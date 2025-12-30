@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شهادات الشهود</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕵️</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: linear-gradient(135deg, #0a1828 0%, #1a2332 50%, #0f1d2e 100%);
+            color: #d4af37;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(212, 175, 55, 0.03) 0px,
+                    transparent 1px,
+                    transparent 2px,
+                    rgba(212, 175, 55, 0.03) 3px
+                );
+            pointer-events: none;
+            animation: scanlines 8s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.5); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 1s ease-out;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 20px;
+            background: rgba(26, 35, 50, 0.6);
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            animation: glow 3s infinite;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.7);
+            font-weight: 700;
+        }
+
+        .evidence-id {
+            font-family: 'Share Tech Mono', monospace;
+            color: #8b7355;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            padding: 10px 20px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: rgba(212, 175, 55, 0.2);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .intro-box {
+            background: rgba(26, 35, 50, 0.8);
+            border-right: 4px solid #d4af37;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-radius: 5px;
+            line-height: 1.8;
+        }
+
+        .intro-box p {
+            color: #c9c9c9;
+            margin-bottom: 10px;
+        }
+
+        .witness-card {
+            background: rgba(26, 35, 50, 0.7);
+            border: 2px solid #6b5d4f;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .witness-card:hover {
+            border-color: #d4af37;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .witness-header {
+            border-bottom: 2px solid #6b5d4f;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .witness-number {
+            color: #8b7355;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .witness-name {
+            color: #d4af37;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .witness-role {
+            color: #b8956f;
+            font-size: 1.1rem;
+        }
+
+        .witness-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(40, 30, 20, 0.3);
+            border-radius: 5px;
+        }
+
+        .info-item {
+            color: #c9c9c9;
+            font-size: 0.95rem;
+        }
+
+        .info-label {
+            color: #8b7355;
+            font-size: 0.85rem;
+            margin-bottom: 3px;
+        }
+
+        .statement-section {
+            margin-top: 20px;
+        }
+
+        .section-title {
+            color: #d4af37;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .statement-text {
+            background: rgba(40, 30, 20, 0.4);
+            padding: 20px;
+            border-radius: 5px;
+            border-right: 3px solid #8b7355;
+            color: #c9c9c9;
+            line-height: 1.8;
+            font-size: 1.05rem;
+            font-style: italic;
+        }
+
+        .highlight {
+            background: rgba(212, 175, 55, 0.3);
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #d4af37;
+            font-weight: 600;
+            font-style: normal;
+        }
+
+        .contradiction-box {
+            background: rgba(255, 152, 0, 0.15);
+            border: 2px dashed #ff9800;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .contradiction-box p {
+            color: #ffb74d;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .witness-name {
+                font-size: 1.5rem;
+            }
+
+            .witness-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← العودة للصفحة الرئيسية</a>
+
+        <header>
+            <h1>👥 شهادات الشهود</h1>
+            <p class="evidence-id">الدليل رقم: E-002 | إفادات رسمية</p>
+        </header>
+
+        <div class="intro-box">
+            <p><strong>ملاحظة:</strong> تم جمع هذه الشهادات صباح 26 مارس 2024م (اليوم التالي للسرقة). جميع الشهادات تم تسجيلها تحت القسم وهي شهادات رسمية.</p>
+            <p style="color: #d4af37; margin-top: 15px;"><strong>تنبيه:</strong> قد توجد تناقضات بين الشهادات. هذه التناقضات قد تكون مفتاح حل القضية.</p>
+        </div>
+
+        <!-- Witness 1 -->
+        <div class="witness-card">
+            <div class="witness-header">
+                <p class="witness-number">الشاهد رقم: W-001</p>
+                <h3 class="witness-name">أبو حسن - بائع فلافل</h3>
+                <p class="witness-role">صاحب محل فلافل مقابل المكتبة</p>
+            </div>
+
+            <div class="witness-info">
+                <div class="info-item">
+                    <div class="info-label">العمر:</div>
+                    <div>58 سنة</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">العنوان:</div>
+                    <div>حي باب توما، دمشق</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">تاريخ الإفادة:</div>
+                    <div>26 مارس 2024 - 9:30 ص</div>
+                </div>
+            </div>
+
+            <div class="statement-section">
+                <div class="section-title">📝 نص الشهادة:</div>
+                <div class="statement-text">
+                    "والله يا أستاذ، أنا بشتغل بالمحل من الساعة 5 العصر لحد 12 الليل في رمضان. يوم الخميس، كان يوم عادي. شفت الدكتور سامر طالع من المكتبة حوالي <span class="highlight">الساعة 6 ونص المسا</span>، كان شكله تعبان ومستعجل. بعدها بساعة تقريباً، حوالي <span class="highlight">الساعة 7 ونص</span>، شفت سيارة سوداء واقفة قدام المكتبة لمدة 5 دقائق تقريباً، بس ما شفت مين طلع منها أو نزل. كان في ناس كتير بالشارع وقت الإفطار فما انتبهت كتير. آخر شي، <span class="highlight">حوالي الساعة 11 ونص الليل</span>، شفت سيدة محجبة داخلة على المكتبة، بس كان الضو خفيف وما شفتها منيح. كان شكلها طويلة شوي ولابسة عباية سودا."
+                </div>
+            </div>
+        </div>
+
+        <!-- Witness 2 -->
+        <div class="witness-card">
+            <div class="witness-header">
+                <p class="witness-number">الشاهد رقم: W-002</p>
+                <h3 class="witness-name">منى الشامي</h3>
+                <p class="witness-role">ممرضة في مستشفى الرازي (زميلة نادية)</p>
+            </div>
+
+            <div class="witness-info">
+                <div class="info-item">
+                    <div class="info-label">العمر:</div>
+                    <div>33 سنة</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">العنوان:</div>
+                    <div>حي القصاع، دمشق</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">تاريخ الإفادة:</div>
+                    <div>26 مارس 2024 - 11:00 ص</div>
+                </div>
+            </div>
+
+            <div class="statement-section">
+                <div class="section-title">📝 نص الشهادة:</div>
+                <div class="statement-text">
+                    "نادية صديقتي من زمان، وبعرف قديش كانت قلقانة على أبوها. يوم الخميس، جات على المستشفى <span class="highlight">الساعة 6 ونص المسا تقريباً</span>. قعدت عند أبوها لحد <span class="highlight">حوالي 10 الليل</span>، بعدها قالتلي إنها بدها تروح تجهز إفطار السحور لإخوتها. شفتها طالعة من غرفة أبوها <span class="highlight">الساعة 10 ونص بالضبط</span> لأني كنت عم بسجل الأدوية بنفس الوقت. كانت شكلها مرهقة كتير وعيونها حمرا من البكي. والله العظيم، هاي البنت قلبها طيب وما ممكن تعمل شي غلط."
+                </div>
+                
+                <div class="contradiction-box">
+                    <p>⚠️ تناقض: نادية قالت إنها بقيت في المستشفى حتى 1:00 صباحاً، لكن الممرضة تقول إنها غادرت الساعة 10:00 مساءً!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Witness 3 -->
+        <div class="witness-card">
+            <div class="witness-header">
+                <p class="witness-number">الشاهد رقم: W-003</p>
+                <h3 class="witness-name">كمال الديري</h3>
+                <p class="witness-role">سائق تاكسي</p>
+            </div>
+
+            <div class="witness-info">
+                <div class="info-item">
+                    <div class="info-label">العمر:</div>
+                    <div>44 سنة</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">رقم التاكسي:</div>
+                    <div>DMS-4821</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">تاريخ الإفادة:</div>
+                    <div>26 مارس 2024 - 2:00 م</div>
+                </div>
+            </div>
+
+            <div class="statement-section">
+                <div class="section-title">📝 نص الشهادة:</div>
+                <div class="statement-text">
+                    "أنا بشتغل ليلي في رمضان، بنقل الناس من وإلى المساجد وقت التراويح. <span class="highlight">الساعة 11 ونص تقريباً</span>، وقفتلي امرأة قريب من المكتبة القديمة بباب توما. كانت لابسة <span class="highlight">عباية سودا ومحجبة</span>، ومعها شنطة سودا كبيرة نوعاً ما. طلبت مني أوصلها على <span class="highlight">حي المهاجرين</span>. كانت عم بتحكي على تلفونها بصوت واطي، سمعتها تقول شي زي 'خلصت، كل شي تمام'. وصلتها الساعة 12 تقريباً. دفعتلي ونزلت بسرعة. ما شفت وجهها منيح بس كانت متوسطة الطول، يمكن 165 سم."
+                </div>
+                
+                <div class="contradiction-box">
+                    <p>🔍 ملاحظة مهمة: الوصف يتطابق مع ليلى منصور (165 سم، محجبة). حي المهاجرين هو حي سكن ليلى!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Witness 4 -->
+        <div class="witness-card">
+            <div class="witness-header">
+                <p class="witness-number">الشاهد رقم: W-004</p>
+                <h3 class="witness-name">رامي حداد</h3>
+                <p class="witness-role">موظف استقبال في فندق الشام الكبير</p>
+            </div>
+
+            <div class="witness-info">
+                <div class="info-item">
+                    <div class="info-label">العمر:</div>
+                    <div>29 سنة</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">وردية العمل:</div>
+                    <div>3:00 م - 11:00 م</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">تاريخ الإفادة:</div>
+                    <div>26 مارس 2024 - 3:30 م</div>
+                </div>
+            </div>
+
+            <div class="statement-section">
+                <div class="section-title">📝 نص الشهادة:</div>
+                <div class="statement-text">
+                    "الدكتور فريد الزعبي ساكن عندنا بالفندق من شهرين تقريباً، بغرفة 412. يوم الخميس، دخل على الفندق <span class="highlight">الساعة 8 المسا بالضبط</span>، أنا شفته بعيني وسلمت عليه. طلع على غرفته. بس في شي غريب: <span class="highlight">حوالي الساعة 9 ونص</span>، شفت حدا نازل من الطلعة الخلفية للفندق (الطلعة اللي بتوصل على المواقف)، كان شكله زيه بس ما تأكدت. الطلعة الخلفية ما فيها كاميرات للأسف. <span class="highlight">الساعة 10 ونص</span> تقريباً، سأل عن رقم تلفون للتاكسي من الاستقبال."
+                </div>
+                
+                <div class="contradiction-box">
+                    <p>⚠️ تناقض: فريد يقول إنه بقي في غرفته طوال الليل، لكن الموظف شاهد شخصاً يشبهه يخرج من الطلعة الخلفية!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Witness 5 -->
+        <div class="witness-card">
+            <div class="witness-header">
+                <p class="witness-number">الشاهد رقم: W-005</p>
+                <h3 class="witness-name">إبراهيم الأتاسي</h3>
+                <p class="witness-role">إمام مسجد الحميدية (قريب من المكتبة)</p>
+            </div>
+
+            <div class="witness-info">
+                <div class="info-item">
+                    <div class="info-label">العمر:</div>
+                    <div>52 سنة</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">العنوان:</div>
+                    <div>حي باب توما، دمشق</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">تاريخ الإفادة:</div>
+                    <div>26 مارس 2024 - 5:00 م</div>
+                </div>
+            </div>
+
+            <div class="statement-section">
+                <div class="section-title">📝 نص الشهادة:</div>
+                <div class="statement-text">
+                    "الأخ سامر من المصلين الدائمين عندنا في المسجد، رجل ملتزم وخلوق. يوم الخميس، <span class="highlight">صلى معنا التراويح من الساعة 9 لحد 11 ونص تقريباً</span>. بعد الصلاة، قعد شوي يقرأ قرآن، وبعدها سلم وطلع حوالي <span class="highlight">الساعة 11 وربع</span>. كان شكله مرتاح والحمد لله. أنا متأكد من الوقت لأنه كان معي موعد بعد الصلاة وكنت عم بطلع على الساعة. الأخ سامر إنسان أمين، وأنا بشهد على أخلاقه الحسنة."
+                </div>
+            </div>
+        </div>
+
+        <div style="background: rgba(212, 175, 55, 0.15); border: 2px solid #d4af37; padding: 25px; border-radius: 8px; margin-top: 40px;">
+            <h3 style="color: #d4af37; font-size: 1.5rem; margin-bottom: 15px;">🔍 ملخص التناقضات المهمة:</h3>
+            <div style="color: #c9c9c9; line-height: 2; font-size: 1.05rem;">
+                <p><strong>1.</strong> نادية تقول إنها بقيت في المستشفى حتى 1:00 ص، لكن الممرضة شاهدتها تغادر الساعة 10:00 م</p>
+                <p><strong>2.</strong> فريد يدّعي أنه بقي في الفندق، لكن الموظف شاهد شخصاً يشبهه يخرج من الطلعة الخلفية</p>
+                <p><strong>3.</strong> امرأة محجبة (165 سم) شوهدت تدخل المكتبة الساعة 11:30 م - من هي؟</p>
+                <p><strong>4.</strong> سائق التاكسي نقل امرأة من المكتبة إلى حي المهاجرين (حي ليلى) الساعة 11:30 م</p>
+                <p><strong>5.</strong> سامر كان في المسجد حتى 11:15 م - لكن أبو حسن يقول إنه رأى سامر يغادر الساعة 6:30 م</p>
+            </div>
+        </div>
+
+        <a href="index.html" class="back-link" style="margin-top: 40px;">← العودة للصفحة الرئيسية</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سجلات الدخول والخروج</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕵️</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: linear-gradient(135deg, #0a1828 0%, #1a2332 50%, #0f1d2e 100%);
+            color: #d4af37;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(212, 175, 55, 0.03) 0px,
+                    transparent 1px,
+                    transparent 2px,
+                    rgba(212, 175, 55, 0.03) 3px
+                );
+            pointer-events: none;
+            animation: scanlines 8s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.5); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 1s ease-out;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 20px;
+            background: rgba(26, 35, 50, 0.6);
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            animation: glow 3s infinite;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.7);
+            font-weight: 700;
+        }
+
+        .evidence-id {
+            font-family: 'Share Tech Mono', monospace;
+            color: #8b7355;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            padding: 10px 20px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: rgba(212, 175, 55, 0.2);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .info-box {
+            background: rgba(26, 35, 50, 0.8);
+            border-right: 4px solid #d4af37;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+            line-height: 1.8;
+        }
+
+        .info-box h2 {
+            color: #d4af37;
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+        }
+
+        .info-box p {
+            color: #c9c9c9;
+            margin-bottom: 10px;
+        }
+
+        .alert-box {
+            background: rgba(212, 175, 55, 0.15);
+            border: 2px solid #d4af37;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .alert-box h3 {
+            color: #d4af37;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .alert-box p {
+            color: #c9c9c9;
+            line-height: 1.6;
+        }
+
+        .logs-section {
+            background: rgba(26, 35, 50, 0.7);
+            border: 2px solid #6b5d4f;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .logs-section h2 {
+            color: #d4af37;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .log-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .log-table thead {
+            background: rgba(212, 175, 55, 0.2);
+        }
+
+        .log-table th {
+            padding: 15px 10px;
+            text-align: right;
+            color: #d4af37;
+            font-weight: 600;
+            border-bottom: 2px solid #d4af37;
+            font-size: 0.95rem;
+        }
+
+        .log-table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #6b5d4f;
+            color: #c9c9c9;
+            font-size: 0.9rem;
+        }
+
+        .log-table tbody tr:hover {
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .entry-type {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .entry-in {
+            background: rgba(76, 175, 80, 0.3);
+            color: #90ee90;
+            border: 1px solid #4caf50;
+        }
+
+        .entry-out {
+            background: rgba(244, 67, 54, 0.3);
+            color: #ff6b6b;
+            border: 1px solid #f44336;
+        }
+
+        .suspect-name {
+            color: #d4af37;
+            font-weight: 600;
+        }
+
+        .note-highlight {
+            background: rgba(212, 175, 55, 0.2);
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #d4af37;
+        }
+
+        .deleted-entry {
+            background: rgba(255, 0, 0, 0.15);
+            border-right: 3px solid #ff4444;
+        }
+
+        .deleted-entry td {
+            color: #ff9999;
+            text-decoration: line-through;
+        }
+
+        .anomaly-note {
+            background: rgba(255, 152, 0, 0.2);
+            border: 2px dashed #ff9800;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .anomaly-note p {
+            color: #ffb74d;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .log-table {
+                font-size: 0.75rem;
+            }
+
+            .log-table th,
+            .log-table td {
+                padding: 8px 5px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← العودة للصفحة الرئيسية</a>
+
+        <header>
+            <h1>🔐 سجلات الدخول والخروج</h1>
+            <p class="evidence-id">الدليل رقم: E-001 | نظام البطاقات الإلكترونية</p>
+        </header>
+
+        <div class="info-box">
+            <h2>📋 معلومات عن النظام</h2>
+            <p><strong>نوع النظام:</strong> نظام بطاقات دخول إلكترونية متصل بقاعدة بيانات مركزية</p>
+            <p><strong>التاريخ:</strong> 25 مارس 2024م (15 رمضان 1445هـ)</p>
+            <p><strong>وقت الحادثة:</strong> بين الساعة 11:00 مساءً و 3:00 صباحاً</p>
+            <p><strong>ملاحظة:</strong> جميع الأوقات بالتوقيت المحلي (دمشق، UTC+3)</p>
+        </div>
+
+        <div class="alert-box">
+            <h3>⚠️ تنبيه أمني مهم</h3>
+            <p>تم اكتشاف محاولة حذف لسجل واحد من قاعدة البيانات في الساعة 2:47 صباحاً. تم استرجاع السجل المحذوف من النسخة الاحتياطية. السجل المحذوف مميز باللون الأحمر أدناه.</p>
+        </div>
+
+        <div class="logs-section">
+            <h2>سجلات يوم الحادثة - 25 مارس 2024</h2>
+
+            <table class="log-table">
+                <thead>
+                    <tr>
+                        <th>الملاحظات</th>
+                        <th>نوع البطاقة</th>
+                        <th>الحركة</th>
+                        <th>الوقت</th>
+                        <th>الاسم</th>
+                        <th>#</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>دخول صباحي عادي</td>
+                        <td>موظف دائم</td>
+                        <td><span class="entry-in">دخول</span></td>
+                        <td>08:55 ص</td>
+                        <td class="suspect-name">سامر الخطيب</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>دخول صباحي عادي</td>
+                        <td>موظف دائم</td>
+                        <td><span class="entry-in">دخول</span></td>
+                        <td>09:02 ص</td>
+                        <td class="suspect-name">نادية الحمصي</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>دخول صباحي عادي</td>
+                        <td>موظف دائم</td>
+                        <td><span class="entry-in">دخول</span></td>
+                        <td>09:10 ص</td>
+                        <td class="suspect-name">ليلى منصور</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>زيارة بحثية مجدولة</td>
+                        <td>بطاقة باحث</td>
+                        <td><span class="entry-in">دخول</span></td>
+                        <td>10:15 ص</td>
+                        <td class="suspect-name">فريد الزعبي</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>خروج لتناول الغداء</td>
+                        <td>موظف دائم</td>
+                        <td><span class="entry-out">خروج</span></td>
+                        <td>12:30 م</td>
+                        <td class="suspect-name">نادية الحمصي</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>عودة من الغداء</td>
+                        <td>موظف دائم</td>
+                        <td><span class="entry-in">دخول</span></td>
+                        <td>01:45 م</td>
+                        <td class="suspect-name">نادية الحمصي</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>خروج لصلاة الجمعة</td>
+                        <td>موظف دائم</td>
+                        <td><span class="entry-out">خروج</span></td>
+                        <td>01:50 م</td>
+                        <td class="suspect-name">سامر الخطيب</td>
+                        <td>7</td>
+                    </tr>
+                    <tr>
+                        <td>عودة من الصلاة</td>
+                        <td>موظف دائم</td>
+                        <td><span class="entry-in">دخول</span></td>
+                        <td>02:35 م</td>
+                        <td class="suspect-name">سامر الخطيب</td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <td>إنهاء البحث والمغادرة</td>
+                        <td>بطاقة باحث</td>
+                        <td><span class="entry-out">خروج</span></td>
+                        <td>02:50 م</td>
+                        <td class="suspect-name">فريد الزعبي</td>
+                        <td>9</td>
+                    </tr>
+                    <tr>
+                        <td>إغلاق رمضاني مبكر</td>
+                        <td>موظف دائم</td>
+                        <td><span class="entry-out">خروج</span></td>
+                        <td>03:00 م</td>
+                        <td class="suspect-name">ليلى منصور</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>إغلاق رمضاني مبكر</td>
+                        <td>موظف دائم</td>
+                        <td><span class="entry-out">خروج</span></td>
+                        <td>03:05 م</td>
+                        <td class="suspect-name">نادية الحمصي</td>
+                        <td>11</td>
+                    </tr>
+                    <tr>
+                        <td><span class="note-highlight">بقي للعمل الإضافي</span></td>
+                        <td>موظف دائم</td>
+                        <td><span class="entry-out">خروج</span></td>
+                        <td>06:05 م</td>
+                        <td class="suspect-name">سامر الخطيب</td>
+                        <td>12</td>
+                    </tr>
+                    <tr>
+                        <td>بداية الوردية الليلية</td>
+                        <td>حارس أمن</td>
+                        <td><span class="entry-in">دخول</span></td>
+                        <td>09:50 م</td>
+                        <td class="suspect-name">ياسين العبيد</td>
+                        <td>13</td>
+                    </tr>
+                    <tr class="deleted-entry">
+                        <td><span class="note-highlight">⚠️ سجل محذوف - تم استرجاعه</span></td>
+                        <td>موظف دائم</td>
+                        <td><span class="entry-in">دخول</span></td>
+                        <td>11:23 م</td>
+                        <td class="suspect-name">ليلى منصور</td>
+                        <td>14</td>
+                    </tr>
+                    <tr>
+                        <td>نهاية الوردية الليلية</td>
+                        <td>حارس أمن</td>
+                        <td><span class="entry-out">خروج</span></td>
+                        <td>06:05 ص</td>
+                        <td class="suspect-name">ياسين العبيد</td>
+                        <td>15</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="anomaly-note">
+                <p>🔍 ملاحظة حرجة: السجل رقم 14 تم حذفه من النظام في الساعة 2:47 صباحاً - بعد 3 ساعات و24 دقيقة من حدوثه!</p>
+            </div>
+        </div>
+
+        <div class="logs-section">
+            <h2>📊 تحليل البيانات</h2>
+            
+            <div style="background: rgba(40, 30, 20, 0.4); padding: 20px; border-radius: 5px; margin-bottom: 15px; border-right: 3px solid #8b7355;">
+                <h3 style="color: #d4af37; font-size: 1.2rem; margin-bottom: 10px;">الأشخاص الموجودون بعد ساعات العمل:</h3>
+                <p style="color: #c9c9c9; line-height: 1.8;">
+                    • <strong style="color: #d4af37;">سامر الخطيب:</strong> بقي حتى 6:05 مساءً (3 ساعات إضافية)<br>
+                    • <strong style="color: #d4af37;">ياسين العبيد:</strong> كان في نوبة ليلية من 9:50 مساءً حتى 6:05 صباحاً<br>
+                    • <strong style="color: #d4af37;">ليلى منصور:</strong> دخلت في 11:23 مساءً (حسب السجل المحذوف)
+                </p>
+            </div>
+
+            <div style="background: rgba(40, 30, 20, 0.4); padding: 20px; border-radius: 5px; margin-bottom: 15px; border-right: 3px solid #8b7355;">
+                <h3 style="color: #d4af37; font-size: 1.2rem; margin-bottom: 10px;">الأسئلة المهمة:</h3>
+                <p style="color: #c9c9c9; line-height: 1.8;">
+                    1. لماذا عادت ليلى منصور في الساعة 11:23 مساءً؟<br>
+                    2. من الذي حذف سجل دخولها؟ وكيف؟<br>
+                    3. هل كان سامر الخطيب بحاجة فعلاً لـ3 ساعات إضافية؟<br>
+                    4. أين كان ياسين العبيد أثناء دخول ليلى؟<br>
+                    5. لماذا لا يوجد سجل خروج لليلى بعد دخولها؟
+                </p>
+            </div>
+
+            <div style="background: rgba(212, 175, 55, 0.15); border: 2px solid #d4af37; padding: 20px; border-radius: 5px;">
+                <h3 style="color: #d4af37; font-size: 1.2rem; margin-bottom: 10px;">ملاحظة فنية:</h3>
+                <p style="color: #c9c9c9; line-height: 1.8;">
+                    حذف السجلات من قاعدة البيانات يتطلب صلاحيات إدارية عالية المستوى. فقط <strong style="color: #d4af37;">ليلى منصور</strong> (مسؤولة تقنية المعلومات) لديها هذه الصلاحيات. السؤال: هل حذفت سجلها بنفسها؟ أم أن شخصاً آخر استخدم حسابها؟
+                </p>
+            </div>
+        </div>
+
+        <a href="index.html" class="back-link" style="margin-top: 40px;">← العودة للصفحة الرئيسية</a>
+    </div>
+</body>
+</html>

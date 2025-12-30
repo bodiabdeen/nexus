@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التحقيق في سرقة المخطوطات التراثية</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕵️</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: linear-gradient(135deg, #0a1828 0%, #1a2332 50%, #0f1d2e 100%);
+            color: #d4af37;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(212, 175, 55, 0.03) 0px,
+                    transparent 1px,
+                    transparent 2px,
+                    rgba(212, 175, 55, 0.03) 3px
+                );
+            pointer-events: none;
+            animation: scanlines 8s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.3), inset 0 0 20px rgba(212, 175, 55, 0.1); }
+            50% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.5), inset 0 0 30px rgba(212, 175, 55, 0.2); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 1s ease-out;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px 20px;
+            background: rgba(26, 35, 50, 0.6);
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            animation: glow 3s infinite;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.7);
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: #b8956f;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .case-number {
+            font-family: 'Share Tech Mono', monospace;
+            color: #8b7355;
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+        }
+
+        .intro-section {
+            background: rgba(26, 35, 50, 0.8);
+            border-right: 4px solid #d4af37;
+            padding: 30px;
+            margin-bottom: 40px;
+            border-radius: 5px;
+            line-height: 1.8;
+            font-size: 1.15rem;
+        }
+
+        .intro-section h2 {
+            color: #d4af37;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .intro-section p {
+            color: #c9c9c9;
+            margin-bottom: 15px;
+        }
+
+        .evidence-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .evidence-card {
+            background: rgba(26, 35, 50, 0.7);
+            border: 2px solid #6b5d4f;
+            border-radius: 8px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .evidence-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            bottom: -2px;
+            left: -2px;
+            background: linear-gradient(45deg, #d4af37, #b8956f, #d4af37);
+            border-radius: 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .evidence-card:hover::before {
+            opacity: 0.3;
+        }
+
+        .evidence-card:hover {
+            transform: translateY(-5px);
+            border-color: #d4af37;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .evidence-card h3 {
+            color: #d4af37;
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .evidence-card p {
+            color: #a8a8a8;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .evidence-card a {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .evidence-card a:hover {
+            background: rgba(212, 175, 55, 0.2);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .hint-section {
+            background: rgba(40, 30, 20, 0.6);
+            border: 2px dashed #8b7355;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .hint-section h2 {
+            color: #d4af37;
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+        }
+
+        .hint-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .hint-links a {
+            padding: 12px 25px;
+            background: rgba(139, 115, 85, 0.3);
+            border: 2px solid #8b7355;
+            color: #b8956f;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .hint-links a:hover {
+            background: rgba(139, 115, 85, 0.5);
+            border-color: #d4af37;
+            color: #d4af37;
+        }
+
+        .solution-section {
+            background: rgba(212, 175, 55, 0.1);
+            border: 3px solid #d4af37;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            animation: glow 4s infinite;
+        }
+
+        .solution-section h2 {
+            color: #d4af37;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+
+        .solution-section p {
+            color: #c9c9c9;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .solution-section a {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #d4af37, #b8956f);
+            color: #0a1828;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .solution-section a:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 20px;
+            color: #6b5d4f;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .evidence-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hint-links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🕵️ التحقيق في سرقة المخطوطات التراثية</h1>
+            <p class="subtitle">مكتبة التراث الإسلامي - دمشق القديمة</p>
+            <p class="case-number">رقم القضية: DMQ-2024-RM-073</p>
+        </header>
+
+        <div class="intro-section">
+            <h2>📋 ملخص القضية</h2>
+            <p>في ليلة 15 رمضان 1445هـ، تعرضت مكتبة التراث الإسلامي في دمشق القديمة لسرقة ثلاث مخطوطات نادرة تُقدر قيمتها بملايين الدولارات. المخطوطات المسروقة هي:</p>
+            <p><strong>1.</strong> مخطوطة نادرة لكتاب "إحياء علوم الدين" للإمام الغزالي (650 عام)</p>
+            <p><strong>2.</strong> رسالة تاريخية عن الأمانة من القرن الثامن الهجري</p>
+            <p><strong>3.</strong> مجموعة وثائق أوقاف قديمة ذات قيمة تاريخية</p>
+            <p style="margin-top: 20px; color: #d4af37;">مهمتك: دراسة الأدلة وكشف الجاني. القضية تحتاج إلى التفكير المنطقي والربط بين الأدلة.</p>
+        </div>
+
+        <h2 style="color: #d4af37; font-size: 2rem; margin-bottom: 30px; text-align: center;">📂 الأدلة المتاحة</h2>
+
+        <div class="evidence-grid">
+            <div class="evidence-card">
+                <h3>📁 ملف القضية</h3>
+                <p>معلومات عن المكتبة والمشتبه بهم الخمسة مع أوصافهم الكاملة ودوافعهم المحتملة</p>
+                <a href="case-file.html">فتح الملف ←</a>
+            </div>
+
+            <div class="evidence-card">
+                <h3>🔐 سجلات الدخول</h3>
+                <p>سجلات دخول وخروج جميع الأشخاص من المكتبة في يوم السرقة مع الأوقات الدقيقة</p>
+                <a href="entry-logs.html">فتح السجلات ←</a>
+            </div>
+
+            <div class="evidence-card">
+                <h3>👥 شهادات الشهود</h3>
+                <p>إفادات خمسة شهود شاهدوا أحداثاً مهمة في يوم السرقة</p>
+                <a href="witness-statements.html">قراءة الشهادات ←</a>
+            </div>
+
+            <div class="evidence-card">
+                <h3>💰 السجلات المالية</h3>
+                <p>تحليل الحسابات البنكية والديون والتحويلات المالية للمشتبه بهم</p>
+                <a href="financial-records.html">فحص السجلات ←</a>
+            </div>
+
+            <div class="evidence-card">
+                <h3>📧 المراسلات الإلكترونية</h3>
+                <p>رسائل بريد إلكتروني متبادلة بين المشتبه بهم وأطراف أخرى</p>
+                <a href="emails.html">قراءة الرسائل ←</a>
+            </div>
+
+            <div class="evidence-card">
+                <h3>🛡️ تقرير الأمن</h3>
+                <p>تقرير فني عن نظام الأمن وكيفية تعطيله ومن لديه القدرة على ذلك</p>
+                <a href="security-report.html">فتح التقرير ←</a>
+            </div>
+
+            <div class="evidence-card">
+                <h3>⏰ الجدول الزمني</h3>
+                <p>إعادة بناء تفصيلية لأحداث يوم السرقة ساعة بساعة</p>
+                <a href="timeline.html">مراجعة الجدول ←</a>
+            </div>
+        </div>
+
+        <div class="hint-section">
+            <h2>💡 التلميحات</h2>
+            <p style="color: #a8a8a8; margin-bottom: 20px;">إذا واجهت صعوبة في حل القضية، يمكنك الاطلاع على التلميحات التدريجية</p>
+            <div class="hint-links">
+                <a href="hint1.html">تلميح 1 (خفيف)</a>
+                <a href="hint2.html">تلميح 2 (متوسط)</a>
+                <a href="hint3.html">تلميح 3 (قوي)</a>
+            </div>
+        </div>
+
+        <div class="solution-section">
+            <h2>🔍 الحل النهائي</h2>
+            <p>عندما تكون مستعداً لمعرفة الحقيقة الكاملة</p>
+            <a href="solution.html">كشف الحل ←</a>
+        </div>
+
+        <footer>
+            <p>لعبة تحقيق تعليمية | القيمة الإسلامية: الأمانة</p>
+            <p>جميع الشخصيات والأحداث خيالية لأغراض تعليمية</p>
+        </footer>
+    </div>
+</body>
+</html>

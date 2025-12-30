@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تلميح 2 - متوسط</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕵️</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: linear-gradient(135deg, #0a1828 0%, #1a2332 50%, #0f1d2e 100%);
+            color: #d4af37;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(212, 175, 55, 0.03) 0px,
+                    transparent 1px,
+                    transparent 2px,
+                    rgba(212, 175, 55, 0.03) 3px
+                );
+            pointer-events: none;
+            animation: scanlines 8s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.5); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 1s ease-out;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 20px;
+            background: rgba(26, 35, 50, 0.6);
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            animation: glow 3s infinite;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.7);
+            font-weight: 700;
+        }
+
+        .hint-level {
+            font-family: 'Share Tech Mono', monospace;
+            color: #ff9800;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            padding: 10px 20px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: rgba(212, 175, 55, 0.2);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .hint-box {
+            background: rgba(26, 35, 50, 0.8);
+            border-right: 4px solid #ff9800;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            line-height: 1.9;
+            font-size: 1.15rem;
+        }
+
+        .hint-box h2 {
+            color: #ff9800;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .hint-box p {
+            color: #c9c9c9;
+            margin-bottom: 20px;
+        }
+
+        .hint-box ul {
+            color: #c9c9c9;
+            margin-right: 30px;
+            line-height: 2.2;
+        }
+
+        .highlight {
+            background: rgba(255, 152, 0, 0.3);
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: #ff9800;
+            font-weight: 600;
+        }
+
+        .evidence-pointer {
+            background: rgba(255, 152, 0, 0.15);
+            border: 2px solid #ff9800;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .evidence-pointer h3 {
+            color: #ff9800;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+
+        .evidence-pointer p {
+            color: #ffb74d;
+            line-height: 1.9;
+            font-size: 1.1rem;
+        }
+
+        .warning {
+            background: rgba(212, 175, 55, 0.15);
+            border: 2px dashed #d4af37;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .warning p {
+            color: #d4af37;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .next-hint {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            background: rgba(40, 30, 20, 0.6);
+            border: 2px solid #8b7355;
+            border-radius: 8px;
+        }
+
+        .next-hint h3 {
+            color: #d4af37;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .next-hint a {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 15px 30px;
+            background: rgba(139, 115, 85, 0.3);
+            border: 2px solid #8b7355;
+            color: #d4af37;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .next-hint a:hover {
+            background: rgba(139, 115, 85, 0.5);
+            box-shadow: 0 0 20px rgba(139, 115, 85, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← العودة للصفحة الرئيسية</a>
+
+        <header>
+            <h1>💡 تلميح 2</h1>
+            <p class="hint-level">المستوى: متوسط | يشير لأدلة محددة</p>
+        </header>
+
+        <div class="warning">
+            <p><strong>⚠️ تنبيه:</strong> هذا التلميح سيوجهك لأدلة محددة جداً. التلميح التالي سيكشف الجناة تقريباً!</p>
+        </div>
+
+        <div class="hint-box">
+            <h2>🔍 ركز على هذه الأدلة</h2>
+            <p>القضية قابلة للحل عندما تربط بين الأدلة التالية:</p>
+
+            <ul>
+                <li>هناك <span class="highlight">تحويل مالي بقيمة 50,000 دولار</span> وصل لحساب أحد المشتبه بهم صباح 26 مارس - مباشرة بعد السرقة!</li>
+                <br>
+                <li>في المراسلات الإلكترونية، ستجد <span class="highlight">رسالة بالإنجليزية</span> من شخص لآخر تحدد موعد السرقة والأدوار بالضبط</li>
+                <br>
+                <li>السجل رقم 14 في سجلات الدخول تم <span class="highlight">حذفه عمداً</span> - لكن تم استرجاعه. من كان يحاول إخفاء دخوله؟</li>
+                <br>
+                <li>تقرير الأمن يُظهر أن <span class="highlight">شخصاً واحداً فقط</span> يملك جميع الصلاحيات لتعطيل الأنظمة</li>
+            </ul>
+        </div>
+
+        <div class="evidence-pointer">
+            <h3>🚨 الدليل القاطع رقم 1: البريد الإلكتروني</h3>
+            <p>في ملف المراسلات الإلكترونية، ستجد رسالة من <span class="highlight">فريد الزعبي</span> إلى شخص آخر (مُرمّز بـ "L.M") قبل يوم واحد من السرقة. الرسالة تحدد:</p>
+            <ul style="margin-right: 30px; margin-top: 15px; line-height: 2;">
+                <li>موعد التنفيذ: "Tomorrow night, 11:15 PM"</li>
+                <li>تقسيم الأدوار: "You handle the inside"</li>
+                <li>تقسيم الأموال: "50 for you, 25 for me"</li>
+            </ul>
+            <p style="margin-top: 15px;">السؤال: من هو "L.M"؟ ابحث عن شخص أحرفه الأولى L.M ويملك القدرة على العمل "من الداخل"!</p>
+        </div>
+
+        <div class="evidence-pointer">
+            <h3>🚨 الدليل القاطع رقم 2: التحويل المالي</h3>
+            <p>في السجلات المالية، ستجد أن <span class="highlight">50,000 دولار</span> وصلت لحساب شخص واحد فقط في صباح 26 مارس - بالضبط المبلغ المذكور في البريد الإلكتروني!</p>
+            <p style="margin-top: 15px;">من هو الشخص الذي حصل على هذا المبلغ الضخم؟</p>
+        </div>
+
+        <div class="evidence-pointer">
+            <h3>🚨 الدليل القاطع رقم 3: السجل المحذوف</h3>
+            <p>سجل الدخول المحذوف (رقم 14) كان لشخص دخل الساعة <span class="highlight">11:23 مساءً</span> - بعد 8 دقائق من تعطيل نظام الإنذار!</p>
+            <p style="margin-top: 15px;">تقرير الأمن يُظهر أن هذا الشخص نفسه هو من عطّل النظام باستخدام حسابه الخاص.</p>
+        </div>
+
+        <div class="hint-box">
+            <h2>🎯 الخلاصة</h2>
+            <p>عندما تجمع كل هذه الأدلة معاً:</p>
+            <ul>
+                <li>البريد الإلكتروني يُظهر <span class="highlight">تخطيطاً مشتركاً بين شخصين</span></li>
+                <li>التحويل المالي يُظهر <span class="highlight">من حصل على المال</span></li>
+                <li>السجل المحذوف يُظهر <span class="highlight">من دخل ليلة السرقة</span></li>
+                <li>تقرير الأمن يُظهر <span class="highlight">من لديه القدرة التقنية</span></li>
+            </ul>
+            <p style="margin-top: 25px; font-size: 1.3rem; color: #ff9800;"><strong>كل الأدلة تشير لنفس الشخصين!</strong></p>
+        </div>
+
+        <div class="next-hint">
+            <h3>هل تريد تأكيداً أقوى؟</h3>
+            <p style="color: #c9c9c9; margin: 15px 0;">التلميح التالي سيكشف الجناة بشكل شبه مباشر</p>
+            <a href="hint3.html">انتقل إلى التلميح 3 ←</a>
+        </div>
+
+        <a href="index.html" class="back-link" style="margin-top: 40px;">← العودة للصفحة الرئيسية</a>
+    </div>
+</body>
+</html>

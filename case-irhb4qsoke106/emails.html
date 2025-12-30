@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المراسلات الإلكترونية</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕵️</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: linear-gradient(135deg, #0a1828 0%, #1a2332 50%, #0f1d2e 100%);
+            color: #d4af37;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(212, 175, 55, 0.03) 0px,
+                    transparent 1px,
+                    transparent 2px,
+                    rgba(212, 175, 55, 0.03) 3px
+                );
+            pointer-events: none;
+            animation: scanlines 8s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.5); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 1s ease-out;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 20px;
+            background: rgba(26, 35, 50, 0.6);
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            animation: glow 3s infinite;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.7);
+            font-weight: 700;
+        }
+
+        .evidence-id {
+            font-family: 'Share Tech Mono', monospace;
+            color: #8b7355;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            padding: 10px 20px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: rgba(212, 175, 55, 0.2);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .info-box {
+            background: rgba(26, 35, 50, 0.8);
+            border-right: 4px solid #d4af37;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+            line-height: 1.8;
+        }
+
+        .info-box p {
+            color: #c9c9c9;
+            margin-bottom: 10px;
+        }
+
+        .email-container {
+            background: rgba(26, 35, 50, 0.7);
+            border: 2px solid #6b5d4f;
+            border-radius: 8px;
+            padding: 0;
+            margin-bottom: 30px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .email-container:hover {
+            border-color: #d4af37;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .email-container.suspicious {
+            border-color: #ff9800;
+            background: rgba(255, 152, 0, 0.05);
+        }
+
+        .email-header {
+            background: rgba(212, 175, 55, 0.15);
+            padding: 20px;
+            border-bottom: 2px solid #6b5d4f;
+        }
+
+        .email-number {
+            color: #8b7355;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .email-from {
+            color: #d4af37;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .email-to {
+            color: #b8956f;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .email-subject {
+            color: #c9c9c9;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+
+        .email-date {
+            color: #8b7355;
+            font-size: 0.9rem;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .email-body {
+            padding: 25px;
+            color: #c9c9c9;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .highlight {
+            background: rgba(212, 175, 55, 0.3);
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #d4af37;
+            font-weight: 600;
+        }
+
+        .suspicious-tag {
+            display: inline-block;
+            background: rgba(255, 152, 0, 0.3);
+            color: #ff9800;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .analysis-box {
+            background: rgba(40, 30, 20, 0.6);
+            border-right: 3px solid #8b7355;
+            padding: 20px;
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+
+        .analysis-box h4 {
+            color: #d4af37;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .analysis-box p {
+            color: #c9c9c9;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .email-body {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← العودة للصفحة الرئيسية</a>
+
+        <header>
+            <h1>📧 المراسلات الإلكترونية</h1>
+            <p class="evidence-id">الدليل رقم: E-004 | رسائل بريد إلكتروني</p>
+        </header>
+
+        <div class="info-box">
+            <p><strong>المصدر:</strong> سيرفر البريد الإلكتروني للمكتبة (بإذن قضائي)</p>
+            <p><strong>الفترة:</strong> مارس 2024</p>
+            <p><strong>ملاحظة:</strong> تم استخراج الرسائل المهمة فقط. الرسائل المشبوهة مميزة بعلامة تحذير.</p>
+        </div>
+
+        <!-- Email 1 -->
+        <div class="email-container">
+            <div class="email-header">
+                <p class="email-number">الرسالة #1</p>
+                <p class="email-from"><strong>من:</strong> farid.zoubi@gmail.com</p>
+                <p class="email-to"><strong>إلى:</strong> samer.khatib@heritage-library.sy</p>
+                <p class="email-subject"><strong>الموضوع:</strong> استفسار عن مخطوطة الإمام الغزالي</p>
+                <p class="email-date">📅 التاريخ: 8 مارس 2024 - 2:15 م</p>
+            </div>
+            <div class="email-body">
+                <p>السلام عليكم أستاذ سامر،</p>
+                <p>أشكرك على استقبالك الكريم لي في المكتبة. أنا مهتم جداً بدراسة <span class="highlight">مخطوطة إحياء علوم الدين</span> التي ذكرتها لي. هل يمكنني الحصول على إذن خاص للاطلاع عليها لفترة أطول؟</p>
+                <p>أيضاً، لاحظت أن لديكم <span class="highlight">رسالة نادرة عن الأمانة من القرن الثامن</span>. هذه بالضبط ما أحتاجه لبحثي. هل يمكن تصويرها؟</p>
+                <p>مع خالص تقديري،<br>فريد الزعبي</p>
+            </div>
+        </div>
+
+        <!-- Email 2 - SUSPICIOUS -->
+        <div class="email-container suspicious">
+            <div class="email-header">
+                <p class="email-number">الرسالة #2</p>
+                <p class="email-from"><strong>من:</strong> contact@european-heritage.org</p>
+                <p class="email-to"><strong>إلى:</strong> farid.zoubi@gmail.com</p>
+                <p class="email-subject"><strong>الموضوع:</strong> Project Update - Damascus</p>
+                <p class="email-date">📅 التاريخ: 18 مارس 2024 - 11:40 م</p>
+                <span class="suspicious-tag">⚠️ رسالة مشبوهة</span>
+            </div>
+            <div class="email-body">
+                <p>Dear Farid,</p>
+                <p>We are pleased with your progress. The <span class="highlight">three items you identified</span> are exactly what our client needs. The payment of <span class="highlight">$25,000 has been transferred</span> as advance.</p>
+                <p>Proceed with the acquisition plan. <span class="highlight">Our contact in Beirut</span> will handle the logistics once you deliver. Timeline: <span class="highlight">end of March</span>.</p>
+                <p>Remember: discretion is paramount.</p>
+                <p>Regards,<br>M. Dubois</p>
+                
+                <div class="analysis-box">
+                    <h4>🔍 تحليل:</h4>
+                    <p>رسالة بالإنجليزية من "مؤسسة التراث الأوروبي" لفريد. تتحدث عن "ثلاثة عناصر" و"خطة الحصول" و"اتصال في بيروت"! هذا يطابق تماماً المخطوطات الثلاثة المسروقة. الدفعة المقدمة 25,000$ تظهر في سجلاته المالية!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Email 3 - SUSPICIOUS -->
+        <div class="email-container suspicious">
+            <div class="email-header">
+                <p class="email-number">الرسالة #3</p>
+                <p class="email-from"><strong>من:</strong> layla.mansour@heritage-library.sy</p>
+                <p class="email-to"><strong>إلى:</strong> techhelp24@protonmail.com</p>
+                <p class="email-subject"><strong>الموضوع:</strong> مساعدة تقنية - حذف سجلات</p>
+                <p class="email-date">📅 التاريخ: 22 مارس 2024 - 11:20 م</p>
+                <span class="suspicious-tag">⚠️ رسالة حرجة جداً</span>
+            </div>
+            <div class="email-body">
+                <p>مساء الخير،</p>
+                <p>أحتاج معلومات عن <span class="highlight">كيفية حذف سجلات محددة من قاعدة بيانات MySQL</span> دون ترك أثر في السجل الاحتياطي. هل هذا ممكن؟</p>
+                <p>السؤال نظري فقط لأغراض تعليمية.</p>
+                <p>شكراً</p>
+                
+                <div class="analysis-box">
+                    <h4>🚨 تحليل حرج:</h4>
+                    <p>ليلى تسأل عن حذف سجلات من قاعدة البيانات قبل 3 أيام من السرقة! والسجل المحذوف كان سجل دخولها في 11:23 م. هذا دليل دامغ على التخطيط المسبق!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Email 4 -->
+        <div class="email-container">
+            <div class="email-header">
+                <p class="email-number">الرسالة #4</p>
+                <p class="email-from"><strong>من:</strong> samer.khatib@heritage-library.sy</p>
+                <p class="email-to"><strong>إلى:</strong> hospital.children@damascus.sy</p>
+                <p class="email-subject"><strong>الموضوع:</strong> Re: فاتورة علاج سارة الخطيب</p>
+                <p class="email-date">📅 التاريخ: 23 مارس 2024 - 4:30 م</p>
+            </div>
+            <div class="email-body">
+                <p>السلام عليكم،</p>
+                <p>أرجو منكم التأجيل في الدفعة القادمة. أنا أعمل على إيجاد حل للديون المتراكمة. ابنتي سارة تحتاج العلاج ولا أستطيع تأخيره.</p>
+                <p>سأدفع ما استطيع الأسبوع القادم بإذن الله.</p>
+                <p>سامر الخطيب</p>
+            </div>
+        </div>
+
+        <!-- Email 5 - SUSPICIOUS -->
+        <div class="email-container suspicious">
+            <div class="email-header">
+                <p class="email-number">الرسالة #5</p>
+                <p class="email-from"><strong>من:</strong> farid.zoubi@gmail.com</p>
+                <p class="email-to"><strong>إلى:</strong> l.m.secure@protonmail.com</p>
+                <p class="email-subject"><strong>الموضوع:</strong> Meeting confirmation</p>
+                <p class="email-date">📅 التاريخ: 24 مارس 2024 - 10:15 م</p>
+                <span class="suspicious-tag">⚠️ رسالة مشبوهة جداً</span>
+            </div>
+            <div class="email-body">
+                <p>L,</p>
+                <p><span class="highlight">Tomorrow night, 11:15 PM</span>. I'll be at the back entrance. <span class="highlight">You handle the inside</span>, I'll handle the <span class="highlight">transport to the contact point</span>.</p>
+                <p><span class="highlight">Payment arrives Saturday morning</span>. 50 for you, 25 for me as agreed.</p>
+                <p>Delete this after reading.</p>
+                <p>F</p>
+                
+                <div class="analysis-box">
+                    <h4>🚨 الدليل القاطع!</h4>
+                    <p>رسالة من فريد إلى "L.M" (الأحرف الأولى من Layla Mansour!) قبل يوم من السرقة. يحدد الوقت (11:15 م)، يتحدث عن "المدخل الخلفي" و"النقل" و"الدفع صباح السبت" (50 ألف لليلى، 25 ألف لفريد). هذا يطابق تماماً التحويل المالي الذي حصلت عليه ليلى!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Email 6 -->
+        <div class="email-container">
+            <div class="email-header">
+                <p class="email-number">الرسالة #6</p>
+                <p class="email-from"><strong>من:</strong> nadia.homsi@heritage-library.sy</p>
+                <p class="email-to"><strong>إلى:</strong> samer.khatib@heritage-library.sy</p>
+                <p class="email-subject"><strong>الموضوع:</strong> طلب مساعدة مالية</p>
+                <p class="email-date">📅 التاريخ: 18 مارس 2024 - 3:20 م</p>
+            </div>
+            <div class="email-body">
+                <p>أستاذ سامر،</p>
+                <p>أعلم أني طلبت سلفة الأسبوع الماضي وتم رفضها، لكن أبي في حالة حرجة جداً. العملية تكلف 50,000 دولار ولا أملك أي مصدر آخر.</p>
+                <p>هل يمكن إعادة النظر في الطلب؟ أنا مستعدة لأي شروط.</p>
+                <p>نادية</p>
+            </div>
+        </div>
+
+        <!-- Email 7 -->
+        <div class="email-container">
+            <div class="email-header">
+                <p class="email-number">الرسالة #7</p>
+                <p class="email-from"><strong>من:</strong> yaseen.obeid.security@heritage-library.sy</p>
+                <p class="email-to"><strong>إلى:</strong> layla.mansour@heritage-library.sy</p>
+                <p class="email-subject"><strong>الموضوع:</strong> مشكلة في نظام الكاميرات</p>
+                <p class="email-date">📅 التاريخ: 25 مارس 2024 - 3:45 م</p>
+            </div>
+            <div class="email-body">
+                <p>أستاذة ليلى،</p>
+                <p>الكاميرا رقم 7 (المدخل الخلفي) لا تعمل منذ الصباح. هل يمكنك إصلاحها؟</p>
+                <p>ياسين العبيد<br>حارس الأمن</p>
+            </div>
+        </div>
+
+        <div style="background: rgba(212, 175, 55, 0.15); border: 2px solid #d4af37; padding: 25px; border-radius: 8px; margin-top: 40px;">
+            <h3 style="color: #d4af37; font-size: 1.5rem; margin-bottom: 15px;">📊 ملخص الأدلة من المراسلات:</h3>
+            <div style="color: #c9c9c9; line-height: 2; font-size: 1.05rem;">
+                <p><strong style="color: #ff9800;">1. التخطيط المشترك:</strong> رسالة من فريد إلى "L.M" (ليلى منصور) تحدد موعد السرقة والأدوار والدفعات!</p>
+                <p><strong>2. المعرفة التقنية:</strong> ليلى سألت عن حذف السجلات قبل 3 أيام من السرقة</p>
+                <p><strong>3. الدافع المالي:</strong> فريد يعمل لمؤسسة تشتري آثار بطرق غير قانونية وحصل على دفعة مقدمة</p>
+                <p><strong>4. التوقيت:</strong> كل التفاصيل في الرسالة #5 تتطابق مع ما حدث فعلاً!</p>
+                <p><br><strong style="color: #d4af37; font-size: 1.2rem;">الخلاصة: ليلى منصور وفريد الزعبي خططا للسرقة معاً!</strong></p>
+            </div>
+        </div>
+
+        <a href="index.html" class="back-link" style="margin-top: 40px;">← العودة للصفحة الرئيسية</a>
+    </div>
+</body>
+</html>

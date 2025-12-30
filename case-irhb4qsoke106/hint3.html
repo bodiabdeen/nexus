@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تلميح 3 - قوي</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕵️</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: linear-gradient(135deg, #0a1828 0%, #1a2332 50%, #0f1d2e 100%);
+            color: #d4af37;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(212, 175, 55, 0.03) 0px,
+                    transparent 1px,
+                    transparent 2px,
+                    rgba(212, 175, 55, 0.03) 3px
+                );
+            pointer-events: none;
+            animation: scanlines 8s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 107, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(255, 107, 107, 0.5); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 1s ease-out;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 20px;
+            background: rgba(26, 35, 50, 0.6);
+            border: 2px solid #ff6b6b;
+            border-radius: 10px;
+            animation: glow 3s infinite;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(255, 107, 107, 0.7);
+            font-weight: 700;
+            color: #ff6b6b;
+        }
+
+        .hint-level {
+            font-family: 'Share Tech Mono', monospace;
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            padding: 10px 20px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: rgba(212, 175, 55, 0.2);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .critical-box {
+            background: rgba(255, 107, 107, 0.15);
+            border: 3px solid #ff6b6b;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            line-height: 1.9;
+            font-size: 1.15rem;
+        }
+
+        .critical-box h2 {
+            color: #ff6b6b;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .critical-box p {
+            color: #ffb3b3;
+            margin-bottom: 20px;
+        }
+
+        .critical-box ul {
+            color: #ffb3b3;
+            margin-right: 30px;
+            line-height: 2.2;
+        }
+
+        .suspect-reveal {
+            background: rgba(255, 107, 107, 0.2);
+            border: 3px solid #ff6b6b;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .suspect-reveal h3 {
+            color: #ff6b6b;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .suspect-reveal p {
+            color: #ffb3b3;
+            line-height: 2;
+            font-size: 1.2rem;
+        }
+
+        .highlight {
+            background: rgba(255, 107, 107, 0.4);
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .evidence-list {
+            background: rgba(26, 35, 50, 0.8);
+            border-right: 4px solid #ff6b6b;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .evidence-list h3 {
+            color: #ff6b6b;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .evidence-list ul {
+            color: #c9c9c9;
+            margin-right: 30px;
+            line-height: 2.2;
+        }
+
+        .warning {
+            background: rgba(212, 175, 55, 0.15);
+            border: 2px dashed #d4af37;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .warning p {
+            color: #d4af37;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .next-hint {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            background: rgba(212, 175, 55, 0.15);
+            border: 3px solid #d4af37;
+            border-radius: 8px;
+            animation: glow 4s infinite;
+        }
+
+        .next-hint h3 {
+            color: #d4af37;
+            margin-bottom: 15px;
+            font-size: 1.6rem;
+        }
+
+        .next-hint a {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 18px 40px;
+            background: linear-gradient(135deg, #d4af37, #b8956f);
+            color: #0a1828;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .next-hint a:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← العودة للصفحة الرئيسية</a>
+
+        <header>
+            <h1>🚨 تلميح 3</h1>
+            <p class="hint-level">المستوى: قوي جداً | يكشف الجناة تقريباً</p>
+        </header>
+
+        <div class="warning">
+            <p><strong>⚠️ تحذير نهائي:</strong> هذا التلميح سيكشف لك الجناة بشكل شبه مباشر. إذا كنت تريد حل القضية بنفسك، لا تقرأ أكثر من هذا!</p>
+        </div>
+
+        <div class="critical-box">
+            <h2>🔍 التحليل النهائي</h2>
+            <p>بناءً على جميع الأدلة، القضية واضحة تماماً. السرقة نفذها <span class="highlight">شخصان يعملان معاً</span> في مؤامرة محكمة:</p>
+            
+            <ul style="margin-top: 20px;">
+                <li><strong>الشخص الأول:</strong> الخبير التقني الذي عطّل جميع الأنظمة من الداخل</li>
+                <li><strong>الشخص الثاني:</strong> الباحث الخارجي الذي نظّم البيع للمشتري الأجنبي</li>
+            </ul>
+        </div>
+
+        <div class="suspect-reveal">
+            <h3>👤 الشخص الأول - من الداخل</h3>
+            <p>ابحث عن شخص يملك كل هذه الصفات:</p>
+            <ul style="text-align: right; margin-right: 50px; margin-top: 20px; line-height: 2.5;">
+                <li>✅ مسؤول/ة عن أنظمة تقنية المعلومات والأمن</li>
+                <li>✅ حصل/ت على <span class="highlight">50,000 دولار</span> صباح 26 مارس</li>
+                <li>✅ سجل دخوله/ا الساعة <span class="highlight">11:23 م</span> تم حذفه</li>
+                <li>✅ حسابه/ا استُخدم لتعطيل نظام الإنذار</li>
+                <li>✅ الأحرف الأولى من اسمه/ا: <span class="highlight">L.M</span></li>
+            </ul>
+            <p style="margin-top: 30px; font-size: 1.4rem; color: #fff;">هل عرفت من هو/هي؟</p>
+        </div>
+
+        <div class="suspect-reveal">
+            <h3>👤 الشخص الثاني - من الخارج</h3>
+            <p>ابحث عن شخص يملك كل هذه الصفات:</p>
+            <ul style="text-align: right; margin-right: 50px; margin-top: 20px; line-height: 2.5;">
+                <li>✅ باحث زائر يعمل لصالح مؤسسة أوروبية</li>
+                <li>✅ حصل على <span class="highlight">25,000 دولار</span> قبل السرقة بـ5 أيام</li>
+                <li>✅ أرسل بريداً إلكترونياً لـ "L.M" يحدد خطة السرقة</li>
+                <li>✅ شوهد يغادر فندقه من الطلعة الخلفية ليلة السرقة</li>
+                <li>✅ عنده علاقات مع تجار آثار دوليين</li>
+            </ul>
+            <p style="margin-top: 30px; font-size: 1.4rem; color: #fff;">هل عرفت من هو؟</p>
+        </div>
+
+        <div class="evidence-list">
+            <h3>📊 الأدلة الدامغة</h3>
+            <ul>
+                <li><strong>البريد الإلكتروني رقم 5:</strong> رسالة من الشخص الثاني إلى "L.M" (الشخص الأول) تحدد الخطة بالتفصيل</li>
+                <br>
+                <li><strong>السجلات المالية:</strong> الشخص الأول حصل على 50,000$ والثاني حصل على 25,000$ - بالضبط كما ورد في البريد!</li>
+                <br>
+                <li><strong>سجلات الدخول:</strong> الشخص الأول دخل في 11:23 م وحاول حذف السجل</li>
+                <br>
+                <li><strong>تقرير الأمن:</strong> حساب الشخص الأول استُخدم لتعطيل جميع الأنظمة</li>
+                <br>
+                <li><strong>شهادات الشهود:</strong> امرأة بمواصفات الشخص الأول شوهدت تغادر بتاكسي</li>
+                <br>
+                <li><strong>الجدول الزمني:</strong> كل الأحداث تتطابق تماماً مع البريد الإلكتروني</li>
+            </ul>
+        </div>
+
+        <div class="critical-box">
+            <h2>💡 القيمة الإسلامية المستفادة</h2>
+            <p>هذه القضية تعلمنا عن أهمية <span class="highlight">الأمانة</span> في الإسلام. الجناة:</p>
+            <ul style="margin-top: 15px;">
+                <li>خانا الأمانة التي أُعطيت لهما (الشخص الأول كان مسؤولاً عن الأمن!)</li>
+                <li>سرقا تراثاً إسلامياً ثميناً للمجتمع</li>
+                <li>كذبا وحاولا إخفاء الأدلة</li>
+                <li>تعاونا على الإثم والعدوان</li>
+            </ul>
+            <p style="margin-top: 20px; color: #fff; font-size: 1.2rem;">قال النبي ﷺ: "لا إيمان لمن لا أمانة له"</p>
+        </div>
+
+        <div class="next-hint">
+            <h3>هل تريد معرفة الحل الكامل؟</h3>
+            <p style="color: #0a1828; margin: 15px 0; font-weight: 600;">الحل النهائي يكشف الجناة بالاسم ويشرح كل التفاصيل</p>
+            <a href="solution.html">اكشف الحل الكامل ←</a>
+        </div>
+
+        <a href="index.html" class="back-link" style="margin-top: 40px;">← العودة للصفحة الرئيسية</a>
+    </div>
+</body>
+</html>

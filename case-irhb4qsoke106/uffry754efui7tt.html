@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الحل النهائي</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕵️</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: linear-gradient(135deg, #0a1828 0%, #1a2332 50%, #0f1d2e 100%);
+            color: #d4af37;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(212, 175, 55, 0.03) 0px,
+                    transparent 1px,
+                    transparent 2px,
+                    rgba(212, 175, 55, 0.03) 3px
+                );
+            pointer-events: none;
+            animation: scanlines 8s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.4); }
+            50% { box-shadow: 0 0 50px rgba(212, 175, 55, 0.7); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 1s ease-out;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px 20px;
+            background: rgba(26, 35, 50, 0.6);
+            border: 3px solid #d4af37;
+            border-radius: 10px;
+            animation: glow 3s infinite;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 1);
+            font-weight: 700;
+        }
+
+        .solution-label {
+            font-family: 'Share Tech Mono', monospace;
+            color: #d4af37;
+            font-size: 1rem;
+            letter-spacing: 3px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            padding: 10px 20px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: rgba(212, 175, 55, 0.2);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .culprits-reveal {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(184, 149, 111, 0.2));
+            border: 4px solid #d4af37;
+            border-radius: 10px;
+            padding: 40px;
+            margin-bottom: 50px;
+            text-align: center;
+            animation: glow 4s infinite;
+        }
+
+        .culprits-reveal h2 {
+            color: #d4af37;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
+        }
+
+        .culprit-box {
+            background: rgba(26, 35, 50, 0.8);
+            border: 3px solid #d4af37;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 20px 0;
+            text-align: right;
+        }
+
+        .culprit-box h3 {
+            color: #d4af37;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .culprit-box p {
+            color: #c9c9c9;
+            font-size: 1.2rem;
+            line-height: 2;
+        }
+
+        .section {
+            background: rgba(26, 35, 50, 0.7);
+            border: 2px solid #6b5d4f;
+            border-radius: 8px;
+            padding: 35px;
+            margin-bottom: 35px;
+        }
+
+        .section:hover {
+            border-color: #d4af37;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .section h2 {
+            color: #d4af37;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #6b5d4f;
+        }
+
+        .section h3 {
+            color: #d4af37;
+            font-size: 1.5rem;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .section p {
+            color: #c9c9c9;
+            line-height: 2;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .section ul {
+            color: #c9c9c9;
+            margin-right: 30px;
+            line-height: 2.2;
+            font-size: 1.05rem;
+        }
+
+        .highlight {
+            background: rgba(212, 175, 55, 0.3);
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: #d4af37;
+            font-weight: 700;
+        }
+
+        .evidence-item {
+            background: rgba(40, 30, 20, 0.5);
+            border-right: 4px solid #d4af37;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .evidence-item h4 {
+            color: #d4af37;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .timeline-item {
+            background: rgba(40, 30, 20, 0.5);
+            border-right: 4px solid #8b7355;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .timeline-item strong {
+            color: #d4af37;
+        }
+
+        .islamic-lesson {
+            background: rgba(212, 175, 55, 0.15);
+            border: 3px solid #d4af37;
+            border-radius: 10px;
+            padding: 40px;
+            margin: 50px 0;
+            text-align: center;
+        }
+
+        .islamic-lesson h2 {
+            color: #d4af37;
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+        }
+
+        .islamic-lesson p {
+            color: #c9c9c9;
+            font-size: 1.2rem;
+            line-height: 2.2;
+        }
+
+        .islamic-lesson .hadith {
+            background: rgba(26, 35, 50, 0.8);
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 25px 0;
+            font-size: 1.3rem;
+            color: #d4af37;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .culprits-reveal h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← العودة للصفحة الرئيسية</a>
+
+        <header>
+            <h1>🎯 الحل النهائي</h1>
+            <p class="solution-label">القضية: DMQ-2024-RM-073 | محلولة</p>
+        </header>
+
+        <div class="culprits-reveal">
+            <h2>🚨 الجناة</h2>
+            
+            <div class="culprit-box">
+                <h3>👤 الجاني الأول: ليلى منصور</h3>
+                <p><strong>الوظيفة:</strong> مسؤولة أنظمة تقنية المعلومات والأمن</p>
+                <p><strong>الدور:</strong> تعطيل الأنظمة الأمنية والدخول من الداخل لسرقة المخطوطات</p>
+                <p><strong>المكافأة:</strong> 50,000 دولار</p>
+            </div>
+
+            <div class="culprit-box">
+                <h3>👤 الجاني الثاني: فريد الزعبي</h3>
+                <p><strong>الوظيفة:</strong> باحث زائر يعمل لمؤسسة أوروبية</p>
+                <p><strong>الدور:</strong> التخطيط والتنسيق مع المشتري الأجنبي ونقل المخطوطات</p>
+                <p><strong>المكافأة:</strong> 25,000 دولار (دفعة مقدمة)</p>
+            </div>
+
+            <p style="margin-top: 30px; font-size: 1.3rem; color: #d4af37;">
+                <strong>النتيجة:</strong> مؤامرة مشتركة بين شخصين من الداخل والخارج لسرقة تراث إسلامي نادر
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>🔍 كيف تمت السرقة؟</h2>
+            
+            <h3>المرحلة الأولى: التخطيط (قبل أسابيع)</h3>
+            <p>فريد الزعبي، الذي يعمل لصالح "مؤسسة التراث الأوروبي" (واجهة لتجارة الآثار غير القانونية)، زار المكتبة 45 مرة خلال 3 أشهر. كان يدرس المخطوطات ويختار الأهداف:</p>
+            <ul>
+                <li>مخطوطة إحياء علوم الدين للغزالي</li>
+                <li>رسالة تاريخية عن الأمانة</li>
+                <li>وثائق أوقاف قديمة</li>
+            </ul>
+            <p style="margin-top: 20px;">فريد تواصل مع ليلى منصور، التي كانت تشعر بالظلم بعد أن تم تجاهلها للترقية. عرض عليها 50,000 دولار مقابل مساعدته - مبلغ كبير بالنسبة لراتبها الشهري البسيط.</p>
+
+            <h3>المرحلة الثانية: الإعداد النهائي (24 مارس)</h3>
+            <div class="timeline-item">
+                <strong>10:15 م - 24 مارس:</strong> فريد يرسل البريد الإلكتروني الأخير لليلى يحدد الخطة: "Tomorrow night, 11:15 PM. You handle the inside, I'll handle the transport."
+            </div>
+            <p>الخطة كانت واضحة:</p>
+            <ul>
+                <li>ليلى تعطل الأنظمة من الداخل وتسرق المخطوطات</li>
+                <li>فريد ينتظر عند المدخل الخلفي لاستلام المخطوطات</li>
+                <li>فريد ينقلها للمشتري في لبنان</li>
+                <li>يتقاسمان المال: 50,000 لليلى، 25,000 لفريد</li>
+            </ul>
+
+            <h3>المرحلة الثالثة: التنفيذ (25 مارس - ليلة السرقة)</h3>
+            
+            <div class="timeline-item">
+                <strong>10:30 صباحاً:</strong> شخص ما (على الأرجح فريد) يعطل كاميرا المدخل الخلفي صباحاً - تحضير للخطة الليلية
+            </div>
+
+            <div class="timeline-item">
+                <strong>09:30 مساءً:</strong> فريد يغادر فندقه من الطلعة الخلفية (بدون كاميرات) ويتوجه للمكتبة
+            </div>
+
+            <div class="timeline-item">
+                <strong>11:18 مساءً:</strong> ليلى تدخل غرفة الأمن وتعطل نظام الإنذار بالكامل باستخدام حسابها الإداري. تكتب "صيانة مجدولة" كسبب
+            </div>
+
+            <div class="timeline-item">
+                <strong>11:23 مساءً:</strong> ليلى تدخل من الباب الخلفي باستخدام بطاقتها الإلكترونية
+            </div>
+
+            <div class="timeline-item">
+                <strong>11:23 م - 11:30 م:</strong> ليلى تذهب للخزنة، تفتحها (لديها الصلاحيات)، وتسرق المخطوطات الثلاثة. تضعها في شنطة سوداء كبيرة
+            </div>
+
+            <div class="timeline-item">
+                <strong>11:30 مساءً:</strong> ليلى تخرج من المدخل الخلفي وتسلم المخطوطات لفريد الذي كان ينتظرها. ليلى تركب تاكسي للعودة لبيتها (شاهدها السائق). فريد يأخذ المخطوطات
+            </div>
+
+            <div class="timeline-item">
+                <strong>02:47 صباحاً:</strong> ليلى تستيقظ وتتذكر أن سجل دخولها موجود في النظام! تدخل عن بُعد لقاعدة البيانات وتحذف السجل - لكن النسخة الاحتياطية احتفظت به
+            </div>
+
+            <div class="timeline-item">
+                <strong>08:30 صباحاً - 26 مارس:</strong> 50,000 دولار تصل لحساب ليلى من حساب في لبنان (المشتري الأجنبي يدفع)
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📊 الأدلة الدامغة</h2>
+
+            <div class="evidence-item">
+                <h4>1. البريد الإلكتروني رقم 5 (الدليل القاطع)</h4>
+                <p>رسالة من <span class="highlight">farid.zoubi@gmail.com</span> إلى <span class="highlight">l.m.secure@protonmail.com</span> (ليلى منصور - Layla Mansour) بتاريخ 24 مارس تحدد:</p>
+                <ul>
+                    <li>الموعد: "Tomorrow night, 11:15 PM" (بالضبط قبل دخول ليلى بـ8 دقائق!)</li>
+                    <li>تقسيم الأدوار: "You handle the inside, I'll handle the transport"</li>
+                    <li>المال: "50 for you, 25 for me" (يطابق التحويلات المالية!)</li>
+                </ul>
+            </div>
+
+            <div class="evidence-item">
+                <h4>2. التحويلات المالية</h4>
+                <p>50,000 دولار وصلت لحساب <span class="highlight">ليلى منصور</span> في 26 مارس من حساب مجهول في لبنان. فريد حصل على 25,000 دولار في 20 مارس كدفعة مقدمة من نفس المؤسسة.</p>
+            </div>
+
+            <div class="evidence-item">
+                <h4>3. السجل المحذوف</h4>
+                <p>السجل رقم 14 يُظهر دخول <span class="highlight">ليلى منصور</span> في 11:23 م. تم حذفه في 2:47 ص باستخدام حساب ليلى نفسها - محاولة فاشلة لإخفاء الأدلة!</p>
+            </div>
+
+            <div class="evidence-item">
+                <h4>4. سجلات نظام الأمن</h4>
+                <p>تم تعطيل نظام الإنذار في 11:18 م باستخدام حساب <span class="highlight">"layla.mansour"</span>. ليلى هي الوحيدة التي تملك هذه الصلاحيات!</p>
+            </div>
+
+            <div class="evidence-item">
+                <h4>5. شهادة سائق التاكسي</h4>
+                <p>امرأة محجبة (165 سم - طول ليلى)، معها شنطة سوداء كبيرة، ركبت تاكسي من قرب المكتبة إلى <span class="highlight">حي المهاجرين</span> (حي ليلى!) الساعة 11:30 م. سمعها تقول: "خلصت، كل شي تمام"</p>
+            </div>
+
+            <div class="evidence-item">
+                <h4>6. شهادة موظف الفندق</h4>
+                <p>شخص يشبه فريد شوهد يخرج من الطلعة الخلفية للفندق (بدون كاميرات) الساعة 9:30 م - يكذب عندما يقول إنه بقي في غرفته!</p>
+            </div>
+
+            <div class="evidence-item">
+                <h4>7. البريد الإلكتروني رقم 3</h4>
+                <p>ليلى تسأل قبل 3 أيام من السرقة عن "كيفية حذف سجلات من قاعدة البيانات MySQL دون ترك أثر" - تخطيط واضح!</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>❌ لماذا المشتبه بهم الآخرون أبرياء؟</h2>
+
+            <h3>سامر الخطيب - بريء</h3>
+            <p><strong>الحجة:</strong> كان في المسجد من 9:00 م حتى 11:15 م (شهادة الإمام). بعدها ذهب للبيت مباشرة. لا يوجد دليل على دخوله المكتبة ليلاً.</p>
+            <p><strong>ملاحظة:</strong> رغم ضائقته المالية الشديدة، لم يحصل على أي مال مشبوه. سامر ضحية للظروف لكنه حافظ على أمانته.</p>
+
+            <h3>ياسين العبيد - بريء</h3>
+            <p><strong>الحجة:</strong> كان في نوبته الليلية لكن نظام الإنذار كان معطلاً فلم يلاحظ شيئاً. لا يوجد دليل على تورطه. لم يحصل على أي مال مشبوه.</p>
+            <p><strong>ملاحظة:</strong> رغم ديون القمار الكبيرة، لم يشارك في السرقة.</p>
+
+            <h3>نادية الحمصي - بريئة</h3>
+            <p><strong>الحجة:</strong> كانت في المستشفى حتى 10:00 م (شهادة الممرضة). لا تملك المعرفة التقنية لتعطيل الأنظمة. لم تحصل على أي مال مشبوه.</p>
+            <p><strong>ملاحظة:</strong> رغم حاجتها اليائسة للمال لعلاج والدها، حافظت على أمانتها.</p>
+        </div>
+
+        <div class="islamic-lesson">
+            <h2>📿 الدرس الإسلامي: الأمانة</h2>
+            
+            <p>هذه القضية تعلمنا درساً مهماً عن <strong>الأمانة</strong> في الإسلام. الأمانة من أعظم الصفات التي حث عليها الإسلام، وخيانتها من أكبر الذنوب.</p>
+
+            <div class="hadith">
+                "لا إيمان لمن لا أمانة له، ولا دين لمن لا عهد له"<br>
+                <span style="font-size: 1rem; color: #c9c9c9;">(رواه أحمد)</span>
+            </div>
+
+            <h3 style="color: #d4af37; font-size: 1.8rem; margin: 30px 0 20px;">كيف خانا ليلى وفريد الأمانة؟</h3>
+            
+            <ul style="text-align: right; margin-right: 50px; line-height: 2.5; font-size: 1.15rem;">
+                <li><strong>ليلى:</strong> كانت مؤتمنة على أنظمة الأمن لحماية التراث، فاستغلت منصبها للسرقة</li>
+                <li><strong>فريد:</strong> كان مؤتمناً كباحث للحفاظ على التراث، فخانه وباعه لأعداء الأمة</li>
+                <li><strong>كلاهما:</strong> سرقا تراثاً إسلامياً يعود للأمة كلها، وحرما الأجيال القادمة منه</li>
+            </ul>
+
+            <h3 style="color: #d4af37; font-size: 1.8rem; margin: 30px 0 20px;">الدروس المستفادة:</h3>
+            
+            <ul style="text-align: right; margin-right: 50px; line-height: 2.5; font-size: 1.15rem;">
+                <li>✅ الأمانة واجبة حتى في أصعب الظروف المالية</li>
+                <li>✅ المنصب والمعرفة مسؤولية، لا فرصة للاستغلال</li>
+                <li>✅ خيانة الأمانة تضر الفرد والمجتمع والأجيال القادمة</li>
+                <li>✅ الصبر على الضيق أفضل من الحرام</li>
+                <li>✅ سامر ونادية وياسين رغم ضائقتهم الشديدة، حافظوا على أمانتهم</li>
+            </ul>
+
+            <div class="hadith" style="margin-top: 30px;">
+                "أد الأمانة إلى من ائتمنك، ولا تخن من خانك"<br>
+                <span style="font-size: 1rem; color: #c9c9c9;">(رواه أبو داود والترمذي)</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>⚖️ الخاتمة</h2>
+            <p>القضية أظهرت كيف أن خيانة الأمانة تبدأ بقرار واحد خاطئ. ليلى وفريد اختارا المال السريع على الأمانة، ودفعهما الطمع لتدمير تراث ثمين وسمعتهما.</p>
+            <p style="margin-top: 20px;">في المقابل، سامر ونادية وياسين - رغم ضائقتهم المالية الشديدة - لم يفكروا حتى في خيانة الأمانة. هذا هو الإيمان الحقيقي.</p>
+            <p style="margin-top: 30px; font-size: 1.3rem; color: #d4af37; text-align: center;"><strong>الأمانة ليست خياراً - إنها واجب ديني وأخلاقي</strong></p>
+        </div>
+
+        <div style="text-align: center; margin: 50px 0; padding: 30px; background: rgba(212, 175, 55, 0.15); border: 3px solid #d4af37; border-radius: 10px;">
+            <h2 style="color: #d4af37; font-size: 2rem; margin-bottom: 20px;">🎉 مبروك!</h2>
+            <p style="color: #c9c9c9; font-size: 1.2rem; line-height: 2;">لقد حللت القضية! هل استمتعت باللعبة؟</p>
+            <a href="index.html" class="back-link" style="display: inline-block; margin-top: 20px; font-size: 1.1rem; padding: 15px 30px;">← العودة للبداية</a>
+        </div>
+    </div>
+</body>
+</html>

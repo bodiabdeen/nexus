@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الجدول الزمني للأحداث</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕵️</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: linear-gradient(135deg, #0a1828 0%, #1a2332 50%, #0f1d2e 100%);
+            color: #d4af37;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(212, 175, 55, 0.03) 0px,
+                    transparent 1px,
+                    transparent 2px,
+                    rgba(212, 175, 55, 0.03) 3px
+                );
+            pointer-events: none;
+            animation: scanlines 8s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.5); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 1s ease-out;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 20px;
+            background: rgba(26, 35, 50, 0.6);
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            animation: glow 3s infinite;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.7);
+            font-weight: 700;
+        }
+
+        .evidence-id {
+            font-family: 'Share Tech Mono', monospace;
+            color: #8b7355;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            padding: 10px 20px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: rgba(212, 175, 55, 0.2);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .info-box {
+            background: rgba(26, 35, 50, 0.8);
+            border-right: 4px solid #d4af37;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+            line-height: 1.8;
+        }
+
+        .info-box p {
+            color: #c9c9c9;
+            margin-bottom: 10px;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            right: 50%;
+            transform: translateX(50%);
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(to bottom, #d4af37, #8b7355);
+        }
+
+        .timeline-event {
+            position: relative;
+            margin-bottom: 30px;
+            padding: 25px;
+            background: rgba(26, 35, 50, 0.7);
+            border: 2px solid #6b5d4f;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-event:hover {
+            border-color: #d4af37;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+            transform: translateX(-5px);
+        }
+
+        .timeline-event.critical {
+            border-color: #ff9800;
+            background: rgba(255, 152, 0, 0.05);
+        }
+
+        .timeline-event.critical::before {
+            content: '⚠️';
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+        }
+
+        .time-marker {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.3);
+            color: #d4af37;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-family: 'Share Tech Mono', monospace;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .event-title {
+            color: #d4af37;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .event-description {
+            color: #c9c9c9;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .event-source {
+            color: #8b7355;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .highlight {
+            background: rgba(212, 175, 55, 0.3);
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #d4af37;
+            font-weight: 600;
+        }
+
+        .section-divider {
+            text-align: center;
+            margin: 50px 0;
+            padding: 20px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 8px;
+        }
+
+        .section-divider h2 {
+            color: #d4af37;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .section-divider p {
+            color: #c9c9c9;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .timeline::before {
+                right: 20px;
+            }
+
+            .timeline-event {
+                margin-right: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← العودة للصفحة الرئيسية</a>
+
+        <header>
+            <h1>⏰ الجدول الزمني للأحداث</h1>
+            <p class="evidence-id">الدليل رقم: E-006 | إعادة بناء زمنية</p>
+        </header>
+
+        <div class="info-box">
+            <p><strong>التاريخ:</strong> الخميس 25 مارس 2024 (15 رمضان 1445هـ)</p>
+            <p><strong>الملاحظة:</strong> تم إعادة بناء هذا الجدول الزمني بناءً على جميع الأدلة المتوفرة: سجلات الدخول، شهادات الشهود، البريد الإلكتروني، والسجلات المالية</p>
+            <p style="color: #d4af37; margin-top: 15px;"><strong>الأحداث الحرجة مميزة باللون البرتقالي ⚠️</strong></p>
+        </div>
+
+        <!-- Morning Timeline -->
+        <div class="section-divider">
+            <h2>🌅 الصباح والظهيرة</h2>
+            <p>بداية يوم عادي في المكتبة</p>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-event">
+                <span class="time-marker">08:55 ص</span>
+                <div class="event-title">سامر الخطيب يصل إلى المكتبة</div>
+                <div class="event-description">دخول صباحي عادي. سامر يبدأ يومه كالمعتاد.</div>
+                <div class="event-source">المصدر: سجلات الدخول</div>
+            </div>
+
+            <div class="timeline-event">
+                <span class="time-marker">09:02 ص</span>
+                <div class="event-title">نادية الحمصي تصل إلى المكتبة</div>
+                <div class="event-description">دخول صباحي عادي.</div>
+                <div class="event-source">المصدر: سجلات الدخول</div>
+            </div>
+
+            <div class="timeline-event">
+                <span class="time-marker">09:10 ص</span>
+                <div class="event-title">ليلى منصور تصل إلى المكتبة</div>
+                <div class="event-description">دخول صباحي عادي.</div>
+                <div class="event-source">المصدر: سجلات الدخول</div>
+            </div>
+
+            <div class="timeline-event">
+                <span class="time-marker">10:15 ص</span>
+                <div class="event-title">فريد الزعبي يصل للبحث</div>
+                <div class="event-description">زيارة بحثية مجدولة. فريد يستمر في دراسة المخطوطات النادرة.</div>
+                <div class="event-source">المصدر: سجلات الدخول</div>
+            </div>
+
+            <div class="timeline-event critical">
+                <span class="time-marker">10:30 ص</span>
+                <div class="event-title">⚠️ تعطيل كاميرا المدخل الخلفي</div>
+                <div class="event-description">شخص ما قطع كابل الكاميرا #7 (المدخل الخلفي) بشكل يبدو كعطل تقني. <span class="highlight">هذا يثبت التخطيط المسبق للسرقة!</span></div>
+                <div class="event-source">المصدر: تقرير الأمن التقني</div>
+            </div>
+        </div>
+
+        <!-- Afternoon Timeline -->
+        <div class="section-divider">
+            <h2>☀️ العصر - الإغلاق الرمضاني</h2>
+            <p>المكتبة تغلق مبكراً في رمضان</p>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-event">
+                <span class="time-marker">12:30 م</span>
+                <div class="event-title">نادية تخرج لتناول الغداء</div>
+                <div class="event-description">نادية تغادر المكتبة مؤقتاً.</div>
+                <div class="event-source">المصدر: سجلات الدخول</div>
+            </div>
+
+            <div class="timeline-event">
+                <span class="time-marker">01:45 م</span>
+                <div class="event-title">نادية تعود من الغداء</div>
+                <div class="event-description">نادية تعود إلى المكتبة.</div>
+                <div class="event-source">المصدر: سجلات الدخول</div>
+            </div>
+
+            <div class="timeline-event">
+                <span class="time-marker">01:50 م</span>
+                <div class="event-title">سامر يخرج لصلاة الجمعة</div>
+                <div class="event-description">سامر يذهب إلى المسجد لصلاة الجمعة.</div>
+                <div class="event-source">المصدر: سجلات الدخول</div>
+            </div>
+
+            <div class="timeline-event">
+                <span class="time-marker">02:35 م</span>
+                <div class="event-title">سامر يعود من الصلاة</div>
+                <div class="event-description">سامر يعود إلى المكتبة.</div>
+                <div class="event-source">المصدر: سجلات الدخول</div>
+            </div>
+
+            <div class="timeline-event">
+                <span class="time-marker">02:50 م</span>
+                <div class="event-title">فريد ينهي بحثه ويغادر</div>
+                <div class="event-description">فريد يغادر المكتبة بعد انتهاء جلسة البحث.</div>
+                <div class="event-source">المصدر: سجلات الدخول</div>
+            </div>
+
+            <div class="timeline-event">
+                <span class="time-marker">03:00 م</span>
+                <div class="event-title">ليلى تغادر - إغلاق رمضاني</div>
+                <div class="event-description">ليلى تغادر المكتبة مع موعد الإغلاق الرمضاني المبكر.</div>
+                <div class="event-source">المصدر: سجلات الدخول</div>
+            </div>
+
+            <div class="timeline-event">
+                <span class="time-marker">03:05 م</span>
+                <div class="event-title">نادية تغادر - إغلاق رمضاني</div>
+                <div class="event-description">نادية تغادر المكتبة.</div>
+                <div class="event-source">المصدر: سجلات الدخول</div>
+            </div>
+
+            <div class="timeline-event">
+                <span class="time-marker">03:45 م</span>
+                <div class="event-title">ياسين يبلغ عن عطل الكاميرا</div>
+                <div class="event-description">ياسين العبيد يرسل بريداً إلكترونياً لليلى يخبرها أن كاميرا المدخل الخلفي معطلة.</div>
+                <div class="event-source">المصدر: البريد الإلكتروني</div>
+            </div>
+
+            <div class="timeline-event">
+                <span class="time-marker">06:05 م</span>
+                <div class="event-title">سامر يغادر بعد عمل إضافي</div>
+                <div class="event-description">سامر بقي 3 ساعات إضافية لإنهاء بعض الأعمال. شوهد من قبل أبو حسن (بائع الفلافل) الساعة 6:30 م.</div>
+                <div class="event-source">المصدر: سجلات الدخول + شهادة شاهد</div>
+            </div>
+
+            <div class="timeline-event">
+                <span class="time-marker">06:15 م</span>
+                <div class="event-title">نادية تصل إلى المستشفى</div>
+                <div class="event-description">نادية تدخل مستشفى الرازي لزيارة والدها المريض.</div>
+                <div class="event-source">المصدر: سجلات المستشفى</div>
+            </div>
+        </div>
+
+        <!-- Evening Timeline -->
+        <div class="section-divider">
+            <h2>🌙 المساء - التخطيط النهائي</h2>
+            <p>بداية تنفيذ الخطة</p>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-event">
+                <span class="time-marker">08:00 م</span>
+                <div class="event-title">فريد يدخل فندقه</div>
+                <div class="event-description">فريد يدخل غرفته 412 في فندق الشام الكبير. موظف الاستقبال يؤكد رؤيته.</div>
+                <div class="event-source">المصدر: شهادة موظف الفندق</div>
+            </div>
+
+            <div class="timeline-event">
+                <span class="time-marker">09:00 م</span>
+                <div class="event-title">سامر يصل إلى المسجد</div>
+                <div class="event-description">سامر يذهب لصلاة التراويح في مسجد الحميدية.</div>
+                <div class="event-source">المصدر: شهادة الإمام</div>
+            </div>
+
+            <div class="timeline-event critical">
+                <span class="time-marker">09:30 م</span>
+                <div class="event-title">⚠️ فريد يخرج من الطلعة الخلفية للفندق</div>
+                <div class="event-description">موظف الفندق شاهد شخصاً يشبه فريد ينزل من الطلعة الخلفية (بدون كاميرات). <span class="highlight">فريد يكذب عندما يقول إنه بقي في الغرفة!</span></div>
+                <div class="event-source">المصدر: شهادة موظف الفندق</div>
+            </div>
+
+            <div class="timeline-event">
+                <span class="time-marker">09:50 م</span>
+                <div class="event-title">ياسين يبدأ نوبته الليلية</div>
+                <div class="event-description">ياسين العبيد يسجل دخوله لبدء الوردية الليلية.</div>
+                <div class="event-source">المصدر: سجلات الدخول</div>
+            </div>
+
+            <div class="timeline-event">
+                <span class="time-marker">10:00 م</span>
+                <div class="event-title">نادية تغادر المستشفى</div>
+                <div class="event-description">الممرضة تشهد أن نادية غادرت حوالي الساعة 10:00 م. <span class="highlight">نادية كذبت وقالت إنها بقيت حتى 1:00 ص!</span></div>
+                <div class="event-source">المصدر: شهادة الممرضة</div>
+            </div>
+
+            <div class="timeline-event">
+                <span class="time-marker">10:30 م</span>
+                <div class="event-title">فريد يطلب رقم تاكسي</div>
+                <div class="event-description">فريد يتصل باستقبال الفندق ليطلب رقم تاكسي.</div>
+                <div class="event-source">المصدر: شهادة موظف الفندق</div>
+            </div>
+        </div>
+
+        <!-- Night Timeline - THE HEIST -->
+        <div class="section-divider" style="background: rgba(255, 152, 0, 0.2); border: 2px solid #ff9800;">
+            <h2>🚨 الليل - تنفيذ السرقة</h2>
+            <p>الأحداث الحرجة</p>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-event">
+                <span class="time-marker">11:00 م - 11:30 م</span>
+                <div class="event-title">سامر في المسجد</div>
+                <div class="event-description">سامر يصلي التراويح مع الإمام والمصلين. غادر المسجد الساعة 11:15 م تقريباً حسب شهادة الإمام.</div>
+                <div class="event-source">المصدر: شهادة الإمام</div>
+            </div>
+
+            <div class="timeline-event critical">
+                <span class="time-marker">11:18 م</span>
+                <div class="event-title">🚨 تعطيل نظام الإنذار</div>
+                <div class="event-description">تم تعطيل نظام الإنذار بالكامل باستخدام حساب <span class="highlight">"layla.mansour"</span> عبر لوحة التحكم الرئيسية. السبب المُدخل: "صيانة مجدولة" (كذب!)</div>
+                <div class="event-source">المصدر: سجلات نظام الأمن</div>
+            </div>
+
+            <div class="timeline-event critical">
+                <span class="time-marker">11:23 م</span>
+                <div class="event-title">🚨 ليلى تدخل من الباب الخلفي</div>
+                <div class="event-description">بطاقة ليلى منصور تُستخدم لفتح الباب الخلفي. <span class="highlight">هذا السجل تم حذفه لاحقاً!</span> شوهدت امرأة محجبة تدخل المكتبة في هذا الوقت.</div>
+                <div class="event-source">المصدر: سجلات الأبواب + شهادة أبو حسن</div>
+            </div>
+
+            <div class="timeline-event critical">
+                <span class="time-marker">11:30 م</span>
+                <div class="event-title">🚨 امرأة محجبة تركب تاكسي</div>
+                <div class="event-description">سائق تاكسي ينقل امرأة محجبة (165 سم - طول ليلى!) من قرب المكتبة إلى <span class="highlight">حي المهاجرين (حي ليلى!)</span>. المرأة معها شنطة سوداء كبيرة وتتكلم على الهاتف: "خلصت، كل شي تمام".</div>
+                <div class="event-source">المصدر: شهادة سائق التاكسي</div>
+            </div>
+
+            <div class="timeline-event">
+                <span class="time-marker">11:23 م - 02:47 ص</span>
+                <div class="event-title">السرقة تحدث</div>
+                <div class="event-description">في هذه الفترة، تم سرقة المخطوطات الثلاثة من الخزنة الخاصة. ياسين (الحارس) كان في نوبته لكن لم يلاحظ شيئاً لأن الإنذار معطل.</div>
+                <div class="event-source">المصدر: استنتاج من الأدلة</div>
+            </div>
+
+            <div class="timeline-event critical">
+                <span class="time-marker">02:47 ص</span>
+                <div class="event-title">🚨 حذف سجل دخول ليلى</div>
+                <div class="event-description">شخص ما (ليلى) يحذف السجل رقم 14 من قاعدة البيانات - سجل دخولها في 11:23 م. <span class="highlight">محاولة لمحو الأدلة فشلت بسبب النسخة الاحتياطية!</span></div>
+                <div class="event-source">المصدر: سجلات قاعدة البيانات</div>
+            </div>
+
+            <div class="timeline-event">
+                <span class="time-marker">06:05 ص</span>
+                <div class="event-title">ياسين ينهي نوبته</div>
+                <div class="event-description">ياسين يغادر بعد نهاية الوردية الليلية. يدّعي أنه لم يلاحظ أي شيء غريب.</div>
+                <div class="event-source">المصدر: سجلات الدخول</div>
+            </div>
+        </div>
+
+        <!-- Morning After -->
+        <div class="section-divider">
+            <h2>🌅 صباح السبت 26 مارس - اكتشاف السرقة</h2>
+            <p>الحقيقة تبدأ بالظهور</p>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-event critical">
+                <span class="time-marker">08:30 ص</span>
+                <div class="event-title">🚨 تحويل مالي ضخم لليلى</div>
+                <div class="event-description"><span class="highlight">50,000 دولار</span> تصل لحساب ليلى من حساب مجهول في لبنان. هذا هو <span class="highlight">الدليل القاطع!</span></div>
+                <div class="event-source">المصدر: السجلات المالية</div>
+            </div>
+
+            <div class="timeline-event">
+                <span class="time-marker">09:15 ص</span>
+                <div class="event-title">اكتشاف السرقة</div>
+                <div class="event-description">سامر يكتشف اختفاء المخطوطات الثلاثة ويتصل بالشرطة فوراً.</div>
+                <div class="event-source">المصدر: تقرير الشرطة</div>
+            </div>
+        </div>
+
+        <!-- Conclusion -->
+        <div style="background: rgba(212, 175, 55, 0.15); border: 2px solid #d4af37; padding: 30px; border-radius: 8px; margin-top: 50px;">
+            <h2 style="color: #d4af37; font-size: 1.8rem; margin-bottom: 20px; text-align: center;">📊 الخلاصة الزمنية</h2>
+            <div style="color: #c9c9c9; line-height: 2; font-size: 1.05rem;">
+                <p><strong style="color: #ff9800;">التسلسل الزمني يثبت:</strong></p>
+                <ul style="margin-right: 30px; margin-top: 15px; line-height: 2;">
+                    <li><strong>10:30 ص:</strong> تعطيل كاميرا المدخل الخلفي (تخطيط مسبق)</li>
+                    <li><strong>11:18 م:</strong> ليلى تعطل نظام الإنذار من الداخل</li>
+                    <li><strong>11:23 م:</strong> ليلى تدخل من الباب الخلفي</li>
+                    <li><strong>11:23 م - 2:47 ص:</strong> السرقة تحدث</li>
+                    <li><strong>11:30 م:</strong> امرأة بمواصفات ليلى تغادر بتاكسي إلى حيها</li>
+                    <li><strong>02:47 ص:</strong> ليلى تحذف سجل دخولها (لكن فشلت!)</li>
+                    <li><strong>08:30 ص (اليوم التالي):</strong> 50,000$ تصل لحساب ليلى</li>
+                </ul>
+                <p style="margin-top: 25px; font-size: 1.2rem;"><strong style="color: #d4af37;">الجدول الزمني لا يترك مجالاً للشك: ليلى منصور وفريد الزعبي خططا ونفذا السرقة معاً!</strong></p>
+            </div>
+        </div>
+
+        <a href="index.html" class="back-link" style="margin-top: 40px;">← العودة للصفحة الرئيسية</a>
+    </div>
+</body>
+</html>

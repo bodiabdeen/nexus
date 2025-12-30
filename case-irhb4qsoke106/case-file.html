@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ملف القضية - المشتبه بهم</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕵️</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: linear-gradient(135deg, #0a1828 0%, #1a2332 50%, #0f1d2e 100%);
+            color: #d4af37;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(212, 175, 55, 0.03) 0px,
+                    transparent 1px,
+                    transparent 2px,
+                    rgba(212, 175, 55, 0.03) 3px
+                );
+            pointer-events: none;
+            animation: scanlines 8s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.5); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 1s ease-out;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 20px;
+            background: rgba(26, 35, 50, 0.6);
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            animation: glow 3s infinite;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.7);
+            font-weight: 700;
+        }
+
+        .case-info {
+            font-family: 'Share Tech Mono', monospace;
+            color: #8b7355;
+            font-size: 0.9rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            padding: 10px 20px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: rgba(212, 175, 55, 0.2);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .library-info {
+            background: rgba(26, 35, 50, 0.8);
+            border-right: 4px solid #d4af37;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-radius: 5px;
+            line-height: 1.8;
+        }
+
+        .library-info h2 {
+            color: #d4af37;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .library-info p {
+            color: #c9c9c9;
+            margin-bottom: 10px;
+        }
+
+        .suspects-section h2 {
+            color: #d4af37;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .suspect-card {
+            background: rgba(26, 35, 50, 0.7);
+            border: 2px solid #6b5d4f;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .suspect-card:hover {
+            border-color: #d4af37;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .suspect-header {
+            border-bottom: 2px solid #6b5d4f;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .suspect-name {
+            color: #d4af37;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .suspect-role {
+            color: #b8956f;
+            font-size: 1.2rem;
+            font-weight: 400;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .info-item {
+            background: rgba(40, 30, 20, 0.4);
+            padding: 15px;
+            border-radius: 5px;
+            border-right: 3px solid #8b7355;
+        }
+
+        .info-label {
+            color: #8b7355;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-value {
+            color: #c9c9c9;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            color: #d4af37;
+            font-size: 1.3rem;
+            margin-top: 25px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .section-content {
+            color: #c9c9c9;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .warning-box {
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid #d4af37;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .warning-box p {
+            color: #d4af37;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .suspect-name {
+                font-size: 1.5rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← العودة للصفحة الرئيسية</a>
+
+        <header>
+            <h1>📁 ملف القضية</h1>
+            <p class="case-info">رقم القضية: DMQ-2024-RM-073 | التصنيف: سرقة تراث ثقافي</p>
+        </header>
+
+        <div class="library-info">
+            <h2>🏛️ معلومات عن مكتبة التراث الإسلامي</h2>
+            <p><strong>الموقع:</strong> حي باب توما، دمشق القديمة، سوريا</p>
+            <p><strong>تاريخ التأسيس:</strong> 1887م (منذ 137 سنة)</p>
+            <p><strong>المدير:</strong> الدكتور عمر الحسيني (منذ 8 سنوات)</p>
+            <p><strong>عدد المخطوطات:</strong> أكثر من 12,000 مخطوطة نادرة</p>
+            <p><strong>نظام الأمن:</strong> نظام إنذار حديث مع كاميرات مراقبة وبطاقات دخول إلكترونية</p>
+            <p><strong>ساعات العمل:</strong> من الأحد إلى الخميس، 9:00 صباحاً - 5:00 مساءً (تُغلق في رمضان الساعة 3:00 عصراً)</p>
+            <p style="margin-top: 15px; color: #d4af37;"><strong>تفاصيل الحادثة:</strong> تمت السرقة ليلة 15 رمضان 1445هـ (الموافق 25 مارس 2024م) بين الساعة 11:00 مساءً و 3:00 صباحاً. تم تعطيل نظام الأمن بطريقة احترافية.</p>
+        </div>
+
+        <div class="suspects-section">
+            <h2>👥 المشتبه بهم الخمسة</h2>
+
+            <!-- Suspect 1: سامر الخطيب -->
+            <div class="suspect-card">
+                <div class="suspect-header">
+                    <h3 class="suspect-name">1. سامر الخطيب</h3>
+                    <p class="suspect-role">رئيس قسم المخطوطات النادرة</p>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">العمر</div>
+                        <div class="info-value">42 سنة</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">الوصف</div>
+                        <div class="info-value">رجل نحيف، طويل القامة (178 سم)، شعر أسود مع شيب خفيف، يرتدي نظارة طبية سميكة، لحية قصيرة مرتبة</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">سنوات الخدمة</div>
+                        <div class="info-value">15 سنة في المكتبة</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">الخبرة</div>
+                        <div class="info-value">دكتوراه في علم المخطوطات، خبير بالمخطوطات النادرة</div>
+                    </div>
+                </div>
+
+                <div class="section-title">الدافع المحتمل:</div>
+                <div class="section-content">
+                    سامر لديه ديون كبيرة تصل إلى 200,000 دولار بسبب علاج مرض ابنته النادر. تواصل معه تاجر آثار مشبوه قبل شهرين يعرض شراء مخطوطات نادرة بأسعار عالية. سامر كان دائماً أميناً لكن الضغط المالي قد يكون دفعه لهذا.
+                </div>
+
+                <div class="section-title">الفرصة:</div>
+                <div class="section-content">
+                    لديه مفتاح رئيسي للمكتبة وبطاقة دخول غير محدودة. يعرف جميع أنظمة الأمن ومواقع الكاميرات. عمل حتى الساعة 6:00 مساءً يوم الحادثة.
+                </div>
+
+                <div class="section-title">الوسيلة:</div>
+                <div class="section-content">
+                    يعرف كيفية فتح الخزائن الخاصة وتعطيل الإنذارات. لديه معرفة تقنية كافية لتجاوز أنظمة الأمن.
+                </div>
+
+                <div class="section-title">الحجة (Alibi):</div>
+                <div class="section-content">
+                    يقول إنه كان في المسجد لصلاة التراويح من 9:00 مساءً حتى 11:30 مساءً، ثم عاد إلى البيت ونام. زوجته تؤكد أنه كان في البيت طوال الليل. لا توجد كاميرات في الطريق إلى بيته لتأكيد ذلك.
+                </div>
+            </div>
+
+            <!-- Suspect 2: ليلى منصور -->
+            <div class="suspect-card">
+                <div class="suspect-header">
+                    <h3 class="suspect-name">2. ليلى منصور</h3>
+                    <p class="suspect-role">مسؤولة أنظمة تقنية المعلومات والأمن</p>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">العمر</div>
+                        <div class="info-value">35 سنة</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">الوصف</div>
+                        <div class="info-value">امرأة متوسطة الطول (165 سم)، شعر بني طويل محجبة، عيون بنية، تلبس ملابس محتشمة وعملية</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">سنوات الخدمة</div>
+                        <div class="info-value">6 سنوات في المكتبة</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">الخبرة</div>
+                        <div class="info-value">بكالوريوس هندسة برمجيات، خبيرة بأنظمة الأمن الإلكتروني</div>
+                    </div>
+                </div>
+
+                <div class="section-title">الدافع المحتمل:</div>
+                <div class="section-content">
+                    ليلى شعرت بالظلم عندما تم ترقية زميل أقل خبرة منها إلى منصب نائب المدير قبل 4 أشهر. لديها طموحات كبيرة لكن راتبها لا يكفي لتحقيق أحلامها. كانت تبحث عن وظائف أخرى لكن لم تجد فرصة أفضل.
+                </div>
+
+                <div class="section-title">الفرصة:</div>
+                <div class="section-content">
+                    لديها صلاحيات كاملة على جميع أنظمة الأمن والكاميرات. يمكنها تعطيل الإنذارات دون ترك أثر. لديها بطاقة دخول ومعرفة كاملة بكل نقاط الضعف في النظام.
+                </div>
+
+                <div class="section-title">الوسيلة:</div>
+                <div class="section-content">
+                    خبيرة تقنية قادرة على اختراق الأنظمة وحذف السجلات. يمكنها برمجة الأنظمة للتعطل في وقت محدد. الوحيدة التي تملك معرفة تقنية كافية لإجراء سرقة نظيفة.
+                </div>
+
+                <div class="section-title">الحجة (Alibi):</div>
+                <div class="section-content">
+                    تقول إنها كانت في بيت أختها تساعدها في إعداد إفطار رمضان من الساعة 7:00 مساءً حتى 12:00 منتصف الليل. أختها تؤكد ذلك، لكن لا يوجد سجل مكالمات أو رسائل في ذلك الوقت يدعم القصة.
+                </div>
+            </div>
+
+            <!-- Suspect 3: ياسين العبيد -->
+            <div class="suspect-card">
+                <div class="suspect-header">
+                    <h3 class="suspect-name">3. ياسين العبيد</h3>
+                    <p class="suspect-role">حارس أمن ليلي</p>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">العمر</div>
+                        <div class="info-value">51 سنة</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">الوصف</div>
+                        <div class="info-value">رجل قوي البنية (180 سم)، وزن حوالي 95 كغ، شعر أسود قصير، شارب كثيف، ندبة صغيرة فوق الحاجب الأيسر</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">سنوات الخدمة</div>
+                        <div class="info-value">12 سنة كحارس في المكتبة</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">الخبرة</div>
+                        <div class="info-value">عسكري سابق، خبرة في الأمن والحراسة</div>
+                    </div>
+                </div>
+
+                <div class="section-title">الدافع المحتمل:</div>
+                <div class="section-content">
+                    ياسين يعاني من ديون قمار كبيرة (150,000 دولار) ويتلقى تهديدات من دائنيه. كان يبحث عن طرق سريعة للحصول على المال. رغم أنه ملتزم دينياً ظاهرياً، إلا أن إدمانه على القمار دفعه لمواقف صعبة.
+                </div>
+
+                <div class="section-title">الفرصة:</div>
+                <div class="section-content">
+                    مسؤول عن الحراسة الليلية وكان في نوبة عمل ليلة الحادثة. لديه مفاتيح وصلاحيات دخول. يعرف جميع زوايا المكتبة ومواعيد تغيير الحراس.
+                </div>
+
+                <div class="section-title">الوسيلة:</div>
+                <div class="section-content">
+                    قوي جسدياً ويمكنه حمل المخطوطات الثقيلة. لديه خبرة أمنية ويعرف كيفية تجنب الكاميرات. يمكنه ادعاء أن شيئاً غريباً حدث أثناء نوبته.
+                </div>
+
+                <div class="section-title">الحجة (Alibi):</div>
+                <div class="section-content">
+                    يقول إنه كان في نوبته الليلية من 10:00 مساءً حتى 6:00 صباحاً. يدّعي أنه كان يجول في المبنى بانتظام لكن لم يلاحظ شيئاً غير عادي. تقرير الأمن الرسمي يظهر أنه سجل دخوله في 9:50 مساءً.
+                </div>
+            </div>
+
+            <!-- Suspect 4: فريد الزعبي -->
+            <div class="suspect-card">
+                <div class="suspect-header">
+                    <h3 class="suspect-name">4. فريد الزعبي</h3>
+                    <p class="suspect-role">باحث زائر متخصص في المخطوطات</p>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">العمر</div>
+                        <div class="info-value">38 سنة</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">الوصف</div>
+                        <div class="info-value">رجل متوسط الطول (172 سم)، نحيف، شعر بني فاتح، نظارة شمسية دائماً، يلبس ملابس رسمية أنيقة، لهجة لبنانية</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">مدة التواجد</div>
+                        <div class="info-value">يزور المكتبة منذ 3 أشهر للبحث</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">الخبرة</div>
+                        <div class="info-value">دكتوراه في التاريخ الإسلامي من جامعة أوروبية، يعمل لصالح متحف خاص</div>
+                    </div>
+                </div>
+
+                <div class="section-title">الدافع المحتمل:</div>
+                <div class="section-content">
+                    فريد يعمل لصالح جامع أثرياء غربي يدفع مبالغ كبيرة مقابل مخطوطات نادرة. لاحظ الموظفون اهتمامه الشديد بالمخطوطات المسروقة تحديداً. كان يسأل أسئلة كثيرة عن أنظمة الحفظ والأمن.
+                </div>
+
+                <div class="section-title">الفرصة:</div>
+                <div class="section-content">
+                    زار المكتبة بشكل متكرر (45 زيارة في 3 أشهر) وتعرف على المبنى جيداً. لديه بطاقة باحث تسمح له بالدخول في أوقات خاصة. يعرف مواقع المخطوطات المسروقة بالضبط.
+                </div>
+
+                <div class="section-title">الوسيلة:</div>
+                <div class="section-content">
+                    خبير بالمخطوطات ويعرف كيفية التعامل معها دون تلفها. لديه علاقات مع تجار آثار دوليين. يمكنه تهريب المخطوطات خارج البلاد بسهولة.
+                </div>
+
+                <div class="section-title">الحجة (Alibi):</div>
+                <div class="section-content">
+                    يقول إنه كان في فندقه (فندق الشام الكبير) طوال الليل. سجلات الفندق تؤكد أنه دخل غرفته الساعة 8:00 مساءً. لكن لا يوجد دليل على أنه بقي فيها طوال الليل - يمكنه المغادرة والعودة دون أن يلاحظه أحد.
+                </div>
+            </div>
+
+            <!-- Suspect 5: نادية الحمصي -->
+            <div class="suspect-card">
+                <div class="suspect-header">
+                    <h3 class="suspect-name">5. نادية الحمصي</h3>
+                    <p class="suspect-role">أمينة مكتبة ومساعدة إدارية</p>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">العمر</div>
+                        <div class="info-value">29 سنة</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">الوصف</div>
+                        <div class="info-value">امرأة قصيرة القامة (158 سم)، شعر أسود قصير محجبة، نظارة طبية، ابتسامة دائمة، صوت هادئ</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">سنوات الخدمة</div>
+                        <div class="info-value">4 سنوات في المكتبة</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">الخبرة</div>
+                        <div class="info-value">بكالوريوس علم المكتبات، خبرة بتنظيم وفهرسة المخطوطات</div>
+                    </div>
+                </div>
+
+                <div class="section-title">الدافع المحتمل:</div>
+                <div class="section-content">
+                    نادية من عائلة فقيرة وتحتاج المال لإكمال علاج والدها المريض بالسرطان (تكلفة 180,000 دولار). رفض طلبها للحصول على سلفة من المكتبة قبل أسبوعين. كانت تبحث عن حلول مالية بشكل يائس.
+                </div>
+
+                <div class="section-title">الفرصة:</div>
+                <div class="section-content">
+                    تعمل بجانب سامر مباشرة وتعرف مواقع جميع المخطوطات. لديها بطاقة دخول ومفاتيح لبعض الأقسام. تعمل أحياناً في أوقات متأخرة لإنهاء الفهرسة.
+                </div>
+
+                <div class="section-title">الوسيلة:</div>
+                <div class="section-content">
+                    تعرف كيفية التعامل مع المخطوطات النادرة. لاحظ زملاؤها أنها كانت تسأل أسئلة غريبة عن أنظمة الأمن مؤخراً. لكنها لا تملك المعرفة التقنية لتعطيل الأنظمة بمفردها.
+                </div>
+
+                <div class="section-title">الحجة (Alibi):</div>
+                <div class="section-content">
+                    تقول إنها كانت في المستشفى مع والدها من الساعة 6:00 مساءً حتى 1:00 صباحاً. سجلات المستشفى تؤكد دخولها في 6:15 مساءً لكن لا توجد سجلات لخروجها. الممرضات يقلن إنهن رأينها تغادر حوالي 10:00 مساءً.
+                </div>
+            </div>
+
+        </div>
+
+        <div class="warning-box">
+            <p>⚠️ تذكر: واحد من هؤلاء الخمسة (أو ربما اثنان يعملان معاً) ارتكب السرقة. ادرس الأدلة بعناية!</p>
+        </div>
+
+        <a href="index.html" class="back-link" style="margin-top: 40px;">← العودة للصفحة الرئيسية</a>
+    </div>
+</body>
+</html>

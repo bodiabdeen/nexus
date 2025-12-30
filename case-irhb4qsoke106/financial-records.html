@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>السجلات المالية</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕵️</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: linear-gradient(135deg, #0a1828 0%, #1a2332 50%, #0f1d2e 100%);
+            color: #d4af37;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(212, 175, 55, 0.03) 0px,
+                    transparent 1px,
+                    transparent 2px,
+                    rgba(212, 175, 55, 0.03) 3px
+                );
+            pointer-events: none;
+            animation: scanlines 8s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.5); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 1s ease-out;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 20px;
+            background: rgba(26, 35, 50, 0.6);
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            animation: glow 3s infinite;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.7);
+            font-weight: 700;
+        }
+
+        .evidence-id {
+            font-family: 'Share Tech Mono', monospace;
+            color: #8b7355;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            padding: 10px 20px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: rgba(212, 175, 55, 0.2);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .info-box {
+            background: rgba(26, 35, 50, 0.8);
+            border-right: 4px solid #d4af37;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+            line-height: 1.8;
+        }
+
+        .info-box p {
+            color: #c9c9c9;
+            margin-bottom: 10px;
+        }
+
+        .suspect-financial {
+            background: rgba(26, 35, 50, 0.7);
+            border: 2px solid #6b5d4f;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .suspect-financial:hover {
+            border-color: #d4af37;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .suspect-header {
+            border-bottom: 2px solid #6b5d4f;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .suspect-name {
+            color: #d4af37;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .account-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-card {
+            background: rgba(40, 30, 20, 0.4);
+            padding: 15px;
+            border-radius: 5px;
+            border-right: 3px solid #8b7355;
+        }
+
+        .info-label {
+            color: #8b7355;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .info-value {
+            color: #c9c9c9;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .negative {
+            color: #ff6b6b;
+        }
+
+        .positive {
+            color: #51cf66;
+        }
+
+        .section-title {
+            color: #d4af37;
+            font-size: 1.3rem;
+            margin-top: 25px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .transaction-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.9rem;
+        }
+
+        .transaction-table th {
+            background: rgba(212, 175, 55, 0.2);
+            padding: 12px 8px;
+            text-align: right;
+            color: #d4af37;
+            font-weight: 600;
+            border-bottom: 2px solid #d4af37;
+        }
+
+        .transaction-table td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #6b5d4f;
+            color: #c9c9c9;
+        }
+
+        .transaction-table tbody tr:hover {
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .suspicious {
+            background: rgba(255, 152, 0, 0.2);
+            border-right: 3px solid #ff9800;
+        }
+
+        .highlight-box {
+            background: rgba(212, 175, 55, 0.15);
+            border: 2px solid #d4af37;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .highlight-box h4 {
+            color: #d4af37;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .highlight-box p {
+            color: #c9c9c9;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .account-info {
+                grid-template-columns: 1fr;
+            }
+
+            .transaction-table {
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← العودة للصفحة الرئيسية</a>
+
+        <header>
+            <h1>💰 السجلات المالية</h1>
+            <p class="evidence-id">الدليل رقم: E-003 | تحليل مالي</p>
+        </header>
+
+        <div class="info-box">
+            <p><strong>المصدر:</strong> سجلات البنوك السورية (بإذن قضائي)</p>
+            <p><strong>الفترة المدروسة:</strong> يناير 2024 - مارس 2024</p>
+            <p><strong>ملاحظة:</strong> جميع المبالغ بالدولار الأمريكي. تم تحليل الحسابات البنكية للمشتبه بهم الخمسة.</p>
+        </div>
+
+        <!-- Samer -->
+        <div class="suspect-financial">
+            <div class="suspect-header">
+                <h3 class="suspect-name">1. سامر الخطيب</h3>
+            </div>
+
+            <div class="account-info">
+                <div class="info-card">
+                    <div class="info-label">رصيد الحساب (25 مارس)</div>
+                    <div class="info-value negative">-$3,200</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">الراتب الشهري</div>
+                    <div class="info-value">$1,800</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">إجمالي الديون</div>
+                    <div class="info-value negative">$200,000</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">الحالة المالية</div>
+                    <div class="info-value negative">حرجة جداً</div>
+                </div>
+            </div>
+
+            <div class="section-title">📊 معاملات مالية مهمة:</div>
+            <table class="transaction-table">
+                <thead>
+                    <tr>
+                        <th>الملاحظات</th>
+                        <th>المبلغ</th>
+                        <th>التفاصيل</th>
+                        <th>التاريخ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>دفعة لمستشفى الأطفال</td>
+                        <td class="negative">-$8,500</td>
+                        <td>علاج ابنته سارة</td>
+                        <td>10 مارس 2024</td>
+                    </tr>
+                    <tr>
+                        <td>قرض شخصي جديد</td>
+                        <td class="positive">+$15,000</td>
+                        <td>بنك الشرق - فائدة 12%</td>
+                        <td>15 مارس 2024</td>
+                    </tr>
+                    <tr>
+                        <td>دفعة لمستشفى الأطفال</td>
+                        <td class="negative">-$12,000</td>
+                        <td>علاج ابنته سارة</td>
+                        <td>22 مارس 2024</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box">
+                <h4>🔍 التحليل:</h4>
+                <p>سامر في ضائقة مالية خانقة. ديون علاج ابنته تراكمت لـ200 ألف دولار. لا يوجد دليل على أي دخل إضافي أو تحويلات مشبوهة. رغم الدافع القوي، لا يوجد دليل مالي مباشر على ارتكابه السرقة.</p>
+            </div>
+        </div>
+
+        <!-- Layla -->
+        <div class="suspect-financial">
+            <div class="suspect-header">
+                <h3 class="suspect-name">2. ليلى منصور</h3>
+            </div>
+
+            <div class="account-info">
+                <div class="info-card">
+                    <div class="info-label">رصيد الحساب (25 مارس)</div>
+                    <div class="info-value">$4,800</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">الراتب الشهري</div>
+                    <div class="info-value">$2,200</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">إجمالي الديون</div>
+                    <div class="info-value negative">$35,000</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">الحالة المالية</div>
+                    <div class="info-value">متوسطة</div>
+                </div>
+            </div>
+
+            <div class="section-title">📊 معاملات مالية مهمة:</div>
+            <table class="transaction-table">
+                <thead>
+                    <tr>
+                        <th>الملاحظات</th>
+                        <th>المبلغ</th>
+                        <th>التفاصيل</th>
+                        <th>التاريخ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>دفعة إيجار شقة</td>
+                        <td class="negative">-$800</td>
+                        <td>إيجار شهري</td>
+                        <td>1 مارس 2024</td>
+                    </tr>
+                    <tr>
+                        <td>راتب شهري</td>
+                        <td class="positive">+$2,200</td>
+                        <td>مكتبة التراث الإسلامي</td>
+                        <td>1 مارس 2024</td>
+                    </tr>
+                    <tr class="suspicious">
+                        <td>⚠️ تحويل لحساب غير معروف</td>
+                        <td class="positive">+$50,000</td>
+                        <td>من حساب مجهول في لبنان</td>
+                        <td>26 مارس 2024 - 8:30 ص</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box" style="background: rgba(255, 152, 0, 0.2); border-color: #ff9800;">
+                <h4>🚨 تنبيه حرج:</h4>
+                <p>تحويل مالي ضخم ($50,000) وصل لحساب ليلى صباح 26 مارس - بعد السرقة مباشرة! المصدر: حساب بنكي في بيروت، لبنان. اسم صاحب الحساب: <strong>"شركة التراث للتجارة العامة"</strong> - شركة وهمية على ما يبدو. هذا دليل قوي جداً!</p>
+            </div>
+        </div>
+
+        <!-- Yaseen -->
+        <div class="suspect-financial">
+            <div class="suspect-header">
+                <h3 class="suspect-name">3. ياسين العبيد</h3>
+            </div>
+
+            <div class="account-info">
+                <div class="info-card">
+                    <div class="info-label">رصيد الحساب (25 مارس)</div>
+                    <div class="info-value negative">-$8,900</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">الراتب الشهري</div>
+                    <div class="info-value">$1,400</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">إجمالي الديون</div>
+                    <div class="info-value negative">$150,000</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">الحالة المالية</div>
+                    <div class="info-value negative">حرجة جداً</div>
+                </div>
+            </div>
+
+            <div class="section-title">📊 معاملات مالية مهمة:</div>
+            <table class="transaction-table">
+                <thead>
+                    <tr>
+                        <th>الملاحظات</th>
+                        <th>المبلغ</th>
+                        <th>التفاصيل</th>
+                        <th>التاريخ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="suspicious">
+                        <td>⚠️ دفعة لوكيل مراهنات</td>
+                        <td class="negative">-$5,000</td>
+                        <td>قمار - ديون متراكمة</td>
+                        <td>5 مارس 2024</td>
+                    </tr>
+                    <tr class="suspicious">
+                        <td>⚠️ دفعة لوكيل مراهنات</td>
+                        <td class="negative">-$8,000</td>
+                        <td>قمار - ديون متراكمة</td>
+                        <td>18 مارس 2024</td>
+                    </tr>
+                    <tr>
+                        <td>راتب شهري</td>
+                        <td class="positive">+$1,400</td>
+                        <td>مكتبة التراث الإسلامي</td>
+                        <td>1 مارس 2024</td>
+                    </tr>
+                    <tr class="suspicious">
+                        <td>تهديد مكتوب في رسالة نصية</td>
+                        <td>-</td>
+                        <td>"ادفع أو ستندم" - 20 مارس</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box">
+                <h4>🔍 التحليل:</h4>
+                <p>ياسين في ورطة كبيرة بسبب القمار. ديونه 150 ألف دولار ويتلقى تهديدات. رغم الدافع القوي جداً، لا يوجد دليل على أنه حصل على مال كبير بعد السرقة. ربما كان متورطاً لكن لم يحصل على حصته بعد؟</p>
+            </div>
+        </div>
+
+        <!-- Farid -->
+        <div class="suspect-financial">
+            <div class="suspect-header">
+                <h3 class="suspect-name">4. فريد الزعبي</h3>
+            </div>
+
+            <div class="account-info">
+                <div class="info-card">
+                    <div class="info-label">رصيد الحساب (25 مارس)</div>
+                    <div class="info-value positive">$85,000</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">الدخل الشهري</div>
+                    <div class="info-value">$6,500</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">إجمالي الديون</div>
+                    <div class="info-value">$0</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">الحالة المالية</div>
+                    <div class="info-value positive">ممتازة</div>
+                </div>
+            </div>
+
+            <div class="section-title">📊 معاملات مالية مهمة:</div>
+            <table class="transaction-table">
+                <thead>
+                    <tr>
+                        <th>الملاحظات</th>
+                        <th>المبلغ</th>
+                        <th>التفاصيل</th>
+                        <th>التاريخ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="suspicious">
+                        <td>⚠️ راتب من جهة غامضة</td>
+                        <td class="positive">+$6,500</td>
+                        <td>"مؤسسة التراث الأوروبي" - باريس</td>
+                        <td>1 مارس 2024</td>
+                    </tr>
+                    <tr>
+                        <td>إيجار فندق الشام</td>
+                        <td class="negative">-$2,100</td>
+                        <td>إيجار شهري لغرفة 412</td>
+                        <td>3 مارس 2024</td>
+                    </tr>
+                    <tr class="suspicious">
+                        <td>⚠️ تحويل من نفس المؤسسة</td>
+                        <td class="positive">+$25,000</td>
+                        <td>"مكافأة مشروع خاص"</td>
+                        <td>20 مارس 2024</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box">
+                <h4>🔍 التحليل:</h4>
+                <p>فريد لديه وضع مالي ممتاز. يعمل لصالح "مؤسسة التراث الأوروبي" في باريس التي تدفع له مبالغ كبيرة. حصل على مكافأة 25 ألف دولار قبل 5 أيام من السرقة - مشبوه! هل كانت دفعة مقدمة؟ المؤسسة معروفة بشراء آثار نادرة بطرق غير قانونية.</p>
+            </div>
+        </div>
+
+        <!-- Nadia -->
+        <div class="suspect-financial">
+            <div class="suspect-header">
+                <h3 class="suspect-name">5. نادية الحمصي</h3>
+            </div>
+
+            <div class="account-info">
+                <div class="info-card">
+                    <div class="info-label">رصيد الحساب (25 مارس)</div>
+                    <div class="info-value negative">-$1,200</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">الراتب الشهري</div>
+                    <div class="info-value">$1,100</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">إجمالي الديون</div>
+                    <div class="info-value negative">$$180,000</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">الحالة المالية</div>
+                    <div class="info-value negative">حرجة جداً</div>
+                </div>
+            </div>
+
+            <div class="section-title">📊 معاملات مالية مهمة:</div>
+            <table class="transaction-table">
+                <thead>
+                    <tr>
+                        <th>الملاحظات</th>
+                        <th>المبلغ</th>
+                        <th>التفاصيل</th>
+                        <th>التاريخ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>دفعة لمستشفى الرازي</td>
+                        <td class="negative">-$4,200</td>
+                        <td>علاج والدها - سرطان</td>
+                        <td>8 مارس 2024</td>
+                    </tr>
+                    <tr class="suspicious">
+                        <td>طلب قرض مرفوض</td>
+                        <td>-</td>
+                        <td>طلبت 50,000$ - مرفوض</td>
+                        <td>12 مارس 2024</td>
+                    </tr>
+                    <tr>
+                        <td>دفعة لمستشفى الرازي</td>
+                        <td class="negative">-$6,800</td>
+                        <td>علاج والدها - عملية طارئة</td>
+                        <td>20 مارس 2024</td>
+                    </tr>
+                    <tr>
+                        <td>راتب شهري</td>
+                        <td class="positive">+$1,100</td>
+                        <td>مكتبة التراث الإسلامي</td>
+                        <td>1 مارس 2024</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box">
+                <h4>🔍 التحليل:</h4>
+                <p>نادية في وضع مالي يائس بسبب علاج والدها. ديون 180 ألف دولار وراتبها فقط 1,100$. طلبت قرضاً كبيراً لكن تم رفضه. رغم الدافع القوي، لا يوجد دليل على حصولها على أموال كبيرة بعد السرقة. لكن ربما لم تحصل على حصتها بعد؟</p>
+            </div>
+        </div>
+
+        <div style="background: rgba(212, 175, 55, 0.15); border: 2px solid #d4af37; padding: 25px; border-radius: 8px; margin-top: 40px;">
+            <h3 style="color: #d4af37; font-size: 1.5rem; margin-bottom: 15px;">🔍 الاستنتاج المالي:</h3>
+            <div style="color: #c9c9c9; line-height: 2; font-size: 1.05rem;">
+                <p><strong style="color: #ff9800;">الدليل الأقوى:</strong> ليلى منصور حصلت على 50,000 دولار من حساب مشبوه في لبنان صباح 26 مارس - بعد السرقة مباشرة!</p>
+                <p><strong>المشبوهون ماليًا:</strong></p>
+                <p>• <strong>ليلى:</strong> تحويل 50,000$ من لبنان (دليل قاطع!)</p>
+                <p>• <strong>فريد:</strong> مكافأة 25,000$ قبل السرقة بـ5 أيام (مشبوه)</p>
+                <p>• <strong>سامر، ياسين، نادية:</strong> ضائقة مالية لكن لا دليل على حصولهم على أموال</p>
+            </div>
+        </div>
+
+        <a href="index.html" class="back-link" style="margin-top: 40px;">← العودة للصفحة الرئيسية</a>
+    </div>
+</body>
+</html>
