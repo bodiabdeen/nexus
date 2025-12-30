@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOLUTION - CASE RESOLVED</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #050814;
+            color: #00f7ff;
+            font-family: 'Rajdhani', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 1000;
+            animation: scanlines 8s linear infinite;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 3px solid #ff006e;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3em;
+            color: #ff006e;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 20px #ff006e, 0 0 40px #ff006e;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px #ff006e, 0 0 40px #ff006e; }
+            to { text-shadow: 0 0 30px #ff006e, 0 0 50px #ff006e, 0 0 70px #ff006e; }
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #00f7ff, #00d4dd);
+            color: #050814;
+            padding: 12px 25px;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 2px solid #00f7ff;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.6);
+        }
+
+        .case-closed {
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.4), rgba(255, 0, 110, 0.2));
+            border: 4px solid #ff006e;
+            padding: 40px;
+            margin: 40px 0;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(255, 0, 110, 0.8);
+            animation: glowBox 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glowBox {
+            from { box-shadow: 0 0 40px rgba(255, 0, 110, 0.6); }
+            to { box-shadow: 0 0 60px rgba(255, 0, 110, 1); }
+        }
+
+        .case-closed h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffd700;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .case-closed .verdict {
+            font-size: 2em;
+            color: #ff006e;
+            font-weight: bold;
+            margin: 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .killer-reveal {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 215, 0, 0.15));
+            border: 4px solid #ffd700;
+            padding: 40px;
+            margin: 40px 0;
+            border-radius: 10px;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+        }
+
+        .killer-reveal h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffd700;
+            font-size: 2em;
+            margin-bottom: 25px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .killer-card {
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.3), rgba(255, 0, 110, 0.15));
+            border: 3px solid #ff006e;
+            padding: 30px;
+            margin: 25px 0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .killer-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.6);
+        }
+
+        .killer-card h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff006e;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .killer-card .role {
+            text-align: center;
+            color: #ffd700;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .killer-card p {
+            color: #00f7ff;
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+
+        .section-box {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+            border: 2px solid #00f7ff;
+            padding: 35px;
+            margin: 35px 0;
+            border-radius: 8px;
+        }
+
+        .section-box h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffd700;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid #00f7ff;
+            padding-bottom: 10px;
+        }
+
+        .section-box p {
+            color: #00f7ff;
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .timeline-reconstruction {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid #ffd700;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .timeline-reconstruction h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffd700;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+
+        .timeline-step {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            margin: 12px 0;
+            border-left: 4px solid #ff006e;
+        }
+
+        .timeline-step .time {
+            color: #ff006e;
+            font-weight: bold;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.1em;
+        }
+
+        .timeline-step .event {
+            color: #00f7ff;
+            margin-top: 5px;
+            line-height: 1.6;
+        }
+
+        .evidence-summary {
+            background: rgba(255, 0, 110, 0.15);
+            border: 2px solid #ff006e;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .evidence-summary h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff006e;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .evidence-summary ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .evidence-summary li {
+            color: #00f7ff;
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .evidence-summary li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+
+        .red-herrings {
+            background: rgba(0, 247, 255, 0.1);
+            border: 2px solid #00f7ff;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+
+        .red-herrings h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: #00f7ff;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+
+        .red-herrings p {
+            color: #00f7ff;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .final-note {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.1));
+            border: 3px solid #ffd700;
+            padding: 30px;
+            margin: 40px 0;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .final-note h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffd700;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .final-note p {
+            color: #00f7ff;
+            font-size: 1.2em;
+            line-height: 1.8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 3px solid #ff006e;
+            margin-top: 60px;
+            color: #00f7ff;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .case-closed h2 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="back-btn">◄ RETURN TO MAIN DATABASE</a>
+            <h1>🎯 CASE SOLVED 🎯</h1>
+            <div style="color: #ffd700; font-family: 'Share Tech Mono', monospace; margin-top: 15px; font-size: 1.3em;">
+                COMPLETE SOLUTION & EXPLANATION
+            </div>
+        </header>
+
+        <div class="case-closed">
+            <h2>CASE STATUS: CLOSED</h2>
+            <div class="verdict">CONSPIRACY TO COMMIT MURDER</div>
+            <div style="color: #ffd700; font-size: 1.3em; margin-top: 20px;">
+                Two suspects working in coordination<br>
+                Criminal charges filed November 29, 2024
+            </div>
+        </div>
+
+        <div class="killer-reveal">
+            <h3>🚨 THE KILLERS REVEALED 🚨</h3>
+            
+            <div class="killer-card">
+                <h4>DR. MARCUS CHEN</h4>
+                <div class="role">PRIMARY CONSPIRATOR - DATA THEFT SPECIALIST</div>
+                <p><strong>Age:</strong> 34 | <strong>Position:</strong> Senior Research Assistant</p>
+                <p><strong>Security Clearance:</strong> Level 4 (Critical for terminal access)</p>
+                <p><strong>Charges:</strong> First-degree murder, conspiracy to commit murder, corporate espionage, theft of trade secrets</p>
+                <p><strong>Motive:</strong> Dr. Chen faced complete financial ruin with $127,000 in gambling debts, bounced rent checks, and aggressive debt collectors. He was excluded from Project Helix patents by Dr. Voss, costing him millions in potential royalties. His email to debt collectors the night before the murder promised "a major financial opportunity very soon" - referencing the planned theft and murder.</p>
+                <p><strong>Role in Crime:</strong> Chen provided the technical expertise and terminal access. His Level 4 security clearance allowed him to access Dr. Voss's secure computer terminal. He executed the data theft at 09:23 AM, copying files to Keller's encrypted USB drive and permanently deleting them. He used Dr. Voss's unconscious or dying hand on the biometric scanner to gain access.</p>
+            </div>
+
+            <div class="killer-card">
+                <h4>JAMES KELLER</h4>
+                <div class="role">PRIMARY CONSPIRATOR - CHEMICAL WEAPONS SPECIALIST</div>
+                <p><strong>Age:</strong> 29 | <strong>Position:</strong> Lab Technician / Maintenance</p>
+                <p><strong>Access Level:</strong> Master keys to all areas (Critical for chemical access)</p>
+                <p><strong>Charges:</strong> First-degree murder, conspiracy to commit murder, corporate espionage, theft of trade secrets</p>
+                <p><strong>Motive:</strong> Keller was hired by an offshore entity (via Cayman Islands contact) to steal Project Helix for $250,000 total ($15K already received). His sister's terminal cancer required $300,000+ in experimental treatments not covered by insurance. He was desperate for money and already compromised by accepting the initial payment.</p>
+                <p><strong>Role in Crime:</strong> Keller provided the murder weapon and physical execution. Using his master keys, he accessed Chemical Storage Room 3C without electronic logging and stole approximately 200mg of potassium cyanide. He contaminated Dr. Voss's coffee with the cyanide around 09:25-09:30 AM. He provided the encrypted USB drive for data storage and maintained contact with the offshore criminal organization.</p>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <h3>📋 COMPLETE TIMELINE OF THE CONSPIRACY</h3>
+
+            <div class="timeline-reconstruction">
+                <h4>PHASE 1: PLANNING (November 13-26, 2024)</h4>
+                <div class="timeline-step">
+                    <div class="time">November 13, 2024</div>
+                    <div class="event">Keller receives $15,000 from offshore account (Cayman Islands). He is now committed to stealing Project Helix data. However, he realizes he lacks the security clearance to access Dr. Voss's Level 4 secure terminal.</div>
+                </div>
+                <div class="timeline-step">
+                    <div class="time">November 18, 2024</div>
+                    <div class="event">Keller purchases military-grade encrypted phone for secure communications with his handler and potential accomplices.</div>
+                </div>
+                <div class="timeline-step">
+                    <div class="time">November 25, 2024</div>
+                    <div class="event">Keller uses his master keys to access Chemical Storage Room 3C without electronic logging. He steals approximately 200mg of potassium cyanide from Container KCN-077. He then officially reports the missing cyanide to create the appearance that he discovered the theft rather than committed it.</div>
+                </div>
+                <div class="timeline-step">
+                    <div class="time">November 26, 2024 - 9:45 PM</div>
+                    <div class="event">Critical phone call: Chen contacts Keller at 9:45 PM. Chen is desperate - his rent check bounced, debt collectors are threatening him, and he just emailed his lawyer about the patent dispute. Keller, who needs someone with Level 4 clearance to complete his espionage mission, sees an opportunity. They discuss "taking control of the situation." This is when the murder conspiracy is formed. Keller likely promises Chen a share of the $250,000 payment.</div>
+                </div>
+                <div class="timeline-step">
+                    <div class="time">November 26, 2024 - 11:51 PM</div>
+                    <div class="event">Chen emails his debt collector promising "a major financial opportunity" within two weeks. He now believes the conspiracy will solve his financial problems.</div>
+                </div>
+            </div>
+
+            <div class="timeline-reconstruction">
+                <h4>PHASE 2: EXECUTION - MORNING OF MURDER (November 27, 2024)</h4>
+                <div class="timeline-step">
+                    <div class="time">06:58 AM</div>
+                    <div class="event">Keller arrives at Research Wing 3 for his maintenance shift. He has the stolen cyanide in a small glass vial in his possession.</div>
+                </div>
+                <div class="timeline-step">
+                    <div class="time">07:15 AM</div>
+                    <div class="event">Dr. Elena Voss arrives at Lab 3A. She is unaware this is her last day alive.</div>
+                </div>
+                <div class="timeline-step">
+                    <div class="time">08:47 AM</div>
+                    <div class="event">Chen arrives at Research Wing 3, proceeding to Lab 3B adjacent to Dr. Voss. He and Keller are now both in position.</div>
+                </div>
+                <div class="timeline-step">
+                    <div class="time">09:25-09:30 AM (estimated)</div>
+                    <div class="event"><strong>THE POISONING:</strong> Keller uses his master keys to enter Lab 3A without keycard logging. Dr. Voss is at her desk. Keller contaminates her coffee mug with approximately 200mg of potassium cyanide from his glass vial. The poison dissolves completely in the hot coffee, leaving no visible trace. Keller disposes of the vial in the lab wastebin - a critical mistake that will later prove premeditation. He exits quickly.</div>
+                </div>
+                <div class="timeline-step">
+                    <div class="time">09:23 AM</div>
+                    <div class="event"><strong>THE DATA THEFT:</strong> Chen enters Lab 3A from adjacent Lab 3B. The coffee is poisoned but Voss hasn't drunk it yet - she's working at her computer. Chen forces or manipulates her to log into the secure terminal using his Level 4 clearance as authorization. He connects Keller's encrypted USB drive. He begins copying the Project Helix files. As the transfer progresses, Dr. Voss starts drinking her coffee (she's thirsty and doesn't suspect anything). By 09:26 AM, the files are copied and Chen uses military-grade wiping software to permanently delete them from her system. Total time: 3 minutes 12 seconds. Chen likely exits immediately, taking the USB drive.</div>
+                </div>
+                <div class="timeline-step">
+                    <div class="time">09:28 AM</div>
+                    <div class="event">Keller exits Storage Room 3D according to security logs, providing him minimal alibi. He moves through the building without keycard tracking.</div>
+                </div>
+                <div class="timeline-step">
+                    <div class="time">09:40 AM (estimated)</div>
+                    <div class="event">Dr. Voss finishes drinking approximately 75% of her poisoned coffee. She has now ingested a lethal dose of cyanide - approximately 6-7 times the minimum fatal amount.</div>
+                </div>
+                <div class="timeline-step">
+                    <div class="time">09:47 AM</div>
+                    <div class="event"><strong>TIME OF DEATH:</strong> Dr. Elena Voss dies from acute cyanide poisoning causing respiratory and cardiac failure. She collapses at her workstation. The cyanide worked exactly as planned, taking 8-12 minutes to kill after ingestion.</div>
+                </div>
+                <div class="timeline-step">
+                    <div class="time">09:52 AM</div>
+                    <div class="event">Chen "discovers" the body. He waits exactly 5 minutes after her death to make his discovery seem natural rather than immediate. He calls security and acts shocked, but doesn't call 911 until 10:24 AM - a suspicious 32-minute delay.</div>
+                </div>
+            </div>
+
+            <div class="timeline-reconstruction">
+                <h4>PHASE 3: AFTERMATH & INVESTIGATION</h4>
+                <div class="timeline-step">
+                    <div class="time">10:07 AM</div>
+                    <div class="event">Security team arrives and initiates lockdown. Both Chen and Keller are detained along with other staff.</div>
+                </div>
+                <div class="timeline-step">
+                    <div class="time">10:47 AM</div>
+                    <div class="event"><strong>CRITICAL MISTAKE:</strong> During the lockdown, Keller uses his encrypted burner phone to call his Cayman Islands handler. This 52-second call is him reporting mission completion. FBI later traces this call, providing crucial evidence of the corporate espionage connection. This call proves Keller's guilt and connects him to the data theft.</div>
+                </div>
+                <div class="timeline-step">
+                    <div class="time">November 27-28, 2024</div>
+                    <div class="event">Forensic investigation unfolds. The glass vial is discovered in the wastebin. Phone records reveal the Chen-Keller late-night conspiracy call. The encrypted USB drive is found on Keller. The timeline analysis proves no single person could have committed both the poisoning and data theft alone. FBI builds airtight case against both conspirators.</div>
+                </div>
+                <div class="timeline-step">
+                    <div class="time">November 29, 2024</div>
+                    <div class="event">Both Dr. Marcus Chen and James Keller are formally charged with first-degree murder, conspiracy to commit murder, and corporate espionage. Both arrested and held without bail.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <h3>🔍 SMOKING GUN EVIDENCE</h3>
+            <p>The evidence that definitively proves Chen and Keller's guilt:</p>
+
+            <div class="evidence-summary">
+                <h4>1. THE PHONE CALL CONSPIRACY</h4>
+                <ul>
+                    <li>November 26, 9:45 PM - Chen calls Keller, speaks 3m 47s</li>
+                    <li>Keller immediately calls back, speaks 7m 15s</li>
+                    <li>Chen texts afterward: "Thanks for talking. You're right - sometimes you just have to take control of your own situation"</li>
+                    <li>11 hours later, Dr. Voss is murdered</li>
+                    <li>This proves premeditation and coordination</li>
+                </ul>
+            </div>
+
+            <div class="evidence-summary">
+                <h4>2. THE CAPABILITY MATRIX</h4>
+                <ul>
+                    <li>Chen has Level 4 clearance - ONLY person present who could access secure terminal</li>
+                    <li>Keller has master keys - ONLY way to access chemical storage without logging</li>
+                    <li>Chen has computer expertise - necessary for data theft</li>
+                    <li>Keller has encrypted USB drive - found in his possession</li>
+                    <li>Together they have ALL required capabilities; alone, each is missing critical elements</li>
+                </ul>
+            </div>
+
+            <div class="evidence-summary">
+                <h4>3. THE TIMELINE IMPOSSIBILITY</h4>
+                <ul>
+                    <li>Coffee poisoned around 09:25-09:30 AM (forensics)</li>
+                    <li>Computer files stolen at 09:23 AM (computer forensics)</li>
+                    <li>Both events occurred in Lab 3A within 7-minute window</li>
+                    <li>One person cannot have done both - requires two conspirators working in perfect coordination</li>
+                    <li>Chen and Keller were the only two suspects present with complementary capabilities</li>
+                </ul>
+            </div>
+
+            <div class="evidence-summary">
+                <h4>4. THE PHYSICAL EVIDENCE</h4>
+                <ul>
+                    <li>Glass vial with cyanide residue found in Lab 3A wastebin - proves poison was transported there</li>
+                    <li>Cyanide source confirmed as Container KCN-077 in Chemical Storage Room 3C</li>
+                    <li>Keller reported this container had missing cyanide on November 25</li>
+                    <li>Encrypted USB drive found on Keller matches device used for data theft</li>
+                    <li>Forensics proves cyanide was from BioGenex inventory - inside job</li>
+                </ul>
+            </div>
+
+            <div class="evidence-summary">
+                <h4>5. THE POST-MURDER BEHAVIOR</h4>
+                <ul>
+                    <li>Keller calls Cayman Islands contact at 10:47 AM during lockdown on encrypted phone</li>
+                    <li>This proves he was reporting to criminal handler about mission completion</li>
+                    <li>Chen "discovers" body exactly 5 minutes after death - suspicious precision</li>
+                    <li>Chen delays calling 911 for 32 minutes - potentially coordinating with Keller</li>
+                    <li>Both act shocked but evidence proves they planned it for 12+ hours</li>
+                </ul>
+            </div>
+
+            <div class="evidence-summary">
+                <h4>6. THE FINANCIAL MOTIVES</h4>
+                <ul>
+                    <li>Chen: $127K gambling debt, rent bounced, excluded from patents worth millions</li>
+                    <li>Chen's email night before murder: "major financial opportunity very soon"</li>
+                    <li>Keller: $15K already received, $235K more promised, sister needs $300K+ for treatment</li>
+                    <li>Keller's encrypted email proves he was hired to steal Project Helix</li>
+                    <li>Both had desperate, immediate need for money that aligned perfectly</li>
+                </ul>
+            </div>
+
+            <div class="evidence-summary">
+                <h4>7. THE BIOMETRIC ACCESS PROOF</h4>
+                <ul>
+                    <li>Terminal accessed at 09:23 AM using Dr. Voss's biometric fingerprint</li>
+                    <li>Forensic timeline proves she was unconscious or dying at this moment</li>
+                    <li>Someone used her dying hand on the scanner - this requires physical presence</li>
+                    <li>Chen was in adjacent lab with direct access, had the clearance, and the computer skills</li>
+                    <li>This is the smoking gun that places Chen at the crime scene doing the data theft</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="red-herrings">
+            <h4>🎭 RED HERRINGS EXPLAINED</h4>
+            <p><strong>Dr. Sarah Rivers:</strong> Had strong motive (career threat) and opportunity (08:30 visit to lab). Could have poisoned coffee during her visit. However, she has ironclad alibi for the data theft at 09:23 AM - she was on video conference with multiple participants. While she COULD have been involved in a three-way conspiracy, there's no evidence connecting her to Chen or Keller.</p>
+            <p><strong>Dr. Robert Nash:</strong> The most suspicious red herring. He exits Chemical Storage Room 3C at 09:47 AM - the exact minute of death! This extraordinary timing coincidence made him look extremely guilty. However, security logs prove he was continuously in Chemical Storage from 08:01-09:47 AM, meaning he physically could not have stolen the computer files at 09:23 AM. Nash also lacks the computer skills for sophisticated data theft. The timing is genuinely a coincidence - he completed his audit and left, unaware of the murder.</p>
+            <p><strong>Nina Garcia:</strong> Weak motive and strong alibi. Multiple witnesses place her in Data Processing Center throughout the critical period. Her Level 2 clearance prevents access to both chemical storage and secure terminals. She was never a viable suspect.</p>
+        </div>
+
+        <div class="section-box">
+            <h3>⚖️ LEGAL OUTCOME</h3>
+            <p><strong>Charges Filed:</strong></p>
+            <p>Both Dr. Marcus Chen and James Keller face the following charges:</p>
+            <p>• First-degree murder (premeditated killing of Dr. Elena Voss)<br>
+            • Conspiracy to commit murder (coordinated planning and execution)<br>
+            • Corporate espionage (theft of trade secrets valued at $50 million)<br>
+            • Theft of trade secrets<br>
+            • Computer crimes (unauthorized access, data destruction)<br>
+            • Obstruction of justice (covering up crime)</p>
+            <p><strong>Evidence Submitted:</strong></p>
+            <p>• Phone records proving conspiracy discussion night before murder<br>
+            • Financial records showing both suspects' desperate motives<br>
+            • Security logs proving both were present during critical window<br>
+            • Forensic evidence (cyanide source, glass vial, USB drive)<br>
+            • Computer forensics proving data theft timing and method<br>
+            • Timeline analysis proving conspiracy was necessary<br>
+            • Keller's encrypted phone call to Cayman Islands handler<br>
+            • Chen's email promising "financial opportunity very soon"</p>
+            <p><strong>Verdict:</strong> Both suspects are held without bail pending trial. District Attorney considers this case extremely strong with overwhelming physical, digital, and circumstantial evidence. Both face life in prison without possibility of parole.</p>
+            <p><strong>BioGenex Response:</strong> Company CEO Richard Hayes and Director Sarah Rivers face no charges but are under internal investigation for failing to prevent the security breach. BioGenex lost the Project Helix formula permanently - the $50 million research project cannot be recovered.</p>
+        </div>
+
+        <div class="final-note">
+            <h3>🎯 CASE CONCLUSION</h3>
+            <p>The murder of Dr. Elena Voss was a carefully planned conspiracy between two desperate men who saw one chance to solve their overwhelming problems. Dr. Marcus Chen provided the technical expertise and terminal access. James Keller provided the murder weapon and physical execution.</p>
+            <p style="margin-top: 20px;">Together, they committed the perfect crime - or so they thought. But their coordination was also their downfall. The evidence proved that no single person could have committed both the poisoning and data theft. The late-night phone call, the complementary capabilities, and the suspicious timing all pointed to one conclusion:</p>
+            <p style="margin-top: 20px; color: #ff006e; font-size: 1.4em;"><strong>Two killers. One victim. One conspiracy.</strong></p>
+            <p style="margin-top: 20px;">In their desperation for money, Chen and Keller destroyed three lives: Dr. Voss's, and their own.</p>
+        </div>
+
+        <div style="text-align: center; margin: 50px 0;">
+            <a href="index.html" class="back-btn" style="font-size: 1.2em; padding: 20px 40px;">◄ RETURN TO MAIN DATABASE</a>
+        </div>
+
+        <footer>
+            <p style="font-size: 1.3em; color: #ff006e; margin-bottom: 15px;">CASE #VX-2024-1127 - CLOSED</p>
+            <p>Dr. Elena Voss - Murdered November 27, 2024</p>
+            <p>Justice Served: Dr. Marcus Chen & James Keller - Charged November 29, 2024</p>
+            <p style="margin-top: 20px; color: #ffd700;">Thank you for solving this case, Detective.</p>
+        </footer>
+    </div>
+</body>
+</html>
