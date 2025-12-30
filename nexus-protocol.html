@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS PROTOCOL :: AUTHENTICATION</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Electrolize&family=Chakra+Petch:wght@300,400,600,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-pink: #ff006e;
+            --neon-cyan: #00f5ff;
+            --neon-purple: #8b00ff;
+            --neon-yellow: #ffea00;
+            --deep-space: #0a0014;
+            --dark-void: #120420;
+            --grid-color: rgba(139, 0, 255, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Chakra Petch', sans-serif;
+            background: var(--deep-space);
+            color: var(--neon-cyan);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        /* Animated 3D grid background */
+        .grid-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            transform: translate(-50%, -50%) rotateX(60deg);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .grid-plane {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 80px 80px;
+            animation: gridMove 20s linear infinite;
+            opacity: 0.4;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(80px); }
+        }
+
+        /* Horizon glow */
+        .horizon-glow {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 300px;
+            background: radial-gradient(ellipse at bottom, var(--neon-purple) 0%, transparent 70%);
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Scan beam effect */
+        .scan-beam {
+            position: fixed;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(to bottom, 
+                transparent,
+                rgba(0, 245, 255, 0.2),
+                transparent
+            );
+            animation: scanDown 6s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        @keyframes scanDown {
+            0%, 100% { top: -100%; }
+            50% { top: 100%; }
+        }
+
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle-dot {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--neon-cyan);
+            border-radius: 50%;
+            animation: float-particle 15s linear infinite;
+            opacity: 0;
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        @keyframes float-particle {
+            0% {
+                transform: translateY(100vh) translateX(0) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Main container */
+        .nexus-container {
+            position: relative;
+            z-index: 10;
+            max-width: 520px;
+            width: 100%;
+        }
+
+        /* Glitch title effect */
+        .header-section {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInGlitch 1s ease-out;
+        }
+
+        @keyframes fadeInGlitch {
+            0%, 5%, 10% {
+                opacity: 0;
+                transform: translateY(-20px) skew(-5deg);
+            }
+            15%, 100% {
+                opacity: 1;
+                transform: translateY(0) skew(0deg);
+            }
+        }
+
+        .nexus-logo {
+            font-family: 'Audiowide', cursive;
+            font-size: 48px;
+            font-weight: 400;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple), var(--neon-cyan));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease infinite;
+            position: relative;
+            display: inline-block;
+            text-shadow: 
+                0 0 20px rgba(255, 0, 110, 0.5),
+                0 0 40px rgba(139, 0, 255, 0.3);
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Glitch effect */
+        .nexus-logo::before,
+        .nexus-logo::after {
+            content: 'NEXUS';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple), var(--neon-cyan));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+        }
+
+        .nexus-logo::before {
+            animation: glitch1 2.5s infinite;
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+        }
+
+        .nexus-logo::after {
+            animation: glitch2 2.5s infinite;
+            clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+        }
+
+        @keyframes glitch1 {
+            0%, 90%, 100% {
+                opacity: 0;
+                transform: translateX(0);
+            }
+            91%, 93% {
+                opacity: 0.8;
+                transform: translateX(-3px);
+            }
+        }
+
+        @keyframes glitch2 {
+            0%, 90%, 100% {
+                opacity: 0;
+                transform: translateX(0);
+            }
+            92%, 94% {
+                opacity: 0.8;
+                transform: translateX(3px);
+            }
+        }
+
+        .protocol-text {
+            font-family: 'Electrolize', sans-serif;
+            font-size: 12px;
+            letter-spacing: 6px;
+            margin-top: 10px;
+            color: var(--neon-pink);
+            text-transform: uppercase;
+            text-shadow: 0 0 10px var(--neon-pink);
+        }
+
+        /* Hexagonal frame */
+        .hex-frame {
+            position: relative;
+            background: linear-gradient(135deg, rgba(18, 4, 32, 0.8), rgba(10, 0, 20, 0.9));
+            backdrop-filter: blur(10px);
+            padding: 50px 45px;
+            clip-path: polygon(
+                0% 10%, 10% 0%, 90% 0%, 100% 10%,
+                100% 90%, 90% 100%, 10% 100%, 0% 90%
+            );
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+            animation: slideIn 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.3s both;
+            box-shadow: 
+                0 0 50px rgba(139, 0, 255, 0.3),
+                inset 0 0 50px rgba(139, 0, 255, 0.1);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* Animated border */
+        .hex-frame::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, 
+                var(--neon-pink), 
+                var(--neon-purple), 
+                var(--neon-cyan),
+                var(--neon-pink)
+            );
+            background-size: 300% 300%;
+            clip-path: polygon(
+                0% 10%, 10% 0%, 90% 0%, 100% 10%,
+                100% 90%, 90% 100%, 10% 100%, 0% 90%
+            );
+            animation: borderPulse 4s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes borderPulse {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* System status */
+        .system-status {
+            text-align: center;
+            margin-bottom: 35px;
+            font-family: 'Electrolize', sans-serif;
+            font-size: 10px;
+            letter-spacing: 3px;
+            color: var(--neon-cyan);
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.8s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .status-bars {
+            display: flex;
+            gap: 4px;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .status-bar {
+            width: 40px;
+            height: 3px;
+            background: var(--neon-cyan);
+            animation: barPulse 1.5s ease-in-out infinite;
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        .status-bar:nth-child(1) { animation-delay: 0s; }
+        .status-bar:nth-child(2) { animation-delay: 0.2s; }
+        .status-bar:nth-child(3) { animation-delay: 0.4s; }
+        .status-bar:nth-child(4) { animation-delay: 0.6s; }
+
+        @keyframes barPulse {
+            0%, 100% { opacity: 0.3; transform: scaleY(1); }
+            50% { opacity: 1; transform: scaleY(2); }
+        }
+
+        /* Input groups */
+        .data-field {
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: slideInField 0.8s ease-out both;
+        }
+
+        .data-field:nth-child(2) { animation-delay: 1s; }
+        .data-field:nth-child(3) { animation-delay: 1.15s; }
+
+        @keyframes slideInField {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .field-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .field-label {
+            font-family: 'Electrolize', sans-serif;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--neon-pink);
+            text-shadow: 0 0 10px var(--neon-pink);
+        }
+
+        .field-id {
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 10px;
+            color: var(--neon-purple);
+            font-weight: 300;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            border: 2px solid rgba(139, 0, 255, 0.3);
+            color: var(--neon-cyan);
+            padding: 16px 20px;
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 16px;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            outline: none;
+            clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 0 100%);
+            position: relative;
+        }
+
+        input::placeholder {
+            color: var(--neon-purple);
+            opacity: 0.5;
+        }
+
+        input:focus {
+            border-color: var(--neon-pink);
+            background: rgba(255, 0, 110, 0.05);
+            box-shadow: 
+                0 0 20px rgba(255, 0, 110, 0.3),
+                inset 0 0 20px rgba(255, 0, 110, 0.1);
+            transform: translateX(5px);
+        }
+
+        /* Corner notch decoration */
+        .corner-notch {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 15px;
+            height: 15px;
+            background: var(--neon-purple);
+            clip-path: polygon(0 0, 100% 0, 100% 100%);
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+
+        input:focus + .corner-notch {
+            background: var(--neon-pink);
+            opacity: 1;
+            box-shadow: 0 0 15px var(--neon-pink);
+        }
+
+        /* Initialize button */
+        .init-section {
+            margin-top: 45px;
+            opacity: 0;
+            animation: slideInField 0.8s ease-out 1.3s both;
+        }
+
+        .init-button {
+            width: 100%;
+            background: transparent;
+            border: 2px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 18px;
+            font-family: 'Audiowide', cursive;
+            font-size: 14px;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+            text-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        .init-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(0, 245, 255, 0.5),
+                transparent
+            );
+            transition: left 0.5s ease;
+        }
+
+        .init-button:hover {
+            border-color: var(--neon-pink);
+            color: var(--neon-pink);
+            text-shadow: 0 0 10px var(--neon-pink);
+            box-shadow: 
+                0 0 30px rgba(255, 0, 110, 0.5),
+                inset 0 0 30px rgba(255, 0, 110, 0.1);
+            transform: scale(1.02);
+        }
+
+        .init-button:hover::before {
+            left: 100%;
+        }
+
+        .init-button:active {
+            transform: scale(0.98);
+        }
+
+        /* Button corners */
+        .button-corner {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--neon-cyan);
+            opacity: 0.3;
+            transition: all 0.3s ease;
+        }
+
+        .button-corner.tl {
+            top: 0;
+            left: 0;
+            clip-path: polygon(0 0, 100% 0, 0 100%);
+        }
+
+        .button-corner.br {
+            bottom: 0;
+            right: 0;
+            clip-path: polygon(100% 0, 100% 100%, 0 100%);
+        }
+
+        .init-button:hover .button-corner {
+            background: var(--neon-pink);
+            opacity: 1;
+            box-shadow: 0 0 15px var(--neon-pink);
+        }
+
+        /* Warning panel */
+        .warning-panel {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 0, 110, 0.05);
+            border-left: 3px solid var(--neon-pink);
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 10px;
+            line-height: 1.7;
+            color: var(--neon-pink);
+            letter-spacing: 1px;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1.5s both;
+            text-shadow: 0 0 5px rgba(255, 0, 110, 0.5);
+        }
+
+        .warning-icon {
+            display: inline-block;
+            margin-right: 8px;
+            font-size: 14px;
+            animation: warningBlink 2s ease-in-out infinite;
+        }
+
+        @keyframes warningBlink {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0.3; }
+        }
+
+        /* Footer */
+        .terminal-footer {
+            margin-top: 40px;
+            text-align: center;
+            font-family: 'Electrolize', sans-serif;
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: var(--neon-purple);
+            opacity: 0.6;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1.7s both;
+        }
+
+        .terminal-id {
+            margin-top: 8px;
+            color: var(--neon-cyan);
+        }
+
+        /* Loading state */
+        .init-button.processing {
+            pointer-events: none;
+            border-color: var(--neon-yellow);
+            color: var(--neon-yellow);
+            animation: processingPulse 1s ease-in-out infinite;
+        }
+
+        @keyframes processingPulse {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(255, 234, 0, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(255, 234, 0, 0.8);
+            }
+        }
+
+        .init-button.processing::after {
+            content: '';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 234, 0, 0.3);
+            border-top-color: var(--neon-yellow);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: translateY(-50%) rotate(360deg); }
+        }
+
+        /* Success state */
+        .init-button.authorized {
+            border-color: #00ff88;
+            color: #00ff88;
+            background: rgba(0, 255, 136, 0.1);
+            box-shadow: 0 0 40px rgba(0, 255, 136, 0.6);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nexus-logo {
+                font-size: 36px;
+                letter-spacing: 6px;
+            }
+
+            .hex-frame {
+                padding: 40px 30px;
+            }
+
+            input {
+                padding: 14px 16px;
+                font-size: 14px;
+            }
+
+            .init-button {
+                font-size: 12px;
+                padding: 16px;
+                letter-spacing: 4px;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background effects -->
+    <div class="grid-container">
+        <div class="grid-plane"></div>
+    </div>
+    <div class="horizon-glow"></div>
+    <div class="scan-beam"></div>
+    <div class="particles" id="particlesContainer"></div>
+
+    <!-- Main container -->
+    <div class="nexus-container">
+        <!-- Header -->
+        <div class="header-section">
+            <h1 class="nexus-logo">NEXUS</h1>
+            <p class="protocol-text">Authentication Protocol</p>
+        </div>
+
+        <!-- Hexagonal frame -->
+        <div class="hex-frame">
+            <div class="system-status">
+                <div class="status-bars">
+                    <div class="status-bar"></div>
+                    <div class="status-bar"></div>
+                    <div class="status-bar"></div>
+                    <div class="status-bar"></div>
+                </div>
+                System Online • Neural Link Active
+            </div>
+
+            <form id="nexusForm" onsubmit="handleNexusAuth(event)">
+                <div class="data-field">
+                    <div class="field-header">
+                        <label class="field-label">Access Vector</label>
+                        <span class="field-id">ID: Δ-001</span>
+                    </div>
+                    <div class="input-wrapper">
+                        <input 
+                            type="text" 
+                            id="accessVector" 
+                            name="accessVector"
+                            placeholder="XXXX-XXXX-XXXX"
+                            autocomplete="off"
+                            required
+                        >
+                        <div class="corner-notch"></div>
+                    </div>
+                </div>
+
+                <div class="data-field">
+                    <div class="field-header">
+                        <label class="field-label">Neural Key</label>
+                        <span class="field-id">ID: Δ-002</span>
+                    </div>
+                    <div class="input-wrapper">
+                        <input 
+                            type="password" 
+                            id="neuralKey" 
+                            name="neuralKey"
+                            placeholder="Enter encryption key"
+                            autocomplete="off"
+                            required
+                        >
+                        <div class="corner-notch"></div>
+                    </div>
+                </div>
+
+                <div class="init-section">
+                    <button type="submit" class="init-button" id="initBtn">
+                        <div class="button-corner tl"></div>
+                        <div class="button-corner br"></div>
+                        Initialize
+                    </button>
+                </div>
+            </form>
+
+            <div class="warning-panel">
+                <span class="warning-icon">⚠</span>
+                RESTRICTED ACCESS ZONE • Unauthorized neural interface attempts will trigger automated countermeasures and immediate lockdown protocols. All sessions are monitored by AI surveillance systems.
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="terminal-footer">
+            NEXUS MAINFRAME
+            <div class="terminal-id" id="terminalId"></div>
+        </div>
+    </div>
+
+    <script>
+        // Generate terminal ID
+        function generateTerminalId() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let id = 'TERM-';
+            for (let i = 0; i < 8; i++) {
+                id += chars[Math.floor(Math.random() * chars.length)];
+                if (i === 3) id += '-';
+            }
+            return id;
+        }
+
+        document.getElementById('terminalId').textContent = generateTerminalId() + ' • ' + new Date().toISOString().split('T')[0];
+
+        // Create floating particles
+        function createParticles() {
+            const container = document.getElementById('particlesContainer');
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle-dot';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+                
+                // Random colors
+                const colors = ['var(--neon-pink)', 'var(--neon-cyan)', 'var(--neon-purple)'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.background = color;
+                particle.style.boxShadow = `0 0 10px ${color}`;
+                
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // Form submission
+        function handleNexusAuth(event) {
+            event.preventDefault();
+            
+            const button = document.getElementById('initBtn');
+            const accessVector = document.getElementById('accessVector').value;
+            const neuralKey = document.getElementById('neuralKey').value;
+            
+            // Processing state
+            button.classList.add('processing');
+            button.innerHTML = '<div class="button-corner tl"></div><div class="button-corner br"></div>Processing';
+            
+            // Log attempt
+            console.log('Neural authentication:', { 
+                accessVector,
+                timestamp: new Date().toISOString(),
+                terminal: document.getElementById('terminalId').textContent
+            });
+            
+            // Simulate authentication
+            setTimeout(() => {
+                button.classList.remove('processing');
+                button.classList.add('authorized');
+                button.innerHTML = '<div class="button-corner tl"></div><div class="button-corner br"></div>Access Granted';
+                
+                // Add your backend logic here
+                setTimeout(() => {
+                    alert('Neural link established. Connect your authentication backend.');
+                    button.classList.remove('authorized');
+                    button.innerHTML = '<div class="button-corner tl"></div><div class="button-corner br"></div>Initialize';
+                }, 2000);
+            }, 2800);
+        }
+
+        // Input glow effect on typing
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                this.style.boxShadow = '0 0 30px rgba(0, 245, 255, 0.5)';
+                setTimeout(() => {
+                    this.style.boxShadow = '';
+                }, 200);
+            });
+        });
+
+        // Prevent right-click
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            console.log('SECURITY: Context menu disabled');
+        });
+
+        // Easter egg: Type "TRON" to change color scheme
+        let keyBuffer = [];
+        document.addEventListener('keydown', (e) => {
+            keyBuffer.push(e.key.toLowerCase());
+            if (keyBuffer.length > 4) keyBuffer.shift();
+            
+            if (keyBuffer.join('') === 'tron') {
+                document.documentElement.style.setProperty('--neon-pink', '#00f5ff');
+                document.documentElement.style.setProperty('--neon-cyan', '#ff006e');
+                setTimeout(() => {
+                    document.documentElement.style.setProperty('--neon-pink', '#ff006e');
+                    document.documentElement.style.setProperty('--neon-cyan', '#00f5ff');
+                }, 3000);
+                keyBuffer = [];
+            }
+        });
+
+        // Random glitch effect
+        setInterval(() => {
+            if (Math.random() > 0.95) {
+                const logo = document.querySelector('.nexus-logo');
+                logo.style.transform = 'skew(' + (Math.random() * 10 - 5) + 'deg)';
+                setTimeout(() => {
+                    logo.style.transform = 'skew(0deg)';
+                }, 100);
+            }
+        }, 2000);
+    </script>
+</body>
+</html>
