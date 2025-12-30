@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EVIDENCE - EMAIL CORRESPONDENCE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #050814;
+            color: #00f7ff;
+            font-family: 'Rajdhani', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 1000;
+            animation: scanlines 8s linear infinite;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 2px solid #ff006e;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5em;
+            color: #ff006e;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #ff006e, 0 0 20px #ff006e;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #00f7ff, #00d4dd);
+            color: #050814;
+            padding: 12px 25px;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 2px solid #00f7ff;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.6);
+        }
+
+        .evidence-header {
+            background: linear-gradient(135deg, rgba(0, 247, 255, 0.1), rgba(255, 0, 110, 0.1));
+            border: 2px solid #00f7ff;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+
+        .evidence-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffd700;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .evidence-header p {
+            color: #00f7ff;
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        .email-container {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+            border: 2px solid #00f7ff;
+            margin: 30px 0;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 247, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .email-container:hover {
+            border-color: #ffd700;
+            box-shadow: 0 5px 25px rgba(255, 215, 0, 0.3);
+        }
+
+        .email-header {
+            background: linear-gradient(135deg, #ff006e, #cc0058);
+            padding: 20px;
+            border-bottom: 2px solid #ffd700;
+        }
+
+        .email-header-row {
+            display: flex;
+            margin-bottom: 8px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.95em;
+        }
+
+        .email-label {
+            color: #ffd700;
+            font-weight: bold;
+            width: 100px;
+            flex-shrink: 0;
+        }
+
+        .email-value {
+            color: #fff;
+            flex-grow: 1;
+        }
+
+        .email-body {
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.4);
+            color: #00f7ff;
+            font-size: 1.05em;
+            line-height: 1.8;
+        }
+
+        .email-body p {
+            margin-bottom: 15px;
+        }
+
+        .email-signature {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(0, 247, 255, 0.3);
+            font-style: italic;
+            color: #ffd700;
+        }
+
+        .threat-level-tag {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 3px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        .threat-high {
+            background: #ff006e;
+            color: #fff;
+            border: 2px solid #ff006e;
+        }
+
+        .threat-medium {
+            background: rgba(255, 165, 0, 0.3);
+            color: #ffa500;
+            border: 2px solid #ffa500;
+        }
+
+        .threat-low {
+            background: rgba(0, 255, 100, 0.2);
+            color: #00ff64;
+            border: 2px solid #00ff64;
+        }
+
+        .analyst-note {
+            background: rgba(255, 215, 0, 0.1);
+            border-left: 4px solid #ffd700;
+            padding: 15px;
+            margin: 15px 0;
+            font-style: italic;
+            color: #ffd700;
+        }
+
+        .analyst-note strong {
+            color: #ff006e;
+        }
+
+        .section-divider {
+            text-align: center;
+            margin: 50px 0;
+            position: relative;
+        }
+
+        .section-divider::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00f7ff, transparent);
+        }
+
+        .section-divider span {
+            background: #050814;
+            padding: 0 20px;
+            color: #ffd700;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .deleted-email {
+            border: 2px solid #ff006e;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .deleted-email::before {
+            content: "⚠ RECOVERED FROM DELETED ITEMS ⚠";
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: #ff006e;
+            color: #fff;
+            padding: 5px 15px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8em;
+            font-weight: bold;
+            z-index: 10;
+            transform: rotate(0deg);
+        }
+
+        .encrypted-email {
+            border: 2px solid #ffd700;
+        }
+
+        .encrypted-email .email-header {
+            background: linear-gradient(135deg, #ffd700, #ccaa00);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 2px solid #00f7ff;
+            margin-top: 50px;
+            color: #00f7ff;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .email-header-row {
+                flex-direction: column;
+            }
+
+            .email-label {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="back-btn">◄ RETURN TO MAIN DATABASE</a>
+            <h1>📧 EMAIL CORRESPONDENCE</h1>
+            <div style="color: #ffd700; font-family: 'Share Tech Mono', monospace; margin-top: 10px;">
+                RECOVERED EMAIL EVIDENCE
+            </div>
+        </header>
+
+        <div class="evidence-header">
+            <h2>EVIDENCE FILE: EMAIL-RECOVERY-2024-1127</h2>
+            <p><strong>Source:</strong> BioGenex Email Server - Forensic Data Recovery</p>
+            <p><strong>Recovery Date:</strong> November 27-28, 2024</p>
+            <p><strong>Total Emails Recovered:</strong> 12 relevant communications</p>
+            <p style="margin-top: 15px; color: #ff006e;"><strong>NOTICE:</strong> Several emails were recovered from deleted folders. These are marked with special indicators. All timestamps are in EST (Eastern Standard Time).</p>
+        </div>
+
+        <!-- EMAIL 1 -->
+        <div class="email-container">
+            <div class="email-header">
+                <div class="email-header-row">
+                    <span class="email-label">FROM:</span>
+                    <span class="email-value">dr.sarah.rivers@biogenex.com</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">TO:</span>
+                    <span class="email-value">dr.elena.voss@biogenex.com</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">DATE:</span>
+                    <span class="email-value">November 20, 2024 - 14:33 EST</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">SUBJECT:</span>
+                    <span class="email-value">URGENT: Project Helix Patent Filing</span>
+                </div>
+                <span class="threat-level-tag threat-high">HIGH PRIORITY</span>
+            </div>
+            <div class="email-body">
+                <p>Elena,</p>
+                <p>We need to discuss the patent situation immediately. I've just been informed by Legal that you filed provisional patents under your personal name for the entire Project Helix platform. This is completely unacceptable and violates your employment contract.</p>
+                <p>BioGenex has invested over $12 million in this research. The intellectual property belongs to the company, NOT to you personally. I'm scheduling an emergency meeting with you, Legal, and the Board for Monday morning.</p>
+                <p>If you do not withdraw these personal patent applications by Friday, we will have no choice but to pursue legal action and termination proceedings.</p>
+                <div class="email-signature">
+                    Dr. Sarah Rivers<br>
+                    Director of Research Operations<br>
+                    BioGenex Pharmaceuticals
+                </div>
+            </div>
+            <div class="analyst-note">
+                <strong>ANALYST NOTE:</strong> This email demonstrates significant hostility between Rivers and Voss. Rivers explicitly threatens termination. This email was sent 7 days before the murder.
+            </div>
+        </div>
+
+        <!-- EMAIL 2 -->
+        <div class="email-container deleted-email">
+            <div class="email-header">
+                <div class="email-header-row">
+                    <span class="email-label">FROM:</span>
+                    <span class="email-value">dr.elena.voss@biogenex.com</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">TO:</span>
+                    <span class="email-value">dr.sarah.rivers@biogenex.com</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">DATE:</span>
+                    <span class="email-value">November 20, 2024 - 16:47 EST</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">SUBJECT:</span>
+                    <span class="email-value">RE: Project Helix Patent Filing</span>
+                </div>
+                <span class="threat-level-tag threat-high">DELETED BY SENDER</span>
+            </div>
+            <div class="email-body">
+                <p>Sarah,</p>
+                <p>Try to fire me and you'll regret it. I have documentation of every corner you've cut, every safety protocol you've violated, and every lie you've told the Board. My lawyers are already reviewing my options.</p>
+                <p>Project Helix is MY work. I developed this formula independently, often on my own time, using my own research notes that predate my employment here. The company contribution has been minimal equipment access at best.</p>
+                <p>You want a war? You'll get one. But I promise you'll lose more than I will.</p>
+                <div class="email-signature">
+                    Elena
+                </div>
+            </div>
+            <div class="analyst-note">
+                <strong>ANALYST NOTE:</strong> This email was deleted from Dr. Voss's sent folder shortly after being sent, but was recovered from the server backup. It shows Dr. Voss was willing to fight back aggressively and had damaging information on Dr. Rivers.
+            </div>
+        </div>
+
+        <div class="section-divider">
+            <span>━━━━━━━━━━</span>
+        </div>
+
+        <!-- EMAIL 3 -->
+        <div class="email-container">
+            <div class="email-header">
+                <div class="email-header-row">
+                    <span class="email-label">FROM:</span>
+                    <span class="email-value">dr.elena.voss@biogenex.com</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">TO:</span>
+                    <span class="email-value">dr.marcus.chen@biogenex.com</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">DATE:</span>
+                    <span class="email-value">November 15, 2024 - 09:12 EST</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">SUBJECT:</span>
+                    <span class="email-value">Project Helix Authorship</span>
+                </div>
+                <span class="threat-level-tag threat-medium">IMPORTANT</span>
+            </div>
+            <div class="email-body">
+                <p>Marcus,</p>
+                <p>I've given this considerable thought and I need to be direct with you. While you've contributed valuable technical support to Project Helix, your role has been assistive rather than innovative. The core breakthrough concepts are entirely my own.</p>
+                <p>Therefore, I will be listed as the sole inventor on all patent applications. You will receive acknowledgment in the technical documentation, which is standard for research assistants.</p>
+                <p>I understand this may be disappointing, but this accurately reflects the intellectual contribution hierarchy. Your compensation and position are not affected.</p>
+                <div class="email-signature">
+                    Dr. Elena Voss<br>
+                    Chief Research Scientist
+                </div>
+            </div>
+            <div class="analyst-note">
+                <strong>ANALYST NOTE:</strong> This email shows Dr. Voss excluding Dr. Chen from patent credit, which would cost him significant royalty income. This occurred 12 days before the murder.
+            </div>
+        </div>
+
+        <!-- EMAIL 4 -->
+        <div class="email-container deleted-email">
+            <div class="email-header">
+                <div class="email-header-row">
+                    <span class="email-label">FROM:</span>
+                    <span class="email-value">dr.marcus.chen@biogenex.com</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">TO:</span>
+                    <span class="email-value">thomas.webb@webblaw.com</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">DATE:</span>
+                    <span class="email-value">November 16, 2024 - 22:38 EST</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">SUBJECT:</span>
+                    <span class="email-value">Consultation Request - Patent Dispute</span>
+                </div>
+                <span class="threat-level-tag threat-high">DELETED BY SENDER</span>
+            </div>
+            <div class="email-body">
+                <p>Tom,</p>
+                <p>I need legal advice urgently. My supervisor is attempting to steal credit for research I co-developed. I have extensive documentation proving my contributions were fundamental, not assistive as she claims.</p>
+                <p>The potential value is in the tens of millions. I cannot afford to let this stand. What are my options for challenging her patent applications? Can I file a competing claim?</p>
+                <p>Also, hypothetically, if the primary researcher were unable to proceed with their applications, would their assistant have stronger standing to claim the intellectual property?</p>
+                <p>Please advise as soon as possible.</p>
+                <div class="email-signature">
+                    Marcus Chen, PhD<br>
+                    Senior Research Assistant<br>
+                    BioGenex Pharmaceuticals
+                </div>
+            </div>
+            <div class="analyst-note">
+                <strong>ANALYST NOTE:</strong> This deleted email shows Dr. Chen was actively seeking legal options against Dr. Voss. The final paragraph is particularly concerning - it suggests Chen was contemplating what would happen if Voss were "unable to proceed" with her patents. Sent 11 days before the murder.
+            </div>
+        </div>
+
+        <div class="section-divider">
+            <span>━━━━━━━━━━</span>
+        </div>
+
+        <!-- EMAIL 5 -->
+        <div class="email-container">
+            <div class="email-header">
+                <div class="email-header-row">
+                    <span class="email-label">FROM:</span>
+                    <span class="email-value">dr.robert.nash@biogenex.com</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">TO:</span>
+                    <span class="email-value">hr@biogenex.com</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">CC:</span>
+                    <span class="email-value">legal@biogenex.com</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">DATE:</span>
+                    <span class="email-value">November 22, 2024 - 11:04 EST</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">SUBJECT:</span>
+                    <span class="email-value">Formal Grievance - False Accusations by Dr. Voss</span>
+                </div>
+                <span class="threat-level-tag threat-high">FORMAL COMPLAINT</span>
+            </div>
+            <div class="email-body">
+                <p>To HR and Legal,</p>
+                <p>I am filing a formal grievance against Dr. Elena Voss for making false accusations regarding my safety protocols and attempting to damage my professional reputation.</p>
+                <p>Dr. Voss has accused me of falsifying chemical inspection reports. These allegations are completely baseless and appear to be retaliation because I reported her unauthorized removal of potassium cyanide from secure storage three months ago.</p>
+                <p>I have maintained impeccable safety records for 15 years. Her claims could destroy my career and cost me my pension. I request an immediate investigation and disciplinary action against Dr. Voss for filing malicious false reports.</p>
+                <p>I also request that her security clearance be suspended pending investigation, as she has demonstrated willingness to misuse hazardous materials.</p>
+                <div class="email-signature">
+                    Dr. Robert Nash<br>
+                    Chemical Safety Officer<br>
+                    BioGenex Pharmaceuticals
+                </div>
+            </div>
+            <div class="analyst-note">
+                <strong>ANALYST NOTE:</strong> Dr. Nash explicitly mentions that Dr. Voss had previously removed potassium cyanide (the murder weapon) from storage. He also expresses fear about losing his career and pension. Sent 5 days before the murder.
+            </div>
+        </div>
+
+        <!-- EMAIL 6 -->
+        <div class="email-container">
+            <div class="email-header">
+                <div class="email-header-row">
+                    <span class="email-label">FROM:</span>
+                    <span class="email-value">james.keller@biogenex.com</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">TO:</span>
+                    <span class="email-value">maintenance-team@biogenex.com</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">DATE:</span>
+                    <span class="email-value">November 25, 2024 - 15:22 EST</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">SUBJECT:</span>
+                    <span class="email-value">Chemical Storage Room 3C - Inventory Discrepancy</span>
+                </div>
+                <span class="threat-level-tag threat-medium">ROUTINE REPORT</span>
+            </div>
+            <div class="email-body">
+                <p>Team,</p>
+                <p>During routine maintenance sweep today, I noticed the chemical inventory log for Room 3C shows a discrepancy. Container KCN-077 (potassium cyanide, 500g) was logged as checked on Nov 22, but the seal appears to have been broken and resealed.</p>
+                <p>The container weight is approximately 15-20 grams lighter than the recorded amount. Dr. Nash's signature is on the most recent inspection form, but the seal break doesn't match standard protocol.</p>
+                <p>Should I file this as a security incident or just log it as a maintenance note?</p>
+                <div class="email-signature">
+                    James Keller<br>
+                    Lab Technician - Maintenance<br>
+                    BioGenex Pharmaceuticals
+                </div>
+            </div>
+            <div class="analyst-note">
+                <strong>ANALYST NOTE:</strong> This email from James Keller, sent 2 days before the murder, documents that potassium cyanide was missing from storage. The seal had been broken and resealed, and Dr. Nash's inspection signature was present. This is the same chemical used to poison Dr. Voss.
+            </div>
+        </div>
+
+        <div class="section-divider">
+            <span>━━━━━━━━━━</span>
+        </div>
+
+        <!-- EMAIL 7 -->
+        <div class="email-container encrypted-email">
+            <div class="email-header">
+                <div class="email-header-row">
+                    <span class="email-label">FROM:</span>
+                    <span class="email-value">unknown_external_573@securemail.net</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">TO:</span>
+                    <span class="email-value">j.keller.personal@gmail.com</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">DATE:</span>
+                    <span class="email-value">November 13, 2024 - 03:17 EST</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">SUBJECT:</span>
+                    <span class="email-value">[ENCRYPTED] Phase 2 Payment Schedule</span>
+                </div>
+                <span class="threat-level-tag threat-high">ENCRYPTED CONTENT</span>
+            </div>
+            <div class="email-body">
+                <p>[MESSAGE PARTIALLY DECRYPTED BY FBI CYBER CRIMES UNIT]</p>
+                <p>Mr. K,</p>
+                <p>First payment ($15,000) has been transferred to your offshore account as agreed. This confirms your commitment to our arrangement.</p>
+                <p>Timeline requirements: Access to [ENCRYPTED] must be secured by Nov 30. Complete data package must include: formula specifications, synthesis protocols, and [ENCRYPTED].</p>
+                <p>Second payment ($85,000) will be released upon successful delivery via the dead-drop USB protocol. Final payment ($150,000) after verification of data authenticity.</p>
+                <p>Security reminder: Use only the provided encrypted device. No personal communications. No paper trails.</p>
+                <p>[REMAINING CONTENT UNABLE TO DECRYPT]</p>
+                <div class="email-signature">
+                    [SIGNATURE ENCRYPTED]
+                </div>
+            </div>
+            <div class="analyst-note">
+                <strong>ANALYST NOTE:</strong> This encrypted email to James Keller's personal account shows he was being paid to steal data from BioGenex, with a total payment structure of $250,000. The timeline mentions November 30 (3 days after the murder) as the deadline. This strongly suggests corporate espionage. The encrypted USB device mentioned matches the encrypted drive found in Keller's possession.
+            </div>
+        </div>
+
+        <!-- EMAIL 8 -->
+        <div class="email-container">
+            <div class="email-header">
+                <div class="email-header-row">
+                    <span class="email-label">FROM:</span>
+                    <span class="email-value">dr.elena.voss@biogenex.com</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">TO:</span>
+                    <span class="email-value">michael.foster@genetech.com</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">DATE:</span>
+                    <span class="email-value">November 24, 2024 - 19:45 EST</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">SUBJECT:</span>
+                    <span class="email-value">RE: Director Position Discussion</span>
+                </div>
+                <span class="threat-level-tag threat-medium">CONFIDENTIAL</span>
+            </div>
+            <div class="email-body">
+                <p>Michael,</p>
+                <p>Thank you for the generous offer. The Director of Advanced Research position at GeneTech is extremely attractive, and the compensation package ($420K base plus equity) is well above my current arrangement.</p>
+                <p>However, I need to be transparent with you: I cannot bring Project Helix with me as you suggested. While I developed the core concepts, the current implementation was done using BioGenex resources and would legally belong to them regardless of patent disputes.</p>
+                <p>I can start fresh at GeneTech and develop a similar platform using my knowledge and experience, but it would take 18-24 months to reach the same level of progress.</p>
+                <p>Let me think about your offer over the Thanksgiving break. I'll have a decision for you by December 1st.</p>
+                <div class="email-signature">
+                    Best regards,<br>
+                    Elena
+                </div>
+            </div>
+            <div class="analyst-note">
+                <strong>ANALYST NOTE:</strong> This email proves Dr. Rivers' suspicions were correct - Dr. Voss was negotiating with competitor GeneTech. However, Voss explicitly states she cannot bring Project Helix with her. This was sent 3 days before the murder. If Rivers knew about this email, it would have given her strong motive to act immediately.
+            </div>
+        </div>
+
+        <div class="section-divider">
+            <span>━━━━━━━━━━</span>
+        </div>
+
+        <!-- EMAIL 9 -->
+        <div class="email-container deleted-email">
+            <div class="email-header">
+                <div class="email-header-row">
+                    <span class="email-label">FROM:</span>
+                    <span class="email-value">dr.marcus.chen@biogenex.com</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">TO:</span>
+                    <span class="email-value">mike.rodriguez@eastside-casino.com</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">DATE:</span>
+                    <span class="email-value">November 26, 2024 - 23:51 EST</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">SUBJECT:</span>
+                    <span class="email-value">Payment Extension Request</span>
+                </div>
+                <span class="threat-level-tag threat-high">DELETED - RECOVERED</span>
+            </div>
+            <div class="email-body">
+                <p>Mike,</p>
+                <p>I know I'm already two weeks past the deadline on the $127K. I'm not making excuses, but I need you to understand that I will have the full amount plus interest within two weeks.</p>
+                <p>A major financial opportunity is about to break my way. I can't give you details, but it's legitimate and it's happening very soon. I just need a little more time.</p>
+                <p>Please don't send anyone to my apartment again. My neighbors are asking questions and I can't afford to lose my housing on top of everything else.</p>
+                <p>I promise you'll have your money by December 15th at the latest. I've never defaulted before - you know I'm good for it.</p>
+                <div class="email-signature">
+                    Marcus
+                </div>
+            </div>
+            <div class="analyst-note">
+                <strong>ANALYST NOTE:</strong> Sent at 11:51 PM the night before the murder, Dr. Chen tells his gambling debt collector that he expects a "major financial opportunity" to resolve his $127K debt "very soon." The timing is highly suspicious - he wrote this less than 10 hours before Dr. Voss was killed. What "opportunity" was he expecting?
+            </div>
+        </div>
+
+        <!-- EMAIL 10 -->
+        <div class="email-container">
+            <div class="email-header">
+                <div class="email-header-row">
+                    <span class="email-label">FROM:</span>
+                    <span class="email-value">security@biogenex.com</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">TO:</span>
+                    <span class="email-value">dr.sarah.rivers@biogenex.com</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">DATE:</span>
+                    <span class="email-value">November 26, 2024 - 16:33 EST</span>
+                </div>
+                <div class="email-header-row">
+                    <span class="email-label">SUBJECT:</span>
+                    <span class="email-value">Security Alert - Unauthorized Email Intercept Detected</span>
+                </div>
+                <span class="threat-level-tag threat-high">SECURITY ALERT</span>
+            </div>
+            <div class="email-body">
+                <p>Dr. Rivers,</p>
+                <p>Our IT security team has detected unauthorized access to Dr. Elena Voss's email account from an external IP address on November 24 at 22:17 EST.</p>
+                <p>The intruder accessed the following email thread: "RE: Director Position Discussion" with recipient michael.foster@genetech.com. The email was forwarded to an encrypted external address before the intrusion was terminated.</p>
+                <p>We are conducting a full investigation. However, we wanted to alert you immediately as this email contained information about Dr. Voss's negotiations with a competitor company.</p>
+                <p>Please advise how you would like us to proceed.</p>
+                <div class="email-signature">
+                    BioGenex Security Team<br>
+                    IT Department
+                </div>
+            </div>
+            <div class="analyst-note">
+                <strong>ANALYST NOTE:</strong> This proves that Dr. Rivers was made aware of Dr. Voss's GeneTech negotiations the evening of November 26 - less than 24 hours before the murder. This gave Rivers immediate motive to act before Voss could leave and take her knowledge to a competitor. The email was also forwarded to an unknown encrypted address - possibly the same party that hired Keller?
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 40px 0;">
+            <a href="index.html" class="back-btn">◄ RETURN TO MAIN DATABASE</a>
+        </div>
+
+        <footer>
+            <p>BioGenex Email Forensics System</p>
+            <p>Evidence Recovered: November 27-28, 2024</p>
+        </footer>
+    </div>
+</body>
+</html>

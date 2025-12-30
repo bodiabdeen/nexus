@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EVIDENCE - TIMELINE RECONSTRUCTION</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #050814;
+            color: #00f7ff;
+            font-family: 'Rajdhani', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 1000;
+            animation: scanlines 8s linear infinite;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 2px solid #ff006e;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5em;
+            color: #ff006e;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #ff006e, 0 0 20px #ff006e;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #00f7ff, #00d4dd);
+            color: #050814;
+            padding: 12px 25px;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 2px solid #00f7ff;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.6);
+        }
+
+        .evidence-header {
+            background: linear-gradient(135deg, rgba(0, 247, 255, 0.1), rgba(255, 0, 110, 0.1));
+            border: 2px solid #00f7ff;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+
+        .evidence-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffd700;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .evidence-header p {
+            color: #00f7ff;
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        .timeline-container {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, #00f7ff, #ff006e);
+        }
+
+        .timeline-entry {
+            position: relative;
+            padding: 25px 25px 25px 100px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+            border: 2px solid #00f7ff;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-entry:hover {
+            border-color: #ffd700;
+            transform: translateX(10px);
+            box-shadow: 0 5px 20px rgba(0, 247, 255, 0.3);
+        }
+
+        .timeline-entry.critical {
+            border-color: #ff006e;
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.2), rgba(255, 0, 110, 0.1));
+        }
+
+        .timeline-entry.suspicious {
+            border-color: #ffd700;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.1));
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 35px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            background: #00f7ff;
+            border: 4px solid #050814;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #050814;
+            font-size: 1.2em;
+            z-index: 2;
+        }
+
+        .timeline-entry.critical .timeline-marker {
+            background: #ff006e;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(255, 0, 110, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(255, 0, 110, 0);
+            }
+        }
+
+        .timeline-entry.suspicious .timeline-marker {
+            background: #ffd700;
+        }
+
+        .timeline-time {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8em;
+            color: #ffd700;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .timeline-event {
+            font-size: 1.3em;
+            color: #00f7ff;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .timeline-details {
+            color: #00f7ff;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .timeline-actors {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 4px solid #ffd700;
+        }
+
+        .timeline-actors h4 {
+            color: #ffd700;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .actor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .actor-item {
+            padding: 8px;
+            background: rgba(0, 247, 255, 0.1);
+            border-left: 3px solid #00f7ff;
+            font-size: 0.95em;
+        }
+
+        .actor-name {
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .actor-location {
+            color: #00f7ff;
+            font-size: 0.9em;
+        }
+
+        .evidence-tag {
+            display: inline-block;
+            background: rgba(255, 0, 110, 0.3);
+            color: #ff006e;
+            padding: 4px 10px;
+            border-radius: 3px;
+            font-size: 0.85em;
+            margin: 5px 5px 5px 0;
+            font-weight: bold;
+            border: 1px solid #ff006e;
+        }
+
+        .critical-note {
+            background: rgba(255, 0, 110, 0.2);
+            border: 2px solid #ff006e;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+
+        .critical-note h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff006e;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .critical-note p {
+            color: #00f7ff;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .smoking-gun {
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.3), rgba(255, 0, 110, 0.2));
+            border: 3px solid #ff006e;
+            padding: 30px;
+            margin: 40px 0;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 20px rgba(255, 0, 110, 0.5);
+            }
+            to {
+                box-shadow: 0 0 40px rgba(255, 0, 110, 0.8);
+            }
+        }
+
+        .smoking-gun h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff006e;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .smoking-gun p {
+            color: #ffd700;
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 2px solid #00f7ff;
+            margin-top: 50px;
+            color: #00f7ff;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .timeline-entry {
+                padding-left: 80px;
+            }
+
+            .timeline-line {
+                left: 30px;
+            }
+
+            .timeline-marker {
+                left: 22px;
+                width: 20px;
+                height: 20px;
+                font-size: 0.9em;
+            }
+
+            .actor-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="back-btn">◄ RETURN TO MAIN DATABASE</a>
+            <h1>⏱️ TIMELINE RECONSTRUCTION</h1>
+            <div style="color: #ffd700; font-family: 'Share Tech Mono', monospace; margin-top: 10px;">
+                NOVEMBER 27, 2024 - HOUR BY HOUR ANALYSIS
+            </div>
+        </header>
+
+        <div class="evidence-header">
+            <h2>EVIDENCE FILE: TIMELINE-2024-1127</h2>
+            <p><strong>Compiled By:</strong> Lead Detective Sarah Morrison - Homicide Division</p>
+            <p><strong>Sources:</strong> Security logs, phone records, witness statements, forensic analysis, computer logs</p>
+            <p><strong>Scope:</strong> Complete reconstruction of events from 06:00 AM to 11:00 AM on November 27, 2024</p>
+            <p style="margin-top: 15px; color: #ff006e;"><strong>OBJECTIVE:</strong> Establish precise timeline of victim's movements, suspect activities, and critical events leading to and following the murder of Dr. Elena Voss.</p>
+        </div>
+
+        <div class="timeline-container">
+            <div class="timeline-line"></div>
+
+            <!-- 06:58 -->
+            <div class="timeline-entry">
+                <div class="timeline-marker">1</div>
+                <div class="timeline-time">06:58 AM</div>
+                <div class="timeline-event">James Keller Arrives - First Person On Scene</div>
+                <div class="timeline-details">
+                    Lab technician James Keller enters Research Wing 3 via main door. Keycard log shows entry at 06:58:14. Keller is scheduled for early maintenance shift. He proceeds directly to equipment storage areas.
+                </div>
+                <div class="timeline-actors">
+                    <h4>Personnel Locations</h4>
+                    <div class="actor-grid">
+                        <div class="actor-item">
+                            <div class="actor-name">James Keller</div>
+                            <div class="actor-location">Research Wing 3 - General Area</div>
+                        </div>
+                    </div>
+                </div>
+                <span class="evidence-tag">Security Log</span>
+            </div>
+
+            <!-- 07:15 -->
+            <div class="timeline-entry">
+                <div class="timeline-marker">2</div>
+                <div class="timeline-time">07:15 AM</div>
+                <div class="timeline-event">Dr. Elena Voss Arrives at Laboratory</div>
+                <div class="timeline-details">
+                    Victim Dr. Elena Voss enters Research Wing 3 at 07:15:03. She proceeds directly to her personal laboratory (Lab 3A). Security cameras show she is carrying her briefcase and personal coffee thermos. She begins her normal morning routine of reviewing overnight data analysis results.
+                </div>
+                <div class="timeline-actors">
+                    <h4>Personnel Locations</h4>
+                    <div class="actor-grid">
+                        <div class="actor-item">
+                            <div class="actor-name">Dr. Elena Voss</div>
+                            <div class="actor-location">Lab 3A - Her Primary Workspace</div>
+                        </div>
+                        <div class="actor-item">
+                            <div class="actor-name">James Keller</div>
+                            <div class="actor-location">Research Wing 3 - Equipment Areas</div>
+                        </div>
+                    </div>
+                </div>
+                <span class="evidence-tag">Security Log</span>
+                <span class="evidence-tag">Camera Footage</span>
+            </div>
+
+            <!-- 07:28 -->
+            <div class="timeline-entry">
+                <div class="timeline-marker">3</div>
+                <div class="timeline-time">07:28 AM</div>
+                <div class="timeline-event">Nina Garcia Arrives</div>
+                <div class="timeline-details">
+                    Junior researcher Nina Garcia enters Research Wing 3 at 07:28:41. She proceeds to Data Processing Center (Room 3F) where she logs into her workstation at 07:42 AM according to computer records. Garcia remains in this location for the duration of the morning, with multiple coworkers present.
+                </div>
+                <div class="timeline-actors">
+                    <h4>Personnel Locations</h4>
+                    <div class="actor-grid">
+                        <div class="actor-item">
+                            <div class="actor-name">Dr. Elena Voss</div>
+                            <div class="actor-location">Lab 3A</div>
+                        </div>
+                        <div class="actor-item">
+                            <div class="actor-name">James Keller</div>
+                            <div class="actor-location">Research Wing 3</div>
+                        </div>
+                        <div class="actor-item">
+                            <div class="actor-name">Nina Garcia</div>
+                            <div class="actor-location">Data Processing Center 3F</div>
+                        </div>
+                    </div>
+                </div>
+                <span class="evidence-tag">Security Log</span>
+                <span class="evidence-tag">Computer Log</span>
+            </div>
+
+            <!-- 07:43 -->
+            <div class="timeline-entry">
+                <div class="timeline-marker">4</div>
+                <div class="timeline-time">07:43 AM</div>
+                <div class="timeline-event">Dr. Robert Nash Arrives</div>
+                <div class="timeline-details">
+                    Chemical Safety Officer Dr. Robert Nash enters Research Wing 3 at 07:43:27. He is scheduled to conduct quarterly chemical inventory audit. Nash has access to all hazardous materials storage including Chemical Storage Room 3C where potassium cyanide is kept.
+                </div>
+                <div class="timeline-actors">
+                    <h4>Personnel Locations</h4>
+                    <div class="actor-grid">
+                        <div class="actor-item">
+                            <div class="actor-name">Dr. Elena Voss</div>
+                            <div class="actor-location">Lab 3A</div>
+                        </div>
+                        <div class="actor-item">
+                            <div class="actor-name">James Keller</div>
+                            <div class="actor-location">Research Wing 3</div>
+                        </div>
+                        <div class="actor-item">
+                            <div class="actor-name">Nina Garcia</div>
+                            <div class="actor-location">Data Processing 3F</div>
+                        </div>
+                        <div class="actor-item">
+                            <div class="actor-name">Dr. Robert Nash</div>
+                            <div class="actor-location">Research Wing 3 - General</div>
+                        </div>
+                    </div>
+                </div>
+                <span class="evidence-tag">Security Log</span>
+            </div>
+
+            <!-- 08:01 -->
+            <div class="timeline-entry">
+                <div class="timeline-marker">5</div>
+                <div class="timeline-time">08:01 AM</div>
+                <div class="timeline-event">Dr. Nash Enters Chemical Storage</div>
+                <div class="timeline-details">
+                    Dr. Nash accesses Chemical Storage Room 3C at 08:01:55. This room contains Container KCN-077 (potassium cyanide) which was later confirmed as the source of the murder weapon. Nash will remain in this room conducting inventory for approximately 1 hour 46 minutes - significantly longer than typical.
+                </div>
+                <div class="timeline-actors">
+                    <h4>Personnel Locations</h4>
+                    <div class="actor-grid">
+                        <div class="actor-item">
+                            <div class="actor-name">Dr. Robert Nash</div>
+                            <div class="actor-location">⚠️ Chemical Storage 3C</div>
+                        </div>
+                    </div>
+                </div>
+                <span class="evidence-tag">Security Log</span>
+                <span class="evidence-tag">Chemical Access</span>
+            </div>
+
+            <!-- 08:02 -->
+            <div class="timeline-entry">
+                <div class="timeline-marker">6</div>
+                <div class="timeline-time">08:02 AM</div>
+                <div class="timeline-event">Keller Enters Storage Room 3D</div>
+                <div class="timeline-details">
+                    James Keller enters Storage Room 3D at 08:02:18 to perform scheduled equipment calibration. He will remain logged in this room until 09:28 AM. However, as maintenance staff, Keller has master access to all internal doors and could move between rooms without keycard logging.
+                </div>
+                <span class="evidence-tag">Security Log</span>
+            </div>
+
+            <!-- 08:13 -->
+            <div class="timeline-entry suspicious">
+                <div class="timeline-marker">⚠</div>
+                <div class="timeline-time">08:13 AM</div>
+                <div class="timeline-event">Dr. Sarah Rivers Arrives - CRITICAL WINDOW</div>
+                <div class="timeline-details">
+                    Director of Research Operations Dr. Sarah Rivers enters Research Wing 3 at 08:13:09. She is conducting "routine inspection rounds" but arrived specifically to confront Dr. Voss about the GeneTech negotiations. This visit was planned the previous evening in communications with the CEO.
+                </div>
+                <div class="timeline-actors">
+                    <h4>Personnel Locations</h4>
+                    <div class="actor-grid">
+                        <div class="actor-item">
+                            <div class="actor-name">Dr. Sarah Rivers</div>
+                            <div class="actor-location">Research Wing 3 - Moving to Lab 3A</div>
+                        </div>
+                        <div class="actor-item">
+                            <div class="actor-name">Dr. Elena Voss</div>
+                            <div class="actor-location">Lab 3A</div>
+                        </div>
+                        <div class="actor-item">
+                            <div class="actor-name">Dr. Robert Nash</div>
+                            <div class="actor-location">Chemical Storage 3C</div>
+                        </div>
+                        <div class="actor-item">
+                            <div class="actor-name">James Keller</div>
+                            <div class="actor-location">Storage Room 3D</div>
+                        </div>
+                        <div class="actor-item">
+                            <div class="actor-name">Nina Garcia</div>
+                            <div class="actor-location">Data Processing 3F</div>
+                        </div>
+                    </div>
+                </div>
+                <span class="evidence-tag">Security Log</span>
+                <span class="evidence-tag">Witness Statement</span>
+            </div>
+
+            <!-- 08:30 -->
+            <div class="timeline-entry suspicious">
+                <div class="timeline-marker">⚠</div>
+                <div class="timeline-time">08:30 AM</div>
+                <div class="timeline-event">Rivers Visits Dr. Voss in Lab 3A</div>
+                <div class="timeline-details">
+                    Dr. Rivers enters Lab 3A and speaks with Dr. Voss for approximately 5 minutes. Witness statement from Rivers claims they discussed "quarterly reports" but email evidence shows this was likely the confrontation about GeneTech negotiations. No witnesses to this conversation - only Rivers and Voss were present. Rivers had access to Dr. Voss's coffee during this visit.
+                </div>
+                <div class="critical-note">
+                    <h3>⚠️ OPPORTUNITY WINDOW FOR POISONING #1</h3>
+                    <p><strong>Suspect: Dr. Sarah Rivers</strong></p>
+                    <p>Dr. Rivers had physical access to Dr. Voss's workspace from approximately 08:30-08:35 AM. If Voss's coffee was already on her desk, Rivers could have added poison during this visit. The cyanide concentration and timing would allow Voss to die at 09:47 AM (1 hour 17 minutes later, accounting for 8-12 minute action time after consumption).</p>
+                    <p><strong>Problem:</strong> Rivers was on video conference starting at 09:02 AM when the computer files were stolen at 09:23 AM. She could not have stolen the data herself.</p>
+                </div>
+                <span class="evidence-tag">Witness Statement</span>
+                <span class="evidence-tag">Opportunity</span>
+            </div>
+
+            <!-- 08:37 -->
+            <div class="timeline-entry">
+                <div class="timeline-marker">7</div>
+                <div class="timeline-time">08:37 AM</div>
+                <div class="timeline-event">Dr. Rivers Exits Research Wing 3</div>
+                <div class="timeline-details">
+                    Dr. Rivers exits Research Wing 3 at 08:37:44 after 24 minutes of presence. She returns to Administrative Wing and will be on video conference calls from 09:02 AM onward, giving her a strong alibi for the data theft at 09:23 AM.
+                </div>
+                <span class="evidence-tag">Security Log</span>
+            </div>
+
+            <!-- 08:47 -->
+            <div class="timeline-entry suspicious">
+                <div class="timeline-marker">⚠</div>
+                <div class="timeline-time">08:47 AM</div>
+                <div class="timeline-event">Dr. Marcus Chen Arrives</div>
+                <div class="timeline-details">
+                    Senior Research Assistant Dr. Marcus Chen enters Research Wing 3 at 08:47:33. He proceeds to Lab 3B (adjacent to Dr. Voss's Lab 3A). Internal doors between labs do not require keycard access - Chen could move freely to Lab 3A without electronic record. Chen will discover the body at 09:52 AM.
+                </div>
+                <div class="timeline-actors">
+                    <h4>Personnel Locations - ALL SUSPECTS NOW PRESENT</h4>
+                    <div class="actor-grid">
+                        <div class="actor-item">
+                            <div class="actor-name">Dr. Marcus Chen</div>
+                            <div class="actor-location">Lab 3B (adjacent to victim)</div>
+                        </div>
+                        <div class="actor-item">
+                            <div class="actor-name">Dr. Elena Voss</div>
+                            <div class="actor-location">Lab 3A - ALIVE</div>
+                        </div>
+                        <div class="actor-item">
+                            <div class="actor-name">Dr. Robert Nash</div>
+                            <div class="actor-location">Chemical Storage 3C</div>
+                        </div>
+                        <div class="actor-item">
+                            <div class="actor-name">James Keller</div>
+                            <div class="actor-location">Storage Room 3D</div>
+                        </div>
+                        <div class="actor-item">
+                            <div class="actor-name">Nina Garcia</div>
+                            <div class="actor-location">Data Processing 3F (witnesses)</div>
+                        </div>
+                    </div>
+                </div>
+                <span class="evidence-tag">Security Log</span>
+            </div>
+
+            <!-- 09:20 -->
+            <div class="timeline-entry critical">
+                <div class="timeline-marker">🔴</div>
+                <div class="timeline-time">09:20 AM</div>
+                <div class="timeline-event">CRITICAL WINDOW BEGINS</div>
+                <div class="timeline-details">
+                    This marks the beginning of the critical period during which the murder and data theft occurred. Based on forensic analysis, Dr. Voss's coffee was contaminated and consumed sometime between 09:20-09:35 AM. All three primary suspects (Chen, Nash, Keller) were present in Research Wing 3 with no exits logged.
+                </div>
+                <div class="critical-note">
+                    <h3>🎯 OPPORTUNITY WINDOW FOR POISONING #2</h3>
+                    <p><strong>Time Frame: 09:20-09:35 AM</strong></p>
+                    <p>The forensic team determined the coffee was contaminated 5-15 minutes before consumption. If Dr. Voss drank the coffee at approximately 09:40 AM (dying at 09:47 AM after 8-12 minute action time), the poison was added between 09:20-09:35 AM.</p>
+                    <p><strong>Suspects with Access During This Window:</strong></p>
+                    <p>• Dr. Marcus Chen - Lab 3B, adjacent to victim's lab, no exit logged<br>
+                    • James Keller - Exited Storage 3D at 09:28 AM, has master access to all internal doors<br>
+                    • Dr. Robert Nash - Still in Chemical Storage 3C with the murder weapon</p>
+                </div>
+                <span class="evidence-tag">Forensic Analysis</span>
+                <span class="evidence-tag">Critical Period</span>
+            </div>
+
+            <!-- 09:23 -->
+            <div class="timeline-entry critical">
+                <div class="timeline-marker">💀</div>
+                <div class="timeline-time">09:23 AM</div>
+                <div class="timeline-event">🚨 PROJECT HELIX FILES STOLEN 🚨</div>
+                <div class="timeline-details">
+                    Computer forensics show that at precisely 09:23:17 AM, Dr. Voss's secure terminal was accessed using her credentials and biometric fingerprint. The complete Project Helix formula was copied to an external USB device, then permanently deleted using military-grade wiping software. Operation completed at 09:26:29 AM (3 minutes 12 seconds total).
+                </div>
+                <div class="smoking-gun">
+                    <h3>🎯 SMOKING GUN EVIDENCE 🎯</h3>
+                    <p><strong>CRITICAL FINDING:</strong> Based on the poisoning timeline, Dr. Voss was likely already unconscious or dying at 09:23 AM when the files were stolen. The killer administered the poison, waited for it to take effect, then used her incapacitated or recently deceased body to access the biometric scanner and steal the data.</p>
+                    <p><strong>This proves the murder and data theft were coordinated actions by the same person(s).</strong></p>
+                    <p><strong>Required Capabilities:</strong></p>
+                    <p>1. Physical access to Lab 3A at 09:23 AM<br>
+                    2. Knowledge of computer systems and data theft procedures<br>
+                    3. Access to Dr. Voss's hand for biometric scan (she was dying/dead)<br>
+                    4. Level 4+ security clearance for terminal access<br>
+                    5. Possession of external USB drive (encrypted device found on Keller)</p>
+                </div>
+                <span class="evidence-tag">Computer Forensics</span>
+                <span class="evidence-tag">Smoking Gun</span>
+                <span class="evidence-tag">Biometric Access</span>
+            </div>
+
+            <!-- 09:28 -->
+            <div class="timeline-entry suspicious">
+                <div class="timeline-marker">⚠</div>
+                <div class="timeline-time">09:28 AM</div>
+                <div class="timeline-event">Keller Exits Storage Room 3D</div>
+                <div class="timeline-details">
+                    James Keller's keycard logs exit from Storage Room 3D at 09:28:07 - just 5 minutes after the data theft and 19 minutes before the estimated time of death. Keller claimed he was "doing equipment rounds" between 09:28-10:15 AM but cannot provide specific alibi for where he was during the critical 09:28-09:52 window.
+                </div>
+                <div class="critical-note">
+                    <h3>⚠️ KELLER'S SUSPICIOUS TIMING</h3>
+                    <p>Keller exits Storage Room 3D at 09:28 AM, only 5 minutes after the data theft. His maintenance access allows him to move between rooms without keycard logging. Keller had:</p>
+                    <p>• Physical access to Lab 3A (master keys)<br>
+                    • Encrypted USB device in his possession<br>
+                    • $15,000 payment from offshore account<br>
+                    • No alibi for 09:28-09:52 AM period</p>
+                    <p><strong>However:</strong> Keller has only Level 3 clearance - insufficient for Dr. Voss's secure terminal. He would need help from someone with Level 4+ access.</p>
+                </div>
+                <span class="evidence-tag">Security Log</span>
+                <span class="evidence-tag">Suspicious Timing</span>
+            </div>
+
+            <!-- 09:40 -->
+            <div class="timeline-entry critical">
+                <div class="timeline-marker">☠️</div>
+                <div class="timeline-time">09:40 AM</div>
+                <div class="timeline-event">Dr. Voss Consumes Poisoned Coffee (Estimated)</div>
+                <div class="timeline-details">
+                    Based on forensic analysis of stomach contents and cyanide absorption rates, Dr. Voss consumed approximately 75% of her poisoned coffee around 09:40 AM (±3 minutes). The 3.2 mg/L blood concentration indicates she ingested approximately 170-200 mg of potassium cyanide with an 8-12 minute time to death.
+                </div>
+                <span class="evidence-tag">Forensic Analysis</span>
+                <span class="evidence-tag">Toxicology</span>
+            </div>
+
+            <!-- 09:47 -->
+            <div class="timeline-entry critical">
+                <div class="timeline-marker">💀</div>
+                <div class="timeline-time">09:47 AM</div>
+                <div class="timeline-event">🚨 ESTIMATED TIME OF DEATH 🚨</div>
+                <div class="timeline-details">
+                    Dr. Elena Voss dies from acute cyanide poisoning at approximately 09:47 AM. Cause of death: respiratory and cardiac failure induced by cellular asphyxiation. The cyanide concentration was 6-7 times the lethal dose, ensuring rapid death. Victim collapsed at her workstation, unable to call for help.
+                </div>
+                <div class="timeline-actors">
+                    <h4>Personnel Locations at Time of Death</h4>
+                    <div class="actor-grid">
+                        <div class="actor-item">
+                            <div class="actor-name">Dr. Marcus Chen</div>
+                            <div class="actor-location">Lab 3B - No exit logged</div>
+                        </div>
+                        <div class="actor-item">
+                            <div class="actor-name">Dr. Robert Nash</div>
+                            <div class="actor-location">⚠️ EXITS CHEMICAL STORAGE 09:47 - SAME MINUTE!</div>
+                        </div>
+                        <div class="actor-item">
+                            <div class="actor-name">James Keller</div>
+                            <div class="actor-location">Unknown - Between equipment rounds</div>
+                        </div>
+                        <div class="actor-item">
+                            <div class="actor-name">Nina Garcia</div>
+                            <div class="actor-location">Data Processing 3F (alibied)</div>
+                        </div>
+                        <div class="actor-item">
+                            <div class="actor-name">Dr. Sarah Rivers</div>
+                            <div class="actor-location">Admin Wing - Video Conference (alibied)</div>
+                        </div>
+                    </div>
+                </div>
+                <span class="evidence-tag">Medical Examiner</span>
+                <span class="evidence-tag">Time of Death</span>
+            </div>
+
+            <!-- 09:47 NASH -->
+            <div class="timeline-entry critical">
+                <div class="timeline-marker">🚨</div>
+                <div class="timeline-time">09:47 AM</div>
+                <div class="timeline-event">Dr. Nash Exits Chemical Storage - EXACT TIME OF DEATH</div>
+                <div class="timeline-details">
+                    Dr. Robert Nash exits Chemical Storage Room 3C at 09:47:22 - the exact same minute as the estimated time of death. He spent 1 hour 46 minutes in the chemical storage facility with the murder weapon (potassium cyanide). This timing is extraordinarily suspicious.
+                </div>
+                <div class="smoking-gun">
+                    <h3>🔥 CRITICAL TIMING COINCIDENCE 🔥</h3>
+                    <p><strong>Dr. Nash exits the room containing the murder weapon at the EXACT minute the victim dies.</strong></p>
+                    <p>However, analysis reveals a problem with Nash as sole perpetrator:<br>
+                    • Nash was in Chemical Storage continuously from 08:01-09:47 AM<br>
+                    • Computer files were stolen at 09:23 AM from Lab 3A<br>
+                    • Nash cannot have been in two places simultaneously<br>
+                    • Nash lacks computer skills for sophisticated data theft</p>
+                    <p><strong>Possible Explanations:</strong><br>
+                    1. Extreme coincidence (unlikely)<br>
+                    2. Nash and another person worked together<br>
+                    3. Someone is framing Nash with false timestamps</p>
+                </div>
+                <span class="evidence-tag">Security Log</span>
+                <span class="evidence-tag">Critical Timing</span>
+            </div>
+
+            <!-- 09:50 -->
+            <div class="timeline-entry suspicious">
+                <div class="timeline-marker">⚠</div>
+                <div class="timeline-time">09:50 AM</div>
+                <div class="timeline-event">Dr. Nash Exits Research Wing 3</div>
+                <div class="timeline-details">
+                    Dr. Nash exits Research Wing 3 entirely at 09:50:18 - only 3 minutes after Dr. Voss's death and 2 minutes before her body is discovered. Nash proceeds to the cafeteria where multiple witnesses place him from approximately 10:00 AM onward. Nash claimed he was unaware of any problems when he left.
+                </div>
+                <span class="evidence-tag">Security Log</span>
+                <span class="evidence-tag">Witness Statement</span>
+            </div>
+
+            <!-- 09:52 -->
+            <div class="timeline-entry critical">
+                <div class="timeline-marker">🚨</div>
+                <div class="timeline-time">09:52 AM</div>
+                <div class="timeline-event">Body Discovered by Dr. Marcus Chen</div>
+                <div class="timeline-details">
+                    Dr. Marcus Chen enters Lab 3A and discovers Dr. Voss collapsed at her workstation. Chen claims he went to check on her because "she hadn't responded to his morning greeting." Chen immediately recognizes she is deceased and calls 911 at 10:24 AM (note: 32-minute delay before calling emergency services - Chen claims he first checked for pulse, attempted CPR, then panicked before calling).
+                </div>
+                <div class="critical-note">
+                    <h3>⚠️ CHEN'S DISCOVERY - SUSPICIOUS ELEMENTS</h3>
+                    <p><strong>Timing Questions:</strong></p>
+                    <p>• Chen discovers body only 5 minutes after death - remarkably quick<br>
+                    • Chen was in adjacent Lab 3B the entire morning with no exit logged<br>
+                    • Chen had both motive ($127K debt) and opportunity (physical access)<br>
+                    • Chen has Level 4 clearance - sufficient for terminal access<br>
+                    • Chen late-night conversation with Keller about "taking control of situation"</p>
+                    <p><strong>Counter-Evidence:</strong><br>
+                    • Chen's 911 call shows genuine distress (voice stress analysis)<br>
+                    • Chen would be extremely obvious suspect as discoverer<br>
+                    • No evidence Chen possessed USB drive or cyanide</p>
+                </div>
+                <span class="evidence-tag">Witness Statement</span>
+                <span class="evidence-tag">911 Call</span>
+            </div>
+
+            <!-- 10:07 -->
+            <div class="timeline-entry">
+                <div class="timeline-marker">8</div>
+                <div class="timeline-time">10:07 AM</div>
+                <div class="timeline-event">Security Team Arrives - Lockdown Initiated</div>
+                <div class="timeline-details">
+                    BioGenex security team enters Research Wing 3 at 10:07:55 in response to Chen's 911 call. Building is placed under immediate lockdown. All personnel in Research Wing 3 are detained for questioning. No one is permitted to leave until police arrive and clear them individually.
+                </div>
+                <span class="evidence-tag">Security Response</span>
+            </div>
+
+            <!-- 10:47 -->
+            <div class="timeline-entry critical">
+                <div class="timeline-marker">📞</div>
+                <div class="timeline-time">10:47 AM</div>
+                <div class="timeline-event">Keller Makes Encrypted Call to Cayman Islands</div>
+                <div class="timeline-details">
+                    While detained during security lockdown, James Keller makes a 52-second call on his encrypted burner phone to his Cayman Islands contact - only 55 minutes after the body was discovered. This strongly suggests Keller was reporting to his handler about the operation's completion.
+                </div>
+                <div class="smoking-gun">
+                    <h3>📱 KELLER'S POST-MURDER CALL</h3>
+                    <p><strong>Evidence of Criminal Conspiracy:</strong></p>
+                    <p>Keller called his offshore handler during the security lockdown, suggesting he was providing an update on the mission. Combined with:</p>
+                    <p>• $15,000 payment received Nov 13<br>
+                    • Encrypted email promising $85,000 more upon data delivery<br>
+                    • Encrypted USB device in his possession<br>
+                    • Access to all areas via master keys<br>
+                    • Timing of exit from Storage 3D (09:28, 5 min after data theft)</p>
+                    <p><strong>This confirms Keller was hired for corporate espionage, but did his assignment include murder?</strong></p>
+                </div>
+                <span class="evidence-tag">Phone Records</span>
+                <span class="evidence-tag">Burner Phone</span>
+            </div>
+
+        </div>
+
+        <div class="smoking-gun" style="margin-top: 60px;">
+            <h3>🎯 FINAL TIMELINE ANALYSIS 🎯</h3>
+            <p><strong>THE CRITICAL QUESTION:</strong> Who had BOTH opportunity AND capability?</p>
+            <p style="margin-top: 20px;"><strong>Required to commit this crime:</strong></p>
+            <p>1. Access to Chemical Storage Room 3C (Level 3+ clearance)<br>
+            2. Physical access to Lab 3A during 09:20-09:50 window<br>
+            3. Level 4+ security clearance for secure terminal access<br>
+            4. Computer knowledge for data theft<br>
+            5. Possession of encrypted USB device</p>
+            <p style="margin-top: 20px; color: #ff006e;"><strong>ANALYSIS:</strong></p>
+            <p>• Rivers: Had opportunity to poison (08:30 visit) but alibied during data theft (09:23)<br>
+            • Nash: Had cyanide access and suspicious exit timing (09:47) but was in Chemical Storage during data theft (09:23)<br>
+            • Chen: Had computer access and was present entire time, but no evidence of cyanide access or USB device<br>
+            • Keller: Had physical access and USB device, but insufficient clearance for terminal (Level 3)<br>
+            • Garcia: Strong alibi, insufficient clearance, no access to chemicals</p>
+            <p style="margin-top: 20px; font-size: 1.4em; color: #ffd700;"><strong>Could this have been a CONSPIRACY between two suspects?</strong></p>
+        </div>
+
+        <div style="text-align: center; margin: 40px 0;">
+            <a href="index.html" class="back-btn">◄ RETURN TO MAIN DATABASE</a>
+        </div>
+
+        <footer>
+            <p>Timeline Reconstruction Complete</p>
+            <p>Lead Detective: Sarah Morrison | November 28, 2024</p>
+        </footer>
+    </div>
+</body>
+</html>

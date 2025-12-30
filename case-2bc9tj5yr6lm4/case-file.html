@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CASE FILE - SUSPECT PROFILES</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #050814;
+            color: #00f7ff;
+            font-family: 'Rajdhani', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 1000;
+            animation: scanlines 8s linear infinite;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 2px solid #ff006e;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5em;
+            color: #ff006e;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #ff006e, 0 0 20px #ff006e;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #00f7ff, #00d4dd);
+            color: #050814;
+            padding: 12px 25px;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 2px solid #00f7ff;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.6);
+        }
+
+        .victim-profile {
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.2), rgba(255, 0, 110, 0.1));
+            border: 3px solid #ff006e;
+            padding: 30px;
+            margin-bottom: 50px;
+            border-radius: 5px;
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.4);
+        }
+
+        .victim-profile h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff006e;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .profile-item {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-left: 4px solid #ffd700;
+        }
+
+        .profile-label {
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .profile-value {
+            color: #00f7ff;
+            font-size: 1.1em;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffd700;
+            font-size: 2em;
+            margin: 40px 0 25px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 2px solid #00f7ff;
+            padding-bottom: 10px;
+        }
+
+        .suspect-card {
+            background: linear-gradient(135deg, rgba(0, 247, 255, 0.05), rgba(255, 0, 110, 0.05));
+            border: 2px solid #00f7ff;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .suspect-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 247, 255, 0.1), transparent);
+            transition: left 0.7s ease;
+        }
+
+        .suspect-card:hover::before {
+            left: 100%;
+        }
+
+        .suspect-card:hover {
+            border-color: #ffd700;
+            box-shadow: 0 5px 20px rgba(0, 247, 255, 0.3);
+            transform: translateX(5px);
+        }
+
+        .suspect-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .suspect-name {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff006e;
+            font-size: 1.8em;
+            text-transform: uppercase;
+        }
+
+        .suspect-role {
+            color: #ffd700;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .threat-level {
+            display: inline-block;
+            background: #ff006e;
+            color: #fff;
+            padding: 5px 15px;
+            font-family: 'Share Tech Mono', monospace;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .suspect-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .detail-box {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 12px;
+            border-left: 3px solid #00f7ff;
+        }
+
+        .detail-label {
+            color: #ffd700;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            color: #00f7ff;
+            font-size: 1em;
+        }
+
+        .section-block {
+            margin: 20px 0;
+        }
+
+        .section-block h3 {
+            color: #ffd700;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .section-block p {
+            color: #00f7ff;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .alibi-box {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid #ffd700;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .alibi-box h4 {
+            color: #ffd700;
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 10px;
+        }
+
+        .motive-box {
+            background: rgba(255, 0, 110, 0.1);
+            border: 2px solid #ff006e;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .motive-box h4 {
+            color: #ff006e;
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 10px;
+        }
+
+        .warning-box {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid #ffd700;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+            font-family: 'Share Tech Mono', monospace;
+            color: #ffd700;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 2px solid #00f7ff;
+            margin-top: 50px;
+            color: #00f7ff;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .suspect-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .profile-grid,
+            .suspect-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="back-btn">◄ RETURN TO MAIN DATABASE</a>
+            <h1>📋 CASE FILE</h1>
+            <div style="color: #ffd700; font-family: 'Share Tech Mono', monospace; margin-top: 10px;">
+                VICTIM PROFILE & SUSPECT DOSSIERS
+            </div>
+        </header>
+
+        <div class="victim-profile">
+            <h2>🔴 VICTIM: DR. ELENA VOSS</h2>
+            
+            <div class="profile-grid">
+                <div class="profile-item">
+                    <div class="profile-label">Age</div>
+                    <div class="profile-value">42 years old</div>
+                </div>
+                <div class="profile-item">
+                    <div class="profile-label">Position</div>
+                    <div class="profile-value">Chief Research Scientist</div>
+                </div>
+                <div class="profile-item">
+                    <div class="profile-label">Department</div>
+                    <div class="profile-value">Advanced Vaccine Development</div>
+                </div>
+                <div class="profile-item">
+                    <div class="profile-label">Time at BioGenex</div>
+                    <div class="profile-value">8 years</div>
+                </div>
+                <div class="profile-item">
+                    <div class="profile-label">Height / Build</div>
+                    <div class="profile-value">5'6" / Average build</div>
+                </div>
+                <div class="profile-item">
+                    <div class="profile-label">Security Clearance</div>
+                    <div class="profile-value">Level 5 (Highest)</div>
+                </div>
+            </div>
+
+            <div class="section-block" style="margin-top: 25px;">
+                <h3>Background</h3>
+                <p>Dr. Elena Voss was the lead scientist on Project Helix, a groundbreaking vaccine platform with potential applications across multiple viral diseases. The project represented 3 years of research and was valued at approximately $50 million in potential pharmaceutical revenue. Dr. Voss held sole authority over the complete formula and had been protective of the intellectual property, refusing to share full documentation even with senior management.</p>
+                <p>Known for her meticulous nature and demanding leadership style, Dr. Voss had recently become increasingly paranoid about corporate espionage. She had implemented additional security protocols and was in the process of patenting the formula under her own name, causing significant tension with BioGenex executives.</p>
+            </div>
+
+            <div class="section-block">
+                <h3>Time of Death</h3>
+                <p><strong>Estimated: 09:47 AM, November 27, 2024</strong></p>
+                <p>Dr. Voss arrived at her laboratory at 07:15 AM. Security footage shows she remained in Research Wing 3 continuously until her death. She was discovered collapsed at her workstation by research assistant Marcus Chen at 09:52 AM. Emergency services pronounced her dead at 10:08 AM.</p>
+            </div>
+
+            <div class="section-block">
+                <h3>Cause of Death</h3>
+                <p><strong>Acute Cyanide Poisoning</strong></p>
+                <p>Toxicology analysis confirmed lethal levels of potassium cyanide in her system. The poison was administered via her morning coffee, which was found on her desk approximately 75% consumed. Time to death after ingestion: 8-12 minutes based on concentration levels. The coffee mug contained residue consistent with laboratory-grade potassium cyanide from BioGenex's own chemical storage.</p>
+            </div>
+        </div>
+
+        <div class="warning-box">
+            ⚠️ CRITICAL INFORMATION: The complete Project Helix formula was accessed from Dr. Voss's secure terminal at 09:23 AM and subsequently deleted. Digital forensics indicates the files were transferred to an encrypted external device. All five suspects had physical access to Research Wing 3 during the critical timeframe (07:00-10:00 AM). ⚠️
+        </div>
+
+        <h2 class="section-title">👥 SUSPECT PROFILES</h2>
+
+        <!-- SUSPECT 1 -->
+        <div class="suspect-card">
+            <div class="suspect-header">
+                <div>
+                    <div class="suspect-name">DR. MARCUS CHEN</div>
+                    <div class="suspect-role">Senior Research Assistant</div>
+                    <div class="threat-level">THREAT LEVEL: HIGH</div>
+                </div>
+            </div>
+
+            <div class="suspect-details">
+                <div class="detail-box">
+                    <div class="detail-label">Age</div>
+                    <div class="detail-value">34</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Height / Build</div>
+                    <div class="detail-value">5'10" / Slim</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Time at BioGenex</div>
+                    <div class="detail-value">5 years</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Security Level</div>
+                    <div class="detail-value">Level 4</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Specialty</div>
+                    <div class="detail-value">Molecular Biology</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Status</div>
+                    <div class="detail-value">Under Investigation</div>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3>Background</h3>
+                <p>Dr. Chen has worked directly under Dr. Voss for the past 5 years and was her most trusted assistant on Project Helix. Brilliant researcher with a PhD in molecular biology from Stanford. Recently passed over for promotion to Associate Scientist position, which was given to an external hire instead. Colleagues report growing tension between Chen and Voss over research credit and authorship on upcoming publications.</p>
+            </div>
+
+            <div class="motive-box">
+                <h4>MOTIVE</h4>
+                <p><strong>Professional Resentment + Financial Desperation:</strong> Dr. Chen was promised co-authorship on the Project Helix patents but Dr. Voss recently excluded him from all patent filings, claiming sole inventor status. This would cost Chen millions in royalties. Additionally, Chen has significant gambling debts ($127,000) and was facing pressure from creditors. He had opportunity to steal the formula and sell it to competitors.</p>
+            </div>
+
+            <div class="alibi-box">
+                <h4>ALIBI</h4>
+                <p><strong>Claims:</strong> Arrived at Research Wing 3 at 08:45 AM. States he was working in Lab 3B (adjacent to Dr. Voss's Lab 3A) until he discovered her body at 09:52 AM. Says he went to check on her because she hadn't responded to his morning greeting.</p>
+                <p><strong>Verification:</strong> Keycard logs confirm entry at 08:47 AM. No exits recorded until 10:15 AM (after police arrival). However, internal doors between labs don't require keycard access. Claims he didn't enter Lab 3A until 09:52 AM, but this cannot be independently verified.</p>
+                <p><strong>Issues:</strong> Was alone during the critical period (09:20-09:50 AM). Had access to Dr. Voss's coffee (shared kitchen area). Discovered the body suspiciously quickly after her death.</p>
+            </div>
+        </div>
+
+        <!-- SUSPECT 2 -->
+        <div class="suspect-card">
+            <div class="suspect-header">
+                <div>
+                    <div class="suspect-name">DR. SARAH RIVERS</div>
+                    <div class="suspect-role">Director of Research Operations</div>
+                    <div class="threat-level">THREAT LEVEL: MEDIUM</div>
+                </div>
+            </div>
+
+            <div class="suspect-details">
+                <div class="detail-box">
+                    <div class="detail-label">Age</div>
+                    <div class="detail-value">47</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Height / Build</div>
+                    <div class="detail-value">5'7" / Athletic</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Time at BioGenex</div>
+                    <div class="detail-value">12 years</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Security Level</div>
+                    <div class="detail-value">Level 5</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Specialty</div>
+                    <div class="detail-value">Administrative / Oversight</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Status</div>
+                    <div class="detail-value">Cooperative</div>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3>Background</h3>
+                <p>Dr. Rivers oversees all research operations at BioGenex and reports directly to the CEO. She was Dr. Voss's immediate supervisor and had been in increasingly hostile disputes with Voss over Project Helix budgets, timelines, and patent ownership. Rivers wanted BioGenex to own the patents; Voss insisted on personal ownership. Rivers has MBA in addition to her PhD in biochemistry.</p>
+            </div>
+
+            <div class="motive-box">
+                <h4>MOTIVE</h4>
+                <p><strong>Corporate Control + Career Protection:</strong> Dr. Rivers was under pressure from the Board of Directors to secure Project Helix for BioGenex. If Voss succeeded in patenting the formula personally, Rivers would be held responsible for the company's loss. Additionally, Rivers had discovered that Voss was negotiating with rival company GeneTech Corp for a lucrative position and was planning to take Project Helix with her. Rivers' career and reputation were at stake.</p>
+            </div>
+
+            <div class="alibi-box">
+                <h4>ALIBI</h4>
+                <p><strong>Claims:</strong> Arrived at Research Wing 3 at 08:15 AM for routine inspection rounds. States she visited Dr. Voss's lab at approximately 08:30 AM to discuss quarterly reports, spoke briefly with Voss (who was alive and working), then left at 08:35 AM. Returned to her office in the Administrative Wing and was in video conference meetings from 09:00-10:30 AM.</p>
+                <p><strong>Verification:</strong> Keycard shows entry at 08:13 AM and exit at 08:37 AM. Video conference logs confirm her presence in meetings starting at 09:02 AM. Conference system shows her camera was active throughout.</p>
+                <p><strong>Issues:</strong> Had opportunity to contaminate Voss's coffee during her 08:30 visit. The poison's 8-12 minute action time would place death after Rivers left the building. However, she had a strong alibi for the data theft at 09:23 AM - she was visible on camera during that time.</p>
+            </div>
+        </div>
+
+        <!-- SUSPECT 3 -->
+        <div class="suspect-card">
+            <div class="suspect-header">
+                <div>
+                    <div class="suspect-name">JAMES KELLER</div>
+                    <div class="suspect-role">Lab Technician / Maintenance</div>
+                    <div class="threat-level">THREAT LEVEL: MEDIUM</div>
+                </div>
+            </div>
+
+            <div class="suspect-details">
+                <div class="detail-box">
+                    <div class="detail-label">Age</div>
+                    <div class="detail-value">29</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Height / Build</div>
+                    <div class="detail-value">6'1" / Muscular</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Time at BioGenex</div>
+                    <div class="detail-value">3 years</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Security Level</div>
+                    <div class="detail-value">Level 3</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Background</div>
+                    <div class="detail-value">Technical Training</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Status</div>
+                    <div class="detail-value">Detained for Questioning</div>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3>Background</h3>
+                <p>Keller is responsible for equipment maintenance, chemical inventory, and general lab support in Research Wing 3. Has unlimited access to all labs including chemical storage areas. Former military (Army, honorable discharge). Lives modestly despite having access to valuable research. Known to be quiet and professional, though some staff report he seemed unusually interested in Project Helix procedures.</p>
+            </div>
+
+            <div class="motive-box">
+                <h4>MOTIVE</h4>
+                <p><strong>Corporate Espionage:</strong> Financial records show Keller received a $15,000 payment from an offshore account two weeks before the murder. Phone records reveal encrypted communications with an unknown number. Background investigation uncovered that Keller's sister is terminally ill with medical bills exceeding $300,000. He has been desperately seeking money for experimental treatments not covered by insurance. Evidence suggests he may have been hired by a competitor to steal the formula.</p>
+            </div>
+
+            <div class="alibi-box">
+                <h4>ALIBI</h4>
+                <p><strong>Claims:</strong> Arrived at 07:00 AM for routine maintenance. States he was performing equipment calibrations in Storage Room 3D from 08:00-09:30 AM, then was doing rounds checking lab equipment from 09:30-10:15 AM. Says he never entered Lab 3A that morning and didn't see Dr. Voss.</p>
+                <p><strong>Verification:</strong> Keycard confirms entry to Research Wing 3 at 06:58 AM. Storage Room 3D entry logged at 08:02 AM, exit at 09:28 AM. However, Keller has master access to all internal doors and could move between areas without keycard logging.</p>
+                <p><strong>Issues:</strong> Has complete access to chemical storage where the cyanide was kept. Could have accessed Dr. Voss's lab without electronic trace. Timeline places him in the building during both the poisoning and data theft. Was carrying a personal USB drive, which was confiscated by security (contents encrypted).</p>
+            </div>
+        </div>
+
+        <!-- SUSPECT 4 -->
+        <div class="suspect-card">
+            <div class="suspect-header">
+                <div>
+                    <div class="suspect-name">NINA GARCIA</div>
+                    <div class="suspect-role">Junior Research Scientist</div>
+                    <div class="threat-level">THREAT LEVEL: LOW</div>
+                </div>
+            </div>
+
+            <div class="suspect-details">
+                <div class="detail-box">
+                    <div class="detail-label">Age</div>
+                    <div class="detail-value">28</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Height / Build</div>
+                    <div class="detail-value">5'4" / Petite</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Time at BioGenex</div>
+                    <div class="detail-value">1 year</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Security Level</div>
+                    <div class="detail-value">Level 2</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Specialty</div>
+                    <div class="detail-value">Data Analysis</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Status</div>
+                    <div class="detail-value">Cleared</div>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3>Background</h3>
+                <p>Nina Garcia is a recent hire who works on data analysis for multiple research teams. She occasionally assisted with Project Helix data processing but was not privy to the complete formula. Bright and ambitious, she had expressed interest in working more closely with Dr. Voss but was repeatedly denied access to higher-level project details. Known for her technical computer skills and long work hours.</p>
+            </div>
+
+            <div class="motive-box">
+                <h4>MOTIVE</h4>
+                <p><strong>Career Advancement + Revenge:</strong> Garcia had applied for the Senior Research Assistant position that was given to an external candidate instead. She blamed Dr. Voss for blocking her advancement, as Voss had written a lukewarm recommendation letter. Additionally, Garcia's boyfriend works for competitor GeneTech Corp, creating potential conflict of interest. Personal emails reveal bitter complaints about being "kept in the dark" on important projects.</p>
+            </div>
+
+            <div class="alibi-box">
+                <h4>ALIBI</h4>
+                <p><strong>Claims:</strong> Arrived at Research Wing 3 at 07:30 AM. States she was working in the Data Processing Center (Room 3F) from 07:45 AM until 10:30 AM, running statistical models. Says she never left her workstation and didn't see or speak to Dr. Voss that morning. Multiple witnesses place her in the Data Center throughout the morning.</p>
+                <p><strong>Verification:</strong> Keycard entry at 07:28 AM. Security cameras show her entering Data Processing Center at 07:42 AM. Three other staff members confirm she was working at her desk throughout the morning and never left. Computer logs show continuous activity from her workstation 07:50 AM-10:45 AM.</p>
+                <p><strong>Issues:</strong> Her security clearance level (Level 2) would not allow access to Dr. Voss's secure terminal or chemical storage. Alibi is strong and corroborated by multiple sources. However, her computer skills could potentially be used for remote system access if she obtained credentials.</p>
+            </div>
+        </div>
+
+        <!-- SUSPECT 5 -->
+        <div class="suspect-card">
+            <div class="suspect-header">
+                <div>
+                    <div class="suspect-name">DR. ROBERT NASH</div>
+                    <div class="suspect-role">Chemical Safety Officer</div>
+                    <div class="threat-level">THREAT LEVEL: HIGH</div>
+                </div>
+            </div>
+
+            <div class="suspect-details">
+                <div class="detail-box">
+                    <div class="detail-label">Age</div>
+                    <div class="detail-value">51</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Height / Build</div>
+                    <div class="detail-value">5'9" / Heavyset</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Time at BioGenex</div>
+                    <div class="detail-value">15 years</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Security Level</div>
+                    <div class="detail-value">Level 4</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Specialty</div>
+                    <div class="detail-value">Toxicology / Safety</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Status</div>
+                    <div class="detail-value">Under Investigation</div>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3>Background</h3>
+                <p>Dr. Nash oversees all chemical safety protocols and maintains the hazardous materials inventory for BioGenex. Has comprehensive knowledge of toxins and access to all chemical storage areas. Long-term employee with excellent record until recently. Six months ago, Dr. Voss filed a formal complaint against Nash alleging he had falsified safety inspection reports. Nash was placed under review and faced potential termination.</p>
+            </div>
+
+            <div class="motive-box">
+                <h4>MOTIVE</h4>
+                <p><strong>Job Security + Personal Grudge:</strong> Dr. Nash faced termination due to Dr. Voss's safety violations complaint. He vehemently denied the allegations and blamed Voss for "manufacturing evidence" against him. Additionally, Nash had recently been diagnosed with early-onset Alzheimer's disease (confidential medical records) and was desperate to keep his job for the health insurance and retirement benefits. Financial analysis shows he has minimal savings and would lose everything if terminated. Colleagues report Nash made veiled threats about Voss "getting what she deserves."</p>
+            </div>
+
+            <div class="alibi-box">
+                <h4>ALIBI</h4>
+                <p><strong>Claims:</strong> Arrived at Research Wing 3 at 07:45 AM for scheduled chemical inventory audit. States he was in Chemical Storage (Room 3C) from 08:00 AM-09:45 AM conducting physical inventory counts. Says he logged the cyanide container at 08:15 AM and it was properly sealed. Claims he left Research Wing 3 at 09:50 AM and was in the cafeteria from 09:55-10:20 AM (multiple witnesses confirm).</p>
+                <p><strong>Verification:</strong> Keycard entry at 07:43 AM. Chemical Storage access logged 08:01 AM. However, exit from Chemical Storage not logged until 09:47 AM - Nash has master override codes that allow unlogged access to areas. Cafeteria witnesses confirm his presence from approximately 10:00 AM onward.</p>
+                <p><strong>Issues:</strong> Has expert knowledge of cyanide toxicity and dosing. Complete access to chemical storage. Timeline allows for both poisoning and data theft. However, Nash lacks high-level computer access to delete the formula files from Voss's secure terminal. His computer skills are limited to basic inventory systems.</p>
+            </div>
+        </div>
+
+        <div class="warning-box">
+            🔍 INVESTIGATION NOTE: Cross-reference these profiles with security logs, phone records, financial data, and timeline reconstruction. Pay close attention to who had both MOTIVE and MEANS. Remember: the killer needed access to both the cyanide AND Dr. Voss's secure computer terminal. 🔍
+        </div>
+
+        <div style="text-align: center; margin: 40px 0;">
+            <a href="index.html" class="back-btn">◄ RETURN TO MAIN DATABASE</a>
+        </div>
+
+        <footer>
+            <p>BioGenex Investigation Database v2.4.7</p>
+            <p>Case File Generated: November 27, 2024</p>
+        </footer>
+    </div>
+</body>
+</html>

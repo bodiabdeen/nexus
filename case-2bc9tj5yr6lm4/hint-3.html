@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HINT #3 - STRONG GUIDANCE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #050814;
+            color: #00f7ff;
+            font-family: 'Rajdhani', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 1000;
+            animation: scanlines 8s linear infinite;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 2px solid #ff006e;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5em;
+            color: #ff006e;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #ff006e, 0 0 20px #ff006e;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #ff006e, 0 0 20px #ff006e; }
+            to { text-shadow: 0 0 20px #ff006e, 0 0 30px #ff006e, 0 0 40px #ff006e; }
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #00f7ff, #00d4dd);
+            color: #050814;
+            padding: 12px 25px;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 2px solid #00f7ff;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.6);
+        }
+
+        .hint-level {
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.3), rgba(255, 0, 110, 0.15));
+            border: 3px solid #ff006e;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.4);
+        }
+
+        .hint-level h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff006e;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .hint-level p {
+            color: #ffd700;
+            font-size: 1.1em;
+        }
+
+        .hint-box {
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.2), rgba(255, 0, 110, 0.1));
+            border: 3px solid #ff006e;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 5px;
+            box-shadow: 0 5px 30px rgba(255, 0, 110, 0.4);
+        }
+
+        .hint-box h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff006e;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .hint-box p {
+            color: #00f7ff;
+            font-size: 1.15em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .hint-icon {
+            font-size: 4em;
+            text-align: center;
+            margin: 20px 0;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.2); }
+        }
+
+        .smoking-gun {
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.4), rgba(255, 0, 110, 0.2));
+            border: 4px solid #ff006e;
+            padding: 35px;
+            margin: 40px 0;
+            border-radius: 10px;
+            box-shadow: 0 0 40px rgba(255, 0, 110, 0.6);
+            animation: glowBox 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glowBox {
+            from { box-shadow: 0 0 30px rgba(255, 0, 110, 0.5); }
+            to { box-shadow: 0 0 50px rgba(255, 0, 110, 0.8); }
+        }
+
+        .smoking-gun h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff006e;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .smoking-gun p {
+            color: #ffd700;
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .suspect-box {
+            background: rgba(255, 0, 110, 0.25);
+            border: 3px solid #ff006e;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .suspect-box:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.5);
+        }
+
+        .suspect-box h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffd700;
+            font-size: 1.6em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .guilt-meter {
+            background: rgba(0, 0, 0, 0.4);
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px 0;
+            border: 2px solid #ffd700;
+        }
+
+        .guilt-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff006e, #ff4499);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
+            transition: width 1s ease;
+        }
+
+        .evidence-list {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-left: 4px solid #ffd700;
+            margin: 15px 0;
+        }
+
+        .evidence-list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .evidence-list li {
+            color: #00f7ff;
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            line-height: 1.6;
+            font-size: 1.1em;
+        }
+
+        .evidence-list li:before {
+            content: "🔴";
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+        }
+
+        .final-question {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 215, 0, 0.15));
+            border: 3px solid #ffd700;
+            padding: 30px;
+            margin: 40px 0;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+        }
+
+        .final-question h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffd700;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .final-question p {
+            color: #00f7ff;
+            font-size: 1.3em;
+            line-height: 1.8;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin: 40px 0;
+            gap: 20px;
+        }
+
+        .nav-btn {
+            flex: 1;
+            background: linear-gradient(45deg, #ff006e, #cc0058);
+            color: #fff;
+            padding: 15px 25px;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 2px solid #ff006e;
+            transition: all 0.3s ease;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 0, 110, 0.6);
+        }
+
+        .nav-btn.solution {
+            background: linear-gradient(45deg, #ffd700, #ccaa00);
+            border-color: #ffd700;
+            font-size: 1.1em;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 2px solid #ff006e;
+            margin-top: 50px;
+            color: #00f7ff;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="back-btn">◄ RETURN TO MAIN DATABASE</a>
+            <h1>💡 HINT #3</h1>
+            <div style="color: #ffd700; font-family: 'Share Tech Mono', monospace; margin-top: 10px;">
+                STRONG GUIDANCE - NEAR-EXPLICIT DIRECTION
+            </div>
+        </header>
+
+        <div class="hint-level">
+            <h2>DIFFICULTY LEVEL: STRONG</h2>
+            <p>This hint strongly suggests the killer(s) without directly revealing the answer. After reading this, you should be able to solve the case with high confidence.</p>
+        </div>
+
+        <div class="hint-icon">🎯</div>
+
+        <div class="hint-box">
+            <h3>The Core Truth</h3>
+            <p>This crime required <strong>TWO PEOPLE</strong> working together. Not one person, not three - exactly two. Here's why:</p>
+            <p><strong>The Murder:</strong> Required someone to obtain cyanide from Chemical Storage Room 3C and contaminate Dr. Voss's coffee in Lab 3A.</p>
+            <p><strong>The Data Theft:</strong> Required someone with Level 4+ security clearance to access the secure terminal at 09:23 AM and steal the files while Dr. Voss was dying.</p>
+            <p><strong>The Problem:</strong> These events happened in different locations during overlapping timeframes. No single person could do both. Therefore, it was a conspiracy.</p>
+        </div>
+
+        <div class="smoking-gun">
+            <h4>🔥 THE SMOKING GUN 🔥</h4>
+            <p><strong>Look at the timeline reconstruction very carefully:</strong></p>
+            <p>At 09:23 AM, the computer files were stolen from Lab 3A. At this exact moment, Dr. Voss was unconscious or dying from the poison she consumed around 09:40 AM... wait, that doesn't make sense, does it?</p>
+            <p style="color: #ff006e; font-size: 1.3em; margin-top: 20px;"><strong>Actually, forensics indicates the coffee was contaminated BEFORE 09:23 AM.</strong> The poison was added around 09:20-09:35 AM. Dr. Voss drank it at approximately 09:40 AM, dying at 09:47 AM.</p>
+            <p>This means someone accessed her terminal at 09:23 AM while the poison was already in her coffee but before she drank it. They were waiting for the right moment. When she started showing symptoms, they used her dying hand on the biometric scanner.</p>
+            <p style="color: #ffd700; font-size: 1.4em; margin-top: 20px;"><strong>This required two people: one to handle the poison, one to handle the data theft - and they had to coordinate perfectly.</strong></p>
+        </div>
+
+        <div class="suspect-box">
+            <h4>SUSPECT ANALYSIS: DR. MARCUS CHEN</h4>
+            <div class="guilt-meter">
+                <div class="guilt-fill" style="width: 95%;">95% GUILTY</div>
+            </div>
+            <div class="evidence-list">
+                <ul>
+                    <li><strong>Motive:</strong> Extreme - $127K gambling debt, rent bounced, creditors threatening him. Excluded from patents worth millions.</li>
+                    <li><strong>Opportunity:</strong> Present in Lab 3B (adjacent to victim) entire morning with no exit logged until body discovery.</li>
+                    <li><strong>Security Clearance:</strong> Level 4 - ONLY person present who could access Dr. Voss's secure terminal!</li>
+                    <li><strong>Computer Skills:</strong> Excellent - PhD molecular biologist with strong technical background.</li>
+                    <li><strong>Timeline:</strong> "Discovered" body at 09:52 AM, only 5 minutes after death. Too quick to be coincidence?</li>
+                    <li><strong>Communication:</strong> Called James Keller at 9:45 PM night before, texted about "taking control of your own situation."</li>
+                    <li><strong>Financial desperation:</strong> Email to debt collector at 11:51 PM night before murder promising "major financial opportunity very soon."</li>
+                    <li><strong>Problem:</strong> No evidence Chen had access to cyanide. No chemical vial or cyanide found in his possession. How did he get the poison?</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="suspect-box">
+            <h4>SUSPECT ANALYSIS: JAMES KELLER</h4>
+            <div class="guilt-meter">
+                <div class="guilt-fill" style="width: 95%;">95% GUILTY</div>
+            </div>
+            <div class="evidence-list">
+                <ul>
+                    <li><strong>Motive:</strong> Corporate espionage - $15K already received, $235K more promised. Sister's medical bills $312K. Encrypted email proves he was hired to steal data.</li>
+                    <li><strong>Opportunity:</strong> Present entire morning. Master keys allow access to ALL rooms without electronic logging.</li>
+                    <li><strong>Chemical Access:</strong> Master access to Chemical Storage Room 3C - could obtain cyanide without keycard record!</li>
+                    <li><strong>Physical Evidence:</strong> Encrypted USB drive found in possession. Reported missing cyanide himself on Nov 25 - covering tracks?</li>
+                    <li><strong>Timeline:</strong> Exited Storage Room 3D at 09:28 AM - only 5 minutes after data theft. Was in general area during critical window.</li>
+                    <li><strong>Post-Murder Behavior:</strong> Called Cayman Islands contact at 10:47 AM during lockdown - reporting mission completion?</li>
+                    <li><strong>Communication:</strong> Received calls from Chen at 9:45 PM night before murder. Long conversations totaling 11+ minutes.</li>
+                    <li><strong>Problem:</strong> Only Level 3 clearance - CANNOT access secure terminal. How did files get stolen?</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="smoking-gun">
+            <h4>🎯 THE PERFECT PARTNERSHIP 🎯</h4>
+            <p><strong>See how their weaknesses complement each other?</strong></p>
+            <p style="margin-top: 20px;"><strong>CHEN'S STRENGTH = KELLER'S WEAKNESS:</strong><br>
+            Chen has Level 4 clearance for terminal access. Keller only has Level 3.</p>
+            <p style="margin-top: 15px;"><strong>KELLER'S STRENGTH = CHEN'S WEAKNESS:</strong><br>
+            Keller has master keys for chemical storage access without logging. Chen would show up in security logs.</p>
+            <p style="margin-top: 20px; color: #ffd700; font-size: 1.3em;"><strong>Together, they have ALL the required capabilities:</strong></p>
+            <p>✓ Access to cyanide (Keller's master keys)<br>
+            ✓ Physical access to Lab 3A (both present)<br>
+            ✓ Terminal security clearance (Chen's Level 4)<br>
+            ✓ Computer expertise (Chen's PhD background)<br>
+            ✓ USB device for data storage (Keller's encrypted drive)<br>
+            ✓ Offshore contact to sell data (Keller's Cayman connection)<br>
+            ✓ Desperate financial motives (both need money urgently)</p>
+        </div>
+
+        <div class="hint-box">
+            <h3>The Operation - Reconstructed</h3>
+            <p><strong>THE PLAN (discussed in phone call Nov 26, 9:45 PM):</strong></p>
+            <p><strong>PHASE 1 - PREPARATION (Nov 25-26):</strong><br>
+            Keller uses master keys to access Chemical Storage Room 3C without keycard logging. Removes approximately 200mg of potassium cyanide from Container KCN-077. He reports the missing cyanide himself on Nov 25 to create paper trail suggesting he's innocent. Chen provides technical advice on data theft procedures.</p>
+            <p><strong>PHASE 2 - MORNING OF MURDER (Nov 27, ~09:25 AM):</strong><br>
+            Keller, who has been in Storage Room 3D, uses his master keys to enter Lab 3A without electronic record. Dr. Voss is at her desk working. Keller contaminates her coffee with cyanide using a small glass vial. He disposes of vial in lab wastebin. Vial will later be found by forensics - a crucial mistake.</p>
+            <p><strong>PHASE 3 - DATA THEFT (09:23 AM):</strong><br>
+            Chen enters Lab 3A from adjacent Lab 3B (no keycard required for internal doors). The poison hasn't taken effect yet, but Voss is starting to feel ill. Chen uses his Level 4 clearance and Voss's credentials (possibly obtained earlier, or forces her while she's weakening) to access secure terminal. Files copied to Keller's encrypted USB drive. Chen deletes files using wiping software. Total time: 3 minutes 12 seconds.</p>
+            <p><strong>PHASE 4 - THE MURDER (09:40-09:47 AM):</strong><br>
+            Dr. Voss drinks remaining coffee around 09:40 AM. Cyanide takes 8-12 minutes to kill. She dies at 09:47 AM. Both Chen and Keller maintain distance during this period.</p>
+            <p><strong>PHASE 5 - DISCOVERY (09:52 AM):</strong><br>
+            Chen "discovers" body and reports to security. Keller exits Storage Room 3D at 09:28 AM but waits to be "discovered" during lockdown. Both act shocked and innocent.</p>
+            <p><strong>PHASE 6 - AFTERMATH (10:47 AM):</strong><br>
+            During lockdown, Keller calls his Cayman handler on encrypted phone to report mission completion. Chen has the encrypted USB drive hidden somewhere, or has already passed it to Keller. They plan to collect payment after investigation clears.</p>
+        </div>
+
+        <div class="final-question">
+            <h3>🎯 THE FINAL QUESTION 🎯</h3>
+            <p>Based on all the evidence you've reviewed, can you confidently identify the killers?</p>
+            <p style="margin-top: 20px; color: #ffd700; font-size: 1.4em;">Two suspects worked together. One provided chemical access and physical execution. The other provided technical expertise and terminal access. Together they murdered Dr. Elena Voss and stole Project Helix.</p>
+            <p style="margin-top: 20px; color: #ff006e; font-size: 1.5em;"><strong>Who are they?</strong></p>
+        </div>
+
+        <div class="hint-box">
+            <h3>Evidence That Seals Their Fate</h3>
+            <p><strong>If you're still not 100% certain, review these smoking gun pieces of evidence:</strong></p>
+            <p>1. <strong>Phone Records:</strong> Chen-Keller late night call Nov 26, 9:45 PM - "taking control of your own situation"<br>
+            2. <strong>Financial Records:</strong> Both in desperate financial situations requiring immediate action<br>
+            3. <strong>Security Logs:</strong> Both present during entire critical window, no exits logged<br>
+            4. <strong>Timeline:</strong> Computer theft at 09:23 requires Chen's clearance; poison delivery requires Keller's access<br>
+            5. <strong>Physical Evidence:</strong> Encrypted USB found on Keller; glass vial (cyanide transport) found in lab<br>
+            6. <strong>Post-Murder Behavior:</strong> Keller calls offshore contact during lockdown; Chen "discovers" body too quickly<br>
+            7. <strong>Capabilities Matrix:</strong> Only these two together have all required skills and access</p>
+        </div>
+
+        <div class="navigation">
+            <a href="hint-2.html" class="nav-btn">◄ BACK TO HINT #2</a>
+            <a href="solution.html" class="nav-btn solution">READY FOR SOLUTION? → FULL EXPLANATION</a>
+        </div>
+
+        <footer>
+            <p>Investigation Assistance System</p>
+            <p>You're one step away from solving this case</p>
+        </footer>
+    </div>
+</body>
+</html>

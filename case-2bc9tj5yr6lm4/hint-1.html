@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HINT #1 - SUBTLE GUIDANCE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #050814;
+            color: #00f7ff;
+            font-family: 'Rajdhani', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 1000;
+            animation: scanlines 8s linear infinite;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 2px solid #00f7ff;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5em;
+            color: #00f7ff;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #00f7ff, #00d4dd);
+            color: #050814;
+            padding: 12px 25px;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 2px solid #00f7ff;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.6);
+        }
+
+        .hint-level {
+            background: linear-gradient(135deg, rgba(0, 247, 255, 0.2), rgba(0, 247, 255, 0.1));
+            border: 2px solid #00f7ff;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .hint-level h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffd700;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .hint-level p {
+            color: #00f7ff;
+            font-size: 1.1em;
+        }
+
+        .hint-box {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+            border: 2px solid #00f7ff;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 5px;
+            box-shadow: 0 5px 20px rgba(0, 247, 255, 0.2);
+        }
+
+        .hint-box h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffd700;
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .hint-box p {
+            color: #00f7ff;
+            font-size: 1.15em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .hint-icon {
+            font-size: 3em;
+            text-align: center;
+            margin: 20px 0;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+
+        .question-box {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid #ffd700;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+
+        .question-box h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffd700;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .question-box p {
+            color: #00f7ff;
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin: 40px 0;
+            gap: 20px;
+        }
+
+        .nav-btn {
+            flex: 1;
+            background: linear-gradient(45deg, #ff006e, #cc0058);
+            color: #fff;
+            padding: 15px 25px;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 2px solid #ff006e;
+            transition: all 0.3s ease;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 0, 110, 0.6);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 2px solid #00f7ff;
+            margin-top: 50px;
+            color: #00f7ff;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="back-btn">◄ RETURN TO MAIN DATABASE</a>
+            <h1>💡 HINT #1</h1>
+            <div style="color: #ffd700; font-family: 'Share Tech Mono', monospace; margin-top: 10px;">
+                SUBTLE GUIDANCE - INVESTIGATION ASSISTANCE
+            </div>
+        </header>
+
+        <div class="hint-level">
+            <h2>DIFFICULTY LEVEL: SUBTLE</h2>
+            <p>This hint provides gentle guidance without revealing the solution. It points you toward specific evidence worth reexamining more carefully.</p>
+        </div>
+
+        <div class="hint-icon">🔦</div>
+
+        <div class="hint-box">
+            <h3>Evidence to Reexamine</h3>
+            <p>Your investigation has uncovered substantial evidence, but have you noticed what's <em>missing</em> from certain critical moments?</p>
+            <p>Consider this: When analyzing the timeline reconstruction, pay very close attention to the <strong>exact timestamps</strong> of key events. Sometimes what appears to be a coincidence might actually be something more.</p>
+            <p>In particular, look carefully at the <strong>security logs</strong> between 09:20 AM and 09:50 AM. Notice who was where, and more importantly, notice who <em>wasn't</em> somewhere they should have been.</p>
+        </div>
+
+        <div class="question-box">
+            <h4>🔍 Question to Consider:</h4>
+            <p>One of the suspects has an extremely unusual timing pattern in the security logs. Their exit from a particular location occurs at the <em>exact same minute</em> as a critical event. This level of precision seems almost impossible as a coincidence.</p>
+            <p>Ask yourself: Is this suspect's timeline physically possible? Could one person have done everything the evidence suggests happened during that narrow window?</p>
+        </div>
+
+        <div class="hint-box">
+            <h3>Consider the Phone Records</h3>
+            <p>The phone records reveal some interesting late-night communications. When someone makes calls to a coworker at unusual hours (like 9:45 PM or later), it's worth asking: what were they discussing?</p>
+            <p>Pay attention to the <strong>content of text messages</strong> sent the night before the murder. Words like "take control of your own situation" might mean different things in different contexts.</p>
+            <p>Also notice: which suspect has <em>two</em> phones? And who did they call immediately after the body was discovered?</p>
+        </div>
+
+        <div class="question-box">
+            <h4>🔍 Question to Consider:</h4>
+            <p>If someone needed help committing a crime that required multiple capabilities (chemical knowledge, computer skills, and physical access), who would make the most logical partners? Look for connections between suspects - shared conversations, complementary skill sets, or matching motives.</p>
+        </div>
+
+        <div class="hint-box">
+            <h3>The Computer Access Problem</h3>
+            <p>The forensic report tells us that Project Helix files were stolen at 09:23 AM using Dr. Voss's credentials and biometric fingerprint. The forensic timeline also suggests she was unconscious or dying at that exact moment.</p>
+            <p>This raises an important question: Who had the technical knowledge, the security clearance level, <em>and</em> the physical access to accomplish this?</p>
+            <p>Review the <strong>case file</strong> carefully. Look at each suspect's security clearance level. Remember: Level 3 clearance is NOT sufficient for accessing secure research terminals. You need Level 4 or higher.</p>
+        </div>
+
+        <div class="question-box">
+            <h4>🔍 Final Thought:</h4>
+            <p>Not every suspect who <em>looks</em> guilty actually is guilty. Red herrings are placed deliberately. But sometimes two suspects who individually couldn't have committed the crime might have been able to do it <em>together</em>.</p>
+            <p>Look for evidence of collaboration. Did any two suspects communicate with each other around the time of the murder? Did they have complementary capabilities that would allow them to overcome each other's limitations?</p>
+        </div>
+
+        <div class="navigation">
+            <a href="index.html" class="nav-btn">◄ BACK TO EVIDENCE</a>
+            <a href="hint-2.html" class="nav-btn">NEED MORE HELP? → HINT #2</a>
+        </div>
+
+        <footer>
+            <p>Investigation Assistance System</p>
+            <p>Remember: The best detectives notice what doesn't fit</p>
+        </footer>
+    </div>
+</body>
+</html>

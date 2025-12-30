@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EVIDENCE - FINANCIAL RECORDS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #050814;
+            color: #00f7ff;
+            font-family: 'Rajdhani', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 1000;
+            animation: scanlines 8s linear infinite;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 2px solid #ff006e;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5em;
+            color: #ff006e;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #ff006e, 0 0 20px #ff006e;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #00f7ff, #00d4dd);
+            color: #050814;
+            padding: 12px 25px;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 2px solid #00f7ff;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.6);
+        }
+
+        .evidence-header {
+            background: linear-gradient(135deg, rgba(0, 247, 255, 0.1), rgba(255, 0, 110, 0.1));
+            border: 2px solid #00f7ff;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+
+        .evidence-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffd700;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .evidence-header p {
+            color: #00f7ff;
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        .suspect-section {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+            border: 2px solid #00f7ff;
+            margin: 40px 0;
+            border-radius: 5px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .suspect-section:hover {
+            border-color: #ffd700;
+            box-shadow: 0 5px 25px rgba(0, 247, 255, 0.3);
+        }
+
+        .suspect-header {
+            background: linear-gradient(135deg, #ff006e, #cc0058);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .suspect-name {
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            font-size: 1.6em;
+            text-transform: uppercase;
+        }
+
+        .financial-status {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.4);
+            color: #ffd700;
+            padding: 8px 15px;
+            border-radius: 3px;
+            font-family: 'Share Tech Mono', monospace;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .financial-content {
+            padding: 30px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .summary-box {
+            background: rgba(0, 247, 255, 0.1);
+            border-left: 4px solid #00f7ff;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .summary-box:hover {
+            background: rgba(0, 247, 255, 0.15);
+            transform: translateX(5px);
+        }
+
+        .summary-label {
+            color: #ffd700;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .summary-value {
+            color: #00f7ff;
+            font-size: 1.3em;
+            font-weight: bold;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .summary-value.positive {
+            color: #00ff64;
+        }
+
+        .summary-value.negative {
+            color: #ff006e;
+        }
+
+        .transaction-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.9em;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .transaction-table thead {
+            background: linear-gradient(135deg, #ffd700, #ccaa00);
+        }
+
+        .transaction-table th {
+            color: #050814;
+            padding: 12px 10px;
+            text-align: left;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .transaction-table td {
+            padding: 10px;
+            border-bottom: 1px solid rgba(0, 247, 255, 0.2);
+            color: #00f7ff;
+        }
+
+        .transaction-table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .transaction-table tbody tr:hover {
+            background: rgba(0, 247, 255, 0.1);
+        }
+
+        .transaction-table tbody tr.suspicious {
+            background: rgba(255, 0, 110, 0.2);
+            border-left: 4px solid #ff006e;
+        }
+
+        .amount-positive {
+            color: #00ff64;
+            font-weight: bold;
+        }
+
+        .amount-negative {
+            color: #ff6400;
+            font-weight: bold;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffd700;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+            text-transform: uppercase;
+            border-bottom: 2px solid #00f7ff;
+            padding-bottom: 8px;
+        }
+
+        .note-box {
+            background: rgba(255, 215, 0, 0.1);
+            border-left: 4px solid #ffd700;
+            padding: 15px;
+            margin: 15px 0;
+            font-style: italic;
+            color: #ffd700;
+        }
+
+        .note-box strong {
+            color: #ff006e;
+        }
+
+        .red-flag {
+            background: rgba(255, 0, 110, 0.2);
+            border: 2px solid #ff006e;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .red-flag h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff006e;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .red-flag ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .red-flag li {
+            color: #00f7ff;
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .red-flag li:before {
+            content: "⚠";
+            position: absolute;
+            left: 0;
+            color: #ff006e;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 2px solid #00f7ff;
+            margin-top: 50px;
+            color: #00f7ff;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .transaction-table {
+                font-size: 0.75em;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="back-btn">◄ RETURN TO MAIN DATABASE</a>
+            <h1>💰 FINANCIAL RECORDS</h1>
+            <div style="color: #ffd700; font-family: 'Share Tech Mono', monospace; margin-top: 10px;">
+                BANK TRANSACTIONS & FINANCIAL ANALYSIS
+            </div>
+        </header>
+
+        <div class="evidence-header">
+            <h2>EVIDENCE FILE: FIN-ANALYSIS-2024-1127</h2>
+            <p><strong>Source:</strong> FBI Financial Crimes Unit - Subpoenaed Bank Records</p>
+            <p><strong>Analysis Period:</strong> October 1 - November 27, 2024</p>
+            <p><strong>Institutions:</strong> Chase Bank, Wells Fargo, Cayman International Trust, Bitcoin Exchange Records</p>
+            <p style="margin-top: 15px; color: #ff006e;"><strong>INVESTIGATION FOCUS:</strong> Suspicious transactions, unusual deposits, offshore accounts, and financial motives related to Project Helix theft and Dr. Voss's murder.</p>
+        </div>
+
+        <!-- DR. MARCUS CHEN -->
+        <div class="suspect-section">
+            <div class="suspect-header">
+                <div class="suspect-name">DR. MARCUS CHEN</div>
+                <div class="financial-status">STATUS: SEVERE DEBT</div>
+            </div>
+            <div class="financial-content">
+                <div class="summary-grid">
+                    <div class="summary-box">
+                        <div class="summary-label">Annual Salary</div>
+                        <div class="summary-value positive">$98,000</div>
+                    </div>
+                    <div class="summary-box">
+                        <div class="summary-label">Current Balance</div>
+                        <div class="summary-value negative">-$3,247</div>
+                    </div>
+                    <div class="summary-box">
+                        <div class="summary-label">Outstanding Debt</div>
+                        <div class="summary-value negative">$127,000</div>
+                    </div>
+                    <div class="summary-box">
+                        <div class="summary-label">Credit Cards Maxed</div>
+                        <div class="summary-value negative">4 of 4</div>
+                    </div>
+                </div>
+
+                <h3 class="section-title">Recent Transactions (Nov 1-27)</h3>
+                <table class="transaction-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Amount</th>
+                            <th>Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Nov 1</td>
+                            <td>BioGenex Payroll Deposit</td>
+                            <td class="amount-positive">+$3,769</td>
+                            <td>$4,102</td>
+                        </tr>
+                        <tr class="suspicious">
+                            <td>Nov 1</td>
+                            <td>EastSide Casino - Atlantic City</td>
+                            <td class="amount-negative">-$8,200</td>
+                            <td>-$4,098</td>
+                        </tr>
+                        <tr>
+                            <td>Nov 3</td>
+                            <td>Overdraft Fee</td>
+                            <td class="amount-negative">-$35</td>
+                            <td>-$4,133</td>
+                        </tr>
+                        <tr class="suspicious">
+                            <td>Nov 8</td>
+                            <td>Cash Advance - Visa Card</td>
+                            <td class="amount-positive">+$2,000</td>
+                            <td>-$2,133</td>
+                        </tr>
+                        <tr class="suspicious">
+                            <td>Nov 9</td>
+                            <td>Online Poker - PokerStars</td>
+                            <td class="amount-negative">-$1,850</td>
+                            <td>-$3,983</td>
+                        </tr>
+                        <tr>
+                            <td>Nov 15</td>
+                            <td>BioGenex Payroll Deposit</td>
+                            <td class="amount-positive">+$3,769</td>
+                            <td>-$214</td>
+                        </tr>
+                        <tr class="suspicious">
+                            <td>Nov 16</td>
+                            <td>Wire Transfer - Rodriguez Collections</td>
+                            <td class="amount-negative">-$3,000</td>
+                            <td>-$3,214</td>
+                        </tr>
+                        <tr>
+                            <td>Nov 22</td>
+                            <td>Rent Payment - RETURNED NSF</td>
+                            <td class="amount-negative">-$0</td>
+                            <td>-$3,214</td>
+                        </tr>
+                        <tr>
+                            <td>Nov 25</td>
+                            <td>NSF Fee + Returned Check Fee</td>
+                            <td class="amount-negative">-$68</td>
+                            <td>-$3,282</td>
+                        </tr>
+                        <tr>
+                            <td>Nov 26</td>
+                            <td>Cash Withdrawal ATM</td>
+                            <td class="amount-negative">-$40</td>
+                            <td>-$3,322</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="red-flag">
+                    <h4>🚨 CRITICAL FINANCIAL RED FLAGS</h4>
+                    <ul>
+                        <li><strong>Gambling Addiction:</strong> $127,000 in gambling debts accumulated over 18 months. Recent activity shows continued gambling despite crushing debt.</li>
+                        <li><strong>Debt Collectors:</strong> Multiple contacts from Rodriguez Collections (known for aggressive tactics). Email evidence shows threats of physical intimidation.</li>
+                        <li><strong>Failed Rent Payment:</strong> Check bounced on Nov 22, indicating complete financial collapse just 5 days before murder.</li>
+                        <li><strong>No Savings:</strong> Chen has zero savings, no investments, and negative net worth of approximately -$130,000.</li>
+                        <li><strong>Motive Strength:</strong> EXTREME - Chen desperately needed money and had lost access to patent royalties (potentially worth $5-15 million) when Voss excluded him from Project Helix IP.</li>
+                    </ul>
+                </div>
+
+                <div class="note-box">
+                    <strong>INVESTIGATOR NOTE:</strong> Dr. Chen's financial situation reached crisis level in mid-November, exactly when he started consulting lawyers about patent disputes. His email on Nov 26 (night before murder) mentions expecting a "major financial opportunity very soon." If Chen stole the Project Helix formula, he could sell it to competitors for $500K-$2M, solving his debt crisis immediately.
+                </div>
+            </div>
+        </div>
+
+        <!-- JAMES KELLER -->
+        <div class="suspect-section">
+            <div class="suspect-header">
+                <div class="suspect-name">JAMES KELLER</div>
+                <div class="financial-status">STATUS: SUSPICIOUS ACTIVITY</div>
+            </div>
+            <div class="financial-content">
+                <div class="summary-grid">
+                    <div class="summary-box">
+                        <div class="summary-label">Annual Salary</div>
+                        <div class="summary-value positive">$62,000</div>
+                    </div>
+                    <div class="summary-box">
+                        <div class="summary-label">Current Balance</div>
+                        <div class="summary-value positive">$8,734</div>
+                    </div>
+                    <div class="summary-box">
+                        <div class="summary-label">Medical Debt</div>
+                        <div class="summary-value negative">$312,000</div>
+                    </div>
+                    <div class="summary-box">
+                        <div class="summary-label">Offshore Account</div>
+                        <div class="summary-value positive">$15,000</div>
+                    </div>
+                </div>
+
+                <h3 class="section-title">Suspicious Transactions (Oct-Nov)</h3>
+                <table class="transaction-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Amount</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Oct 15</td>
+                            <td>Memorial Hospital - Sister Treatment</td>
+                            <td class="amount-negative">-$8,500</td>
+                            <td>Experimental cancer therapy</td>
+                        </tr>
+                        <tr>
+                            <td>Oct 20</td>
+                            <td>Medical Collections - Final Notice</td>
+                            <td class="amount-negative">-$2,100</td>
+                            <td>Partial payment</td>
+                        </tr>
+                        <tr class="suspicious">
+                            <td>Nov 13</td>
+                            <td>Wire Transfer - Cayman International</td>
+                            <td class="amount-positive">+$15,000</td>
+                            <td>⚠️ Offshore source unknown</td>
+                        </tr>
+                        <tr>
+                            <td>Nov 14</td>
+                            <td>Wire Transfer - Memorial Hospital</td>
+                            <td class="amount-negative">-$15,000</td>
+                            <td>Sister's treatment deposit</td>
+                        </tr>
+                        <tr class="suspicious">
+                            <td>Nov 18</td>
+                            <td>Purchase - SecureComm Encrypted Phone</td>
+                            <td class="amount-negative">-$899</td>
+                            <td>⚠️ Military-grade encryption</td>
+                        </tr>
+                        <tr class="suspicious">
+                            <td>Nov 20</td>
+                            <td>Bitcoin Exchange - Coinbase</td>
+                            <td class="amount-negative">-$500</td>
+                            <td>⚠️ Cryptocurrency purchase</td>
+                        </tr>
+                        <tr>
+                            <td>Nov 25</td>
+                            <td>Medical Collections - Payment</td>
+                            <td class="amount-negative">-$3,000</td>
+                            <td>Debt reduction</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="red-flag">
+                    <h4>🚨 CRITICAL FINANCIAL RED FLAGS</h4>
+                    <ul>
+                        <li><strong>Unexplained $15,000 Payment:</strong> Wire transfer from Cayman International bank on Nov 13 - exactly matches the payment mentioned in the encrypted email recovered from his personal account.</li>
+                        <li><strong>Sister's Medical Crisis:</strong> Keller's sister diagnosed with stage 4 cancer. Experimental treatment costs $300,000+. Insurance denial means family facing financial devastation.</li>
+                        <li><strong>Encrypted Phone Purchase:</strong> Bought military-grade encrypted phone on Nov 18, consistent with corporate espionage operations requiring secure communications.</li>
+                        <li><strong>Cryptocurrency Activity:</strong> Bitcoin purchase suggests preparation for untraceable transactions - standard protocol for selling stolen data.</li>
+                        <li><strong>Timing:</strong> $15,000 received 14 days before murder. Encrypted email promised additional $85,000 upon data delivery by Nov 30 (3 days after murder).</li>
+                    </ul>
+                </div>
+
+                <div class="note-box">
+                    <strong>INVESTIGATOR NOTE:</strong> Keller's financial records strongly support corporate espionage theory. The $15,000 offshore payment, encrypted phone purchase, and cryptocurrency activity all indicate he was hired to steal Project Helix. However, the encrypted email shows he was hired to steal DATA, not commit murder. Question: Did Keller's assignment expand to include eliminating Dr. Voss to facilitate the theft?
+                </div>
+            </div>
+        </div>
+
+        <!-- DR. ROBERT NASH -->
+        <div class="suspect-section">
+            <div class="suspect-header">
+                <div class="suspect-name">DR. ROBERT NASH</div>
+                <div class="financial-status">STATUS: PRECARIOUS</div>
+            </div>
+            <div class="financial-content">
+                <div class="summary-grid">
+                    <div class="summary-box">
+                        <div class="summary-label">Annual Salary</div>
+                        <div class="summary-value positive">$112,000</div>
+                    </div>
+                    <div class="summary-box">
+                        <div class="summary-label">Current Balance</div>
+                        <div class="summary-value positive">$12,450</div>
+                    </div>
+                    <div class="summary-box">
+                        <div class="summary-label">Retirement Savings</div>
+                        <div class="summary-value positive">$47,000</div>
+                    </div>
+                    <div class="summary-box">
+                        <div class="summary-label">Medical Expenses</div>
+                        <div class="summary-value negative">$8,900/mo</div>
+                    </div>
+                </div>
+
+                <h3 class="section-title">Key Financial Information</h3>
+                <table class="transaction-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Amount</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Nov 1</td>
+                            <td>BioGenex Payroll + Benefits</td>
+                            <td class="amount-positive">+$8,615</td>
+                            <td>Bi-weekly salary</td>
+                        </tr>
+                        <tr class="suspicious">
+                            <td>Nov 5</td>
+                            <td>Neurological Associates - Consultation</td>
+                            <td class="amount-negative">-$2,400</td>
+                            <td>Alzheimer's specialist</td>
+                        </tr>
+                        <tr class="suspicious">
+                            <td>Nov 8</td>
+                            <td>CVS Pharmacy - Aricept Prescription</td>
+                            <td class="amount-negative">-$485</td>
+                            <td>Alzheimer's medication</td>
+                        </tr>
+                        <tr>
+                            <td>Nov 10</td>
+                            <td>Healthcare Premium - Monthly</td>
+                            <td class="amount-negative">-$1,200</td>
+                            <td>Family coverage</td>
+                        </tr>
+                        <tr class="suspicious">
+                            <td>Nov 15</td>
+                            <td>Law Office - Employment Attorney</td>
+                            <td class="amount-negative">-$3,500</td>
+                            <td>Wrongful termination defense</td>
+                        </tr>
+                        <tr>
+                            <td>Nov 15</td>
+                            <td>BioGenex Payroll + Benefits</td>
+                            <td class="amount-positive">+$8,615</td>
+                            <td>Bi-weekly salary</td>
+                        </tr>
+                        <tr class="suspicious">
+                            <td>Nov 22</td>
+                            <td>Memory Care Center - Deposit</td>
+                            <td class="amount-negative">-$5,000</td>
+                            <td>Long-term care facility</td>
+                        </tr>
+                        <tr>
+                            <td>Nov 25</td>
+                            <td>Mortgage Payment</td>
+                            <td class="amount-negative">-$2,800</td>
+                            <td>Monthly</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="red-flag">
+                    <h4>🚨 CRITICAL FINANCIAL RED FLAGS</h4>
+                    <ul>
+                        <li><strong>Early-Onset Alzheimer's:</strong> Diagnosed 3 months ago (confidential medical records). Medication costs $485/month, specialist visits ongoing. Condition will force retirement within 2-3 years.</li>
+                        <li><strong>Health Insurance Dependency:</strong> Monthly premium $1,200 - Nash absolutely cannot afford to lose his job or he loses coverage for his Alzheimer's treatment.</li>
+                        <li><strong>Minimal Retirement Savings:</strong> Only $47,000 saved after 15 years - insufficient for early medical retirement. Nash needed to work another 10-15 years to have adequate retirement funds.</li>
+                        <li><strong>Legal Defense Costs:</strong> Spent $3,500 on employment attorney on Nov 15 to fight Voss's termination complaint - money he couldn't afford to spend.</li>
+                        <li><strong>Care Facility Deposit:</strong> Made $5,000 deposit on memory care center Nov 22 - suggesting he knows he'll need long-term care and is desperately trying to secure it while still employed.</li>
+                    </ul>
+                </div>
+
+                <div class="note-box">
+                    <strong>INVESTIGATOR NOTE:</strong> Dr. Nash was facing financial and personal catastrophe if Dr. Voss succeeded in getting him terminated. With Alzheimer's diagnosis, he needed his job for 2-3 more years minimum to secure adequate retirement and healthcare. Voss's termination complaint threatened to destroy everything he'd worked for and leave him unable to afford his own medical care. However, Nash lacks the computer skills to steal the Project Helix files - he could poison Voss out of rage/desperation, but not steal the formula.
+                </div>
+            </div>
+        </div>
+
+        <!-- DR. SARAH RIVERS -->
+        <div class="suspect-section">
+            <div class="suspect-header">
+                <div class="suspect-name">DR. SARAH RIVERS</div>
+                <div class="financial-status">STATUS: FINANCIALLY STABLE</div>
+            </div>
+            <div class="financial-content">
+                <div class="summary-grid">
+                    <div class="summary-box">
+                        <div class="summary-label">Annual Salary</div>
+                        <div class="summary-value positive">$245,000</div>
+                    </div>
+                    <div class="summary-box">
+                        <div class="summary-label">Current Balance</div>
+                        <div class="summary-value positive">$87,340</div>
+                    </div>
+                    <div class="summary-box">
+                        <div class="summary-label">Investment Portfolio</div>
+                        <div class="summary-value positive">$1.2M</div>
+                    </div>
+                    <div class="summary-box">
+                        <div class="summary-label">BioGenex Stock Options</div>
+                        <div class="summary-value positive">$420,000</div>
+                    </div>
+                </div>
+
+                <h3 class="section-title">Key Financial Information</h3>
+                <table class="transaction-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Amount</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Nov 1</td>
+                            <td>BioGenex Salary Direct Deposit</td>
+                            <td class="amount-positive">+$18,846</td>
+                            <td>Bi-weekly executive pay</td>
+                        </tr>
+                        <tr>
+                            <td>Nov 15</td>
+                            <td>BioGenex Salary Direct Deposit</td>
+                            <td class="amount-positive">+$18,846</td>
+                            <td>Bi-weekly executive pay</td>
+                        </tr>
+                        <tr class="suspicious">
+                            <td>Nov 20</td>
+                            <td>Performance Bonus - PENDING</td>
+                            <td class="amount-positive">+$0</td>
+                            <td>⚠️ $150K bonus contingent on Q4 goals</td>
+                        </tr>
+                        <tr>
+                            <td>Nov 25</td>
+                            <td>Investment Transfer - Fidelity</td>
+                            <td class="amount-positive">+$12,500</td>
+                            <td>Monthly investment contribution</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="red-flag">
+                    <h4>🚨 CRITICAL FINANCIAL RED FLAGS</h4>
+                    <ul>
+                        <li><strong>Performance Bonus at Risk:</strong> Dr. Rivers' $150,000 Q4 bonus was contingent on securing Project Helix IP for BioGenex by December 1. Voss's personal patent filing threatened this bonus.</li>
+                        <li><strong>Stock Options Devaluation:</strong> Rivers holds $420,000 in BioGenex stock options. If Voss left and took Project Helix to GeneTech, BioGenex stock would plummet, potentially costing Rivers hundreds of thousands.</li>
+                        <li><strong>Career Reputation:</strong> As Director of Research Operations, Rivers would be held personally responsible for losing a $50 million project to a competitor. This could destroy her career in the industry.</li>
+                        <li><strong>Board Pressure:</strong> Email evidence shows the Board of Directors was pressuring Rivers to resolve the Voss situation immediately. Failure could result in termination.</li>
+                        <li><strong>Timeline Urgency:</strong> Rivers learned on Nov 26 (from security alert) that Voss was negotiating with GeneTech. This created immediate pressure to act before Voss could leave.</li>
+                    </ul>
+                </div>
+
+                <div class="note-box">
+                    <strong>INVESTIGATOR NOTE:</strong> Dr. Rivers had strong financial motive despite her personal wealth. The combination of lost bonus ($150K), devalued stock options ($420K), and career destruction created urgency to stop Voss before she left for GeneTech. However, Rivers has a strong alibi - she left Research Wing 3 at 08:37 AM and was on video conference from 09:02 AM during the data theft at 09:23 AM. She could have poisoned the coffee during her 08:30 visit, but she couldn't have stolen the files herself.
+                </div>
+            </div>
+        </div>
+
+        <!-- NINA GARCIA -->
+        <div class="suspect-section">
+            <div class="suspect-header">
+                <div class="suspect-name">NINA GARCIA</div>
+                <div class="financial-status">STATUS: NORMAL</div>
+            </div>
+            <div class="financial-content">
+                <div class="summary-grid">
+                    <div class="summary-box">
+                        <div class="summary-label">Annual Salary</div>
+                        <div class="summary-value positive">$71,000</div>
+                    </div>
+                    <div class="summary-box">
+                        <div class="summary-label">Current Balance</div>
+                        <div class="summary-value positive">$8,920</div>
+                    </div>
+                    <div class="summary-box">
+                        <div class="summary-label">Student Loans</div>
+                        <div class="summary-value negative">$85,000</div>
+                    </div>
+                    <div class="summary-box">
+                        <div class="summary-label">Savings</div>
+                        <div class="summary-value positive">$14,200</div>
+                    </div>
+                </div>
+
+                <h3 class="section-title">Financial Summary</h3>
+                <div class="note-box">
+                    Nina Garcia's financial records show no suspicious activity. Standard salary deposits, normal living expenses, and regular student loan payments. No unusual transactions, no offshore accounts, no large debts beyond typical student loans. Garcia has the most stable and unremarkable financial profile of all suspects.
+                </div>
+
+                <div class="note-box">
+                    <strong>INVESTIGATOR NOTE:</strong> Garcia lacks financial motive. While she may have been frustrated about career advancement, her financial situation is stable and typical for someone her age and position. No evidence of financial desperation or unusual transactions. Combined with her strong alibi and low security clearance, Garcia appears to be the least likely suspect from a financial perspective.
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 40px 0;">
+            <a href="index.html" class="back-btn">◄ RETURN TO MAIN DATABASE</a>
+        </div>
+
+        <footer>
+            <p>FBI Financial Crimes Unit - Evidence Analysis</p>
+            <p>Report Generated: November 28, 2024</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HINT #2 - KEY CONNECTIONS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #050814;
+            color: #00f7ff;
+            font-family: 'Rajdhani', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 1000;
+            animation: scanlines 8s linear infinite;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 2px solid #ffd700;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5em;
+            color: #ffd700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #00f7ff, #00d4dd);
+            color: #050814;
+            padding: 12px 25px;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 2px solid #00f7ff;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.6);
+        }
+
+        .hint-level {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.1));
+            border: 2px solid #ffd700;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .hint-level h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffd700;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .hint-level p {
+            color: #00f7ff;
+            font-size: 1.1em;
+        }
+
+        .hint-box {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+            border: 2px solid #ffd700;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 5px;
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .hint-box h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffd700;
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .hint-box p {
+            color: #00f7ff;
+            font-size: 1.15em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .hint-icon {
+            font-size: 3em;
+            text-align: center;
+            margin: 20px 0;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+
+        .connection-box {
+            background: rgba(255, 0, 110, 0.2);
+            border: 2px solid #ff006e;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+
+        .connection-box h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff006e;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+
+        .connection-box p {
+            color: #00f7ff;
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        .connection-box strong {
+            color: #ffd700;
+        }
+
+        .evidence-link {
+            display: inline-block;
+            background: rgba(0, 247, 255, 0.2);
+            color: #00f7ff;
+            padding: 5px 12px;
+            border-radius: 3px;
+            margin: 5px 5px 5px 0;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.9em;
+            border: 1px solid #00f7ff;
+        }
+
+        .suspect-profile {
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.15), rgba(255, 0, 110, 0.05));
+            border-left: 4px solid #ff006e;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .suspect-profile h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff006e;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .suspect-profile ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .suspect-profile li {
+            color: #00f7ff;
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .suspect-profile li:before {
+            content: "▶";
+            position: absolute;
+            left: 0;
+            color: #ffd700;
+        }
+
+        .critical-timeline {
+            background: rgba(255, 215, 0, 0.1);
+            border: 3px solid #ffd700;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+
+        .critical-timeline h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffd700;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .timeline-item {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #00f7ff;
+        }
+
+        .timeline-time {
+            color: #ff006e;
+            font-family: 'Share Tech Mono', monospace;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .timeline-desc {
+            color: #00f7ff;
+            margin-top: 5px;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin: 40px 0;
+            gap: 20px;
+        }
+
+        .nav-btn {
+            flex: 1;
+            background: linear-gradient(45deg, #ff006e, #cc0058);
+            color: #fff;
+            padding: 15px 25px;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 2px solid #ff006e;
+            transition: all 0.3s ease;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 0, 110, 0.6);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 2px solid #ffd700;
+            margin-top: 50px;
+            color: #00f7ff;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="back-btn">◄ RETURN TO MAIN DATABASE</a>
+            <h1>🔍 HINT #2</h1>
+            <div style="color: #ffd700; font-family: 'Share Tech Mono', monospace; margin-top: 10px;">
+                MODERATE ASSISTANCE - KEY CONNECTIONS REVEALED
+            </div>
+        </header>
+
+        <div class="hint-level">
+            <h2>DIFFICULTY LEVEL: MODERATE</h2>
+            <p>This hint reveals important connections between different pieces of evidence. It shows you how to link multiple clues together to form a clearer picture.</p>
+        </div>
+
+        <div class="hint-icon">🔎</div>
+
+        <div class="hint-box">
+            <h3>The Conspiracy Theory</h3>
+            <p>You're looking for evidence that <strong>two people worked together</strong> to commit this crime. Why? Because no single suspect has ALL the required capabilities:</p>
+            <p><strong>Requirements to commit this crime:</strong></p>
+            <p>1. Access to Chemical Storage Room 3C (to obtain cyanide)<br>
+            2. Physical presence in Lab 3A during poisoning window<br>
+            3. Level 4+ security clearance (to access secure terminal)<br>
+            4. Computer expertise (to steal and wipe files)<br>
+            5. External USB device (to store stolen data)</p>
+        </div>
+
+        <div class="connection-box">
+            <h4>🔗 CONNECTION #1: The Late-Night Phone Call</h4>
+            <p><span class="evidence-link">Phone Records</span> + <span class="evidence-link">Timeline</span></p>
+            <p><strong>Key Finding:</strong> On November 26 at 9:45 PM (the night before the murder), Dr. Marcus Chen called James Keller. They had two conversations totaling over 11 minutes.</p>
+            <p>Chen's text message afterward said: <em>"Thanks for talking. You're right - sometimes you just have to take control of your own situation."</em></p>
+            <p><strong>What does this mean?</strong> Chen was seeking advice about his desperate financial situation. But were they just talking about Chen's gambling debts, or were they planning something more sinister?</p>
+        </div>
+
+        <div class="connection-box">
+            <h4>🔗 CONNECTION #2: Complementary Capabilities</h4>
+            <p><span class="evidence-link">Case File</span> + <span class="evidence-link">Security Logs</span></p>
+            <p>Now look at what each suspect CAN and CANNOT do:</p>
+        </div>
+
+        <div class="suspect-profile">
+            <h4>DR. MARCUS CHEN - Capabilities Analysis</h4>
+            <ul>
+                <li><strong>Security Clearance:</strong> Level 4 (✓ Can access secure terminal)</li>
+                <li><strong>Computer Skills:</strong> Excellent - PhD in Molecular Biology (✓ Can steal files)</li>
+                <li><strong>Chemical Storage Access:</strong> NO - Only Level 4 personnel can access 3C, but Nash controls all chemical access</li>
+                <li><strong>Motive:</strong> EXTREME - $127K gambling debt, excluded from patents worth millions</li>
+                <li><strong>Physical Access:</strong> ✓ Present in Lab 3B (adjacent to victim) entire morning</li>
+                <li><strong>USB Device:</strong> No encrypted device found in his possession</li>
+            </ul>
+            <p style="color: #ffd700; margin-top: 15px;"><strong>Chen's Problem:</strong> He has terminal access and computer skills, but no clear way to obtain the cyanide.</p>
+        </div>
+
+        <div class="suspect-profile">
+            <h4>JAMES KELLER - Capabilities Analysis</h4>
+            <ul>
+                <li><strong>Security Clearance:</strong> Level 3 (✗ CANNOT access secure terminal)</li>
+                <li><strong>Computer Skills:</strong> Basic maintenance only (✗ Unlikely to do sophisticated data theft)</li>
+                <li><strong>Chemical Storage Access:</strong> ✓ Master keys - can access ANY room without logging</li>
+                <li><strong>Motive:</strong> HIGH - $15K already received, $235K more promised for data theft</li>
+                <li><strong>Physical Access:</strong> ✓ Present entire morning, master access to all areas</li>
+                <li><strong>USB Device:</strong> ✓ Encrypted USB drive found in possession!</li>
+            </ul>
+            <p style="color: #ffd700; margin-top: 15px;"><strong>Keller's Problem:</strong> He has physical access and the USB drive, but LACKS the security clearance to access Dr. Voss's terminal.</p>
+        </div>
+
+        <div class="connection-box">
+            <h4>🔗 CONNECTION #3: The Security Clearance Problem</h4>
+            <p><span class="evidence-link">Forensics</span> + <span class="evidence-link">Case File</span></p>
+            <p><strong>Critical Finding:</strong> The computer files were stolen at 09:23 AM using Dr. Voss's credentials and biometric fingerprint. Forensic analysis proves she was unconscious or dying at this exact moment.</p>
+            <p><strong>The Question:</strong> Who could have accessed her terminal?</p>
+            <p>• <strong>Keller (Level 3):</strong> NO - Insufficient clearance<br>
+            • <strong>Chen (Level 4):</strong> YES - Has sufficient clearance<br>
+            • <strong>Nash (Level 4):</strong> YES - But he was in Chemical Storage during the data theft<br>
+            • <strong>Rivers (Level 5):</strong> YES - But she was on video conference during the data theft<br>
+            • <strong>Garcia (Level 2):</strong> NO - Insufficient clearance</p>
+            <p><strong>Conclusion:</strong> Only Chen could have stolen the files while being present during the critical window!</p>
+        </div>
+
+        <div class="connection-box">
+            <h4>🔗 CONNECTION #4: The Cyanide Source</h4>
+            <p><span class="evidence-link">Forensics</span> + <span class="evidence-link">Email</span> + <span class="evidence-link">Security Logs</span></p>
+            <p><strong>Key Facts:</strong></p>
+            <p>• Cyanide came from Container KCN-077 in Chemical Storage Room 3C<br>
+            • James Keller reported 15-20 grams missing on Nov 25 (2 days before murder)<br>
+            • Dr. Nash had access to Chemical Storage from 08:01-09:47 AM on murder day<br>
+            • Keller has MASTER KEYS - can access Chemical Storage without keycard logging</p>
+            <p><strong>The Question:</strong> Who took the cyanide?</p>
+            <p>Chen has Level 4 clearance but would show up in security logs accessing Chemical Storage. Keller has master keys and could enter without electronic record. The email shows Keller documented the missing cyanide himself - was this to cover his tracks?</p>
+        </div>
+
+        <div class="critical-timeline">
+            <h4>⚠️ THE CRITICAL SEQUENCE ⚠️</h4>
+            <div class="timeline-item">
+                <div class="timeline-time">09:20-09:35 AM</div>
+                <div class="timeline-desc">Coffee contaminated with cyanide (estimated window)</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-time">09:23 AM</div>
+                <div class="timeline-desc">Computer files stolen using Voss's dying/dead hand for biometric access</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-time">09:28 AM</div>
+                <div class="timeline-desc">Keller exits Storage Room 3D - now in general area with no tracking</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-time">09:40 AM (est.)</div>
+                <div class="timeline-desc">Dr. Voss drinks poisoned coffee</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-time">09:47 AM</div>
+                <div class="timeline-desc">Dr. Voss dies</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-time">09:52 AM</div>
+                <div class="timeline-desc">Chen "discovers" body</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-time">10:47 AM</div>
+                <div class="timeline-desc">Keller calls Cayman Islands contact on encrypted phone during lockdown!</div>
+            </div>
+        </div>
+
+        <div class="connection-box">
+            <h4>🔗 CONNECTION #5: The Division of Labor</h4>
+            <p><span class="evidence-link">All Evidence</span></p>
+            <p><strong>If Chen and Keller worked together, here's how it could work:</strong></p>
+            <p><strong>KELLER'S ROLE:</strong><br>
+            • Steal cyanide from Chemical Storage using master keys (no electronic trace)<br>
+            • Transport cyanide to Lab 3A using small glass vial (found in wastebin)<br>
+            • Contaminate Dr. Voss's coffee around 09:25-09:35 AM<br>
+            • Provide encrypted USB drive for data storage<br>
+            • Call offshore contact to report mission completion</p>
+            <p><strong>CHEN'S ROLE:</strong><br>
+            • Wait for poison to incapacitate Dr. Voss<br>
+            • Access secure terminal using his Level 4 clearance at 09:23 AM<br>
+            • Use Voss's unconscious/dying hand for biometric scanner<br>
+            • Copy files to Keller's USB drive<br>
+            • Delete files using military-grade wiping software<br>
+            • "Discover" body at 09:52 AM to appear innocent</p>
+            <p><strong>MOTIVE ALIGNMENT:</strong><br>
+            • Chen gets revenge on Voss + potential payment for helping Keller<br>
+            • Keller gets $250,000 total payment from offshore employer<br>
+            • Both solve their desperate financial situations</p>
+        </div>
+
+        <div class="hint-box">
+            <h3>The Key Question Remaining</h3>
+            <p>If this theory is correct, you need to find the <strong>definitive proof</strong> that Chen and Keller worked together. Look for:</p>
+            <p>1. Evidence that proves Chen had access to the cyanide<br>
+            2. Evidence that connects Keller to the computer theft<br>
+            3. Evidence of their coordination and planning<br>
+            4. The "smoking gun" that proves their guilt beyond doubt</p>
+            <p style="color: #ffd700; font-size: 1.2em; margin-top: 20px;">Remember: The timeline shows something that ONLY makes sense if two people were working together. One person simply cannot be in two places at the same time...</p>
+        </div>
+
+        <div class="navigation">
+            <a href="hint-1.html" class="nav-btn">◄ BACK TO HINT #1</a>
+            <a href="hint-3.html" class="nav-btn">NEED MORE HELP? → HINT #3</a>
+        </div>
+
+        <footer>
+            <p>Investigation Assistance System</p>
+            <p>The truth is found in the connections between evidence</p>
+        </footer>
+    </div>
+</body>
+</html>

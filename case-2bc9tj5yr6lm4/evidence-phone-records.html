@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EVIDENCE - PHONE RECORDS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #050814;
+            color: #00f7ff;
+            font-family: 'Rajdhani', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 1000;
+            animation: scanlines 8s linear infinite;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 2px solid #ff006e;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5em;
+            color: #ff006e;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #ff006e, 0 0 20px #ff006e;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #00f7ff, #00d4dd);
+            color: #050814;
+            padding: 12px 25px;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 2px solid #00f7ff;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.6);
+        }
+
+        .evidence-header {
+            background: linear-gradient(135deg, rgba(0, 247, 255, 0.1), rgba(255, 0, 110, 0.1));
+            border: 2px solid #00f7ff;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+
+        .evidence-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffd700;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .evidence-header p {
+            color: #00f7ff;
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        .suspect-section {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+            border: 2px solid #00f7ff;
+            margin: 40px 0;
+            border-radius: 5px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .suspect-section:hover {
+            border-color: #ffd700;
+            box-shadow: 0 5px 25px rgba(0, 247, 255, 0.3);
+        }
+
+        .suspect-header {
+            background: linear-gradient(135deg, #ff006e, #cc0058);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .suspect-name {
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            font-size: 1.6em;
+            text-transform: uppercase;
+        }
+
+        .phone-number {
+            font-family: 'Share Tech Mono', monospace;
+            color: #ffd700;
+            font-size: 1.1em;
+        }
+
+        .suspect-content {
+            padding: 30px;
+        }
+
+        .call-log-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.9em;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .call-log-table thead {
+            background: linear-gradient(135deg, #ffd700, #ccaa00);
+        }
+
+        .call-log-table th {
+            color: #050814;
+            padding: 12px 10px;
+            text-align: left;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .call-log-table td {
+            padding: 10px;
+            border-bottom: 1px solid rgba(0, 247, 255, 0.2);
+            color: #00f7ff;
+        }
+
+        .call-log-table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .call-log-table tbody tr:hover {
+            background: rgba(0, 247, 255, 0.1);
+        }
+
+        .call-log-table tbody tr.suspicious {
+            background: rgba(255, 0, 110, 0.2);
+            border-left: 4px solid #ff006e;
+        }
+
+        .call-type {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        .call-incoming {
+            background: rgba(0, 255, 100, 0.3);
+            color: #00ff64;
+            border: 1px solid #00ff64;
+        }
+
+        .call-outgoing {
+            background: rgba(255, 165, 0, 0.3);
+            color: #ffa500;
+            border: 1px solid #ffa500;
+        }
+
+        .call-missed {
+            background: rgba(255, 0, 110, 0.3);
+            color: #ff006e;
+            border: 1px solid #ff006e;
+        }
+
+        .text-message {
+            background: rgba(0, 247, 255, 0.1);
+            border-left: 4px solid #00f7ff;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .text-message.sent {
+            border-left-color: #ffa500;
+            background: rgba(255, 165, 0, 0.1);
+        }
+
+        .text-message.received {
+            border-left-color: #00ff64;
+            background: rgba(0, 255, 100, 0.1);
+        }
+
+        .text-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.9em;
+        }
+
+        .text-from {
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .text-time {
+            color: #ff006e;
+        }
+
+        .text-body {
+            color: #00f7ff;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffd700;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+            text-transform: uppercase;
+            border-bottom: 2px solid #00f7ff;
+            padding-bottom: 8px;
+        }
+
+        .critical-finding {
+            background: rgba(255, 0, 110, 0.2);
+            border: 2px solid #ff006e;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .critical-finding h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff006e;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .critical-finding p {
+            color: #00f7ff;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .analyst-note {
+            background: rgba(255, 215, 0, 0.1);
+            border-left: 4px solid #ffd700;
+            padding: 15px;
+            margin: 15px 0;
+            font-style: italic;
+            color: #ffd700;
+        }
+
+        .analyst-note strong {
+            color: #ff006e;
+        }
+
+        .encrypted-msg {
+            background: rgba(255, 215, 0, 0.2);
+            border: 2px dashed #ffd700;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Share Tech Mono', monospace;
+            text-align: center;
+        }
+
+        .burner-phone {
+            background: rgba(255, 0, 110, 0.3);
+            border: 2px solid #ff006e;
+            padding: 10px;
+            display: inline-block;
+            font-family: 'Share Tech Mono', monospace;
+            font-weight: bold;
+            color: #ff006e;
+            margin: 10px 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 2px solid #00f7ff;
+            margin-top: 50px;
+            color: #00f7ff;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .call-log-table {
+                font-size: 0.75em;
+            }
+
+            .text-header {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="back-btn">◄ RETURN TO MAIN DATABASE</a>
+            <h1>📱 PHONE RECORDS</h1>
+            <div style="color: #ffd700; font-family: 'Share Tech Mono', monospace; margin-top: 10px;">
+                CALL LOGS & TEXT MESSAGE ANALYSIS
+            </div>
+        </header>
+
+        <div class="evidence-header">
+            <h2>EVIDENCE FILE: PHONE-RECORDS-2024-1126-27</h2>
+            <p><strong>Source:</strong> FBI Communications Forensics - Court-Ordered Subpoena</p>
+            <p><strong>Carriers:</strong> Verizon, AT&T, T-Mobile, TracFone (Prepaid)</p>
+            <p><strong>Analysis Period:</strong> November 26-27, 2024 (48 hours surrounding murder)</p>
+            <p style="margin-top: 15px; color: #ff006e;"><strong>PRIORITY FOCUS:</strong> Communication patterns during critical timeframe (07:00-11:00 AM, November 27). Burner phone activity flagged for investigation.</p>
+        </div>
+
+        <!-- DR. MARCUS CHEN -->
+        <div class="suspect-section">
+            <div class="suspect-header">
+                <div class="suspect-name">DR. MARCUS CHEN</div>
+                <div class="phone-number">(555) 847-2193</div>
+            </div>
+            <div class="suspect-content">
+                <h3 class="section-title">Call Log - November 26-27</h3>
+                <table class="call-log-table">
+                    <thead>
+                        <tr>
+                            <th>Date/Time</th>
+                            <th>Type</th>
+                            <th>Number</th>
+                            <th>Contact</th>
+                            <th>Duration</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Nov 26, 14:37</td>
+                            <td><span class="call-outgoing">OUT</span></td>
+                            <td>(555) 903-4471</td>
+                            <td>EastSide Casino</td>
+                            <td>8m 22s</td>
+                            <td>Debt negotiation</td>
+                        </tr>
+                        <tr>
+                            <td>Nov 26, 18:22</td>
+                            <td><span class="call-incoming">IN</span></td>
+                            <td>(555) 903-4471</td>
+                            <td>EastSide Casino</td>
+                            <td>12m 04s</td>
+                            <td>Return call</td>
+                        </tr>
+                        <tr class="suspicious">
+                            <td>Nov 26, 21:45</td>
+                            <td><span class="call-outgoing">OUT</span></td>
+                            <td>(555) 776-8833</td>
+                            <td>James Keller</td>
+                            <td>3m 47s</td>
+                            <td>⚠️ Call to coworker late at night</td>
+                        </tr>
+                        <tr class="suspicious">
+                            <td>Nov 26, 22:18</td>
+                            <td><span class="call-incoming">IN</span></td>
+                            <td>(555) 776-8833</td>
+                            <td>James Keller</td>
+                            <td>7m 15s</td>
+                            <td>⚠️ Return call from Keller</td>
+                        </tr>
+                        <tr>
+                            <td>Nov 27, 06:42</td>
+                            <td><span class="call-outgoing">OUT</span></td>
+                            <td>(555) 234-7890</td>
+                            <td>Mom</td>
+                            <td>2m 11s</td>
+                            <td>Morning call</td>
+                        </tr>
+                        <tr>
+                            <td>Nov 27, 10:24</td>
+                            <td><span class="call-outgoing">OUT</span></td>
+                            <td>911</td>
+                            <td>Emergency</td>
+                            <td>4m 38s</td>
+                            <td>Reported victim's death</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="section-title">Text Messages - Critical</h3>
+                
+                <div class="text-message sent suspicious">
+                    <div class="text-header">
+                        <span class="text-from">TO: James Keller (555-776-8833)</span>
+                        <span class="text-time">Nov 26, 21:47 PM</span>
+                    </div>
+                    <div class="text-body">
+                        Hey, you still at work? Need to talk to you about something. Can you meet me for coffee tomorrow morning before shift?
+                    </div>
+                </div>
+
+                <div class="text-message received suspicious">
+                    <div class="text-header">
+                        <span class="text-from">FROM: James Keller (555-776-8833)</span>
+                        <span class="text-time">Nov 26, 21:52 PM</span>
+                    </div>
+                    <div class="text-body">
+                        Already left. What's up? Can talk now if you want.
+                    </div>
+                </div>
+
+                <div class="text-message sent suspicious">
+                    <div class="text-header">
+                        <span class="text-from">TO: James Keller (555-776-8833)</span>
+                        <span class="text-time">Nov 26, 22:31 PM</span>
+                    </div>
+                    <div class="text-body">
+                        Thanks for talking. I appreciate the advice. You're right - sometimes you just have to take control of your own situation. See you tomorrow.
+                    </div>
+                </div>
+
+                <div class="critical-finding">
+                    <h4>🚨 CRITICAL COMMUNICATION PATTERN</h4>
+                    <p><strong>Chen-Keller Late Night Contact:</strong> Dr. Chen initiated contact with James Keller at 21:45 PM on November 26 (night before murder). They spoke for 3m 47s, then Keller called back at 22:18 PM for an additional 7m 15s.</p>
+                    <p style="margin-top: 10px;">Text messages show Chen wanted to meet Keller for coffee but settled for phone conversation. Chen's final text at 22:31 PM thanks Keller for "advice" and says "sometimes you just have to take control of your own situation."</p>
+                    <p style="margin-top: 10px; color: #ff006e;"><strong>SIGNIFICANCE:</strong> This communication occurred less than 12 hours before Dr. Voss's murder. Chen's statement about "taking control of your own situation" could be interpreted as planning to take action. Did Chen and Keller discuss the murder? Or was this innocent advice about Chen's debt problems?</p>
+                </div>
+
+                <div class="analyst-note">
+                    <strong>ANALYST NOTE:</strong> Dr. Chen called 911 at 10:24 AM to report the death, four minutes before official security lockdown. His voice stress analysis on the 911 call shows genuine distress, but this doesn't eliminate him as a suspect - killers can experience genuine shock when confronting what they've done.
+                </div>
+            </div>
+        </div>
+
+        <!-- JAMES KELLER -->
+        <div class="suspect-section">
+            <div class="suspect-header">
+                <div class="suspect-name">JAMES KELLER</div>
+                <div class="phone-number">(555) 776-8833</div>
+            </div>
+            <div class="suspect-content">
+                <h3 class="section-title">Call Log - November 26-27</h3>
+                <table class="call-log-table">
+                    <thead>
+                        <tr>
+                            <th>Date/Time</th>
+                            <th>Type</th>
+                            <th>Number</th>
+                            <th>Contact</th>
+                            <th>Duration</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Nov 26, 11:23</td>
+                            <td><span class="call-outgoing">OUT</span></td>
+                            <td>(555) 847-9921</td>
+                            <td>Memorial Hospital</td>
+                            <td>6m 18s</td>
+                            <td>Sister's treatment inquiry</td>
+                        </tr>
+                        <tr class="suspicious">
+                            <td>Nov 26, 15:47</td>
+                            <td><span class="call-incoming">IN</span></td>
+                            <td>UNKNOWN</td>
+                            <td>Blocked/Private</td>
+                            <td>2m 03s</td>
+                            <td>⚠️ Caller ID blocked</td>
+                        </tr>
+                        <tr class="suspicious">
+                            <td>Nov 26, 21:45</td>
+                            <td><span class="call-incoming">IN</span></td>
+                            <td>(555) 847-2193</td>
+                            <td>Dr. Marcus Chen</td>
+                            <td>3m 47s</td>
+                            <td>⚠️ Late night call from Chen</td>
+                        </tr>
+                        <tr class="suspicious">
+                            <td>Nov 26, 22:18</td>
+                            <td><span class="call-outgoing">OUT</span></td>
+                            <td>(555) 847-2193</td>
+                            <td>Dr. Marcus Chen</td>
+                            <td>7m 15s</td>
+                            <td>⚠️ Return call to Chen</td>
+                        </tr>
+                        <tr>
+                            <td>Nov 27, 06:15</td>
+                            <td><span class="call-outgoing">OUT</span></td>
+                            <td>(555) 293-4471</td>
+                            <td>Sister - Sarah</td>
+                            <td>4m 52s</td>
+                            <td>Morning check-in</td>
+                        </tr>
+                        <tr>
+                            <td>Nov 27, 10:55</td>
+                            <td><span class="call-incoming">IN</span></td>
+                            <td>(555) 293-4471</td>
+                            <td>Sister - Sarah</td>
+                            <td>1m 34s</td>
+                            <td>Emergency at work mentioned</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="critical-finding">
+                    <h4>📞 BURNER PHONE DISCOVERY</h4>
+                    <div class="burner-phone">⚠️ SECOND DEVICE DETECTED: (555) 901-XXXX [TracFone Prepaid]</div>
+                    <p style="margin-top: 15px;">FBI forensics discovered a second encrypted phone in James Keller's possession during questioning. This TracFone prepaid device (purchased Nov 18 as shown in financial records) contains encrypted communications that partially match the pattern from the corporate espionage email.</p>
+                </div>
+
+                <h3 class="section-title">Burner Phone Records - Encrypted Device</h3>
+                <table class="call-log-table">
+                    <thead>
+                        <tr>
+                            <th>Date/Time</th>
+                            <th>Type</th>
+                            <th>Number</th>
+                            <th>Contact</th>
+                            <th>Duration</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="suspicious">
+                            <td>Nov 13, 15:22</td>
+                            <td><span class="call-incoming">IN</span></td>
+                            <td>+1-345-XXX-XXXX</td>
+                            <td>Cayman Islands</td>
+                            <td>8m 47s</td>
+                            <td>⚠️ International - offshore account region</td>
+                        </tr>
+                        <tr class="suspicious">
+                            <td>Nov 20, 09:14</td>
+                            <td><span class="call-incoming">IN</span></td>
+                            <td>+1-345-XXX-XXXX</td>
+                            <td>Cayman Islands</td>
+                            <td>4m 12s</td>
+                            <td>⚠️ Follow-up call</td>
+                        </tr>
+                        <tr class="suspicious">
+                            <td>Nov 25, 19:33</td>
+                            <td><span class="call-outgoing">OUT</span></td>
+                            <td>+1-345-XXX-XXXX</td>
+                            <td>Cayman Islands</td>
+                            <td>11m 28s</td>
+                            <td>⚠️ Long call 2 days before murder</td>
+                        </tr>
+                        <tr class="suspicious">
+                            <td>Nov 27, 10:47</td>
+                            <td><span class="call-outgoing">OUT</span></td>
+                            <td>+1-345-XXX-XXXX</td>
+                            <td>Cayman Islands</td>
+                            <td>0m 52s</td>
+                            <td>⚠️ Brief call 55 min after murder</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="encrypted-msg">
+                    <p style="color: #ffd700; margin-bottom: 10px;">⚠️ ENCRYPTED TEXT MESSAGES DETECTED ⚠️</p>
+                    <p style="color: #00f7ff; font-size: 0.9em;">Multiple encrypted text messages sent/received on this device.<br>FBI Cyber Crimes Unit working to decrypt contents.<br>Messages timestamped: Nov 13, 20, 25, 27</p>
+                </div>
+
+                <div class="critical-finding">
+                    <h4>🔐 KELLER BURNER PHONE ANALYSIS</h4>
+                    <p><strong>International Communications:</strong> All calls from burner phone are to/from a Cayman Islands number - the same region where Keller received his $15,000 payment on Nov 13.</p>
+                    <p style="margin-top: 10px;"><strong>Nov 27, 10:47 AM Call:</strong> Keller made a 52-second call to his Cayman contact at 10:47 AM - only 55 minutes after Dr. Voss's body was discovered and during the security lockdown. This suggests he was reporting completion of an assignment or requesting instructions.</p>
+                    <p style="margin-top: 10px; color: #ff006e;"><strong>SIGNIFICANCE:</strong> The burner phone confirms Keller was in communication with an offshore entity throughout the operation. The timing of the Nov 27 call strongly suggests he was updating his handler immediately after the murder. This supports the corporate espionage theory.</p>
+                </div>
+
+                <div class="analyst-note">
+                    <strong>ANALYST NOTE:</strong> Keller's dual phone usage is classic espionage tradecraft. Personal phone maintains normal patterns (family calls, work contacts) while burner handles criminal communications. The fact that he kept the burner phone and didn't dispose of it suggests either overconfidence or that he intended to continue the operation. The Chen-Keller late-night conversation remains unexplained - were they working together?
+                </div>
+            </div>
+        </div>
+
+        <!-- DR. ROBERT NASH -->
+        <div class="suspect-section">
+            <div class="suspect-header">
+                <div class="suspect-name">DR. ROBERT NASH</div>
+                <div class="phone-number">(555) 662-4109</div>
+            </div>
+            <div class="suspect-content">
+                <h3 class="section-title">Call Log - November 26-27</h3>
+                <table class="call-log-table">
+                    <thead>
+                        <tr>
+                            <th>Date/Time</th>
+                            <th>Type</th>
+                            <th>Number</th>
+                            <th>Contact</th>
+                            <th>Duration</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Nov 26, 08:15</td>
+                            <td><span class="call-outgoing">OUT</span></td>
+                            <td>(555) 447-9823</td>
+                            <td>Dr. Miller - Neurologist</td>
+                            <td>12m 33s</td>
+                            <td>Medical consultation</td>
+                        </tr>
+                        <tr>
+                            <td>Nov 26, 13:42</td>
+                            <td><span class="call-outgoing">OUT</span></td>
+                            <td>(555) 908-3344</td>
+                            <td>Law Office - Employment</td>
+                            <td>18m 47s</td>
+                            <td>Legal advice on termination case</td>
+                        </tr>
+                        <tr class="suspicious">
+                            <td>Nov 26, 19:24</td>
+                            <td><span class="call-outgoing">OUT</span></td>
+                            <td>(555) 221-8877</td>
+                            <td>Wife - Martha</td>
+                            <td>23m 15s</td>
+                            <td>Long evening call</td>
+                        </tr>
+                        <tr>
+                            <td>Nov 27, 06:55</td>
+                            <td><span class="call-outgoing">OUT</span></td>
+                            <td>(555) 221-8877</td>
+                            <td>Wife - Martha</td>
+                            <td>3m 08s</td>
+                            <td>Morning call</td>
+                        </tr>
+                        <tr>
+                            <td>Nov 27, 10:02</td>
+                            <td><span class="call-outgoing">OUT</span></td>
+                            <td>(555) 221-8877</td>
+                            <td>Wife - Martha</td>
+                            <td>1m 52s</td>
+                            <td>Brief check-in call</td>
+                        </tr>
+                        <tr>
+                            <td>Nov 27, 11:18</td>
+                            <td><span class="call-incoming">IN</span></td>
+                            <td>(555) 908-3344</td>
+                            <td>Law Office - Employment</td>
+                            <td>9m 22s</td>
+                            <td>Attorney returning call</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="section-title">Text Messages</h3>
+                
+                <div class="text-message sent">
+                    <div class="text-header">
+                        <span class="text-from">TO: Wife - Martha (555-221-8877)</span>
+                        <span class="text-time">Nov 26, 19:47 PM</span>
+                    </div>
+                    <div class="text-body">
+                        The lawyer says we might have a case but it will be expensive and take months. I don't know if we can afford this fight. I'm so tired, Martha. I just want this nightmare to end.
+                    </div>
+                </div>
+
+                <div class="text-message received">
+                    <div class="text-header">
+                        <span class="text-from">FROM: Wife - Martha (555-221-8877)</span>
+                        <span class="text-time">Nov 26, 19:52 PM</span>
+                    </div>
+                    <div class="text-body">
+                        We'll figure it out together. We always do. Try to get some rest. Tomorrow is a new day. I love you.
+                    </div>
+                </div>
+
+                <div class="text-message sent">
+                    <div class="text-header">
+                        <span class="text-from">TO: Wife - Martha (555-221-8877)</span>
+                        <span class="text-time">Nov 27, 10:15 AM</span>
+                    </div>
+                    <div class="text-body">
+                        Something terrible happened at work. There's police everywhere. I can't talk about it yet but I'm okay. Will call you when I can. Don't worry.
+                    </div>
+                </div>
+
+                <div class="analyst-note">
+                    <strong>ANALYST NOTE:</strong> Dr. Nash's phone records show normal patterns - medical consultations, legal advice calls, and regular contact with his wife. His text messages on Nov 26 show emotional distress about his termination case but nothing indicating plans for violence. His 10:15 AM text to his wife on Nov 27 (28 minutes after time of death) shows surprise about police presence, though this could be staged. Nash has no suspicious calls or encrypted communications. His alibi timing is suspicious (left chemical storage at exact time of death) but his phone provides no evidence of criminal conspiracy.
+                </div>
+            </div>
+        </div>
+
+        <!-- DR. SARAH RIVERS -->
+        <div class="suspect-section">
+            <div class="suspect-header">
+                <div class="suspect-name">DR. SARAH RIVERS</div>
+                <div class="phone-number">(555) 384-7721</div>
+            </div>
+            <div class="suspect-content">
+                <h3 class="section-title">Call Log - November 26-27</h3>
+                <table class="call-log-table">
+                    <thead>
+                        <tr>
+                            <th>Date/Time</th>
+                            <th>Type</th>
+                            <th>Number</th>
+                            <th>Contact</th>
+                            <th>Duration</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="suspicious">
+                            <td>Nov 26, 17:12</td>
+                            <td><span class="call-outgoing">OUT</span></td>
+                            <td>(555) 990-1122</td>
+                            <td>CEO - Richard Hayes</td>
+                            <td>14m 38s</td>
+                            <td>Evening call to CEO</td>
+                        </tr>
+                        <tr class="suspicious">
+                            <td>Nov 26, 20:03</td>
+                            <td><span class="call-incoming">IN</span></td>
+                            <td>(555) 990-1122</td>
+                            <td>CEO - Richard Hayes</td>
+                            <td>8m 22s</td>
+                            <td>CEO callback</td>
+                        </tr>
+                        <tr>
+                            <td>Nov 27, 07:45</td>
+                            <td><span class="call-outgoing">OUT</span></td>
+                            <td>(555) 447-3309</td>
+                            <td>Personal Assistant</td>
+                            <td>2m 11s</td>
+                            <td>Schedule coordination</td>
+                        </tr>
+                        <tr>
+                            <td>Nov 27, 10:38</td>
+                            <td><span class="call-incoming">IN</span></td>
+                            <td>(555) 990-1122</td>
+                            <td>CEO - Richard Hayes</td>
+                            <td>6m 47s</td>
+                            <td>Emergency notification</td>
+                        </tr>
+                        <tr>
+                            <td>Nov 27, 10:52</td>
+                            <td><span class="call-outgoing">OUT</span></td>
+                            <td>(555) 784-9900</td>
+                            <td>BioGenex Legal</td>
+                            <td>11m 33s</td>
+                            <td>Legal coordination</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="section-title">Text Messages - Critical</h3>
+                
+                <div class="text-message sent suspicious">
+                    <div class="text-header">
+                        <span class="text-from">TO: CEO Richard Hayes (555-990-1122)</span>
+                        <span class="text-time">Nov 26, 16:44 PM</span>
+                    </div>
+                    <div class="text-body">
+                        Richard, we need to talk urgently. IT just informed me that Elena is negotiating with GeneTech. She's planning to leave and may attempt to take proprietary information with her. This is the crisis scenario we discussed. Call me ASAP.
+                    </div>
+                </div>
+
+                <div class="text-message received suspicious">
+                    <div class="text-header">
+                        <span class="text-from">FROM: CEO Richard Hayes (555-990-1122)</span>
+                        <span class="text-time">Nov 26, 17:04 PM</span>
+                    </div>
+                    <div class="text-body">
+                        This is unacceptable. If we lose Project Helix the Board will have both our heads. What are our options? Can Legal stop her?
+                    </div>
+                </div>
+
+                <div class="text-message sent suspicious">
+                    <div class="text-header">
+                        <span class="text-from">TO: CEO Richard Hayes (555-990-1122)</span>
+                        <span class="text-time">Nov 26, 20:18 PM</span>
+                    </div>
+                    <div class="text-body">
+                        Legal says we have grounds for injunction but it could take weeks. We don't have weeks - she could walk out any day. I'm going to visit her lab first thing tomorrow morning and make one final attempt to resolve this professionally. If she refuses, we'll have to take more aggressive legal action immediately.
+                    </div>
+                </div>
+
+                <div class="critical-finding">
+                    <h4>📞 RIVERS-CEO COMMUNICATIONS</h4>
+                    <p><strong>Evening of Nov 26:</strong> Dr. Rivers contacted CEO Richard Hayes at 5:12 PM after learning about Dr. Voss's GeneTech negotiations. They had two lengthy phone calls (14m 38s and 8m 22s) discussing the crisis.</p>
+                    <p style="margin-top: 10px;">Text messages show Rivers warned the CEO that "if we lose Project Helix the Board will have both our heads." Rivers stated she would visit Voss's lab "first thing tomorrow morning" for a "final attempt to resolve this."</p>
+                    <p style="margin-top: 10px; color: #ff006e;"><strong>SIGNIFICANCE:</strong> Rivers had clear motive (saving her job and bonus) and opportunity (visited lab at 08:13 AM, left at 08:37 AM). However, she could not have stolen the computer files at 09:23 AM - she was on video conference during that time. Could she have had an accomplice?</p>
+                </div>
+
+                <div class="analyst-note">
+                    <strong>ANALYST NOTE:</strong> Dr. Rivers' communications show she was under extreme pressure from the CEO to prevent Project Helix from being lost. Her statement about making a "final attempt to resolve this professionally" on the morning of the murder is suspicious in hindsight. However, her alibi for the critical data theft window (09:23 AM) is solid - multiple participants confirm she was on video conference. If Rivers was involved, she would have needed help from someone who was in Research Wing 3 during the critical timeframe.
+                </div>
+            </div>
+        </div>
+
+        <!-- NINA GARCIA -->
+        <div class="suspect-section">
+            <div class="suspect-header">
+                <div class="suspect-name">NINA GARCIA</div>
+                <div class="phone-number">(555) 229-8844)</div>
+            </div>
+            <div class="suspect-content">
+                <h3 class="section-title">Call Log - November 26-27</h3>
+                <table class="call-log-table">
+                    <thead>
+                        <tr>
+                            <th>Date/Time</th>
+                            <th>Type</th>
+                            <th>Number</th>
+                            <th>Contact</th>
+                            <th>Duration</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Nov 26, 12:33</td>
+                            <td><span class="call-outgoing">OUT</span>< /td>
+                            <td>(555) 847-2234</td>
+                            <td>Boyfriend - Alex</td>
+                            <td>8m 12s</td>
+                            <td>Lunch break call</td>
+                        </tr>
+                        <tr>
+                            <td>Nov 26, 18:45</td>
+                            <td><span class="call-incoming">IN</span></td>
+                            <td>(555) 847-2234</td>
+                            <td>Boyfriend - Alex</td>
+                            <td>22m 37s</td>
+                            <td>Evening conversation</td>
+                        </tr>
+                        <tr>
+                            <td>Nov 27, 07:15</td>
+                            <td><span class="call-outgoing">OUT</span></td>
+                            <td>(555) 338-4455</td>
+                            <td>Mom</td>
+                            <td>3m 44s</td>
+                            <td>Morning check-in</td>
+                        </tr>
+                        <tr>
+                            <td>Nov 27, 11:05</td>
+                            <td><span class="call-outgoing">OUT</span></td>
+                            <td>(555) 847-2234</td>
+                            <td>Boyfriend - Alex</td>
+                            <td>6m 18s</td>
+                            <td>Reporting incident at work</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="analyst-note">
+                    <strong>ANALYST NOTE:</strong> Nina Garcia's phone records show completely normal patterns. Regular calls to boyfriend (who works at GeneTech but has been cleared of involvement), family contacts, and no suspicious activity. Garcia was in Data Processing Center with multiple witnesses during critical period. She has no encrypted devices, no suspicious contacts, and her security clearance (Level 2) would not allow access to chemical storage or Dr. Voss's secure terminal. Phone evidence supports her innocence.
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 40px 0;">
+            <a href="index.html" class="back-btn">◄ RETURN TO MAIN DATABASE</a>
+        </div>
+
+        <footer>
+            <p>FBI Communications Forensics Division</p>
+            <p>Evidence Compiled: November 28, 2024</p>
+        </footer>
+    </div>
+</body>
+</html>

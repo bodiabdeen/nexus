@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EVIDENCE - SECURITY ACCESS LOGS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #050814;
+            color: #00f7ff;
+            font-family: 'Rajdhani', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 1000;
+            animation: scanlines 8s linear infinite;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 2px solid #ff006e;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5em;
+            color: #ff006e;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #ff006e, 0 0 20px #ff006e;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #00f7ff, #00d4dd);
+            color: #050814;
+            padding: 12px 25px;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 2px solid #00f7ff;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.6);
+        }
+
+        .evidence-header {
+            background: linear-gradient(135deg, rgba(0, 247, 255, 0.1), rgba(255, 0, 110, 0.1));
+            border: 2px solid #00f7ff;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+
+        .evidence-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffd700;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .evidence-header p {
+            color: #00f7ff;
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        .critical-times {
+            background: rgba(255, 0, 110, 0.2);
+            border: 2px solid #ff006e;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .critical-times h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff006e;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .critical-times ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .critical-times li {
+            color: #ffd700;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .log-section {
+            margin: 40px 0;
+        }
+
+        .log-section h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffd700;
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid #00f7ff;
+            padding-bottom: 10px;
+        }
+
+        .log-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.95em;
+            background: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.2);
+        }
+
+        .log-table thead {
+            background: linear-gradient(135deg, #ff006e, #cc0058);
+        }
+
+        .log-table th {
+            color: #fff;
+            padding: 15px 10px;
+            text-align: left;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid #ffd700;
+        }
+
+        .log-table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid rgba(0, 247, 255, 0.2);
+            color: #00f7ff;
+        }
+
+        .log-table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .log-table tbody tr:hover {
+            background: rgba(0, 247, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .time-col {
+            color: #ffd700;
+            font-weight: bold;
+            width: 120px;
+        }
+
+        .name-col {
+            color: #00f7ff;
+            font-weight: bold;
+            width: 200px;
+        }
+
+        .action-col {
+            width: 100px;
+        }
+
+        .location-col {
+            width: 250px;
+        }
+
+        .clearance-col {
+            width: 120px;
+        }
+
+        .action-entry {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 3px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .action-entry.entry {
+            background: rgba(0, 255, 100, 0.3);
+            color: #00ff64;
+            border: 1px solid #00ff64;
+        }
+
+        .action-entry.exit {
+            background: rgba(255, 100, 0, 0.3);
+            color: #ff6400;
+            border: 1px solid #ff6400;
+        }
+
+        .highlight-critical {
+            background: rgba(255, 0, 110, 0.2) !important;
+            border-left: 4px solid #ff006e;
+        }
+
+        .highlight-suspicious {
+            background: rgba(255, 215, 0, 0.1) !important;
+            border-left: 4px solid #ffd700;
+        }
+
+        .notes-box {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid #ffd700;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+
+        .notes-box h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffd700;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .notes-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .notes-box li {
+            color: #00f7ff;
+            padding: 10px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .notes-box li:before {
+            content: "▶";
+            position: absolute;
+            left: 0;
+            color: #ff006e;
+        }
+
+        .legend {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .legend-box {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+        }
+
+        .legend-box.critical {
+            background: rgba(255, 0, 110, 0.5);
+            border: 2px solid #ff006e;
+        }
+
+        .legend-box.suspicious {
+            background: rgba(255, 215, 0, 0.3);
+            border: 2px solid #ffd700;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 2px solid #00f7ff;
+            margin-top: 50px;
+            color: #00f7ff;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .log-table {
+                font-size: 0.8em;
+            }
+
+            .log-table th,
+            .log-table td {
+                padding: 8px 5px;
+            }
+
+            .legend {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="back-btn">◄ RETURN TO MAIN DATABASE</a>
+            <h1>🔐 SECURITY ACCESS LOGS</h1>
+            <div style="color: #ffd700; font-family: 'Share Tech Mono', monospace; margin-top: 10px;">
+                RESEARCH WING 3 - NOVEMBER 27, 2024
+            </div>
+        </header>
+
+        <div class="evidence-header">
+            <h2>EVIDENCE FILE: SEC-LOG-2024-1127</h2>
+            <p><strong>Source:</strong> BioGenex Security System - Automated Keycard Entry/Exit Logs</p>
+            <p><strong>Location:</strong> Research Wing 3, Level 7 - Secure Access Area</p>
+            <p><strong>Date Range:</strong> November 27, 2024 - 06:00:00 to 11:00:00</p>
+            <p><strong>System:</strong> BiometricKey Security Suite v4.2 - All entries/exits require valid keycard + fingerprint scan</p>
+            <p style="margin-top: 15px; color: #ff006e;"><strong>CRITICAL NOTE:</strong> These logs show access to main wing entrance only. Internal doors between laboratories (3A, 3B, 3C, 3D, 3F) do NOT require keycard access once inside the wing. Staff with Level 3+ clearance can move freely between internal rooms without electronic tracking.</p>
+        </div>
+
+        <div class="critical-times">
+            <h3>⚠️ CRITICAL TIMELINE EVENTS</h3>
+            <ul>
+                <li><strong>07:15 AM</strong> - Dr. Voss arrives at lab, begins work</li>
+                <li><strong>09:23 AM</strong> - Project Helix files accessed and deleted from secure terminal</li>
+                <li><strong>09:35-09:47 AM</strong> - Estimated time Dr. Voss consumed poisoned coffee</li>
+                <li><strong>09:47 AM</strong> - Estimated time of death (cyanide takes 8-12 minutes)</li>
+                <li><strong>09:52 AM</strong> - Body discovered by Dr. Marcus Chen</li>
+            </ul>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-box critical"></div>
+                <span style="color: #ff006e; font-weight: bold;">CRITICAL TIME PERIOD (09:20-09:50 AM)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box suspicious"></div>
+                <span style="color: #ffd700; font-weight: bold;">SUSPICIOUS ACTIVITY</span>
+            </div>
+        </div>
+
+        <div class="log-section">
+            <h3>📋 COMPLETE ACCESS LOG - RESEARCH WING 3</h3>
+            
+            <table class="log-table">
+                <thead>
+                    <tr>
+                        <th class="time-col">TIME</th>
+                        <th class="name-col">NAME</th>
+                        <th class="action-col">ACTION</th>
+                        <th class="location-col">LOCATION</th>
+                        <th class="clearance-col">CLEARANCE</th>
+                        <th>NOTES</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="time-col">06:58:14</td>
+                        <td class="name-col">James Keller</td>
+                        <td class="action-col"><span class="action-entry entry">ENTRY</span></td>
+                        <td class="location-col">Research Wing 3 - Main Door</td>
+                        <td class="clearance-col">Level 3</td>
+                        <td>Maintenance shift start</td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">07:15:03</td>
+                        <td class="name-col">Dr. Elena Voss</td>
+                        <td class="action-col"><span class="action-entry entry">ENTRY</span></td>
+                        <td class="location-col">Research Wing 3 - Main Door</td>
+                        <td class="clearance-col">Level 5</td>
+                        <td>Victim arrival</td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">07:28:41</td>
+                        <td class="name-col">Nina Garcia</td>
+                        <td class="action-col"><span class="action-entry entry">ENTRY</span></td>
+                        <td class="location-col">Research Wing 3 - Main Door</td>
+                        <td class="clearance-col">Level 2</td>
+                        <td>Data processing shift</td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">07:43:27</td>
+                        <td class="name-col">Dr. Robert Nash</td>
+                        <td class="action-col"><span class="action-entry entry">ENTRY</span></td>
+                        <td class="location-col">Research Wing 3 - Main Door</td>
+                        <td class="clearance-col">Level 4</td>
+                        <td>Chemical inventory audit</td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">08:01:55</td>
+                        <td class="name-col">Dr. Robert Nash</td>
+                        <td class="action-col"><span class="action-entry entry">ENTRY</span></td>
+                        <td class="location-col">Chemical Storage Room 3C</td>
+                        <td class="clearance-col">Level 4</td>
+                        <td>Accessing hazmat storage</td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">08:02:18</td>
+                        <td class="name-col">James Keller</td>
+                        <td class="action-col"><span class="action-entry entry">ENTRY</span></td>
+                        <td class="location-col">Storage Room 3D</td>
+                        <td class="clearance-col">Level 3</td>
+                        <td>Equipment calibration</td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">08:13:09</td>
+                        <td class="name-col">Dr. Sarah Rivers</td>
+                        <td class="action-col"><span class="action-entry entry">ENTRY</span></td>
+                        <td class="location-col">Research Wing 3 - Main Door</td>
+                        <td class="clearance-col">Level 5</td>
+                        <td>Inspection rounds</td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">08:37:44</td>
+                        <td class="name-col">Dr. Sarah Rivers</td>
+                        <td class="action-col"><span class="action-entry exit">EXIT</span></td>
+                        <td class="location-col">Research Wing 3 - Main Door</td>
+                        <td class="clearance-col">Level 5</td>
+                        <td>Returning to admin wing</td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">08:47:33</td>
+                        <td class="name-col">Dr. Marcus Chen</td>
+                        <td class="action-col"><span class="action-entry entry">ENTRY</span></td>
+                        <td class="location-col">Research Wing 3 - Main Door</td>
+                        <td class="clearance-col">Level 4</td>
+                        <td>Lab work shift start</td>
+                    </tr>
+                    <tr class="highlight-suspicious">
+                        <td class="time-col">09:28:07</td>
+                        <td class="name-col">James Keller</td>
+                        <td class="action-col"><span class="action-entry exit">EXIT</span></td>
+                        <td class="location-col">Storage Room 3D</td>
+                        <td class="clearance-col">Level 3</td>
+                        <td>Completed equipment work</td>
+                    </tr>
+                    <tr class="highlight-critical">
+                        <td class="time-col">09:47:22</td>
+                        <td class="name-col">Dr. Robert Nash</td>
+                        <td class="action-col"><span class="action-entry exit">EXIT</span></td>
+                        <td class="location-col">Chemical Storage Room 3C</td>
+                        <td class="clearance-col">Level 4</td>
+                        <td>⚠️ Left chemical storage near TOD</td>
+                    </tr>
+                    <tr class="highlight-critical">
+                        <td class="time-col">09:50:18</td>
+                        <td class="name-col">Dr. Robert Nash</td>
+                        <td class="action-col"><span class="action-entry exit">EXIT</span></td>
+                        <td class="location-col">Research Wing 3 - Main Door</td>
+                        <td class="clearance-col">Level 4</td>
+                        <td>⚠️ Left wing minutes after TOD</td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">10:07:55</td>
+                        <td class="name-col">Security Team Alpha</td>
+                        <td class="action-col"><span class="action-entry entry">ENTRY</span></td>
+                        <td class="location-col">Research Wing 3 - Main Door</td>
+                        <td class="clearance-col">Level 6</td>
+                        <td>Emergency response - lockdown</td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">10:15:44</td>
+                        <td class="name-col">Dr. Marcus Chen</td>
+                        <td class="action-col"><span class="action-entry exit">EXIT</span></td>
+                        <td class="location-col">Research Wing 3 - Main Door</td>
+                        <td class="clearance-col">Level 4</td>
+                        <td>Escorted by security</td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">10:22:09</td>
+                        <td class="name-col">James Keller</td>
+                        <td class="action-col"><span class="action-entry exit">EXIT</span></td>
+                        <td class="location-col">Research Wing 3 - Main Door</td>
+                        <td class="clearance-col">Level 3</td>
+                        <td>Escorted by security</td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">10:45:33</td>
+                        <td class="name-col">Nina Garcia</td>
+                        <td class="action-col"><span class="action-entry exit">EXIT</span></td>
+                        <td class="location-col">Research Wing 3 - Main Door</td>
+                        <td class="clearance-col">Level 2</td>
+                        <td>Escorted by security</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="notes-box">
+            <h3>🔍 SECURITY ANALYST NOTES</h3>
+            <ul>
+                <li><strong>MISSING EXIT LOG:</strong> Dr. Elena Voss has no exit log - she never left Research Wing 3 after arriving at 07:15 AM (deceased at scene)</li>
+                <li><strong>SUSPICIOUS TIMING:</strong> Dr. Robert Nash exited Chemical Storage Room 3C at 09:47 AM - the exact estimated time of death. He then left Research Wing 3 at 09:50 AM, only 3 minutes after the victim died.</li>
+                <li><strong>NO EXIT LOG FOR CHEN:</strong> Dr. Marcus Chen entered at 08:47 AM but has no exit until police lockdown at 10:15 AM. He was present during the entire critical period (09:20-09:50 AM).</li>
+                <li><strong>NASH CHEMICAL ACCESS:</strong> Dr. Nash spent 1 hour 46 minutes in Chemical Storage (08:01-09:47). This is 30 minutes longer than typical audit procedures.</li>
+                <li><strong>KELLER MOVEMENT:</strong> James Keller exited Storage Room 3D at 09:28 AM, placing him in the general lab area during file deletion at 09:23 AM and poisoning timeframe.</li>
+                <li><strong>INTERNAL DOOR ISSUE:</strong> Once inside Research Wing 3, personnel with Level 3+ clearance can access all internal labs (3A, 3B, 3C, 3D, 3F) without keycard scans. This means Chen, Keller, and Nash could have entered Dr. Voss's Lab 3A without electronic record.</li>
+                <li><strong>GARCIA CLEARANCE:</strong> Nina Garcia has only Level 2 clearance - she cannot access Chemical Storage Room 3C or Dr. Voss's secure Lab 3A. Her access is restricted to Data Processing Center 3F only.</li>
+                <li><strong>RIVERS EARLY EXIT:</strong> Dr. Sarah Rivers left Research Wing 3 at 08:37 AM - well before the critical events. However, she had 24 minutes of access (08:13-08:37) during which she could have contaminated the coffee.</li>
+            </ul>
+        </div>
+
+        <div class="notes-box" style="border-color: #ff006e; background: rgba(255, 0, 110, 0.1);">
+            <h3 style="color: #ff006e;">⚠️ CRITICAL OBSERVATION</h3>
+            <ul>
+                <li style="color: #ffd700;"><strong>THREE SUSPECTS HAD CONTINUOUS PRESENCE DURING CRITICAL PERIOD:</strong> Dr. Marcus Chen (entered 08:47, no exit until lockdown), James Keller (entered 06:58, exited 10:22 during lockdown), and Dr. Robert Nash (entered 07:43, exited 09:50 - suspiciously timed). All three had opportunity for both poisoning and data theft.</li>
+                <li style="color: #ffd700;"><strong>COMPUTER ACCESS ISSUE:</strong> The secure terminal file deletion at 09:23 AM requires Level 4+ clearance AND physical access to Dr. Voss's computer in Lab 3A. Chen (Level 4), Nash (Level 4), and Rivers (Level 5) have sufficient clearance. Keller (Level 3) and Garcia (Level 2) do NOT have clearance for secure terminal access.</li>
+                <li style="color: #ffd700;"><strong>TIMING ANOMALY:</strong> Dr. Nash exited chemical storage at 09:47 AM (exact TOD), then left the building at 09:50 AM - only 5 minutes before the body was discovered at 09:52 AM. This timing is highly suspicious.</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin: 40px 0;">
+            <a href="index.html" class="back-btn">◄ RETURN TO MAIN DATABASE</a>
+        </div>
+
+        <footer>
+            <p>BioGenex Security System v4.2</p>
+            <p>Automated Log Export - Generated 11:30 AM, November 27, 2024</p>
+        </footer>
+    </div>
+</body>
+</html>

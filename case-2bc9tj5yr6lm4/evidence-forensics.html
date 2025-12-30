@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EVIDENCE - FORENSIC ANALYSIS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #050814;
+            color: #00f7ff;
+            font-family: 'Rajdhani', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 1000;
+            animation: scanlines 8s linear infinite;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 2px solid #ff006e;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5em;
+            color: #ff006e;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #ff006e, 0 0 20px #ff006e;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #00f7ff, #00d4dd);
+            color: #050814;
+            padding: 12px 25px;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 2px solid #00f7ff;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.6);
+        }
+
+        .evidence-header {
+            background: linear-gradient(135deg, rgba(0, 247, 255, 0.1), rgba(255, 0, 110, 0.1));
+            border: 2px solid #00f7ff;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+
+        .evidence-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffd700;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .evidence-header p {
+            color: #00f7ff;
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        .report-section {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+            border: 2px solid #00f7ff;
+            margin: 30px 0;
+            border-radius: 5px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .report-section:hover {
+            border-color: #ffd700;
+            box-shadow: 0 5px 25px rgba(0, 247, 255, 0.3);
+        }
+
+        .report-header {
+            background: linear-gradient(135deg, #ff006e, #cc0058);
+            padding: 20px;
+            border-bottom: 2px solid #ffd700;
+        }
+
+        .report-header h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            font-size: 1.6em;
+            text-transform: uppercase;
+        }
+
+        .report-meta {
+            color: #ffd700;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .report-content {
+            padding: 30px;
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .data-box {
+            background: rgba(0, 247, 255, 0.1);
+            border-left: 4px solid #00f7ff;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .data-box:hover {
+            background: rgba(0, 247, 255, 0.15);
+            transform: translateX(5px);
+        }
+
+        .data-label {
+            color: #ffd700;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .data-value {
+            color: #00f7ff;
+            font-size: 1.2em;
+            font-weight: bold;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .critical-finding {
+            background: rgba(255, 0, 110, 0.2);
+            border: 2px solid #ff006e;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .critical-finding h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff006e;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .critical-finding p {
+            color: #00f7ff;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .fingerprint-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.95em;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .fingerprint-table thead {
+            background: linear-gradient(135deg, #ffd700, #ccaa00);
+        }
+
+        .fingerprint-table th {
+            color: #050814;
+            padding: 12px 10px;
+            text-align: left;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .fingerprint-table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid rgba(0, 247, 255, 0.2);
+            color: #00f7ff;
+        }
+
+        .fingerprint-table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .fingerprint-table tbody tr:hover {
+            background: rgba(0, 247, 255, 0.1);
+        }
+
+        .match-status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 3px;
+            font-weight: bold;
+            font-size: 0.85em;
+        }
+
+        .match-confirmed {
+            background: rgba(0, 255, 100, 0.3);
+            color: #00ff64;
+            border: 1px solid #00ff64;
+        }
+
+        .match-partial {
+            background: rgba(255, 165, 0, 0.3);
+            color: #ffa500;
+            border: 1px solid #ffa500;
+        }
+
+        .match-unknown {
+            background: rgba(255, 0, 110, 0.3);
+            color: #ff006e;
+            border: 1px solid #ff006e;
+        }
+
+        .timeline-box {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid #ffd700;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .timeline-box h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffd700;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .timeline-entry {
+            padding: 10px 0;
+            border-left: 3px solid #00f7ff;
+            padding-left: 15px;
+            margin-left: 10px;
+            position: relative;
+        }
+
+        .timeline-entry:before {
+            content: "●";
+            position: absolute;
+            left: -8px;
+            color: #ffd700;
+            font-size: 1.2em;
+        }
+
+        .timeline-time {
+            color: #ff006e;
+            font-weight: bold;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .timeline-desc {
+            color: #00f7ff;
+            margin-top: 5px;
+        }
+
+        .analyst-note {
+            background: rgba(0, 247, 255, 0.1);
+            border-left: 4px solid #00f7ff;
+            padding: 15px;
+            margin: 15px 0;
+            font-style: italic;
+            color: #00f7ff;
+        }
+
+        .analyst-note strong {
+            color: #ffd700;
+        }
+
+        .chemical-specs {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid #00f7ff;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.95em;
+        }
+
+        .section-divider {
+            text-align: center;
+            margin: 50px 0;
+            position: relative;
+        }
+
+        .section-divider::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00f7ff, transparent);
+        }
+
+        .section-divider span {
+            background: #050814;
+            padding: 0 20px;
+            color: #ffd700;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2em;
+            position: relative;
+            z-index: 1;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 2px solid #00f7ff;
+            margin-top: 50px;
+            color: #00f7ff;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .data-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .fingerprint-table {
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="back-btn">◄ RETURN TO MAIN DATABASE</a>
+            <h1>🧪 FORENSIC ANALYSIS</h1>
+            <div style="color: #ffd700; font-family: 'Share Tech Mono', monospace; margin-top: 10px;">
+                TOXICOLOGY & CRIME SCENE EXAMINATION
+            </div>
+        </header>
+
+        <div class="evidence-header">
+            <h2>EVIDENCE FILE: FORENSICS-2024-1127</h2>
+            <p><strong>Lead Examiner:</strong> Dr. Patricia Morgan, MD - Chief Medical Examiner</p>
+            <p><strong>Lab:</strong> State Crime Laboratory - Forensic Toxicology Division</p>
+            <p><strong>Case Number:</strong> ME-2024-1127-VX</p>
+            <p><strong>Examination Date:</strong> November 27-28, 2024</p>
+            <p style="margin-top: 15px; color: #ff006e;"><strong>PRIORITY:</strong> Expedited analysis requested by FBI due to corporate espionage implications and active threat to research facility.</p>
+        </div>
+
+        <!-- AUTOPSY REPORT -->
+        <div class="report-section">
+            <div class="report-header">
+                <h3>AUTOPSY REPORT - DR. ELENA VOSS</h3>
+                <div class="report-meta">Examined by Dr. Patricia Morgan | November 27, 2024 - 13:00 EST</div>
+            </div>
+            <div class="report-content">
+                <div class="data-grid">
+                    <div class="data-box">
+                        <div class="data-label">Age / Sex</div>
+                        <div class="data-value">42 / Female</div>
+                    </div>
+                    <div class="data-box">
+                        <div class="data-label">Height / Weight</div>
+                        <div class="data-value">5'6" / 142 lbs</div>
+                    </div>
+                    <div class="data-box">
+                        <div class="data-label">Time of Death</div>
+                        <div class="data-value">~09:47 AM</div>
+                    </div>
+                    <div class="data-box">
+                        <div class="data-label">Body Discovered</div>
+                        <div class="data-value">09:52 AM</div>
+                    </div>
+                </div>
+
+                <h4 style="color: #ffd700; font-family: 'Orbitron', sans-serif; margin: 25px 0 15px 0; font-size: 1.3em;">EXTERNAL EXAMINATION</h4>
+                <p style="color: #00f7ff; line-height: 1.8;">
+                    Body found in seated position at laboratory workstation, collapsed forward over keyboard. No signs of physical trauma, struggle, or defensive wounds. Victim was wearing standard laboratory attire: white lab coat, blue scrubs, safety glasses positioned on forehead. No signs of forced entry or physical altercation at scene.
+                </p>
+                <p style="color: #00f7ff; line-height: 1.8; margin-top: 15px;">
+                    Notable observations: Cyanotic discoloration of skin (blue-tinged), particularly around lips and fingernails. Petechial hemorrhaging in eyes. Facial expression indicates sudden onset of distress. These findings are consistent with acute poisoning.
+                </p>
+
+                <h4 style="color: #ffd700; font-family: 'Orbitron', sans-serif; margin: 25px 0 15px 0; font-size: 1.3em;">INTERNAL EXAMINATION</h4>
+                <p style="color: #00f7ff; line-height: 1.8;">
+                    <strong>Respiratory System:</strong> Lungs showed acute edema and congestion. Airways contained pink-tinged frothy fluid. Consistent with sudden respiratory failure.<br><br>
+                    <strong>Cardiovascular System:</strong> Heart showed no pre-existing disease. Evidence of acute cardiac distress at time of death.<br><br>
+                    <strong>Gastrointestinal System:</strong> Stomach contents included approximately 300ml of coffee (partially digested) consumed within 30-45 minutes prior to death. No food particles present - victim had not eaten breakfast.<br><br>
+                    <strong>Neurological:</strong> Brain showed evidence of acute hypoxia consistent with cyanide poisoning mechanism.
+                </p>
+
+                <div class="critical-finding">
+                    <h4>⚠️ CAUSE OF DEATH - CONFIRMED</h4>
+                    <p><strong>Primary Cause:</strong> Acute Cyanide Poisoning (Potassium Cyanide)</p>
+                    <p><strong>Mechanism:</strong> Cyanide inhibits cellular respiration by binding to cytochrome c oxidase, preventing cells from using oxygen. Results in rapid cellular asphyxiation despite adequate oxygen in bloodstream.</p>
+                    <p><strong>Manner of Death:</strong> HOMICIDE</p>
+                    <p><strong>Time to Death After Ingestion:</strong> 8-12 minutes based on concentration levels</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-divider">
+            <span>━━━━━━━━━━</span>
+        </div>
+
+        <!-- TOXICOLOGY REPORT -->
+        <div class="report-section">
+            <div class="report-header">
+                <h3>TOXICOLOGY ANALYSIS</h3>
+                <div class="report-meta">State Crime Laboratory - Toxicology Division | November 27, 2024</div>
+            </div>
+            <div class="report-content">
+                <h4 style="color: #ffd700; font-family: 'Orbitron', sans-serif; margin-bottom: 15px; font-size: 1.3em;">BLOOD ANALYSIS</h4>
+                
+                <div class="data-grid">
+                    <div class="data-box">
+                        <div class="data-label">Cyanide Level</div>
+                        <div class="data-value" style="color: #ff006e;">3.2 mg/L</div>
+                    </div>
+                    <div class="data-box">
+                        <div class="data-label">Lethal Threshold</div>
+                        <div class="data-value">0.5-1.0 mg/L</div>
+                    </div>
+                    <div class="data-box">
+                        <div class="data-label">Exposure Level</div>
+                        <div class="data-value" style="color: #ff006e;">6-7x LETHAL</div>
+                    </div>
+                    <div class="data-box">
+                        <div class="data-label">Other Substances</div>
+                        <div class="data-value">NEGATIVE</div>
+                    </div>
+                </div>
+
+                <div class="chemical-specs">
+                    <strong style="color: #ffd700;">CHEMICAL ANALYSIS RESULTS:</strong><br><br>
+                    Compound Identified: Potassium Cyanide (KCN)<br>
+                    Blood Concentration: 3.2 mg/L (milligrams per liter)<br>
+                    Stomach Content Concentration: 8.7 mg/L<br>
+                    Estimated Dose Ingested: 180-200 milligrams<br>
+                    Lethal Dose Range: 50-100 milligrams<br><br>
+                    <strong style="color: #ff006e;">CONCLUSION:</strong> Victim ingested approximately 2x the minimum lethal dose. This concentration would cause death within 8-12 minutes of ingestion. The poison was deliberately administered in a dosage intended to kill quickly and ensure victim could not seek help.
+                </div>
+
+                <div class="critical-finding">
+                    <h4>🔬 CRITICAL FINDING: SOURCE IDENTIFICATION</h4>
+                    <p>The potassium cyanide matches the chemical signature of laboratory-grade KCN stored in BioGenex Chemical Storage Room 3C. Isotopic analysis confirms it came from Container KCN-077, which is part of BioGenex's hazardous materials inventory.</p>
+                    <p style="margin-top: 10px;"><strong>Inventory Records Show:</strong> Container KCN-077 was last inspected on November 22, 2024 by Dr. Robert Nash. Physical inventory conducted November 25 by James Keller noted seal had been broken and approximately 15-20 grams missing.</p>
+                    <p style="margin-top: 10px; color: #ff006e;"><strong>SIGNIFICANCE:</strong> The killer had access to BioGenex chemical storage and removed cyanide between November 22-25. Only personnel with Level 3+ security clearance can access Chemical Storage Room 3C.</p>
+                </div>
+
+                <div class="timeline-box">
+                    <h4>ESTIMATED POISONING TIMELINE</h4>
+                    <div class="timeline-entry">
+                        <div class="timeline-time">09:35-09:40 AM</div>
+                        <div class="timeline-desc">Coffee contaminated with cyanide (estimated window)</div>
+                    </div>
+                    <div class="timeline-entry">
+                        <div class="timeline-time">09:40-09:45 AM</div>
+                        <div class="timeline-desc">Dr. Voss consumed poisoned coffee (stomach content analysis indicates she drank ~75% of cup)</div>
+                    </div>
+                    <div class="timeline-entry">
+                        <div class="timeline-time">09:47 AM</div>
+                        <div class="timeline-desc">Time of death - respiratory and cardiac failure</div>
+                    </div>
+                    <div class="timeline-entry">
+                        <div class="timeline-time">09:52 AM</div>
+                        <div class="timeline-desc">Body discovered by Dr. Marcus Chen</div>
+                    </div>
+                </div>
+
+                <div class="analyst-note">
+                    <strong>FORENSIC PATHOLOGIST NOTE:</strong> The rapid time to death (8-12 minutes) and high concentration of cyanide indicates the killer used a substantial dose to ensure quick death. This suggests either knowledge of toxicology or consultation with toxicology references. The method chosen (coffee contamination) indicates the killer had routine access to the victim's work area and knowledge of her morning routine.
+                </div>
+            </div>
+        </div>
+
+        <div class="section-divider">
+            <span>━━━━━━━━━━</span>
+        </div>
+
+        <!-- COFFEE CUP ANALYSIS -->
+        <div class="report-section">
+            <div class="report-header">
+                <h3>EVIDENCE ITEM: COFFEE MUG ANALYSIS</h3>
+                <div class="report-meta">Item #VX-2024-003 | Analyzed November 27, 2024</div>
+            </div>
+            <div class="report-content">
+                <h4 style="color: #ffd700; font-family: 'Orbitron', sans-serif; margin-bottom: 15px; font-size: 1.3em;">PHYSICAL DESCRIPTION</h4>
+                <p style="color: #00f7ff; line-height: 1.8;">
+                    White ceramic coffee mug, 12 oz capacity, with BioGenex company logo printed on side. Mug found on victim's desk, positioned to right of keyboard, approximately 25% full at time of discovery. Liquid identified as black coffee (no cream or sugar added).
+                </p>
+
+                <h4 style="color: #ffd700; font-family: 'Orbitron', sans-serif; margin: 25px 0 15px 0; font-size: 1.3em;">CHEMICAL ANALYSIS OF CONTENTS</h4>
+                
+                <div class="data-grid">
+                    <div class="data-box">
+                        <div class="data-label">Liquid Volume Remaining</div>
+                        <div class="data-value">~75 ml (25%)</div>
+                    </div>
+                    <div class="data-box">
+                        <div class="data-label">Cyanide Concentration</div>
+                        <div class="data-value" style="color: #ff006e;">12.4 mg/L</div>
+                    </div>
+                    <div class="data-box">
+                        <div class="data-label">Total Cyanide in Cup</div>
+                        <div class="data-value" style="color: #ff006e;">~225 mg</div>
+                    </div>
+                    <div class="data-box">
+                        <div class="data-label">Amount Consumed</div>
+                        <div class="data-value">~170 mg</div>
+                    </div>
+                </div>
+
+                <div class="critical-finding">
+                    <h4>💀 POISON DELIVERY METHOD</h4>
+                    <p>The coffee contained approximately 225mg of potassium cyanide mixed throughout the liquid. This suggests the poison was added while the coffee was still hot, allowing it to dissolve completely. No visible residue or crystals present - the killer ensured the poison was fully dissolved to avoid detection.</p>
+                    <p style="margin-top: 10px;"><strong>Delivery Timing:</strong> Cyanide must have been added after coffee was poured but before victim consumed it. Coffee temperature analysis suggests contamination occurred 5-15 minutes before consumption.</p>
+                    <p style="margin-top: 10px;"><strong>Location of Contamination:</strong> Coffee was likely contaminated in victim's lab (Lab 3A) or in the shared break room adjacent to labs. Victim's routine was to prepare coffee in break room and carry it to her desk.</p>
+                </div>
+
+                <h4 style="color: #ffd700; font-family: 'Orbitron', sans-serif; margin: 25px 0 15px 0; font-size: 1.3em;">FINGERPRINT ANALYSIS</h4>
+                
+                <table class="fingerprint-table">
+                    <thead>
+                        <tr>
+                            <th>Print Location</th>
+                            <th>Quality</th>
+                            <th>Match Status</th>
+                            <th>Identified As</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Handle - Primary Grip</td>
+                            <td>Excellent</td>
+                            <td><span class="match-confirmed">CONFIRMED</span></td>
+                            <td>Dr. Elena Voss</td>
+                            <td>Victim's primary hand position</td>
+                        </tr>
+                        <tr>
+                            <td>Handle - Secondary Position</td>
+                            <td>Good</td>
+                            <td><span class="match-confirmed">CONFIRMED</span></td>
+                            <td>Dr. Elena Voss</td>
+                            <td>Multiple overlapping prints</td>
+                        </tr>
+                        <tr>
+                            <td>Body of Cup - Upper Rim</td>
+                            <td>Partial</td>
+                            <td><span class="match-partial">PARTIAL</span></td>
+                            <td>Unknown Subject</td>
+                            <td>Smudged, insufficient for ID</td>
+                        </tr>
+                        <tr>
+                            <td>Body of Cup - Lower Section</td>
+                            <td>Fair</td>
+                            <td><span class="match-confirmed">CONFIRMED</span></td>
+                            <td>Dr. Elena Voss</td>
+                            <td>Palm print fragment</td>
+                        </tr>
+                        <tr>
+                            <td>Bottom of Cup - Exterior</td>
+                            <td>Poor</td>
+                            <td><span class="match-unknown">UNKNOWN</span></td>
+                            <td>Unknown Subject</td>
+                            <td>Extremely degraded</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="critical-finding">
+                    <h4>🔍 FINGERPRINT ANALYSIS CONCLUSION</h4>
+                    <p><strong>PRIMARY FINDING:</strong> The coffee mug contains predominantly Dr. Voss's fingerprints, as expected for her personal mug used regularly. However, partial prints from an unknown subject were detected on the upper rim and bottom of cup.</p>
+                    <p style="margin-top: 10px;"><strong>SIGNIFICANCE:</strong> The unknown partial prints are insufficient for positive identification but indicate someone other than the victim handled the cup. The prints' position (upper rim and bottom) suggests someone may have lifted the cup, possibly to add the poison.</p>
+                    <p style="margin-top: 10px; color: #ff006e;"><strong>LIMITATION:</strong> The killer likely wore gloves or wiped the cup after contamination. The partial prints may be from innocent contact (colleague moving the cup, cleaning staff, etc.) and cannot definitively identify the killer.</p>
+                </div>
+
+                <div class="analyst-note">
+                    <strong>FORENSIC EXAMINER NOTE:</strong> The absence of clear fingerprints from suspects suggests premeditation. The killer took steps to avoid leaving forensic evidence, indicating planning rather than crime of passion. The use of laboratory gloves would be completely normal in this environment and would not raise suspicion.
+                </div>
+            </div>
+        </div>
+
+        <div class="section-divider">
+            <span>━━━━━━━━━━</span>
+        </div>
+
+        <!-- CRIME SCENE ANALYSIS -->
+        <div class="report-section">
+            <div class="report-header">
+                <h3>CRIME SCENE EXAMINATION - LAB 3A</h3>
+                <div class="report-meta">Scene processed by Crime Scene Unit Alpha | November 27, 2024</div>
+            </div>
+            <div class="report-content">
+                <h4 style="color: #ffd700; font-family: 'Orbitron', sans-serif; margin-bottom: 15px; font-size: 1.3em;">SCENE DESCRIPTION</h4>
+                <p style="color: #00f7ff; line-height: 1.8;">
+                    Dr. Voss's primary laboratory (Lab 3A) is a 400 square foot secure research space. Access requires Level 4+ keycard clearance. The lab contains specialized equipment, a secure computer terminal, chemical analysis stations, and a personal desk area where the body was discovered.
+                </p>
+
+                <h4 style="color: #ffd700; font-family: 'Orbitron', sans-serif; margin: 25px 0 15px 0; font-size: 1.3em;">KEY EVIDENCE RECOVERED FROM SCENE</h4>
+                
+                <div style="background: rgba(0, 0, 0, 0.4); padding: 20px; margin: 15px 0; border-left: 4px solid #00f7ff;">
+                    <p style="color: #00f7ff; margin-bottom: 15px;"><strong style="color: #ffd700;">ITEM 1:</strong> Coffee mug (analyzed above) - found on desk, 25% full</p>
+                    <p style="color: #00f7ff; margin-bottom: 15px;"><strong style="color: #ffd700;">ITEM 2:</strong> Secure computer terminal - showing file deletion activity at 09:23 AM</p>
+                    <p style="color: #00f7ff; margin-bottom: 15px;"><strong style="color: #ffd700;">ITEM 3:</strong> Laboratory notebook - open to Project Helix entries, no signs of tampering</p>
+                    <p style="color: #00f7ff; margin-bottom: 15px;"><strong style="color: #ffd700;">ITEM 4:</strong> Personal belongings - purse, phone, keys all present and undisturbed</p>
+                    <p style="color: #00f7ff; margin-bottom: 15px;"><strong style="color: #ffd700;">ITEM 5:</strong> USB port access log - external device connected 09:23-09:26 AM</p>
+                    <p style="color: #00f7ff;"><strong style="color: #ffd700;">ITEM 6:</strong> Empty chemical vial found in lab wastebin - trace cyanide residue detected</p>
+                </div>
+
+                <div class="critical-finding">
+                    <h4>💻 COMPUTER TERMINAL ANALYSIS - CRITICAL</h4>
+                    <p><strong>File Deletion Activity - 09:23 AM:</strong></p>
+                    <p style="margin-top: 10px;">Complete Project Helix formula files were accessed from Dr. Voss's secure terminal at 09:23:17 AM. Files were copied to an external USB device, then permanently deleted using military-grade wiping software. Total time: 3 minutes 12 seconds.</p>
+                    <p style="margin-top: 10px;"><strong>Access Credentials:</strong> The terminal was accessed using Dr. Voss's own login credentials and biometric fingerprint. This means either:</p>
+                    <p style="margin-top: 5px; margin-left: 20px;">1. Dr. Voss performed the deletion herself (unlikely - she was dying/dead at this time)</p>
+                    <p style="margin-left: 20px;">2. The killer used Dr. Voss's unconscious or recently deceased hand to access biometric scanner</p>
+                    <p style="margin-left: 20px;">3. The killer had obtained Dr. Voss's credentials and created a fingerprint bypass</p>
+                    <p style="margin-top: 10px; color: #ff006e;"><strong>CRITICAL TIMING:</strong> File theft occurred at 09:23 AM. Based on poisoning timeline, Dr. Voss was likely already unconscious or dying at this moment. The killer acted quickly after administering poison to steal the data while victim was incapacitated.</p>
+                </div>
+
+                <div class="critical-finding">
+                    <h4>🗑️ CHEMICAL VIAL DISCOVERY</h4>
+                    <p>A small glass vial (10ml capacity) was recovered from the laboratory wastebin beneath Dr. Voss's desk. The vial contained trace residue of potassium cyanide matching Container KCN-077.</p>
+                    <p style="margin-top: 10px;"><strong>Significance:</strong> This vial was likely used to transport the cyanide from Chemical Storage Room 3C to Lab 3A. The killer disposed of it after poisoning the coffee, assuming it would be emptied by cleaning staff before discovery.</p>
+                    <p style="margin-top: 10px;"><strong>Fingerprints:</strong> The vial had been wiped clean - no usable prints recovered.</p>
+                    <p style="margin-top: 10px; color: #ff006e;"><strong>Forensic Error by Killer:</strong> Disposing of the vial at the crime scene was a mistake. It proves the poison was transported in a container and confirms premeditation. A more careful killer would have removed the vial from the building.</p>
+                </div>
+
+                <div class="analyst-note">
+                    <strong>CRIME SCENE INVESTIGATOR SUMMARY:</strong> The evidence indicates a premeditated murder combined with corporate espionage. The killer brought cyanide to the lab in a vial, contaminated Dr. Voss's coffee, waited for the poison to take effect, then used her credentials to steal Project Helix data. The entire operation took less than 30 minutes. The killer demonstrated knowledge of the lab environment, Dr. Voss's routine, toxicology, and computer systems. This was not a spontaneous crime - it was carefully planned and executed.
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 40px 0;">
+            <a href="index.html" class="back-btn">◄ RETURN TO MAIN DATABASE</a>
+        </div>
+
+        <footer>
+            <p>State Crime Laboratory - Forensic Division</p>
+            <p>Report Finalized: November 28, 2024</p>
+        </footer>
+    </div>
+</body>
+</html>
