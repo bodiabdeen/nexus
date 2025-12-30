@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Blackwood Estate Mystery</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕵️</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(135deg, #1a0a0a 0%, #2d1810 50%, #1a0a0a 100%);
+            color: #d4c5a9;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.15) 0px,
+                    transparent 1px,
+                    transparent 2px,
+                    rgba(0, 0, 0, 0.15) 3px
+                );
+            pointer-events: none;
+            z-index: 1;
+            animation: scan 8s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.95; }
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 10px #8b4513, 0 0 20px #8b4513; }
+            50% { text-shadow: 0 0 20px #8b4513, 0 0 30px #8b4513, 0 0 40px #8b4513; }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(20, 10, 5, 0.9);
+            border: 3px solid #8b4513;
+            box-shadow: 
+                0 0 30px rgba(139, 69, 19, 0.5),
+                inset 0 0 50px rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            position: relative;
+            z-index: 2;
+            animation: flicker 3s infinite;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(45deg, #8b4513, #cd853f, #8b4513);
+            z-index: -1;
+            border-radius: 2px;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid #8b4513;
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3em;
+            color: #d4af37;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            color: #cd853f;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .case-number {
+            font-family: 'Cinzel', serif;
+            font-size: 0.9em;
+            color: #8b7355;
+            letter-spacing: 2px;
+        }
+
+        .warning-banner {
+            background: rgba(139, 0, 0, 0.3);
+            border: 2px solid #8b0000;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(139, 0, 0, 0.3);
+        }
+
+        .warning-banner h2 {
+            font-family: 'Cinzel', serif;
+            color: #ff6b6b;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .case-summary {
+            background: rgba(40, 20, 10, 0.6);
+            border-left: 4px solid #8b4513;
+            padding: 25px;
+            margin: 30px 0;
+            line-height: 1.8;
+            font-size: 1.1em;
+        }
+
+        .case-summary p {
+            margin-bottom: 15px;
+        }
+
+        .evidence-section {
+            margin: 40px 0;
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            color: #d4af37;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #8b4513;
+            padding-bottom: 10px;
+        }
+
+        .evidence-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .evidence-item {
+            background: rgba(60, 30, 15, 0.8);
+            border: 2px solid #8b4513;
+            padding: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .evidence-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .evidence-item:hover::before {
+            left: 100%;
+        }
+
+        .evidence-item:hover {
+            border-color: #d4af37;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .evidence-item h3 {
+            font-family: 'Cinzel', serif;
+            color: #cd853f;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .evidence-item p {
+            color: #d4c5a9;
+            font-size: 0.95em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .evidence-link {
+            display: inline-block;
+            color: #d4af37;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            border: 1px solid #8b4513;
+            padding: 8px 20px;
+            transition: all 0.3s ease;
+            background: rgba(139, 69, 19, 0.2);
+        }
+
+        .evidence-link:hover {
+            background: rgba(212, 175, 55, 0.3);
+            border-color: #d4af37;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .instructions {
+            background: rgba(20, 40, 20, 0.4);
+            border: 2px solid #2d5016;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+
+        .instructions h3 {
+            font-family: 'Cinzel', serif;
+            color: #90ee90;
+            margin-bottom: 15px;
+        }
+
+        .instructions ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .instructions li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .instructions li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #8b4513;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #8b4513;
+            font-size: 0.9em;
+            color: #8b7355;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .evidence-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>The Blackwood Estate</h1>
+            <div class="subtitle">A Most Grievous Murder</div>
+            <div class="case-number">CASE NO. 1889-10-31 | INSPECTOR'S FILE</div>
+        </header>
+
+        <div class="warning-banner">
+            <h2>⚠ ACTIVE INVESTIGATION ⚠</h2>
+            <p>This case remains under investigation by Scotland Yard. All evidence must be examined with utmost scrutiny.</p>
+        </div>
+
+        <div class="case-summary">
+            <p><strong>DATE OF INCIDENT:</strong> October 30th, 1889</p>
+            <p><strong>LOCATION:</strong> Blackwood Estate, Yorkshire</p>
+            <p><strong>DECEASED:</strong> Lord Edmund Blackwood, aged 58</p>
+            <p><strong>CAUSE OF DEATH:</strong> Arsenic poisoning (confirmed by post-mortem examination)</p>
+            
+            <p style="margin-top: 20px;">Lord Edmund Blackwood, industrialist and patriarch of the Blackwood family, was found deceased in his study on the morning of October 31st. The family had gathered for their annual autumn reunion when tragedy struck. Initial investigation revealed traces of arsenic in his system, administered sometime during the evening of October 30th.</p>
+            
+            <p>Five individuals were present at the estate during the fatal evening. Each had means, motive, and opportunity. Your task is to examine all evidence, cross-reference testimonies, and determine who committed this heinous crime.</p>
+        </div>
+
+        <div class="instructions">
+            <h3>Investigation Guidelines</h3>
+            <ul>
+                <li>Examine each piece of evidence carefully</li>
+                <li>Note contradictions in testimonies and timelines</li>
+                <li>Cross-reference financial records with stated motives</li>
+                <li>Pay attention to physical descriptions and alibis</li>
+                <li>The solution can be derived entirely from the evidence provided</li>
+                <li>Consider both individual actors and potential conspiracies</li>
+            </ul>
+        </div>
+
+        <section class="evidence-section">
+            <h2>Case Files & Evidence</h2>
+            <div class="evidence-grid">
+                <div class="evidence-item">
+                    <h3>📋 Official Case File</h3>
+                    <p>Victim profile and detailed dossiers on all five suspects, including physical descriptions and known backgrounds.</p>
+                    <a href="case-file.html" class="evidence-link">EXAMINE FILE →</a>
+                </div>
+
+                <div class="evidence-item">
+                    <h3>🔬 Autopsy Report</h3>
+                    <p>Complete post-mortem examination conducted by Dr. William Hartley, including toxicology analysis and time of death estimation.</p>
+                    <a href="autopsy-report.html" class="evidence-link">READ REPORT →</a>
+                </div>
+
+                <div class="evidence-item">
+                    <h3>👥 Servant Statements</h3>
+                    <p>Testimonies from household staff who observed the family throughout the evening. Multiple witnesses provide crucial details.</p>
+                    <a href="servant-statements.html" class="evidence-link">READ STATEMENTS →</a>
+                </div>
+
+                <div class="evidence-item">
+                    <h3>💰 Financial Ledger</h3>
+                    <p>Estate accounts, debts, insurance policies, and recent transactions revealing financial motives and pressures.</p>
+                    <a href="financial-ledger.html" class="evidence-link">EXAMINE LEDGER →</a>
+                </div>
+
+                <div class="evidence-item">
+                    <h3>✉️ Personal Correspondence</h3>
+                    <p>Letters, notes, and private communications discovered in the deceased's study and suspect quarters.</p>
+                    <a href="personal-correspondence.html" class="evidence-link">READ LETTERS →</a>
+                </div>
+
+                <div class="evidence-item">
+                    <h3>⚗️ Medicine Inventory</h3>
+                    <p>Complete accounting of medicinal compounds, tonics, and substances kept at the estate, including recent access records.</p>
+                    <a href="medicine-inventory.html" class="evidence-link">REVIEW INVENTORY →</a>
+                </div>
+
+                <div class="evidence-item">
+                    <h3>⏰ Timeline Reconstruction</h3>
+                    <p>Hour-by-hour account of the fatal evening, compiled from multiple witness statements and physical evidence.</p>
+                    <a href="timeline.html" class="evidence-link">REVIEW TIMELINE →</a>
+                </div>
+
+                <div class="evidence-item">
+                    <h3>🎭 Police Interrogations</h3>
+                    <p>Formal statements given to Scotland Yard by all five suspects following the discovery of the body.</p>
+                    <a href="police-interrogations.html" class="evidence-link">READ INTERROGATIONS →</a>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>Scotland Yard - Criminal Investigation Division</p>
+            <p>All evidence is confidential and for investigative purposes only</p>
+            <p style="margin-top: 15px; font-style: italic;">"The truth, however distressing, must come to light."</p>
+        </footer>
+    </div>
+</body>
+</html>

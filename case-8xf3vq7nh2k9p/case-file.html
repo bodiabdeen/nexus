@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case File - The Blackwood Estate</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕵️</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(135deg, #1a0a0a 0%, #2d1810 50%, #1a0a0a 100%);
+            color: #d4c5a9;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.15) 0px,
+                    transparent 1px,
+                    transparent 2px,
+                    rgba(0, 0, 0, 0.15) 3px
+                );
+            pointer-events: none;
+            z-index: 1;
+            animation: scan 8s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.95; }
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 10px #8b4513, 0 0 20px #8b4513; }
+            50% { text-shadow: 0 0 20px #8b4513, 0 0 30px #8b4513, 0 0 40px #8b4513; }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(20, 10, 5, 0.9);
+            border: 3px solid #8b4513;
+            box-shadow: 
+                0 0 30px rgba(139, 69, 19, 0.5),
+                inset 0 0 50px rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            position: relative;
+            z-index: 2;
+            animation: flicker 3s infinite;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(45deg, #8b4513, #cd853f, #8b4513);
+            z-index: -1;
+            border-radius: 2px;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid #8b4513;
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5em;
+            color: #d4af37;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .case-number {
+            font-family: 'Cinzel', serif;
+            font-size: 0.9em;
+            color: #8b7355;
+            letter-spacing: 2px;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #d4af37;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            border: 1px solid #8b4513;
+            padding: 10px 25px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            background: rgba(139, 69, 19, 0.2);
+        }
+
+        .back-link:hover {
+            background: rgba(212, 175, 55, 0.3);
+            border-color: #d4af37;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .profile-section {
+            margin: 40px 0;
+            background: rgba(40, 20, 10, 0.6);
+            border: 2px solid #8b4513;
+            padding: 30px;
+        }
+
+        .profile-section.victim {
+            border-color: #8b0000;
+            background: rgba(60, 10, 10, 0.4);
+        }
+
+        .profile-section.suspect {
+            border-left: 5px solid #cd853f;
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            color: #d4af37;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #8b4513;
+            padding-bottom: 10px;
+        }
+
+        .profile-section.victim h2 {
+            color: #ff6b6b;
+        }
+
+        h3 {
+            font-family: 'Cinzel', serif;
+            color: #cd853f;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 15px;
+            margin: 20px 0;
+            line-height: 1.8;
+        }
+
+        .detail-label {
+            font-family: 'Cinzel', serif;
+            color: #8b7355;
+            font-weight: 600;
+        }
+
+        .detail-value {
+            color: #d4c5a9;
+        }
+
+        .description {
+            margin: 20px 0;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+
+        .description p {
+            margin-bottom: 15px;
+        }
+
+        .known-facts {
+            background: rgba(20, 30, 20, 0.3);
+            border-left: 3px solid #2d5016;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .known-facts h4 {
+            font-family: 'Cinzel', serif;
+            color: #90ee90;
+            margin-bottom: 10px;
+        }
+
+        .known-facts ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .known-facts li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .known-facts li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #8b4513;
+        }
+
+        .warning-box {
+            background: rgba(139, 0, 0, 0.2);
+            border: 2px solid #8b0000;
+            padding: 15px;
+            margin: 20px 0;
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #8b4513;
+            font-size: 0.9em;
+            color: #8b7355;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .detail-grid {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+            
+            .detail-label {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Official Case File</h1>
+            <div class="case-number">SCOTLAND YARD - CASE NO. 1889-10-31</div>
+        </header>
+
+        <a href="index.html" class="back-link">← RETURN TO EVIDENCE INDEX</a>
+
+        <!-- VICTIM PROFILE -->
+        <div class="profile-section victim">
+            <h2>DECEASED - LORD EDMUND BLACKWOOD</h2>
+            
+            <div class="detail-grid">
+                <div class="detail-label">Full Name:</div>
+                <div class="detail-value">Edmund Cornelius Blackwood</div>
+                
+                <div class="detail-label">Age:</div>
+                <div class="detail-value">58 years</div>
+                
+                <div class="detail-label">Occupation:</div>
+                <div class="detail-value">Industrialist, Owner of Blackwood Steel & Iron Works</div>
+                
+                <div class="detail-label">Marital Status:</div>
+                <div class="detail-value">Married to Lady Catherine Blackwood (25 years)</div>
+                
+                <div class="detail-label">Physical Description:</div>
+                <div class="detail-value">Height 6'1", robust build, graying hair, prominent mustache, perpetual stern expression</div>
+                
+                <div class="detail-label">Date of Death:</div>
+                <div class="detail-value">October 31st, 1889 (discovered 6:45 AM)</div>
+                
+                <div class="detail-label">Cause of Death:</div>
+                <div class="detail-value">Arsenic poisoning (administered October 30th, between 6:00 PM - 10:00 PM)</div>
+            </div>
+
+            <div class="description">
+                <p>Lord Edmund Blackwood was a formidable presence in both Yorkshire society and British industry. His steel works employed over 800 men and supplied railways across the Empire. Known for his iron will and business acumen, he was equally renowned for his tyrannical control over his family.</p>
+                
+                <p>Edmund maintained strict authority over his household. He arranged his daughter's engagement without her consent, monitored his son's finances with ruthless scrutiny, and maintained what many described as a cold, loveless marriage. His household staff feared him, though they respected his consistency and fairness in employment matters.</p>
+                
+                <p>In recent months, Edmund had been consuming various "health tonics" purchased from apothecaries, believing they improved his vigor. This habit would prove fatal, as it masked early symptoms of poisoning that might otherwise have alerted him to danger.</p>
+            </div>
+
+            <div class="warning-box">
+                <strong>NOTE:</strong> Post-mortem revealed Edmund had been ingesting small amounts of arsenic over several days prior to the fatal dose, likely mixed into his daily tonic regimen.
+            </div>
+        </div>
+
+        <!-- SUSPECT 1 -->
+        <div class="profile-section suspect">
+            <h2>SUSPECT ONE - LADY CATHERINE BLACKWOOD</h2>
+            
+            <div class="detail-grid">
+                <div class="detail-label">Full Name:</div>
+                <div class="detail-value">Catherine Eleanor Blackwood (née Ashford)</div>
+                
+                <div class="detail-label">Age:</div>
+                <div class="detail-value">52 years</div>
+                
+                <div class="detail-label">Relation to Deceased:</div>
+                <div class="detail-value">Wife</div>
+                
+                <div class="detail-label">Occupation:</div>
+                <div class="detail-value">Lady of the Estate</div>
+                
+                <div class="detail-label">Physical Description:</div>
+                <div class="detail-value">Height 5'6", slender build, auburn hair with gray streaks, elegant bearing, often wears pearls, delicate hands showing no manual labor</div>
+                
+                <div class="detail-label">Residence:</div>
+                <div class="detail-value">Blackwood Estate (separate quarters from husband since 1885)</div>
+            </div>
+
+            <div class="description">
+                <p>Lady Catherine married Edmund Blackwood in 1864 in what was largely considered a strategic alliance between families. The marriage produced two children but little affection. Over the years, Catherine endured Edmund's emotional coldness and, according to household whispers, occasional cruelty.</p>
+                
+                <p>In 1885, Catherine moved to separate quarters, claiming health concerns required solitude. Edmund permitted this arrangement with apparent indifference. Since then, Catherine has spent much time with her personal physician, Dr. Helena Ashworth, who visits the estate frequently to treat Catherine's "nervous condition."</p>
+                
+                <p>Catherine is well-educated, cultured, and maintains correspondence with literary society in London. She reads extensively and has developed a particular interest in medicinal herbs and compounds, keeping a private collection of botanical texts.</p>
+            </div>
+
+            <div class="known-facts">
+                <h4>Known Facts:</h4>
+                <ul>
+                    <li>Stood to inherit the entire estate and £85,000 in life insurance upon Edmund's death</li>
+                    <li>Has been observed in private conversation with Dr. Helena Ashworth on numerous occasions</li>
+                    <li>Requested separate living quarters four years ago</li>
+                    <li>Maintains regular correspondence with an "E.M." in London (identity unknown)</li>
+                    <li>Has knowledge of medicinal compounds and access to the estate's medicine cabinet</li>
+                    <li>Was present at the estate during the entire evening of October 30th</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SUSPECT 2 -->
+        <div class="profile-section suspect">
+            <h2>SUSPECT TWO - VICTOR BLACKWOOD</h2>
+            
+            <div class="detail-grid">
+                <div class="detail-label">Full Name:</div>
+                <div class="detail-value">Victor Edmund Blackwood</div>
+                
+                <div class="detail-label">Age:</div>
+                <div class="detail-value">32 years</div>
+                
+                <div class="detail-label">Relation to Deceased:</div>
+                <div class="detail-value">Eldest son and heir</div>
+                
+                <div class="detail-label">Occupation:</div>
+                <div class="detail-value">Nominal director at Blackwood Steel & Iron Works</div>
+                
+                <div class="detail-label">Physical Description:</div>
+                <div class="detail-value">Height 6'0", athletic but slightly disheveled appearance, dark hair, clean-shaven, nervous mannerisms, often appears fatigued</div>
+                
+                <div class="detail-label">Residence:</div>
+                <div class="detail-value">London townhouse (returns to estate quarterly)</div>
+            </div>
+
+            <div class="description">
+                <p>Victor Blackwood is Edmund's only son and was groomed from birth to inherit the family business. However, Victor showed little aptitude or interest in industrial management, preferring the social life of London to the grim realities of the steel works.</p>
+                
+                <p>Edmund maintained tight control over Victor's finances, providing only a modest allowance despite the family's considerable wealth. This led Victor to seek funds elsewhere, resulting in substantial gambling debts. Recent months have seen increasingly desperate attempts to secure loans.</p>
+                
+                <p>Victor's relationship with his father deteriorated significantly in 1888 when Edmund discovered Victor had forged a check. Edmund threatened disinheritance but ultimately relented, instead imposing even stricter financial controls. Victor was required to visit the estate quarterly for "accountability reviews" that household staff described as brutal interrogations.</p>
+            </div>
+
+            <div class="known-facts">
+                <h4>Known Facts:</h4>
+                <ul>
+                    <li>Owes approximately £12,000 to various London creditors and gambling establishments</li>
+                    <li>Would inherit the steel works and become head of family upon Edmund's death</li>
+                    <li>Had a heated argument with Edmund on October 29th (overheard by servants)</li>
+                    <li>Was seen entering Edmund's study at 7:15 PM on October 30th</li>
+                    <li>Has no knowledge of chemistry or medicine</li>
+                    <li>Was scheduled for another "accountability review" on November 1st</li>
+                    <li>Recently insured his own life for £5,000 (unusual for someone in debt)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SUSPECT 3 -->
+        <div class="profile-section suspect">
+            <h2>SUSPECT THREE - DR. HELENA ASHWORTH</h2>
+            
+            <div class="detail-grid">
+                <div class="detail-label">Full Name:</div>
+                <div class="detail-value">Dr. Helena Margaret Ashworth</div>
+                
+                <div class="detail-label">Age:</div>
+                <div class="detail-value">45 years</div>
+                
+                <div class="detail-label">Relation to Deceased:</div>
+                <div class="detail-value">Family physician (serving the Blackwoods since 1883)</div>
+                
+                <div class="detail-label">Occupation:</div>
+                <div class="detail-value">Physician and apothecary</div>
+                
+                <div class="detail-label">Physical Description:</div>
+                <div class="detail-value">Height 5'8", sturdy build, dark hair pulled back severely, sharp features, wire-rimmed spectacles, always carries a medical bag, hands stained with medicinal compounds</div>
+                
+                <div class="detail-label">Residence:</div>
+                <div class="detail-value">Private practice in nearby village of Thornwick (3 miles from estate)</div>
+            </div>
+
+            <div class="description">
+                <p>Dr. Helena Ashworth is one of the few female physicians in Yorkshire, having studied medicine in Switzerland when English institutions refused her entry. She established her practice in Thornwick in 1880 and gradually built a respectable clientele, including the Blackwood family.</p>
+                
+                <p>Helena has been Lady Catherine's personal physician since 1883, treating her for various nervous complaints and providing regular tonics and medications. She visits the estate at least twice weekly and has unrestricted access to the family's medicine cabinet to administer and adjust prescriptions.</p>
+                
+                <p>In recent years, Helena has also treated Edmund for minor ailments and has been responsible for preparing his health tonics. She maintains detailed records of all medicinal compounds at the estate and personally oversees the inventory of substances.</p>
+            </div>
+
+            <div class="known-facts">
+                <h4>Known Facts:</h4>
+                <ul>
+                    <li>Has complete knowledge of toxicology and access to arsenic for medical purposes</li>
+                    <li>Was present at the estate on October 30th from 3:00 PM until 9:30 PM</li>
+                    <li>Personally prepared Edmund's daily tonic on October 30th at 5:00 PM</li>
+                    <li>Edmund had recently threatened to report her to the Medical Society for "unprofessional conduct" (nature unspecified)</li>
+                    <li>Has been seen in private consultation with Lady Catherine on numerous occasions</li>
+                    <li>Maintains the estate's medicine inventory and has keys to the locked cabinet</li>
+                    <li>Was the one who suggested Edmund begin taking daily tonics in July 1889</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SUSPECT 4 -->
+        <div class="profile-section suspect">
+            <h2>SUSPECT FOUR - JAMES PEMBROKE</h2>
+            
+            <div class="detail-grid">
+                <div class="detail-label">Full Name:</div>
+                <div class="detail-value">James Arthur Pembroke</div>
+                
+                <div class="detail-label">Age:</div>
+                <div class="detail-value">48 years</div>
+                
+                <div class="detail-label">Relation to Deceased:</div>
+                <div class="detail-value">Estate manager (15 years of service)</div>
+                
+                <div class="detail-label">Occupation:</div>
+                <div class="detail-value">Manager of Blackwood Estate operations and accounts</div>
+                
+                <div class="detail-label">Physical Description:</div>
+                <div class="detail-value">Height 5'10", portly build, balding with gray fringe, always impeccably dressed, ink-stained fingers, slight tremor in hands (recent development)</div>
+                
+                <div class="detail-label">Residence:</div>
+                <div class="detail-value">Manager's cottage on estate grounds</div>
+            </div>
+
+            <div class="description">
+                <p>James Pembroke has managed the Blackwood Estate since 1874, overseeing all domestic operations, staff management, and household accounts. He maintains meticulous records and has earned Edmund's trust through years of seemingly faithful service.</p>
+                
+                <p>Pembroke handles all estate expenditures, from staff wages to maintenance costs to household purchases. He presents monthly accounting reports to Edmund and has signing authority for routine expenses under £100.</p>
+                
+                <p>Recently, Pembroke has appeared increasingly anxious. Staff have noticed his hands shaking when handling documents, and he has been observed working late into the night in the estate office, sometimes burning papers in the fireplace.</p>
+            </div>
+
+            <div class="known-facts">
+                <h4>Known Facts:</h4>
+                <ul>
+                    <li>Has complete access to all areas of the estate, including private quarters</li>
+                    <li>Manages household purchases, including medicinal supplies</li>
+                    <li>Edmund scheduled a "comprehensive audit" of estate accounts for November 2nd</li>
+                    <li>Has been seen destroying documents in his office on October 28th and 29th</li>
+                    <li>Recently sold his personal property in the village (reason unknown)</li>
+                    <li>Was present at the estate throughout October 30th</li>
+                    <li>Served Edmund his evening port at 8:00 PM on October 30th</li>
+                    <li>Has access to the medicine cabinet keys (manages all household keys)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SUSPECT 5 -->
+        <div class="profile-section suspect">
+            <h2>SUSPECT FIVE - CONSTANCE BLACKWOOD</h2>
+            
+            <div class="detail-grid">
+                <div class="detail-label">Full Name:</div>
+                <div class="detail-value">Constance Mary Blackwood</div>
+                
+                <div class="detail-label">Age:</div>
+                <div class="detail-value">27 years</div>
+                
+                <div class="detail-label">Relation to Deceased:</div>
+                <div class="detail-value">Daughter</div>
+                
+                <div class="detail-label">Occupation:</div>
+                <div class="detail-value">None (unmarried daughter)</div>
+                
+                <div class="detail-label">Physical Description:</div>
+                <div class="detail-value">Height 5'4", petite build, blonde hair, pale complexion, often appears distressed, frequently wears mourning colors even before father's death</div>
+                
+                <div class="detail-label">Residence:</div>
+                <div class="detail-value">Blackwood Estate (in her childhood quarters)</div>
+            </div>
+
+            <div class="description">
+                <p>Constance Blackwood is Edmund's younger child and only daughter. Sheltered throughout her youth, she received education at home and has rarely left the estate. Her world has been confined to the manor grounds, under her father's watchful control.</p>
+                
+                <p>In September 1889, Edmund arranged Constance's engagement to Lord Reginald Thornbury, a man 35 years her senior and known for his cruel temperament. Constance pleaded against the match, but Edmund dismissed her objections as "feminine hysteria." The wedding was set for December 1889.</p>
+                
+                <p>Since the engagement announcement, Constance has become increasingly withdrawn. Servants report hearing her crying late at night and have witnessed several emotional confrontations with her father. She spends hours in the estate library and has been observed reading medical texts.</p>
+            </div>
+
+            <div class="known-facts">
+                <h4>Known Facts:</h4>
+                <ul>
+                    <li>Stood to receive only a £2,000 dowry upon marriage (significantly less than typical for the family's wealth)</li>
+                    <li>Had violent argument with Edmund on October 28th regarding her engagement</li>
+                    <li>Has been reading books on poisons and toxicology from the estate library</li>
+                    <li>Was seen near Edmund's study at approximately 6:30 PM on October 30th</li>
+                    <li>Knows the location of the medicine cabinet and has observed Dr. Ashworth accessing it</li>
+                    <li>Has stated openly (to her mother) that she would "rather die than marry Lord Thornbury"</li>
+                    <li>Was present at the estate throughout October 30th</li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <p>Scotland Yard - Criminal Investigation Division</p>
+            <p>All information is to be treated as confidential</p>
+            <p style="margin-top: 15px;"><a href="index.html" style="color: #d4af37;">← Return to Evidence Index</a></p>
+        </footer>
+    </div>
+</body>
+</html>

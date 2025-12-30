@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Ledger - The Blackwood Estate</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕵️</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(135deg, #1a0a0a 0%, #2d1810 50%, #1a0a0a 100%);
+            color: #d4c5a9;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.15) 0px,
+                    transparent 1px,
+                    transparent 2px,
+                    rgba(0, 0, 0, 0.15) 3px
+                );
+            pointer-events: none;
+            z-index: 1;
+            animation: scan 8s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.95; }
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: rgba(20, 10, 5, 0.9);
+            border: 3px solid #8b4513;
+            box-shadow: 
+                0 0 30px rgba(139, 69, 19, 0.5),
+                inset 0 0 50px rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            position: relative;
+            z-index: 2;
+            animation: flicker 3s infinite;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid #8b4513;
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2em;
+            color: #d4af37;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .document-info {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85em;
+            color: #8b7355;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #d4af37;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            border: 1px solid #8b4513;
+            padding: 10px 25px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            background: rgba(139, 69, 19, 0.2);
+        }
+
+        .back-link:hover {
+            background: rgba(212, 175, 55, 0.3);
+            border-color: #d4af37;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            color: #d4af37;
+            font-size: 1.6em;
+            margin: 40px 0 20px 0;
+            border-bottom: 1px solid #8b4513;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-family: 'Cinzel', serif;
+            color: #cd853f;
+            font-size: 1.3em;
+            margin: 25px 0 15px 0;
+        }
+
+        .ledger-section {
+            background: rgba(40, 20, 10, 0.6);
+            border: 2px solid #8b4513;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .ledger-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-family: 'Crimson Text', serif;
+        }
+
+        .ledger-table th {
+            background: rgba(139, 69, 19, 0.4);
+            color: #d4af37;
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #8b4513;
+            font-family: 'Cinzel', serif;
+            font-size: 0.95em;
+        }
+
+        .ledger-table td {
+            padding: 10px 12px;
+            border: 1px solid #8b4513;
+            color: #d4c5a9;
+        }
+
+        .ledger-table tr:nth-child(even) {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .ledger-table tr:hover {
+            background: rgba(139, 69, 19, 0.2);
+        }
+
+        .amount-positive {
+            color: #90ee90;
+        }
+
+        .amount-negative {
+            color: #ff6b6b;
+        }
+
+        .amount-total {
+            font-weight: 600;
+            font-size: 1.1em;
+            color: #d4af37;
+        }
+
+        .note-box {
+            background: rgba(139, 69, 19, 0.3);
+            border-left: 4px solid #8b4513;
+            padding: 15px;
+            margin: 15px 0;
+            font-style: italic;
+        }
+
+        .warning-box {
+            background: rgba(139, 0, 0, 0.2);
+            border: 2px solid #8b0000;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .warning-box::before {
+            content: '⚠ ATTENTION: ';
+            color: #ff6b6b;
+            font-weight: 600;
+        }
+
+        .suspicious-entry {
+            background: rgba(139, 0, 0, 0.15);
+            border-left: 3px solid #8b0000;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 15px;
+            margin: 20px 0;
+            line-height: 1.8;
+        }
+
+        .detail-label {
+            font-family: 'Cinzel', serif;
+            color: #8b7355;
+            font-weight: 600;
+        }
+
+        .detail-value {
+            color: #d4c5a9;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #8b4513;
+            font-size: 0.9em;
+            color: #8b7355;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .ledger-table {
+                font-size: 0.85em;
+            }
+            
+            .ledger-table th,
+            .ledger-table td {
+                padding: 8px;
+            }
+
+            .detail-grid {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Financial Records</h1>
+            <div class="document-info">
+                BLACKWOOD ESTATE ACCOUNTS & PERSONAL FINANCES<br>
+                COMPILED FOR INVESTIGATION - NOVEMBER 1889<br>
+                DOCUMENTS SECURED FROM ESTATE OFFICE
+            </div>
+        </header>
+
+        <a href="index.html" class="back-link">← RETURN TO EVIDENCE INDEX</a>
+
+        <!-- ESTATE VALUATION -->
+        <div class="ledger-section">
+            <h2>Estate Valuation & Assets</h2>
+            <div class="detail-grid">
+                <div class="detail-label">Blackwood Steel & Iron Works:</div>
+                <div class="detail-value amount-positive">£450,000 (estimated value)</div>
+                
+                <div class="detail-label">Blackwood Estate Property:</div>
+                <div class="detail-value amount-positive">£85,000</div>
+                
+                <div class="detail-label">London Townhouse:</div>
+                <div class="detail-value amount-positive">£35,000</div>
+                
+                <div class="detail-label">Investment Portfolio:</div>
+                <div class="detail-value amount-positive">£125,000</div>
+                
+                <div class="detail-label">Cash & Bank Accounts:</div>
+                <div class="detail-value amount-positive">£42,000</div>
+                
+                <div class="detail-label"><strong>TOTAL ESTATE VALUE:</strong></div>
+                <div class="detail-value amount-total">£737,000</div>
+            </div>
+
+            <div class="note-box">
+                Note: Upon Lord Blackwood's death, control of the steel works passes to his eldest son Victor. Lady Catherine inherits the estate properties and half of the liquid assets. Miss Constance receives her designated dowry of £2,000.
+            </div>
+        </div>
+
+        <!-- LIFE INSURANCE -->
+        <div class="ledger-section">
+            <h2>Life Insurance Policies</h2>
+            
+            <h3>Policy on Lord Edmund Blackwood:</h3>
+            <div class="detail-grid">
+                <div class="detail-label">Policy Number:</div>
+                <div class="detail-value">LF-8847-1875</div>
+                
+                <div class="detail-label">Insurance Company:</div>
+                <div class="detail-value">London & Imperial Life Assurance</div>
+                
+                <div class="detail-label">Policy Value:</div>
+                <div class="detail-value amount-positive">£85,000</div>
+                
+                <div class="detail-label">Beneficiary:</div>
+                <div class="detail-value">Lady Catherine Blackwood (100%)</div>
+                
+                <div class="detail-label">Premium:</div>
+                <div class="detail-value">£1,200 per annum (paid current)</div>
+            </div>
+
+            <div class="warning-box">
+                Policy has been in force for 14 years. No recent modifications. Full benefit payable regardless of cause of death after initial two-year period.
+            </div>
+
+            <h3>Policy on Victor Blackwood:</h3>
+            <div class="detail-grid">
+                <div class="detail-label">Policy Number:</div>
+                <div class="detail-value">LF-9203-1889</div>
+                
+                <div class="detail-label">Policy Date:</div>
+                <div class="detail-value">August 15th, 1889</div>
+                
+                <div class="detail-label">Policy Value:</div>
+                <div class="detail-value amount-positive">£5,000</div>
+                
+                <div class="detail-label">Beneficiary:</div>
+                <div class="detail-value">Lord Edmund Blackwood</div>
+            </div>
+
+            <div class="note-box">
+                Unusual for a son to insure himself with his father as beneficiary. Policy was taken out shortly after Victor's gambling debts came to light. Premium paid by Victor personally.
+            </div>
+        </div>
+
+        <!-- VICTOR'S DEBTS -->
+        <div class="ledger-section">
+            <h2>Victor Blackwood - Outstanding Debts</h2>
+            
+            <div class="warning-box">
+                The following debts were discovered through correspondence seized from Victor's London residence and confirmed by creditors.
+            </div>
+
+            <table class="ledger-table">
+                <thead>
+                    <tr>
+                        <th>Creditor</th>
+                        <th>Nature of Debt</th>
+                        <th>Amount Owed</th>
+                        <th>Due Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>White's Club</td>
+                        <td>Gambling debts (card games)</td>
+                        <td class="amount-negative">£3,200</td>
+                        <td>October 15th, 1889 (OVERDUE)</td>
+                    </tr>
+                    <tr>
+                        <td>Mr. Samuel Rothschild (private)</td>
+                        <td>Personal loan at 12% interest</td>
+                        <td class="amount-negative">£4,500</td>
+                        <td>November 10th, 1889</td>
+                    </tr>
+                    <tr>
+                        <td>Tattersalls (horse racing)</td>
+                        <td>Betting debts</td>
+                        <td class="amount-negative">£1,850</td>
+                        <td>October 30th, 1889 (OVERDUE)</td>
+                    </tr>
+                    <tr>
+                        <td>Various London merchants</td>
+                        <td>Clothing, jewelry, furnishings</td>
+                        <td class="amount-negative">£1,200</td>
+                        <td>Various dates</td>
+                    </tr>
+                    <tr>
+                        <td>Brooks's Club</td>
+                        <td>Gambling debts (hazard, faro)</td>
+                        <td class="amount-negative">£1,450</td>
+                        <td>November 1st, 1889</td>
+                    </tr>
+                    <tr>
+                        <td><strong>TOTAL DEBTS:</strong></td>
+                        <td></td>
+                        <td class="amount-total amount-negative">£12,200</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="note-box">
+                Victor's annual allowance from Lord Blackwood: £800. Without access to the inheritance, Victor has no means to repay these debts. Multiple creditors have sent threatening letters regarding legal action.
+            </div>
+        </div>
+
+        <!-- ESTATE MANAGEMENT ACCOUNTS -->
+        <div class="ledger-section">
+            <h2>Estate Management - James Pembroke's Accounts</h2>
+            
+            <div class="warning-box">
+                Lord Blackwood scheduled a comprehensive audit of these accounts for November 2nd, 1889. The following irregularities were discovered during preliminary review.
+            </div>
+
+            <h3>Suspicious Transactions - Past 6 Months:</h3>
+            <table class="ledger-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Amount</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="suspicious-entry">
+                        <td>May 12, 1889</td>
+                        <td>Roof repairs - Miller & Sons</td>
+                        <td class="amount-negative">£450</td>
+                        <td>No corresponding work verified</td>
+                    </tr>
+                    <tr class="suspicious-entry">
+                        <td>June 8, 1889</td>
+                        <td>Fence replacement - eastern boundary</td>
+                        <td class="amount-negative">£380</td>
+                        <td>Fence shows no recent repairs</td>
+                    </tr>
+                    <tr class="suspicious-entry">
+                        <td>July 3, 1889</td>
+                        <td>Painting - interior halls</td>
+                        <td class="amount-negative">£290</td>
+                        <td>Staff confirm no painting occurred</td>
+                    </tr>
+                    <tr class="suspicious-entry">
+                        <td>August 15, 1889</td>
+                        <td>Garden supplies - wholesale</td>
+                        <td class="amount-negative">£215</td>
+                        <td>Head gardener has no record</td>
+                    </tr>
+                    <tr class="suspicious-entry">
+                        <td>September 20, 1889</td>
+                        <td>Chimney sweep - all chimneys</td>
+                        <td class="amount-negative">£180</td>
+                        <td>Service not performed</td>
+                    </tr>
+                    <tr class="suspicious-entry">
+                        <td>October 5, 1889</td>
+                        <td>Coal delivery - winter stock</td>
+                        <td class="amount-negative">£325</td>
+                        <td>Delivery amount does not match invoice</td>
+                    </tr>
+                    <tr>
+                        <td><strong>TOTAL SUSPECTED EMBEZZLEMENT:</strong></td>
+                        <td></td>
+                        <td class="amount-total amount-negative">£1,840</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="note-box">
+                All invoices for the above transactions appear to be forgeries. Mr. Pembroke has signing authority for estate expenditures under £100, but these amounts required Lord Blackwood's approval, which was obtained through falsified documentation.
+            </div>
+
+            <h3>Pembroke's Personal Financial Situation:</h3>
+            <div class="detail-grid" style="margin-top: 20px;">
+                <div class="detail-label">Annual Salary:</div>
+                <div class="detail-value">£120</div>
+                
+                <div class="detail-label">Personal Property Sold (Sept 1889):</div>
+                <div class="detail-value">£280 (cottage in village, household effects)</div>
+                
+                <div class="detail-label">Known Debts:</div>
+                <div class="detail-value amount-negative">£650 (medical bills for deceased wife, burial costs)</div>
+                
+                <div class="detail-label">Current Assets:</div>
+                <div class="detail-value">Minimal - less than £50</div>
+            </div>
+
+            <div class="warning-box">
+                If the audit had proceeded, Pembroke faced certain dismissal, criminal prosecution, and imprisonment. The embezzlement would have been discovered no later than November 2nd.
+            </div>
+        </div>
+
+        <!-- DR. ASHWORTH'S FINANCES -->
+        <div class="ledger-section">
+            <h2>Dr. Helena Ashworth - Financial Records</h2>
+            
+            <h3>Medical Practice Income & Expenses:</h3>
+            <div class="detail-grid">
+                <div class="detail-label">Annual Practice Income:</div>
+                <div class="detail-value amount-positive">£380</div>
+                
+                <div class="detail-label">Annual Expenses:</div>
+                <div class="detail-value amount-negative">£290</div>
+                
+                <div class="detail-label">Net Annual Income:</div>
+                <div class="detail-value amount-positive">£90</div>
+            </div>
+
+            <div class="note-box">
+                Dr. Ashworth's practice serves primarily lower-income patients. The Blackwood family represents her most affluent client, paying £150 annually for regular consultations and treatments.
+            </div>
+
+            <h3>Recent Financial Pressure:</h3>
+            <div class="detail-grid" style="margin-top: 20px;">
+                <div class="detail-label">Medical School Debt:</div>
+                <div class="detail-value amount-negative">£2,200 (Swiss medical training, 1876-1880)</div>
+                
+                <div class="detail-label">Practice Equipment Loan:</div>
+                <div class="detail-value amount-negative">£450</div>
+                
+                <div class="detail-label">Monthly Debt Payments:</div>
+                <div class="detail-value amount-negative">£18</div>
+            </div>
+
+            <div class="warning-box">
+                Letter discovered from Lord Blackwood to Dr. Ashworth (dated October 15th, 1889): "Your services are no longer required. Your final payment will be rendered on October 31st. Further, I intend to report your unprofessional conduct to the Medical Society unless you return all family medical records immediately."
+            </div>
+
+            <div class="note-box">
+                Loss of Blackwood family income would represent 40% of Dr. Ashworth's annual earnings. Professional censure from the Medical Society would likely end her medical career entirely.
+            </div>
+        </div>
+
+        <!-- LADY CATHERINE'S SITUATION -->
+        <div class="ledger-section">
+            <h2>Lady Catherine Blackwood - Financial Position</h2>
+            
+            <h3>Current Situation:</h3>
+            <div class="detail-grid">
+                <div class="detail-label">Personal Allowance:</div>
+                <div class="detail-value">£400 per annum (controlled by Lord Blackwood)</div>
+                
+                <div class="detail-label">Personal Assets:</div>
+                <div class="detail-value">£1,200 (jewelry, personal effects)</div>
+                
+                <div class="detail-label">Independent Income:</div>
+                <div class="detail-value">None</div>
+            </div>
+
+            <h3>Upon Lord Blackwood's Death:</h3>
+            <div class="detail-grid" style="margin-top: 20px;">
+                <div class="detail-label">Estate Properties Inherited:</div>
+                <div class="detail-value amount-positive">£85,000</div>
+                
+                <div class="detail-label">Life Insurance Benefit:</div>
+                <div class="detail-value amount-positive">£85,000</div>
+                
+                <div class="detail-label">Portion of Liquid Assets:</div>
+                <div class="detail-value amount-positive">£21,000</div>
+                
+                <div class="detail-label">TOTAL INHERITANCE:</div>
+                <div class="detail-value amount-total amount-positive">£191,000</div>
+            </div>
+
+            <div class="note-box">
+                Lord Blackwood's will (dated 1884) grants Lady Catherine complete financial independence and substantial wealth upon his death. She would be free to manage her own affairs for the first time in 25 years of marriage.
+            </div>
+        </div>
+
+        <!-- CONSTANCE'S SITUATION -->
+        <div class="ledger-section">
+            <h2>Constance Blackwood - Financial Arrangements</h2>
+            
+            <h3>Current Engagement Contract:</h3>
+            <div class="detail-grid">
+                <div class="detail-label">Dowry to Lord Thornbury:</div>
+                <div class="detail-value amount-negative">£2,000</div>
+                
+                <div class="detail-label">Wedding Date:</div>
+                <div class="detail-value">December 15th, 1889</div>
+                
+                <div class="detail-label">Post-Marriage Allowance:</div>
+                <div class="detail-value">£50 per annum (from Lord Thornbury)</div>
+            </div>
+
+            <div class="warning-box">
+                Marriage contract stipulates that Constance's dowry and all future income would be controlled entirely by Lord Thornbury. She would have no independent financial resources.
+            </div>
+
+            <h3>If Marriage Does Not Proceed:</h3>
+            <div class="detail-grid" style="margin-top: 20px;">
+                <div class="detail-label">Inheritance from Father's Estate:</div>
+                <div class="detail-value amount-positive">£2,000 (one-time payment)</div>
+                
+                <div class="detail-label">Residence Rights:</div>
+                <div class="detail-value">Permitted to remain at estate (controlled by Victor as heir)</div>
+                
+                <div class="detail-label">Annual Allowance:</div>
+                <div class="detail-value">At discretion of Victor Blackwood</div>
+            </div>
+
+            <div class="note-box">
+                Lord Blackwood rejected Constance's pleas to cancel the engagement. His death prior to the wedding would legally void the marriage contract. However, Constance's financial situation would remain dependent on her brother's goodwill.
+            </div>
+        </div>
+
+        <footer>
+            <p>Scotland Yard - Financial Investigation Unit</p>
+            <p>Documents compiled from estate records, bank statements, and correspondence</p>
+            <p style="margin-top: 15px;"><a href="index.html" style="color: #d4af37;">← Return to Evidence Index</a></p>
+        </footer>
+    </div>
+</body>
+</html>

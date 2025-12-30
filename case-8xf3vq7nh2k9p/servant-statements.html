@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servant Statements - The Blackwood Estate</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕵️</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(135deg, #1a0a0a 0%, #2d1810 50%, #1a0a0a 100%);
+            color: #d4c5a9;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.15) 0px,
+                    transparent 1px,
+                    transparent 2px,
+                    rgba(0, 0, 0, 0.15) 3px
+                );
+            pointer-events: none;
+            z-index: 1;
+            animation: scan 8s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.95; }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(20, 10, 5, 0.9);
+            border: 3px solid #8b4513;
+            box-shadow: 
+                0 0 30px rgba(139, 69, 19, 0.5),
+                inset 0 0 50px rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            position: relative;
+            z-index: 2;
+            animation: flicker 3s infinite;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid #8b4513;
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2em;
+            color: #d4af37;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .document-info {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85em;
+            color: #8b7355;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #d4af37;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            border: 1px solid #8b4513;
+            padding: 10px 25px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            background: rgba(139, 69, 19, 0.2);
+        }
+
+        .back-link:hover {
+            background: rgba(212, 175, 55, 0.3);
+            border-color: #d4af37;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .statement {
+            margin: 30px 0;
+            background: rgba(40, 20, 10, 0.6);
+            border: 2px solid #8b4513;
+            border-left: 5px solid #cd853f;
+            padding: 25px;
+        }
+
+        .statement-header {
+            border-bottom: 1px solid #8b4513;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .witness-name {
+            font-family: 'Cinzel', serif;
+            color: #d4af37;
+            font-size: 1.4em;
+            margin-bottom: 8px;
+        }
+
+        .witness-details {
+            font-size: 0.95em;
+            color: #8b7355;
+            line-height: 1.6;
+        }
+
+        .testimony {
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+
+        .testimony p {
+            margin-bottom: 15px;
+        }
+
+        .timestamp {
+            color: #d4af37;
+            font-weight: 600;
+            background: rgba(212, 175, 55, 0.1);
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .observation {
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 3px solid #2d5016;
+            padding: 15px;
+            margin: 15px 0;
+            font-style: italic;
+        }
+
+        .important-note {
+            background: rgba(139, 69, 19, 0.3);
+            border: 2px solid #8b4513;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .important-note::before {
+            content: '⚠ IMPORTANT: ';
+            color: #d4af37;
+            font-weight: 600;
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            color: #d4af37;
+            font-size: 1.6em;
+            margin: 30px 0 20px 0;
+            border-bottom: 1px solid #8b4513;
+            padding-bottom: 10px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #8b4513;
+            font-size: 0.9em;
+            color: #8b7355;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Witness Statements</h1>
+            <div class="document-info">
+                HOUSEHOLD STAFF TESTIMONIES<br>
+                COLLECTED OCTOBER 31ST - NOVEMBER 1ST, 1889<br>
+                SCOTLAND YARD INVESTIGATION
+            </div>
+        </header>
+
+        <a href="index.html" class="back-link">← RETURN TO EVIDENCE INDEX</a>
+
+        <h2>Introduction</h2>
+        <div style="background: rgba(40, 20, 10, 0.6); padding: 20px; margin-bottom: 30px; border-left: 4px solid #8b4513;">
+            <p style="line-height: 1.8;">The following statements were collected from household staff present at Blackwood Estate on the evening of October 30th, 1889. Each witness was interviewed separately and asked to recount their observations and interactions during the relevant time period. Statements have been recorded verbatim.</p>
+        </div>
+
+        <!-- STATEMENT 1: MARY HOBBS -->
+        <div class="statement">
+            <div class="statement-header">
+                <div class="witness-name">Mary Hobbs</div>
+                <div class="witness-details">
+                    <strong>Position:</strong> Housemaid (7 years of service)<br>
+                    <strong>Age:</strong> 34 years<br>
+                    <strong>Statement Given:</strong> October 31st, 1889 at 9:15 AM<br>
+                    <strong>Interviewed By:</strong> Inspector James Caldwell
+                </div>
+            </div>
+            <div class="testimony">
+                <p>I've been with the Blackwood family since 1882, sir, and I've never seen anything like this terrible business. I'm the one who found His Lordship this morning, God rest his soul.</p>
+
+                <p>On the evening of October 30th, I served dinner in the dining room at <span class="timestamp">7:30 PM</span>. All the family were present - Lord Blackwood, Lady Catherine, Master Victor, Miss Constance, and Mr. Pembroke, the estate manager. Dr. Ashworth had also been invited to dine with them.</p>
+
+                <p>I noticed Lord Blackwood seemed in foul spirits. He barely touched his soup and kept giving Master Victor angry looks. At one point, around <span class="timestamp">7:45 PM</span>, he said something sharp to the young master about "frivolous expenditures" and Master Victor went quite red in the face.</p>
+
+                <div class="observation">
+                    Miss Constance looked dreadful all evening. Pale as a ghost, she was, and hardly said a word. Lady Catherine kept touching her arm, trying to comfort her, but Miss Constance just stared at her plate.
+                </div>
+
+                <p>Dinner concluded at approximately <span class="timestamp">8:15 PM</span>. Lord Blackwood retired to his study immediately afterward. Mr. Pembroke followed him about five minutes later, carrying some papers. I saw this as I was clearing the dining room.</p>
+
+                <p>At <span class="timestamp">8:45 PM</span>, I was in the upstairs hallway and I heard raised voices coming from the study. I couldn't make out the words, but it sounded like Lord Blackwood was shouting at someone. The door was closed.</p>
+
+                <p>Around <span class="timestamp">9:30 PM</span>, I saw Dr. Ashworth leaving the estate. She was carrying her medical bag and walking quite briskly to her carriage. She looked... I don't know how to describe it, sir... troubled, perhaps? She didn't acknowledge me when I bid her good evening, which wasn't like her at all.</p>
+
+                <div class="important-note">
+                    At approximately <span class="timestamp">10:15 PM</span>, I went to ask if Lord Blackwood needed anything before I retired for the night. I knocked on the study door but received no answer. I assumed he'd gone to bed, though it was earlier than his usual habit.
+                </div>
+
+                <p>The next morning at <span class="timestamp">6:45 AM</span>, I entered the study to clean the grate and found His Lordship... he was seated in his chair by the fireplace, but he wasn't breathing. There was sick on the floor and on his waistcoat. A small glass bottle had fallen from his hand onto the carpet. I screamed and ran for Mr. Pembroke.</p>
+
+                <p>That's all I know, sir. It's a terrible thing.</p>
+            </div>
+        </div>
+
+        <!-- STATEMENT 2: THOMAS WRIGHT -->
+        <div class="statement">
+            <div class="statement-header">
+                <div class="witness-name">Thomas Wright</div>
+                <div class="witness-details">
+                    <strong>Position:</strong> Butler (12 years of service)<br>
+                    <strong>Age:</strong> 51 years<br>
+                    <strong>Statement Given:</strong> October 31st, 1889 at 11:30 AM<br>
+                    <strong>Interviewed By:</strong> Inspector James Caldwell
+                </div>
+            </div>
+            <div class="testimony">
+                <p>I have served the Blackwood family with loyalty and discretion for twelve years, and I can tell you that October 30th was a night of considerable tension.</p>
+
+                <p>At <span class="timestamp">8:00 PM</span>, I personally brought Lord Blackwood his evening port and his medicinal tonic in the study. This was our established routine every evening. The tonic bottle had been prepared earlier by Dr. Ashworth and was kept in the medicine cabinet in the hallway. I retrieved it myself and brought it on a silver tray along with the port.</p>
+
+                <div class="observation">
+                    Lord Blackwood examined the tonic bottle before drinking, as he always did. He commented that it "smelled stronger than usual" but attributed this to Dr. Ashworth perhaps adjusting the formula. He consumed approximately half the bottle immediately, mixed with the port as was his custom.
+                </div>
+
+                <p>At <span class="timestamp">8:20 PM</span>, Mr. Pembroke requested entry to the study. I announced him and then withdrew. I could hear Lord Blackwood's voice rising in anger approximately ten minutes later. Mr. Pembroke emerged at <span class="timestamp">8:35 PM</span> looking quite shaken. His hands were trembling and he asked me for brandy.</p>
+
+                <p>Master Victor entered the study at <span class="timestamp">8:40 PM</span> without being announced. I heard more shouting. Master Victor left at <span class="timestamp">8:55 PM</span> and went directly upstairs. He appeared agitated and was muttering to himself.</p>
+
+                <p>At approximately <span class="timestamp">9:00 PM</span>, Lady Catherine knocked on the study door and asked to speak with Lord Blackwood. I heard him refuse her entry quite rudely. She stood outside the door for several moments before retreating to her quarters. She appeared distressed.</p>
+
+                <div class="important-note">
+                    Dr. Ashworth came down from Lady Catherine's quarters at <span class="timestamp">9:25 PM</span>. She went directly to the study and entered without knocking - she had that privilege as the family physician. She remained inside for approximately seven or eight minutes. When she emerged at <span class="timestamp">9:33 PM</span>, her face was flushed and she departed the estate immediately.
+                </div>
+
+                <p>I saw no one else enter the study after Dr. Ashworth's departure. I locked the main doors at <span class="timestamp">10:30 PM</span> and retired to my quarters at <span class="timestamp">11:00 PM</span>.</p>
+
+                <p>In the morning, Mary Hobbs raised the alarm. I entered the study and confirmed that Lord Blackwood had expired. I immediately sent for the constable and Dr. Hartley, the coroner.</p>
+            </div>
+        </div>
+
+        <!-- STATEMENT 3: AGNES COOPER -->
+        <div class="statement">
+            <div class="statement-header">
+                <div class="witness-name">Agnes Cooper</div>
+                <div class="witness-details">
+                    <strong>Position:</strong> Lady's Maid to Lady Catherine (9 years of service)<br>
+                    <strong>Age:</strong> 41 years<br>
+                    <strong>Statement Given:</strong> November 1st, 1889 at 2:00 PM<br>
+                    <strong>Interviewed By:</strong> Constable Edward Mills
+                </div>
+            </div>
+            <div class="testimony">
+                <p>I attend to Lady Catherine's personal needs and have done so since 1880. Her Ladyship confides in me more than most, and I know she was deeply troubled on October 30th.</p>
+
+                <p>Dr. Ashworth arrived at the estate at <span class="timestamp">3:00 PM</span> that afternoon for Her Ladyship's regular consultation. They met in Lady Catherine's private sitting room. I was present initially to help Her Ladyship prepare, but I was dismissed at <span class="timestamp">3:15 PM</span>. They remained in private conference until <span class="timestamp">4:30 PM</span>.</p>
+
+                <div class="observation">
+                    When I returned to help Her Ladyship dress for dinner, I noticed she had been crying. Her eyes were red and swollen. Dr. Ashworth was still present, and she was holding Her Ladyship's hands and speaking to her in low, urgent tones. They stopped talking when I entered.
+                </div>
+
+                <p>Dr. Ashworth left the sitting room at <span class="timestamp">4:45 PM</span> and went downstairs. I heard her tell Thomas Wright that she would be staying for dinner at Lord Blackwood's invitation, and that she needed to prepare His Lordship's evening tonic.</p>
+
+                <p>Her Ladyship was very quiet while I dressed her for dinner. She asked me what time Lord Blackwood typically took his tonic. I told her it was always at 8:00 PM sharp, brought by Thomas Wright.</p>
+
+                <p>After dinner, Her Ladyship went to her sitting room at <span class="timestamp">8:30 PM</span>. She was restless, pacing back and forth. At <span class="timestamp">8:55 PM</span>, she asked me to go downstairs and see if His Lordship was still in the study. I confirmed he was and reported back to her.</p>
+
+                <div class="important-note">
+                    At <span class="timestamp">9:05 PM</span>, Dr. Ashworth came to Lady Catherine's quarters. They spoke privately for about fifteen minutes. When Dr. Ashworth left at <span class="timestamp">9:20 PM</span>, Her Ladyship told me she was retiring early due to a headache. Dr. Ashworth had given her a sleeping draught, she said.
+                </div>
+
+                <p>I helped Her Ladyship prepare for bed and left her quarters at <span class="timestamp">9:40 PM</span>. I did not see her again until the morning when the terrible news broke.</p>
+
+                <p>Her Ladyship was genuinely shocked and distressed when told of Lord Blackwood's death. Whatever their difficulties, I don't believe she wished him dead. She's not that sort of person.</p>
+            </div>
+        </div>
+
+        <!-- STATEMENT 4: ROBERT FINCH -->
+        <div class="statement">
+            <div class="statement-header">
+                <div class="witness-name">Robert Finch</div>
+                <div class="witness-details">
+                    <strong>Position:</strong> Footman (4 years of service)<br>
+                    <strong>Age:</strong> 28 years<br>
+                    <strong>Statement Given:</strong> November 1st, 1889 at 10:00 AM<br>
+                    <strong>Interviewed By:</strong> Constable Edward Mills
+                </div>
+            </div>
+            <div class="testimony">
+                <p>I assist with various duties about the estate, sir. On October 30th, I was primarily attending to the family's needs during and after dinner.</p>
+
+                <p>At approximately <span class="timestamp">5:00 PM</span>, I was in the main hallway and saw Dr. Ashworth go to the medicine cabinet. She has a key, sir, being the family physician. She removed Lord Blackwood's tonic bottle and took it to the small preparation room off the kitchen. She was in there for about twenty minutes, and when she emerged, she returned the bottle to the cabinet.</p>
+
+                <p>I served wine during dinner and observed the family's interactions. Master Victor and His Lordship had words during the meal, as Mary mentioned. Miss Constance appeared very distressed - she excused herself at <span class="timestamp">8:00 PM</span> and went to her room. I saw her crying on the stairs.</p>
+
+                <div class="observation">
+                    At approximately <span class="timestamp">6:30 PM</span>, before dinner, I was passing near the library and heard Miss Constance and Lady Catherine speaking in hushed tones. I couldn't make out the exact words, but I distinctly heard Miss Constance say something like "there must be another way" and Her Ladyship responding "Helena will know what to do."
+                </div>
+
+                <p>After dinner, I assisted in the kitchen until <span class="timestamp">9:00 PM</span> when I was dismissed for the evening. I retired to the servants' quarters and did not witness anything further of relevance.</p>
+
+                <p>I should mention, sir, that Mr. Pembroke seemed particularly nervous all evening. At one point, around <span class="timestamp">7:00 PM</span>, I saw him in the estate office burning papers in the fireplace. When he noticed me, he asked quite sharply what I wanted, though I was only passing by in the hallway.</p>
+            </div>
+        </div>
+
+        <!-- STATEMENT 5: ELLEN MARSH -->
+        <div class="statement">
+            <div class="statement-header">
+                <div class="witness-name">Ellen Marsh</div>
+                <div class="witness-details">
+                    <strong>Position:</strong> Cook (16 years of service)<br>
+                    <strong>Age:</strong> 58 years<br>
+                    <strong>Statement Given:</strong> October 31st, 1889 at 3:45 PM<br>
+                    <strong>Interviewed By:</strong> Inspector James Caldwell
+                </div>
+            </div>
+            <div class="testimony">
+                <p>I've been cooking for this family since before Master Victor was born, and I can tell you the atmosphere at dinner on October 30th was colder than my ice cellar.</p>
+
+                <p>I prepared the meal starting at <span class="timestamp">5:00 PM</span>. Dr. Ashworth came into my kitchen at <span class="timestamp">5:15 PM</span> and asked to use the preparation room for mixing His Lordship's tonic. She said she wanted to make it fresh as she'd brought some new ingredients from her apothecary. I told her to make herself at home, as she always does.</p>
+
+                <p>She was in there for a good twenty minutes, maybe twenty-five. I could hear bottles clinking and her grinding something with the mortar and pestle. When she came out, she had the tonic bottle sealed and ready. She said she'd put it in the medicine cabinet for Thomas to collect at 8:00 PM.</p>
+
+                <div class="important-note">
+                    Now, I've seen Dr. Ashworth prepare tonics many times over the years, but this time she seemed... agitated, I'd say. Her hands were shaking slightly when she carried the bottle out, and she nearly dropped it. I asked if she was well, and she said she was just tired from a long day of house calls.
+                </div>
+
+                <p>During the dinner service, I noticed Lord Blackwood barely ate anything. He sent back his fish course, saying it tasted odd, though I can assure you there was nothing wrong with my cooking. I've been preparing that recipe for twenty years.</p>
+
+                <p>That's all I know about the evening. I finished my duties at <span class="timestamp">9:30 PM</span> and went to my quarters.</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>Scotland Yard - Criminal Investigation Division</p>
+            <p>Witness statements collected and recorded for official investigation</p>
+            <p style="margin-top: 15px;"><a href="index.html" style="color: #d4af37;">← Return to Evidence Index</a></p>
+        </footer>
+    </div>
+</body>
+</html>

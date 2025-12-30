@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Police Interrogations - The Blackwood Estate</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕵️</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(135deg, #1a0a0a 0%, #2d1810 50%, #1a0a0a 100%);
+            color: #d4c5a9;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.15) 0px,
+                    transparent 1px,
+                    transparent 2px,
+                    rgba(0, 0, 0, 0.15) 3px
+                );
+            pointer-events: none;
+            z-index: 1;
+            animation: scan 8s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.95; }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(20, 10, 5, 0.9);
+            border: 3px solid #8b4513;
+            box-shadow: 
+                0 0 30px rgba(139, 69, 19, 0.5),
+                inset 0 0 50px rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            position: relative;
+            z-index: 2;
+            animation: flicker 3s infinite;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid #8b4513;
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2em;
+            color: #d4af37;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .document-info {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85em;
+            color: #8b7355;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #d4af37;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            border: 1px solid #8b4513;
+            padding: 10px 25px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            background: rgba(139, 69, 19, 0.2);
+        }
+
+        .back-link:hover {
+            background: rgba(212, 175, 55, 0.3);
+            border-color: #d4af37;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .interrogation {
+            background: rgba(40, 20, 10, 0.6);
+            border: 2px solid #8b4513;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .interrogation-header {
+            border-bottom: 2px solid #8b4513;
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        .suspect-name {
+            font-family: 'Cinzel', serif;
+            color: #d4af37;
+            font-size: 1.6em;
+            margin-bottom: 10px;
+        }
+
+        .interrogation-meta {
+            color: #8b7355;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+
+        .qa-section {
+            margin: 20px 0;
+        }
+
+        .question {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            margin: 15px 0 10px 0;
+            border-left: 3px solid #8b4513;
+            font-weight: 600;
+            color: #cd853f;
+        }
+
+        .question::before {
+            content: 'Q: ';
+            color: #d4af37;
+            font-family: 'Cinzel', serif;
+        }
+
+        .answer {
+            padding: 15px;
+            padding-left: 30px;
+            line-height: 1.8;
+            color: #d4c5a9;
+        }
+
+        .answer::before {
+            content: 'A: ';
+            color: #8b7355;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            margin-left: -15px;
+            margin-right: 5px;
+        }
+
+        .contradiction {
+            background: rgba(139, 0, 0, 0.15);
+            border: 2px solid #8b0000;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .contradiction::before {
+            content: '⚠ CONTRADICTION: ';
+            color: #ff6b6b;
+            font-weight: 600;
+            font-family: 'Cinzel', serif;
+        }
+
+        .investigator-note {
+            background: rgba(60, 40, 20, 0.6);
+            border-left: 4px solid #8b4513;
+            padding: 15px;
+            margin: 20px 0;
+            font-style: italic;
+        }
+
+        .investigator-note::before {
+            content: '📝 INVESTIGATOR NOTE: ';
+            font-weight: 600;
+            color: #cd853f;
+            font-style: normal;
+        }
+
+        .evasive {
+            background: rgba(139, 69, 19, 0.2);
+            border-left: 3px solid #cd853f;
+            padding-left: 30px;
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            color: #d4af37;
+            font-size: 1.6em;
+            margin: 40px 0 20px 0;
+            border-bottom: 1px solid #8b4513;
+            padding-bottom: 10px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #8b4513;
+            font-size: 0.9em;
+            color: #8b7355;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .interrogation {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Official Interrogations</h1>
+            <div class="document-info">
+                SCOTLAND YARD - FORMAL SUSPECT INTERVIEWS<br>
+                CONDUCTED OCTOBER 31ST - NOVEMBER 2ND, 1889<br>
+                INSPECTOR JAMES CALDWELL, LEAD INVESTIGATOR
+            </div>
+        </header>
+
+        <a href="index.html" class="back-link">← RETURN TO EVIDENCE INDEX</a>
+
+        <div style="background: rgba(40, 20, 10, 0.6); padding: 25px; margin: 30px 0; border: 2px solid #8b4513;">
+            <p style="line-height: 1.8;">The following interrogations were conducted under oath at Scotland Yard. Each suspect was questioned separately regarding their whereabouts, actions, and knowledge of events on October 30th, 1889. Investigators noted demeanor, inconsistencies, and evasive responses during questioning.</p>
+        </div>
+
+        <!-- INTERROGATION 1: LADY CATHERINE -->
+        <div class="interrogation">
+            <div class="interrogation-header">
+                <div class="suspect-name">Lady Catherine Blackwood</div>
+                <div class="interrogation-meta">
+                    <strong>Date:</strong> November 1st, 1889 at 2:00 PM<br>
+                    <strong>Location:</strong> Scotland Yard, London<br>
+                    <strong>Interrogating Officer:</strong> Inspector James Caldwell<br>
+                    <strong>Present:</strong> Constable Edward Mills (witness)<br>
+                    <strong>Duration:</strong> 1 hour 15 minutes<br>
+                    <strong>Demeanor:</strong> Composed but visibly distressed, occasional tears
+                </div>
+            </div>
+
+            <div class="qa-section">
+                <div class="question">Please describe your relationship with your late husband.</div>
+                <div class="answer">Edmund and I were married for twenty-five years. It was... not always an easy marriage. He was a difficult man, set in his ways, but he provided for the family. I respected him as the head of our household.</div>
+                
+                <div class="investigator-note">
+                    Subject avoided eye contact when discussing the marriage. Response seemed rehearsed. Does not align with correspondence found suggesting severe marital difficulties.
+                </div>
+
+                <div class="question">We found a letter you wrote to someone identified only as "E.M." In it, you expressed a desire for freedom from your husband. Can you explain this?</div>
+                <div class="answer evasive">That... that letter was written in a moment of emotional distress. All marriages have their difficulties. I never would have acted on such sentiments. It was merely the expression of temporary frustration.</div>
+
+                <div class="question">Who is "E.M."?</div>
+                <div class="answer evasive">A friend from my literary society in London. Someone I could confide in during difficult times. The identity is not relevant to this investigation.</div>
+
+                <div class="investigator-note">
+                    Subject refused to provide full name of correspondent despite repeated requests. Became defensive when pressed.
+                </div>
+
+                <div class="question">Describe your activities on October 30th, particularly your interactions with Dr. Ashworth.</div>
+                <div class="answer">Dr. Ashworth arrived at three o'clock for my regular consultation. I suffer from nervous complaints, and she provides treatment and tonics. We met in my sitting room until approximately half past four. She examined me and we discussed my health. Then she stayed for dinner at Edmund's invitation and departed around half past nine.</div>
+
+                <div class="question">Your maid Agnes Cooper stated that when she returned to your room at 4:30, you had been crying and Dr. Ashworth was holding your hands and speaking urgently. What were you discussing?</div>
+                <div class="answer evasive">I... I had received distressing news earlier that day. A friend in London was unwell. Helena was comforting me. She is not merely my physician but also a dear friend.</div>
+
+                <div class="contradiction">
+                    No evidence of any letter or news from London received that day. Subject's explanation appears fabricated. Servant Robert Finch overheard conversation at 6:30 PM where Catherine told Constance "Helena will know what to do" - this suggests Dr. Ashworth was helping solve a problem, not providing comfort about a sick friend.
+                </div>
+
+                <div class="question">Dr. Ashworth visited you again at 9:05 PM, shortly before she departed the estate. What did you discuss?</div>
+                <div class="answer">She came to give me a sleeping draught. I had developed a severe headache and asked her to prepare something to help me rest. We spoke for only a few minutes.</div>
+
+                <div class="question">Agnes Cooper states the meeting lasted fifteen minutes, not "a few minutes." What else did you discuss?</div>
+                <div class="answer evasive">I... time passes differently when one is in pain. Perhaps it was fifteen minutes. We may have discussed my ongoing treatment plan. I cannot recall every detail.</div>
+
+                <div class="investigator-note">
+                    Subject became noticeably nervous during this line of questioning. The timing is critical - Dr. Ashworth left Catherine at 9:20 PM and immediately went to Lord Blackwood's study at 9:25 PM. The sleeping draught ensured Catherine would be sedated and in bed by 9:40 PM, establishing an alibi.
+                </div>
+
+                <div class="question">Were you aware that your husband had dismissed Dr. Ashworth from service and threatened to report her to the Medical Society?</div>
+                <div class="answer">I... yes, Edmund mentioned it. I was devastated. Dr. Ashworth has been invaluable to my health. I pleaded with Edmund to reconsider, but he was quite firm in his decision.</div>
+
+                <div class="question">Did you and Dr. Ashworth discuss ways to prevent her dismissal?</div>
+                <div class="answer evasive">We discussed how unfortunate it was. Helena was understandably upset. But we both accepted Edmund's decision. What else could we do?</div>
+
+                <div class="contradiction">
+                    Note from Dr. Ashworth to Lady Catherine dated October 29th states: "I have found the answer we discussed... ensure he takes his tonic as usual at 8:00 PM... by tomorrow evening, your trials will be over." This directly contradicts claim that they "accepted Edmund's decision."
+                </div>
+
+                <div class="question">Where were you between 8:00 PM and 10:00 PM on October 30th?</div>
+                <div class="answer">After dinner, I went to my quarters. I asked my maid to verify Edmund was in his study around nine o'clock because I wanted to speak with him, but he refused to see me. I returned to my rooms. Dr. Ashworth came at 9:05 to give me the sleeping draught, and I was in bed by twenty minutes to ten. I slept through the night and did not wake until Agnes brought news of Edmund's death in the morning.</div>
+
+                <div class="investigator-note">
+                    Alibi is solid from 9:40 PM onward - Agnes Cooper confirms Catherine was sedated and in bed. However, the critical time is 8:00 PM when the poisoned tonic was consumed. Catherine was not present for that, but the evidence suggests she and Dr. Ashworth planned it together earlier in the day.
+                </div>
+
+                <div class="question">Did you have any knowledge that your husband's tonic had been poisoned?</div>
+                <div class="answer">Absolutely not. I was horrified when told he died of arsenic poisoning. I would never harm Edmund, despite our difficulties. The very thought is monstrous.</div>
+
+                <div class="investigator-note">
+                    Subject became emotional during this denial, crying openly. However, the correspondence and timeline suggest she had both motive and opportunity to conspire with Dr. Ashworth. Her alibi for the actual death is convenient - too convenient.
+                </div>
+
+                <div class="question">As his wife, you inherit substantially from Lord Blackwood's death - the estate properties, £85,000 in life insurance, and a portion of liquid assets totaling approximately £191,000. This gives you complete financial independence for the first time in your marriage. Are you aware of this?</div>
+                <div class="answer">I... yes, I am aware of the will's provisions. But I never wished for Edmund's death. Money means nothing compared to a human life.</div>
+            </div>
+        </div>
+
+        <!-- INTERROGATION 2: DR. HELENA ASHWORTH -->
+        <div class="interrogation">
+            <div class="interrogation-header">
+                <div class="suspect-name">Dr. Helena Ashworth</div>
+                <div class="interrogation-meta">
+                    <strong>Date:</strong> November 2nd, 1889 at 10:00 AM<br>
+                    <strong>Location:</strong> Scotland Yard, London<br>
+                    <strong>Interrogating Officer:</strong> Inspector James Caldwell<br>
+                    <strong>Present:</strong> Constable Edward Mills (witness)<br>
+                    <strong>Duration:</strong> 2 hours<br>
+                    <strong>Demeanor:</strong> Controlled, professional, occasionally defensive
+                </div>
+            </div>
+
+            <div class="qa-section">
+                <div class="question">As the family physician, you were responsible for preparing Lord Blackwood's daily tonic. Describe your process for the tonic prepared on October 30th.</div>
+                <div class="answer">I arrived at the estate at 3:00 PM. After my consultation with Lady Catherine concluded at 4:30, I went to prepare Lord Blackwood's tonic. I accessed the medicine cabinet at 5:00 PM using my key, retrieved the tonic bottle, and took it to the kitchen preparation room. I mixed the standard formula - strychnine for heart stimulation, iron compounds, herbal extracts, and a small therapeutic dose of arsenic as was customary in health tonics of this nature. I sealed the bottle and returned it to the medicine cabinet at approximately 5:25 PM.</div>
+
+                <div class="question">The cook, Ellen Marsh, stated that you appeared agitated when you emerged from the preparation room and nearly dropped the bottle. Can you explain why?</div>
+                <div class="answer evasive">I had received Lord Blackwood's letter dismissing me from service. I was naturally distressed about losing my position with the family. My hands may have been unsteady due to emotional upset.</div>
+
+                <div class="question">The medicine inventory shows that 23 grams of arsenic went missing on October 29th with no corresponding log entry. You are responsible for maintaining this log. Can you explain this discrepancy?</div>
+                <div class="answer evasive">I... that must be an error in the inventory. Perhaps I forgot to record a withdrawal. The estate uses arsenic for various purposes - rat poison, medicinal preparations. It's possible Mr. Pembroke accessed it without my knowledge.</div>
+
+                <div class="contradiction">
+                    Mr. Pembroke states he never accessed the arsenic and had no need for it. All October access logs show only Dr. Ashworth entries. The 23 grams missing is precisely the amount that would be needed to create the lethal concentration found in the tonic bottle.
+                </div>
+
+                <div class="question">The autopsy revealed Lord Blackwood had been receiving gradually increasing doses of arsenic for six to eight weeks prior to his death. This pattern exactly matches your tonic preparation records. Were you deliberately increasing the arsenic content?</div>
+                <div class="answer">Lord Blackwood himself requested stronger tonics. He felt they improved his vitality. I increased the dosage gradually within safe therapeutic ranges. I never intended any harm.</div>
+
+                <div class="question">The final tonic bottle contained 2,400 milligrams of arsenic per liter - approximately 300 times the therapeutic dose you claim to have used. Lord Blackwood consumed roughly 192-240 milligrams, a massively lethal dose. How do you explain this?</div>
+                <div class="answer evasive">I... I cannot explain it. Someone must have tampered with the bottle after I prepared it. I mixed only the standard therapeutic formula.</div>
+
+                <div class="contradiction">
+                    The timeline shows Dr. Ashworth prepared the tonic alone from 5:00-5:25 PM and immediately returned it to the locked medicine cabinet. She held one of only three keys. The butler retrieved it at 8:00 PM and delivered it directly to Lord Blackwood, who consumed it immediately. There was no opportunity for tampering by anyone else.
+                </div>
+
+                <div class="question">After dining with the family, you visited Lady Catherine at 9:05 PM and then entered Lord Blackwood's study at 9:25 PM. This was one hour and twenty-five minutes after he consumed the poisoned tonic. What was the purpose of this visit?</div>
+                <div class="answer evasive">I... I wanted to check on his health. I had concerns about his condition and thought a brief examination might be prudent.</div>
+
+                <div class="question">At 9:25 PM, well past normal calling hours, without being summoned, you entered a man's private study to perform an unsolicited health examination? This seems highly irregular.</div>
+                <div class="answer evasive">Lord Blackwood had complained of feeling unwell at dinner. I merely wanted to ensure he was comfortable.</div>
+
+                <div class="investigator-note">
+                    No other witnesses recall Lord Blackwood complaining of feeling unwell at dinner. This claim appears to be a fabrication. The more likely explanation: she was checking whether the poison had taken effect.
+                </div>
+
+                <div class="question">You remained in the study for 7-8 minutes. What occurred during that time?</div>
+                <div class="answer">I asked after his health. He said he felt slightly nauseous but attributed it to rich food at dinner. I recommended he rest. Then I departed.</div>
+
+                <div class="question">Thomas Wright states you emerged from the study with a flushed face and departed the estate immediately without your usual pleasantries. Why the hasty departure?</div>
+                <div class="answer evasive">I was tired and wished to return home. There was no particular reason.</div>
+
+                <div class="contradiction">
+                    Subject's behavior was notably different from her usual pattern. The combination of the unusual visit, the timing (after poison consumption), and the hasty departure strongly suggests she was verifying the poison was working. If Lord Blackwood was showing symptoms at 9:25 PM, she would have known death was imminent.
+                </div>
+
+                <div class="question">We found a note from you to Lady Catherine dated October 29th that states, and I quote: "I have found the answer we discussed. You need only provide the opportunity we discussed - ensure he takes his tonic as usual at 8:00 PM. By tomorrow evening, your trials will be over. Trust in me." What did you mean by "the answer"?</div>
+                <div class="answer evasive">That... that note was about finding Lady Catherine a new physician after my dismissal. "The answer" was a recommendation for Dr. Hartley. "Her trials" referred to her medical complaints, not... not what you're suggesting.</div>
+
+                <div class="contradiction">
+                    This explanation is absurd. The language clearly suggests a plan to eliminate Lord Blackwood. "Ensure he takes his tonic at 8:00 PM" is an explicit instruction to enable poisoning. "By tomorrow evening, your trials will be over" directly predicts his death.
+                </div>
+
+                <div class="question">Lord Blackwood threatened to report you to the Medical Society and end your career. His death prevents that. You had motive, means through your medical knowledge and access to arsenic, and opportunity as the sole preparer of his tonic. How do you respond?</div>
+                <div class="answer">I did not kill Lord Blackwood. Yes, I had reason to resent him, and yes, I had the knowledge and access. But I am a physician. I took an oath to do no harm. I would never take a life, regardless of personal gain.</div>
+
+                <div class="investigator-note">
+                    Subject maintained composure during this accusation, but her earlier evasiveness and the overwhelming evidence suggest guilt. The correspondence with Lady Catherine indicates conspiracy. Both women had motive - Catherine for freedom and inheritance, Dr. Ashworth to save her career and livelihood.
+                </div>
+            </div>
+        </div>
+
+        <!-- INTERROGATION 3: VICTOR BLACKWOOD -->
+        <div class="interrogation">
+            <div class="interrogation-header">
+                <div class="suspect-name">Victor Blackwood</div>
+                <div class="interrogation-meta">
+                    <strong>Date:</strong> November 1st, 1889 at 10:00 AM<br>
+                    <strong>Location:</strong> Scotland Yard, London<br>
+                    <strong>Interrogating Officer:</strong> Inspector James Caldwell<br>
+                    <strong>Present:</strong> Constable Edward Mills (witness)<br>
+                    <strong>Duration:</strong> 45 minutes<br>
+                    <strong>Demeanor:</strong> Nervous, defensive, occasionally agitated
+                </div>
+            </div>
+
+            <div class="qa-section">
+                <div class="question">You owe approximately £12,200 to various creditors and gambling establishments. Your father controlled your finances and provided only a modest allowance. Is this correct?</div>
+                <div class="answer">Yes. Father was... very controlling about money. He believed my spending was frivolous. We argued about it constantly.</div>
+
+                <div class="question">As his heir, you now control the steel works valued at £450,000 and become head of the family. His death solves your financial problems. Correct?</div>
+                <div class="answer">I... yes, I suppose so. But I didn't want him dead! He was my father, for God's sake. I may have resented his control, but I'm not a murderer!</div>
+
+                <div class="question">You argued with him at dinner on October 30th. What was said?</div>
+                <div class="answer">He made a comment about my "frivolous expenditures" in front of the entire family. It was humiliating. But it was nothing unusual - he always spoke to me that way.</div>
+
+                <div class="question">You entered his study at 8:40 PM without being announced. Shouting was heard. What occurred?</div>
+                <div class="answer">I went to ask him for money to settle some debts. He refused, as he always did. We argued. He said I was a disappointment and threatened to disinherit me entirely. I left angry, but I didn't harm him!</div>
+
+                <div class="question">Where were you between 8:00 PM and 8:40 PM, when the poisoned tonic was consumed?</div>
+                <div class="answer">I went to my room after dinner to brood over his comments. I was alone. No one can verify that, but it's the truth.</div>
+
+                <div class="investigator-note">
+                    Victor has no alibi for the critical time window. However, he has no medical knowledge and no access to the medicine cabinet. He could not have prepared the poisoned tonic. While he had strong motive and would benefit from his father's death, the method of murder required expertise he lacks.
+                </div>
+
+                <div class="question">Did you have any knowledge of or involvement in the poisoning of your father?</div>
+                <div class="answer">No! I knew nothing about it until they found him dead. I may have wished he'd leave me alone, but I never wanted him dead. This is a nightmare.</div>
+
+                <div class="investigator-note">
+                    Victor appears genuinely shocked by his father's death. His debts and inheritance provide clear motive, but the evidence does not support his involvement in the actual murder. He is a red herring - the obvious suspect who lacks the means.
+                </div>
+            </div>
+        </div>
+
+        <!-- INTERROGATION 4: JAMES PEMBROKE -->
+        <div class="interrogation">
+            <div class="interrogation-header">
+                <div class="suspect-name">James Pembroke</div>
+                <div class="interrogation-meta">
+                    <strong>Date:</strong> November 1st, 1889 at 4:00 PM<br>
+                    <strong>Location:</strong> Scotland Yard, London<br>
+                    <strong>Interrogating Officer:</strong> Inspector James Caldwell<br>
+                    <strong>Present:</strong> Constable Edward Mills (witness)<br>
+                    <strong>Duration:</strong> 1 hour<br>
+                    <strong>Demeanor:</strong> Anxious, resigned, cooperative
+                </div>
+            </div>
+
+            <div class="qa-section">
+                <div class="question">We have discovered evidence of embezzlement from the estate accounts totaling at least £1,840. Lord Blackwood scheduled a comprehensive audit for November 2nd. Were you aware this would expose your crimes?</div>
+                <div class="answer">Yes. I knew I would be caught. I have no excuse for what I've done. I was desperate after my wife's illness and death left me with debts. It started with small amounts and spiraled out of control. I fully expected to be discovered, dismissed, and prosecuted.</div>
+
+                <div class="question">His death prevented that audit. You had a strong motive to prevent his investigation.</div>
+                <div class="answer">I know how it looks. But I swear to you, I did not kill Lord Blackwood. I was preparing to confess to him before the audit. I even drafted a letter of confession, though I never delivered it.</div>
+
+                <div class="question">You were seen burning documents on October 28th and 29th. What were you destroying?</div>
+                <div class="answer">Evidence of my embezzlement. I was trying to cover my tracks, though I knew it was futile. The audit would have found everything regardless. I was panicking.</div>
+
+                <div class="question">You met with Lord Blackwood at 8:20 PM on October 30th, approximately twenty minutes after he consumed the poisoned tonic. What was discussed?</div>
+                <div class="answer">I brought him papers regarding estate maintenance. He asked about some expenses and I... I lied to him about them. He became angry and accused me of incompetence. He said the audit would "sort everything out." I left feeling sick with dread.</div>
+
+                <div class="question">Did you have access to the medicine cabinet and the arsenic?</div>
+                <div class="answer">Technically yes - I manage all the estate keys. But I never accessed the medicine cabinet. Dr. Ashworth maintained that inventory, and I had no reason to interfere with it. I don't know anything about poisons or medicine.</div>
+
+                <div class="investigator-note">
+                    Pembroke's confession to embezzlement is credible and matches the financial evidence. However, he lacks the medical knowledge to execute a sophisticated arsenic poisoning. The method required expertise in toxicology and access to medical records showing Lord Blackwood's tonic routine. While he had motive, he did not have the means. Another red herring.
+                </div>
+
+                <div class="question">Did you notice anything suspicious about Dr. Ashworth's behavior on October 30th?</div>
+                <div class="answer">Now that you mention it, yes. She seemed... different that day. More tense than usual. I saw her emerge from the preparation room with the tonic bottle and she looked quite unsettled. But I was too preoccupied with my own troubles to think much of it at the time.</div>
+            </div>
+        </div>
+
+        <!-- INTERROGATION 5: CONSTANCE BLACKWOOD -->
+        <div class="interrogation">
+            <div class="interrogation-header">
+                <div class="suspect-name">Constance Blackwood</div>
+                <div class="interrogation-meta">
+                    <strong>Date:</strong> November 2nd, 1889 at 2:00 PM<br>
+                    <strong>Location:</strong> Scotland Yard, London<br>
+                    <strong>Interrogating Officer:</strong> Inspector James Caldwell<br>
+                    <strong>Present:</strong> Constable Edward Mills (witness)<br>
+                    <strong>Duration:</strong> 30 minutes<br>
+                    <strong>Demeanor:</strong> Frightened, tearful, confused
+                </div>
+            </div>
+
+            <div class="qa-section">
+                <div class="question">Your father arranged your engagement to Lord Thornbury against your wishes. You stated openly you would "rather die than marry" him. Is this correct?</div>
+                <div class="answer">Yes. Lord Thornbury is a cruel man. His first wife... there were rumors about how she died. I begged Father to release me from the engagement, but he refused. He said I was being foolish and ungrateful.</div>
+
+                <div class="question">Your journal shows you had been reading books on poisons and toxicology. Why?</div>
+                <div class="answer">I... I was frightened and desperate. I thought if I knew about such things, I might... I don't know what I thought. I had terrible thoughts about escape. But I never acted on them! I'm not brave enough to do something like that.</div>
+
+                <div class="question">We found a note you wrote to your mother on the morning of October 30th stating you overheard a conversation about "tonight" and "the tonic" and asking to help. What did you mean?</div>
+                <div class="answer evasive">I... I'm not certain what I heard. I was walking past Mother's sitting room and heard her speaking with Dr. Ashworth. They stopped talking when they noticed me. I thought they were planning something to help me with my engagement, but I don't know what. I wrote that note asking to be included, but Mother never responded to it.</div>
+
+                <div class="investigator-note">
+                    Constance appears genuinely confused about what she overheard. It's possible she picked up on fragments of the conspiracy between her mother and Dr. Ashworth but didn't fully understand what they were planning. She may have thought it was a scheme to break her engagement, not to murder her father.
+                </div>
+
+                <div class="question">Where were you when your father consumed the poisoned tonic at 8:00 PM?</div>
+                <div class="answer">I had left dinner early. I was in my room crying. I was so desperate about the marriage. I didn't see Father after dinner ended.</div>
+
+                <div class="question">Did you have any involvement in or knowledge of your father's poisoning?</div>
+                <div class="answer">No! I had terrible thoughts sometimes, I admit that. But I never acted on them. I'm horrified by what happened. Despite everything, he was still my father.</div>
+
+                <div class="investigator-note">
+                    Constance had motive and had researched poisons, making her appear suspicious. However, she lacked access to the medicine cabinet and had no medical knowledge to prepare the tonic. She may have been peripherally aware her mother and Dr. Ashworth were planning something, but the evidence suggests she was not an active participant. Third red herring.
+                </div>
+            </div>
+        </div>
+
+        <!-- FINAL ANALYSIS -->
+        <div style="background: rgba(20, 40, 20, 0.4); border: 2px solid #2d5016; padding: 25px; margin: 40px 0;">
+            <h2 style="color: #90ee90;">Inspector's Final Assessment</h2>
+            
+            <div class="investigator-note" style="border-color: #2d5016; margin-top: 20px;">
+                After reviewing all interrogations, evidence, and timeline, the investigation points conclusively to a conspiracy between Dr. Helena Ashworth and Lady Catherine Blackwood.
+            </div>
+
+            <div style="margin: 20px 0; line-height: 1.8;">
+                <strong style="color: #d4af37;">Dr. Helena Ashworth:</strong>
+                <ul style="list-style: none; padding-left: 20px; margin-top: 10px;">
+                    <li style="padding: 5px 0;">• Had exclusive means (medical knowledge, access to arsenic, sole preparer of tonic)</li>
+                    <li style="padding: 5px 0;">• Had strong motive (Lord Blackwood threatened her career and livelihood)</li>
+                    <li style="padding: 5px 0;">• Prepared the fatal tonic alone on October 30th</li>
+                    <li style="padding: 5px 0;">• 23 grams of arsenic missing from inventory with no log entry</li>
+                    <li style="padding: 5px 0;">• Made suspicious visit to Lord Blackwood at 9:25 PM (after poison consumed)</li>
+                    <li style="padding: 5px 0;">• Note to Catherine explicitly describes the murder plan</li>
+                    <li style="padding: 5px 0;">• Provided evasive and contradictory answers during interrogation</li>
+                </ul>
+            </div>
+
+            <div style="margin: 20px 0; line-height: 1.8;">
+                <strong style="color: #d4af37;">Lady Catherine Blackwood:</strong>
+                <ul style="list-style: none; padding-left: 20px; margin-top: 10px;">
+                    <li style="padding: 5px 0;">• Had strong motive (escape from abusive marriage, financial independence, £191,000 inheritance)</li>
+                    <li style="padding: 5px 0;">• Extended private meeting with Dr. Ashworth on afternoon of murder</li>
+                    <li style="padding: 5px 0;">• Correspondence shows desperation and desire for "freedom"</li>
+                    <li style="padding: 5px 0;">• Received note from Helena describing murder plan</li>
+                    <li style="padding: 5px 0;">• Established convenient alibi with sleeping draught at 9:40 PM</li>
+                    <li style="padding: 5px 0;">• Provided evasive answers about her relationship with Dr. Ashworth</li>
+                    <li style="padding: 5px 0;">• Pattern of behavior suggests coordination with Dr. Ashworth</li>
+                </ul>
+            </div>
+
+            <div style="background: rgba(139, 0, 0, 0.2); border: 2px solid #8b0000; padding: 20px; margin-top: 25px;">
+                <strong style="color: #ff6b6b;">CONCLUSION:</strong> Dr. Helena Ashworth executed the murder by poisoning Lord Blackwood's tonic with a lethal dose of arsenic. Lady Catherine Blackwood conspired with her by providing motivation, opportunity, and support. Both women benefited - Catherine gained freedom and wealth, Helena saved her career. Victor, Pembroke, and Constance all had motives but lacked the means and opportunity to commit this particular crime.
+            </div>
+        </div>
+
+        <footer>
+            <p>Scotland Yard - Criminal Investigation Division</p>
+            <p>Official interrogation transcripts - Case No. 1889-10-31</p>
+            <p style="margin-top: 15px;"><a href="index.html" style="color: #d4af37;">← Return to Evidence Index</a></p>
+        </footer>
+    </div>
+</body>
+</html>

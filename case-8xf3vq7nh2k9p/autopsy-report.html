@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autopsy Report - The Blackwood Estate</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕵️</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(135deg, #1a0a0a 0%, #2d1810 50%, #1a0a0a 100%);
+            color: #d4c5a9;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.15) 0px,
+                    transparent 1px,
+                    transparent 2px,
+                    rgba(0, 0, 0, 0.15) 3px
+                );
+            pointer-events: none;
+            z-index: 1;
+            animation: scan 8s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.95; }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(20, 10, 5, 0.9);
+            border: 3px solid #8b4513;
+            box-shadow: 
+                0 0 30px rgba(139, 69, 19, 0.5),
+                inset 0 0 50px rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            position: relative;
+            z-index: 2;
+            animation: flicker 3s infinite;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid #8b0000;
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2em;
+            color: #ff6b6b;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .document-info {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85em;
+            color: #8b7355;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #d4af37;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            border: 1px solid #8b4513;
+            padding: 10px 25px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            background: rgba(139, 69, 19, 0.2);
+        }
+
+        .back-link:hover {
+            background: rgba(212, 175, 55, 0.3);
+            border-color: #d4af37;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .section {
+            margin: 30px 0;
+            background: rgba(40, 20, 10, 0.6);
+            border-left: 4px solid #8b4513;
+            padding: 25px;
+        }
+
+        .section.critical {
+            border-left-color: #8b0000;
+            background: rgba(60, 10, 10, 0.3);
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            color: #d4af37;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #8b4513;
+            padding-bottom: 10px;
+        }
+
+        .section.critical h2 {
+            color: #ff6b6b;
+        }
+
+        h3 {
+            font-family: 'Cinzel', serif;
+            color: #cd853f;
+            font-size: 1.2em;
+            margin: 20px 0 10px 0;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 15px;
+            margin: 20px 0;
+            line-height: 1.8;
+        }
+
+        .detail-label {
+            font-family: 'Cinzel', serif;
+            color: #8b7355;
+            font-weight: 600;
+        }
+
+        .detail-value {
+            color: #d4c5a9;
+        }
+
+        .finding {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #8b4513;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .finding-label {
+            font-family: 'Cinzel', serif;
+            color: #cd853f;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .toxicology-box {
+            background: rgba(139, 0, 0, 0.2);
+            border: 2px solid #8b0000;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .toxicology-box h3 {
+            color: #ff6b6b;
+        }
+
+        .measurement {
+            font-family: 'Courier New', monospace;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 3px 8px;
+            border: 1px solid #8b4513;
+            color: #d4af37;
+        }
+
+        .conclusion-box {
+            background: rgba(20, 40, 20, 0.3);
+            border: 2px solid #2d5016;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .conclusion-box h2 {
+            color: #90ee90;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        ul li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #8b4513;
+        }
+
+        .timestamp {
+            color: #d4af37;
+            font-weight: 600;
+        }
+
+        .signature {
+            margin-top: 40px;
+            text-align: right;
+            font-style: italic;
+            border-top: 1px solid #8b4513;
+            padding-top: 20px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #8b4513;
+            font-size: 0.9em;
+            color: #8b7355;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .detail-grid {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Post-Mortem Examination Report</h1>
+            <div class="document-info">
+                CONDUCTED BY DR. WILLIAM HARTLEY, M.D.<br>
+                YORKSHIRE CORONER'S OFFICE<br>
+                NOVEMBER 1ST, 1889
+            </div>
+        </header>
+
+        <a href="index.html" class="back-link">← RETURN TO EVIDENCE INDEX</a>
+
+        <!-- CASE INFORMATION -->
+        <div class="section">
+            <h2>Case Information</h2>
+            <div class="detail-grid">
+                <div class="detail-label">Deceased:</div>
+                <div class="detail-value">Lord Edmund Cornelius Blackwood</div>
+                
+                <div class="detail-label">Age:</div>
+                <div class="detail-value">58 years</div>
+                
+                <div class="detail-label">Date of Death:</div>
+                <div class="detail-value">October 31st, 1889 (estimated between 2:00 AM - 4:00 AM)</div>
+                
+                <div class="detail-label">Body Discovered:</div>
+                <div class="detail-value">October 31st, 1889 at 6:45 AM by housemaid Mary Hobbs</div>
+                
+                <div class="detail-label">Location:</div>
+                <div class="detail-value">Private study, Blackwood Estate</div>
+                
+                <div class="detail-label">Examination Conducted:</div>
+                <div class="detail-value">October 31st, 1889 at 11:00 AM</div>
+                
+                <div class="detail-label">Assisting:</div>
+                <div class="detail-value">Dr. Helena Ashworth (family physician, provided medical history)</div>
+            </div>
+        </div>
+
+        <!-- EXTERNAL EXAMINATION -->
+        <div class="section">
+            <h2>External Examination</h2>
+            
+            <div class="finding">
+                <div class="finding-label">General Appearance:</div>
+                <div>Well-nourished male, height 6 feet 1 inch, weight approximately 14 stone. Body was discovered seated in leather armchair, head tilted back, eyes partially open. Rigor mortis fully established. Livor mortis present on posterior surfaces, consistent with seated position at time of death.</div>
+            </div>
+
+            <div class="finding">
+                <div class="finding-label">Skin & Mucous Membranes:</div>
+                <div>Pallor noted. Lips showed slight cyanotic discoloration. No external injuries, contusions, or defensive wounds observed. Fingernails clean, no signs of struggle.</div>
+            </div>
+
+            <div class="finding">
+                <div class="finding-label">Notable Observations:</div>
+                <div>Evidence of gastric distress visible on face (expression of pain). Vomitus present on waistcoat and study floor, indicating severe nausea preceding death. Small glass vessel (tonic bottle) found overturned on desk beside body, residue present.</div>
+            </div>
+        </div>
+
+        <!-- INTERNAL EXAMINATION -->
+        <div class="section">
+            <h2>Internal Examination</h2>
+
+            <h3>Gastrointestinal System:</h3>
+            <div class="finding">
+                <div class="finding-label">Stomach Contents:</div>
+                <div>Stomach contained approximately 150 milliliters of dark fluid with particles of partially digested food. Strong odor consistent with port wine. Gastric mucosa showed severe inflammation and hemorrhagic lesions, characteristic of corrosive poisoning. Samples retained for chemical analysis.</div>
+            </div>
+
+            <div class="finding">
+                <div class="finding-label">Intestinal Tract:</div>
+                <div>Extensive inflammation throughout small intestine. Evidence of severe gastrointestinal hemorrhage. Liver showed signs of acute toxic injury with areas of necrosis.</div>
+            </div>
+
+            <h3>Cardiovascular & Respiratory:</h3>
+            <div class="finding">
+                <div class="finding-label">Heart:</div>
+                <div>Weight 340 grams (within normal range). Mild atherosclerosis of coronary arteries consistent with age. No evidence of acute cardiac event.</div>
+            </div>
+
+            <div class="finding">
+                <div class="finding-label">Lungs:</div>
+                <div>Moderate congestion, consistent with terminal respiratory distress. No primary pathology identified.</div>
+            </div>
+
+            <h3>Neurological:</h3>
+            <div class="finding">
+                <div class="finding-label">Brain:</div>
+                <div>Weight 1,420 grams. No gross abnormalities. Cerebral edema noted, likely secondary to systemic toxicity.</div>
+            </div>
+        </div>
+
+        <!-- TOXICOLOGY -->
+        <div class="section critical">
+            <h2>Toxicological Analysis</h2>
+
+            <div class="toxicology-box">
+                <h3>Primary Finding: Arsenic Poisoning</h3>
+                
+                <div class="detail-grid" style="margin-top: 20px;">
+                    <div class="detail-label">Stomach Contents:</div>
+                    <div class="detail-value">Arsenic concentration <span class="measurement">186 mg/L</span> (lethal dose typically 70-180 mg total)</div>
+                    
+                    <div class="detail-label">Liver Tissue:</div>
+                    <div class="detail-value">Arsenic concentration <span class="measurement">24 mg/kg</span></div>
+                    
+                    <div class="detail-label">Blood Sample:</div>
+                    <div class="detail-value">Arsenic concentration <span class="measurement">8.2 mg/L</span></div>
+                    
+                    <div class="detail-label">Hair Sample Analysis:</div>
+                    <div class="detail-value">Elevated arsenic levels throughout hair shaft, indicating exposure over period of <span class="measurement">6-8 weeks</span> prior to death</div>
+                </div>
+
+                <div style="margin-top: 20px; padding: 15px; background: rgba(0,0,0,0.3); border: 1px solid #8b0000;">
+                    <strong style="color: #ff6b6b;">CRITICAL FINDING:</strong> Hair analysis reveals chronic low-level arsenic exposure beginning approximately early September 1889, with a massive acute dose administered within 4-6 hours of death.
+                </div>
+            </div>
+
+            <h3>Analysis of Tonic Bottle Found at Scene:</h3>
+            <div class="finding">
+                <div class="finding-label">Bottle Contents:</div>
+                <div>Glass vessel labeled "Vitality Tonic - Dr. Ashworth's Preparation" contained residual liquid. Chemical analysis detected arsenic concentration of <span class="measurement">2,400 mg/L</span> - an extraordinarily lethal concentration. Bottle was approximately 1/3 full, suggesting deceased consumed approximately 80-100 milliliters containing roughly 192-240 mg of arsenic.</div>
+            </div>
+
+            <div class="finding">
+                <div class="finding-label">Additional Substances Detected:</div>
+                <div>Tonic also contained strychnine (therapeutic dose), iron compounds, and various herbal extracts consistent with commercial health tonics of the period. The presence of these legitimate ingredients would have masked the taste and appearance of the arsenic.</div>
+            </div>
+        </div>
+
+        <!-- TIME OF DEATH -->
+        <div class="section critical">
+            <h2>Estimation of Time of Death</h2>
+
+            <div class="finding">
+                <div class="finding-label">Rigor Mortis:</div>
+                <div>Fully established in all muscle groups at time of examination (11:00 AM). Rigor typically begins 2-4 hours post-mortem and reaches full establishment 8-12 hours post-mortem. This suggests death occurred between <span class="timestamp">2:00 AM - 4:00 AM</span> on October 31st.</div>
+            </div>
+
+            <div class="finding">
+                <div class="finding-label">Body Temperature:</div>
+                <div>Rectal temperature at examination: 22.8°C (ambient room temperature: 16°C). Cooling rate consistent with death occurring approximately 7-9 hours prior to examination, supporting 2:00 AM - 4:00 AM timeframe.</div>
+            </div>
+
+            <div class="finding">
+                <div class="finding-label">Gastric Contents:</div>
+                <div>Partially digested food suggests deceased consumed final meal approximately 4-6 hours before death. Servants report deceased took dinner at 7:30 PM and consumed port and tonic at 8:00 PM. This timeline places arsenic administration between <span class="timestamp">6:00 PM - 10:00 PM</span> on October 30th.</div>
+            </div>
+
+            <div class="toxicology-box" style="margin-top: 20px;">
+                <h3>Arsenic Poisoning Timeline</h3>
+                <ul style="margin-top: 15px;">
+                    <li><strong>Acute arsenic ingestion:</strong> October 30th, estimated <span class="timestamp">6:00 PM - 10:00 PM</span></li>
+                    <li><strong>Onset of symptoms:</strong> Typically 30 minutes to 2 hours post-ingestion (severe gastric pain, vomiting, diarrhea)</li>
+                    <li><strong>Critical phase:</strong> 4-8 hours post-ingestion (cardiovascular collapse, delirium)</li>
+                    <li><strong>Death:</strong> October 31st, estimated <span class="timestamp">2:00 AM - 4:00 AM</span> (6-10 hours post-ingestion)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- FINDINGS -->
+        <div class="conclusion-box">
+            <h2>Summary of Findings</h2>
+            <ul style="margin-top: 20px;">
+                <li>Lord Edmund Blackwood died as a result of acute arsenic poisoning</li>
+                <li>Lethal dose of arsenic was consumed via medicinal tonic bottle found at scene</li>
+                <li>Hair analysis indicates chronic low-level arsenic exposure for 6-8 weeks prior to fatal dose</li>
+                <li>Deceased likely consumed fatal dose between 6:00 PM - 10:00 PM on October 30th, 1889</li>
+                <li>Death occurred between 2:00 AM - 4:00 AM on October 31st, 1889</li>
+                <li>No evidence of struggle or external violence</li>
+                <li>Concentration of arsenic in tonic bottle far exceeds any therapeutic or accidental dosage</li>
+                <li>The chronic exposure pattern followed by acute lethal dose suggests deliberate, premeditated poisoning</li>
+            </ul>
+        </div>
+
+        <!-- OFFICIAL CONCLUSION -->
+        <div class="section critical">
+            <h2>Official Determination</h2>
+            <p style="line-height: 1.8; font-size: 1.1em;">
+                Death is attributed to <strong>ACUTE ARSENIC POISONING - HOMICIDE</strong>. The presence of arsenic in concentrations incompatible with accident or suicide, combined with evidence of chronic prior exposure, indicates deliberate administration by person or persons unknown. The tonic bottle containing the lethal dose was prepared or tampered with by someone with access to both arsenic and the deceased's medicine regimen.
+            </p>
+            
+            <p style="margin-top: 20px; line-height: 1.8; font-size: 1.05em; color: #ff6b6b;">
+                <strong>NOTE TO INVESTIGATORS:</strong> The pattern of chronic low-dose poisoning followed by a massive acute dose is consistent with a calculated attempt to make the death appear as a culmination of progressive illness. The perpetrator possessed knowledge of toxicology and access to the victim's daily tonic regimen.
+            </p>
+        </div>
+
+        <div class="signature">
+            <p><strong>Dr. William Hartley, M.D.</strong><br>
+            Coroner, Yorkshire<br>
+            November 1st, 1889</p>
+        </div>
+
+        <footer>
+            <p>Yorkshire Coroner's Office - Official Medical Record</p>
+            <p>This document is confidential and intended solely for investigative purposes</p>
+            <p style="margin-top: 15px;"><a href="index.html" style="color: #d4af37;">← Return to Evidence Index</a></p>
+        </footer>
+    </div>
+</body>
+</html>

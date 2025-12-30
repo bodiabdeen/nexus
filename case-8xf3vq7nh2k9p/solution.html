@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solution - The Blackwood Estate</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕵️</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(135deg, #1a0a0a 0%, #2d1810 50%, #1a0a0a 100%);
+            color: #d4c5a9;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.15) 0px,
+                    transparent 1px,
+                    transparent 2px,
+                    rgba(0, 0, 0, 0.15) 3px
+                );
+            pointer-events: none;
+            z-index: 1;
+            animation: scan 8s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.95; }
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 10px #8b0000, 0 0 20px #8b0000; }
+            50% { text-shadow: 0 0 20px #8b0000, 0 0 30px #8b0000, 0 0 40px #8b0000; }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(20, 10, 5, 0.9);
+            border: 3px solid #8b4513;
+            box-shadow: 
+                0 0 30px rgba(139, 69, 19, 0.5),
+                inset 0 0 50px rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            position: relative;
+            z-index: 2;
+            animation: flicker 3s infinite;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 3px solid #8b0000;
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.8em;
+            color: #ff6b6b;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .subtitle {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3em;
+            color: #d4af37;
+            letter-spacing: 2px;
+            margin-top: 15px;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #d4af37;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            border: 1px solid #8b4513;
+            padding: 10px 25px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            background: rgba(139, 69, 19, 0.2);
+        }
+
+        .back-link:hover {
+            background: rgba(212, 175, 55, 0.3);
+            border-color: #d4af37;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .warning-box {
+            background: rgba(139, 0, 0, 0.3);
+            border: 3px solid #8b0000;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .guilty-verdict {
+            background: rgba(60, 10, 10, 0.5);
+            border: 4px solid #ff6b6b;
+            padding: 35px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .guilty-verdict h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2em;
+            color: #ff6b6b;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .killer-names {
+            font-size: 1.5em;
+            color: #d4af37;
+            font-weight: 600;
+            margin: 20px 0;
+            line-height: 1.8;
+        }
+
+        .section {
+            background: rgba(40, 20, 10, 0.6);
+            border: 2px solid #8b4513;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            color: #d4af37;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #8b4513;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-family: 'Cinzel', serif;
+            color: #cd853f;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+        }
+
+        .evidence-point {
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 4px solid #cd853f;
+            padding: 20px;
+            margin: 15px 0;
+            line-height: 1.8;
+        }
+
+        .evidence-point strong {
+            color: #d4af37;
+        }
+
+        .timeline-box {
+            background: rgba(20, 30, 20, 0.3);
+            border: 2px solid #2d5016;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .motive-box {
+            background: rgba(60, 10, 10, 0.3);
+            border-left: 4px solid #8b0000;
+            padding: 20px;
+            margin: 15px 0;
+            line-height: 1.8;
+        }
+
+        ul {
+            margin: 15px 0;
+            padding-left: 30px;
+            line-height: 1.9;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .conclusion {
+            background: rgba(20, 40, 20, 0.4);
+            border: 3px solid #2d5016;
+            padding: 30px;
+            margin: 40px 0;
+            font-size: 1.1em;
+            line-height: 1.9;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #8b4513;
+            font-size: 0.9em;
+            color: #8b7355;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Case Solved</h1>
+            <div class="subtitle">The Complete Solution</div>
+        </header>
+
+        <a href="index.html" class="back-link">← RETURN TO EVIDENCE INDEX</a>
+
+        <div class="warning-box">
+            ⚠️ SPOILER WARNING ⚠️<br>
+            This document contains the complete solution to the mystery<br>
+            Only proceed if you have attempted to solve it yourself
+        </div>
+
+        <div class="guilty-verdict">
+            <h2>Guilty Verdict</h2>
+            <p style="font-size: 1.3em; margin-bottom: 20px; color: #d4c5a9;">The murder of Lord Edmund Blackwood was committed by:</p>
+            <div class="killer-names">
+                DR. HELENA ASHWORTH<br>
+                (Primary Executor)
+            </div>
+            <div style="font-size: 1.2em; color: #cd853f; margin: 15px 0;">In Conspiracy With</div>
+            <div class="killer-names">
+                LADY CATHERINE BLACKWOOD<br>
+                (Co-Conspirator)
+            </div>
+        </div>
+
+        <!-- THE CRIME -->
+        <div class="section">
+            <h2>The Crime: A Calculated Conspiracy</h2>
+            <p style="line-height: 1.8; margin-bottom: 20px;">Lord Edmund Blackwood died of acute arsenic poisoning administered through his daily medicinal tonic on October 30th, 1889. The murder was the culmination of a conspiracy between two women with complementary motives and capabilities: Dr. Helena Ashworth, who possessed the medical knowledge and access to poison, and Lady Catherine Blackwood, who provided the motivation and opportunity.</p>
+            
+            <p style="line-height: 1.8;">The crime involved a sophisticated two-phase approach: chronic low-level poisoning over six weeks to acclimate the victim to increasingly strong-tasting tonics, followed by a massive lethal dose that killed him within hours.</p>
+        </div>
+
+        <!-- DR. HELENA ASHWORTH -->
+        <div class="section">
+            <h2>Killer #1: Dr. Helena Ashworth (Primary Executor)</h2>
+            
+            <h3>Motive</h3>
+            <div class="motive-box">
+                <p style="margin-bottom: 15px;"><strong>Professional Ruin:</strong> Lord Blackwood had dismissed Dr. Ashworth from service effective October 30th and threatened to report her to the Medical Society for "unprofessional conduct." Such a report would have ended her medical career entirely.</p>
+                
+                <p style="margin-bottom: 15px;"><strong>Financial Desperation:</strong> The Blackwood family represented 40% of her annual income (£150 of £380). She carried £2,650 in debts from medical school and equipment loans.</p>
+                
+                <p><strong>Personal Connection:</strong> Dr. Ashworth had developed a close relationship with Lady Catherine over six years as her physician and confidante. She was emotionally invested in Catherine's wellbeing and freedom.</p>
+            </div>
+
+            <h3>Means</h3>
+            <div class="evidence-point">
+                <strong>Medical Expertise:</strong> As a trained physician, Helena had complete knowledge of toxicology, lethal dosages, and symptom progression for arsenic poisoning.
+            </div>
+
+            <div class="evidence-point">
+                <strong>Access to Poison:</strong> She held one of only three keys to the estate's medicine cabinet and was solely responsible for maintaining the arsenic inventory. The medicine inventory shows 23 grams of arsenic went missing on October 29th with NO corresponding log entry - Helena was responsible for this log.
+            </div>
+
+            <div class="evidence-point">
+                <strong>Control of Victim's Medication:</strong> Helena was exclusively responsible for preparing Lord Blackwood's daily tonic. No one else had the expertise or authority to prepare it. She had unrestricted access to his medication routine.
+            </div>
+
+            <h3>Opportunity</h3>
+            <div class="evidence-point">
+                <strong>October 30th, 5:00-5:25 PM:</strong> Helena accessed the medicine cabinet at 5:00 PM, retrieved the tonic bottle, and spent 20-25 minutes ALONE in the kitchen preparation room. Cook Ellen Marsh heard bottles clinking and grinding but did not observe the preparation directly. Helena appeared agitated when she emerged and nearly dropped the bottle.
+            </div>
+
+            <div class="evidence-point">
+                <strong>No Opportunity for Tampering:</strong> After Helena sealed the bottle and returned it to the locked cabinet at 5:25 PM, butler Thomas Wright retrieved it at 8:00 PM and delivered it directly to Lord Blackwood, who consumed it immediately. There was no window for anyone else to tamper with it.
+            </div>
+
+            <div class="evidence-point">
+                <strong>The Suspicious Visit (9:25-9:33 PM):</strong> Helena entered Lord Blackwood's study at 9:25 PM - one hour and twenty-five minutes AFTER he had consumed the poisoned tonic. She remained for 7-8 minutes, then departed hastily with a flushed face. This was almost certainly to verify the poison was taking effect. If Edmund was showing symptoms at this point, she would have known death was imminent.
+            </div>
+
+            <h3>The Smoking Gun Evidence</h3>
+            <div class="evidence-point" style="border-left-color: #ff6b6b;">
+                <strong>Document 5 - Personal Correspondence:</strong> Note from Helena to Catherine dated October 29th:<br><br>
+                <em>"Catherine, We must speak privately tomorrow afternoon. I have considered our conversation most carefully and I believe I have found the answer we discussed. It requires precision and nerve, but it can be done safely if we are cautious. I shall prepare everything necessary. You need only provide the opportunity we discussed - ensure he takes his tonic as usual at 8:00 PM. The timing is essential. I shall attend to the rest. By this time tomorrow evening, your trials will be over. Trust in me, my dear friend. I would do anything to see you free of him. -H."</em><br><br>
+                This note explicitly describes the murder plan and proves premeditation.
+            </div>
+        </div>
+
+        <!-- LADY CATHERINE BLACKWOOD -->
+        <div class="section">
+            <h2>Killer #2: Lady Catherine Blackwood (Co-Conspirator)</h2>
+            
+            <h3>Motive</h3>
+            <div class="motive-box">
+                <p style="margin-bottom: 15px;"><strong>Escape from Abuse:</strong> Catherine had endured 25 years of what she described as a loveless, cold marriage. Correspondence reveals Edmund was emotionally cruel and had recently struck her for the first time - "a backhanded blow across my face that left me bleeding."</p>
+                
+                <p style="margin-bottom: 15px;"><strong>Massive Financial Gain:</strong> Upon Edmund's death, Catherine would inherit: £85,000 in estate properties, £85,000 in life insurance, and £21,000 in liquid assets - totaling £191,000. She would gain complete financial independence for the first time in her life.</p>
+                
+                <p><strong>Emotional Desperation:</strong> Her letters express profound desperation: "I sometimes wish... but no, I cannot write such things" and "If there is any way - any way at all - to end this torment, I beg you to share it with me."</p>
+            </div>
+
+            <h3>Role in the Conspiracy</h3>
+            <div class="evidence-point">
+                <strong>The Planning Meeting (3:15-4:30 PM):</strong> Catherine and Helena met privately for 75 minutes on the afternoon of October 30th - significantly longer than a typical medical consultation. When lady's maid Agnes Cooper returned at 4:30 PM, she found Catherine crying with red, swollen eyes, and Helena holding her hands speaking urgently. They stopped talking when Agnes entered.
+            </div>
+
+            <div class="evidence-point">
+                <strong>Providing Opportunity:</strong> At 8:55 PM, Catherine specifically asked her maid to go downstairs and verify Edmund was still in his study. This was to confirm he was in position to consume the tonic and would not leave unexpectedly.
+            </div>
+
+            <div class="evidence-point">
+                <strong>The Final Coordination (9:05-9:20 PM):</strong> Helena came to Catherine's quarters at 9:05 PM, shortly after Edmund consumed the poison. They spoke privately for 15 minutes - likely confirming the plan had proceeded as intended.
+            </div>
+
+            <div class="evidence-point">
+                <strong>Establishing the Alibi:</strong> At 9:40 PM, witnessed by Agnes Cooper, Catherine took a sleeping draught provided by Helena and went to bed. This ensured she would be visibly sedated and unable to act during the crucial hours when Edmund would die (estimated 2:00-4:00 AM). The alibi was convenient - too convenient.
+            </div>
+
+            <h3>Evidence Against Her</h3>
+            <div class="evidence-point" style="border-left-color: #ff6b6b;">
+                <strong>Evasive Testimony:</strong> During interrogation, Catherine provided contradictory explanations for her meetings with Helena, refused to identify "E.M." (her London correspondent), and claimed she and Helena had "accepted Edmund's decision" to dismiss Helena - directly contradicted by Helena's note describing the murder plan.
+            </div>
+
+            <div class="evidence-point" style="border-left-color: #ff6b6b;">
+                <strong>Overheard Conversation:</strong> Footman Robert Finch overheard Catherine tell Constance at 6:30 PM: "Helena will know what to do" - demonstrating Catherine's reliance on Helena to solve her problems, and specifically referencing Helena in the context of that day's events.
+            </div>
+        </div>
+
+        <!-- THE TIMELINE -->
+        <div class="section">
+            <h2>The Timeline of Murder</h2>
+            
+            <div class="timeline-box">
+                <h3 style="color: #90ee90; margin-top: 0;">Phase 1: Chronic Poisoning (September-October 1889)</h3>
+                <p style="line-height: 1.8;">Beginning in early September, Helena gradually increased the arsenic content of Edmund's daily tonic from 0.5mg (therapeutic dose) to 1.2mg. This served two purposes: it accustomed Edmund to stronger-tasting tonics that would mask the eventual lethal dose, and it caused chronic low-level arsenic accumulation detected in his hair during autopsy. This demonstrates sophisticated premeditation.</p>
+            </div>
+
+            <div class="timeline-box">
+                <h3 style="color: #90ee90; margin-top: 0;">Phase 2: The Fatal Day (October 30th, 1889)</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 15px;"><strong>3:00 PM:</strong> Helena arrives at estate</li>
+                    <li style="margin-bottom: 15px;"><strong>3:15-4:30 PM:</strong> Extended private meeting with Catherine (75 minutes)</li>
+                    <li style="margin-bottom: 15px;"><strong>4:45 PM:</strong> Helena announces she will stay for dinner and prepare Edmund's tonic</li>
+                    <li style="margin-bottom: 15px;"><strong>5:00 PM:</strong> Helena steals 23 grams of arsenic from medicine cabinet (no log entry)</li>
+                    <li style="margin-bottom: 15px;"><strong>5:00-5:25 PM:</strong> Helena prepares fatal tonic ALONE with lethal arsenic dose (approximately 192-240mg)</li>
+                    <li style="margin-bottom: 15px;"><strong>8:00 PM:</strong> Edmund consumes poisoned tonic mixed with port</li>
+                    <li style="margin-bottom: 15px;"><strong>8:55 PM:</strong> Catherine verifies Edmund is still in study</li>
+                    <li style="margin-bottom: 15px;"><strong>9:05-9:20 PM:</strong> Helena meets with Catherine privately (confirmation/coordination)</li>
+                    <li style="margin-bottom: 15px;"><strong>9:25-9:33 PM:</strong> Helena enters Edmund's study to verify poison is working</li>
+                    <li style="margin-bottom: 15px;"><strong>9:40 PM:</strong> Catherine takes sleeping draught, establishing alibi</li>
+                    <li style="margin-bottom: 15px;"><strong>2:00-4:00 AM (Oct 31):</strong> Edmund dies of arsenic poisoning</li>
+                    <li><strong>6:45 AM:</strong> Body discovered by maid Mary Hobbs</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- WHY NOT THE OTHERS -->
+        <div class="section">
+            <h2>Why Not the Other Suspects?</h2>
+            
+            <h3>Victor Blackwood - Red Herring</h3>
+            <p style="line-height: 1.8; margin-bottom: 15px;"><strong>Motive:</strong> Strong (£12,200 in debts, stands to inherit steel works worth £450,000)</p>
+            <p style="line-height: 1.8; margin-bottom: 15px;"><strong>BUT:</strong> No medical knowledge to execute sophisticated arsenic poisoning, no access to medicine cabinet, no opportunity to prepare tonic. Victor's debts made him the obvious suspect, but he lacked the means to commit this particular crime.</p>
+
+            <h3>James Pembroke - Red Herring</h3>
+            <p style="line-height: 1.8; margin-bottom: 15px;"><strong>Motive:</strong> Strong (embezzled £1,840, audit scheduled for November 2nd would expose him)</p>
+            <p style="line-height: 1.8; margin-bottom: 15px;"><strong>BUT:</strong> No medical knowledge, no familiarity with poisons, never accessed medicine cabinet in October. While he had motive and was burning incriminating documents, he could not have executed the poisoning.</p>
+
+            <h3>Constance Blackwood - Red Herring</h3>
+            <p style="line-height: 1.8; margin-bottom: 15px;"><strong>Motive:</strong> Strong (forced engagement to cruel Lord Thornbury, stated she'd "rather die than marry him")</p>
+            <p style="line-height: 1.8;"><strong>BUT:</strong> No access to medicine cabinet, no medical training, no opportunity to prepare tonic. She had been reading about poisons and may have overheard fragments of her mother and Helena's plan, but was not an active participant. Her journal and behavior made her appear suspicious, but she lacked means and opportunity.</p>
+        </div>
+
+        <!-- THE PROOF -->
+        <div class="section">
+            <h2>Irrefutable Evidence of Guilt</h2>
+            
+            <div class="evidence-point">
+                <strong>1. The Medicine Inventory Discrepancy</strong><br>
+                23 grams of arsenic disappeared from the estate inventory on October 29th with NO corresponding log entry. Dr. Ashworth was solely responsible for maintaining this log. The missing quantity was more than sufficient to create the lethal concentration (2,400 mg/L) found in the tonic bottle.
+            </div>
+
+            <div class="evidence-point">
+                <strong>2. Exclusive Opportunity</strong><br>
+                Only Dr. Ashworth could have poisoned the tonic. She prepared it alone on October 30th at 5:00 PM, sealed it, and returned it to the locked cabinet. Butler Thomas Wright retrieved it at 8:00 PM and delivered it directly to Edmund, who consumed it immediately. No one else had opportunity to tamper with it.
+            </div>
+
+            <div class="evidence-point">
+                <strong>3. The Written Confession</strong><br>
+                Helena's note to Catherine dated October 29th explicitly describes the murder plan: "I have found the answer we discussed... ensure he takes his tonic as usual at 8:00 PM... By tomorrow evening, your trials will be over." This is direct evidence of premeditated conspiracy.
+            </div>
+
+            <div class="evidence-point">
+                <strong>4. The Coordination Pattern</strong><br>
+                The timeline shows clear coordination: extended private meeting (3:15-4:30 PM), Catherine verifying Edmund's location (8:55 PM), Helena visiting Catherine after the poisoning (9:05-9:20 PM), Helena checking on Edmund (9:25-9:33 PM), Catherine establishing alibi (9:40 PM). This is not coincidence - it's conspiracy.
+            </div>
+
+            <div class="evidence-point">
+                <strong>5. Complementary Motives</strong><br>
+                Catherine gained freedom and £191,000. Helena saved her career and livelihood. Both benefited directly and substantially from Edmund's death. Their close relationship provided emotional motivation for mutual assistance.
+            </div>
+
+            <div class="evidence-point">
+                <strong>6. Evasive Interrogations</strong><br>
+                Both women provided contradictory, evasive, and unbelievable explanations during police interrogation. Their answers directly contradicted physical evidence and witness testimony.
+            </div>
+        </div>
+
+        <!-- CONCLUSION -->
+        <div class="conclusion">
+            <h2 style="color: #90ee90;">Final Conclusion</h2>
+            <p style="margin-bottom: 20px;">Dr. Helena Ashworth and Lady Catherine Blackwood conspired to murder Lord Edmund Blackwood through arsenic poisoning. Dr. Ashworth provided the means - medical knowledge, access to poison, and control of the victim's medication. Lady Catherine provided the motive and opportunity - years of abuse culminating in desperation, substantial inheritance, and coordination of the victim's schedule.</p>
+
+            <p style="margin-bottom: 20px;">The evidence is overwhelming and interconnected. The medicine inventory proves Helena stole the arsenic. The timeline proves she prepared the fatal tonic alone. The correspondence proves they planned it together. The autopsy proves the method. The interrogations prove their guilt through evasion and contradiction.</p>
+
+            <p style="margin-bottom: 20px;">This was not a crime of passion but a calculated conspiracy executed with medical precision. Both women are equally culpable - one wielded the poison, the other provided the reason and the opportunity.</p>
+
+            <p style="font-weight: 600; font-size: 1.2em; color: #ff6b6b; text-align: center; margin-top: 30px;">GUILTY: Dr. Helena Ashworth and Lady Catherine Blackwood</p>
+            <p style="text-align: center; margin-top: 15px; color: #d4af37;">Murder in the First Degree - Conspiracy to Commit Murder</p>
+        </div>
+
+        <footer>
+            <p>Scotland Yard - Case No. 1889-10-31</p>
+            <p>Investigation concluded by Inspector James Caldwell</p>
+            <p style="margin-top: 15px; font-style: italic;">"Justice, though delayed, shall not be denied."</p>
+            <p style="margin-top: 20px;"><a href="index.html" style="color: #d4af37;">← Return to Evidence Index</a></p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Correspondence - The Blackwood Estate</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕵️</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(135deg, #1a0a0a 0%, #2d1810 50%, #1a0a0a 100%);
+            color: #d4c5a9;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.15) 0px,
+                    transparent 1px,
+                    transparent 2px,
+                    rgba(0, 0, 0, 0.15) 3px
+                );
+            pointer-events: none;
+            z-index: 1;
+            animation: scan 8s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.95; }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(20, 10, 5, 0.9);
+            border: 3px solid #8b4513;
+            box-shadow: 
+                0 0 30px rgba(139, 69, 19, 0.5),
+                inset 0 0 50px rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            position: relative;
+            z-index: 2;
+            animation: flicker 3s infinite;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid #8b4513;
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2em;
+            color: #d4af37;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .document-info {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85em;
+            color: #8b7355;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #d4af37;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            border: 1px solid #8b4513;
+            padding: 10px 25px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            background: rgba(139, 69, 19, 0.2);
+        }
+
+        .back-link:hover {
+            background: rgba(212, 175, 55, 0.3);
+            border-color: #d4af37;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .letter {
+            background: rgba(40, 30, 20, 0.8);
+            border: 2px solid #8b4513;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .letter::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, rgba(139, 0, 0, 0.3) 0%, transparent 70%);
+        }
+
+        .letter-header {
+            border-bottom: 1px solid #8b4513;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .letter-meta {
+            font-size: 0.9em;
+            color: #8b7355;
+            margin-bottom: 5px;
+        }
+
+        .letter-from {
+            font-family: 'Cinzel', serif;
+            color: #cd853f;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .letter-to {
+            font-family: 'Cinzel', serif;
+            color: #d4c5a9;
+            font-size: 1.05em;
+        }
+
+        .letter-body {
+            line-height: 1.9;
+            font-size: 1.05em;
+            text-align: justify;
+        }
+
+        .letter-body p {
+            margin-bottom: 15px;
+        }
+
+        .letter-signature {
+            text-align: right;
+            margin-top: 25px;
+            font-style: italic;
+            font-family: 'Cinzel', serif;
+            color: #cd853f;
+        }
+
+        .evidence-tag {
+            background: rgba(139, 0, 0, 0.3);
+            border: 1px solid #8b0000;
+            padding: 10px;
+            margin-top: 15px;
+            font-size: 0.85em;
+            color: #ff6b6b;
+        }
+
+        .evidence-tag::before {
+            content: '🔍 EVIDENCE TAG: ';
+            font-weight: 600;
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            color: #d4af37;
+            font-size: 1.6em;
+            margin: 40px 0 20px 0;
+            border-bottom: 1px solid #8b4513;
+            padding-bottom: 10px;
+        }
+
+        .note {
+            background: rgba(60, 40, 20, 0.6);
+            border-left: 4px solid #8b4513;
+            padding: 15px;
+            margin: 15px 0;
+            font-style: italic;
+        }
+
+        .telegram {
+            background: rgba(40, 40, 20, 0.6);
+            border: 3px double #8b4513;
+            padding: 20px;
+            margin: 30px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .telegram-header {
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            color: #d4af37;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #8b4513;
+        }
+
+        .journal-entry {
+            background: rgba(30, 20, 15, 0.8);
+            border: 2px solid #8b4513;
+            padding: 25px;
+            margin: 30px 0;
+            font-style: italic;
+        }
+
+        .journal-date {
+            font-family: 'Cinzel', serif;
+            color: #cd853f;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #8b4513;
+            font-size: 0.9em;
+            color: #8b7355;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .letter {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Personal Correspondence</h1>
+            <div class="document-info">
+                LETTERS, NOTES & DOCUMENTS SEIZED FROM ESTATE<br>
+                SCOTLAND YARD INVESTIGATION<br>
+                COLLECTED OCTOBER 31ST - NOVEMBER 2ND, 1889
+            </div>
+        </header>
+
+        <a href="index.html" class="back-link">← RETURN TO EVIDENCE INDEX</a>
+
+        <!-- LETTER 1: EDMUND TO HELENA -->
+        <h2>Document 1: Lord Blackwood to Dr. Ashworth</h2>
+        <div class="letter">
+            <div class="letter-header">
+                <div class="letter-meta">Date: October 15th, 1889</div>
+                <div class="letter-from">From: Lord Edmund Blackwood</div>
+                <div class="letter-to">To: Dr. Helena Ashworth</div>
+            </div>
+            <div class="letter-body">
+                <p>Dr. Ashworth,</p>
+                
+                <p>I write to inform you that your services as family physician are no longer required. Your final consultation will be October 30th, at which time you will receive your outstanding payment of £38.</p>
+                
+                <p>I have become aware of certain improprieties in your conduct, specifically your excessive and inappropriate intimacy with my wife. The nature and frequency of your visits far exceed what is medically necessary, and I have observed conversations between you both that suggest a relationship beyond that of physician and patient.</p>
+                
+                <p>Furthermore, I question the efficacy and indeed the safety of the various tonics and treatments you have prescribed to both myself and Lady Catherine. I shall be consulting with Dr. Hartley of the Yorkshire Medical Board regarding these matters.</p>
+                
+                <p>Unless you return all family medical records to my possession immediately and cease all contact with members of my household, I shall have no choice but to report your unprofessional conduct to the Medical Society. I trust you understand the implications such a report would have for your career.</p>
+                
+                <p>You are not welcome at Blackwood Estate after October 30th.</p>
+            </div>
+            <div class="letter-signature">
+                Lord Edmund Blackwood
+            </div>
+            <div class="evidence-tag">
+                Discovered in Dr. Ashworth's medical bag on October 31st. Letter shows signs of having been read multiple times (worn creases, fingerprints).
+            </div>
+        </div>
+
+        <!-- LETTER 2: CATHERINE TO E.M. -->
+        <h2>Document 2: Lady Catherine to "E.M."</h2>
+        <div class="letter">
+            <div class="letter-header">
+                <div class="letter-meta">Date: October 22nd, 1889 (UNSENT - found in writing desk)</div>
+                <div class="letter-from">From: Lady Catherine Blackwood</div>
+                <div class="letter-to">To: "E.M." (addressee unknown)</div>
+            </div>
+            <div class="letter-body">
+                <p>My Dearest,</p>
+                
+                <p>I can scarcely bring myself to write these words, yet I must unburden my heart to you. The situation has become intolerable. Edmund has discovered our correspondence and has threatened the most dreadful consequences.</p>
+                
+                <p>He knows about our meetings in London, though he does not yet know your identity. He suspects Helena of facilitating our communications, and he has dismissed her from service. Without her help, I shall be completely isolated here.</p>
+                
+                <p>Edmund has always been cruel, but now his tyranny knows no bounds. He controls every aspect of my existence - my movements, my correspondence, my very thoughts it seems. I am a prisoner in this house, denied even the comfort of friendship.</p>
+                
+                <p>I sometimes wish... but no, I cannot write such things. I must not. Yet I confess that in my darkest moments, I have imagined what freedom might feel like. To walk through the world without his shadow upon me. To make my own choices, to live as I wish.</p>
+                
+                <p>Helena has been a true friend through all of this. She understands my suffering in ways no one else can. We have spoken at length about what options might remain to me. She believes there may be a way forward, though she has not yet revealed the particulars.</p>
+                
+                <p>I shall write again when I am able. Know that my thoughts are with you always.</p>
+            </div>
+            <div class="letter-signature">
+                Your devoted C.
+            </div>
+            <div class="evidence-tag">
+                Found in Lady Catherine's writing desk, unsent. Letter was concealed beneath other papers. Identity of "E.M." remains unknown.
+            </div>
+        </div>
+
+        <!-- LETTER 3: VICTOR'S CREDITOR -->
+        <h2>Document 3: Creditor's Demand to Victor Blackwood</h2>
+        <div class="letter">
+            <div class="letter-header">
+                <div class="letter-meta">Date: October 20th, 1889</div>
+                <div class="letter-from">From: Mr. Samuel Rothschild</div>
+                <div class="letter-to">To: Mr. Victor Blackwood, London</div>
+            </div>
+            <div class="letter-body">
+                <p>Mr. Blackwood,</p>
+                
+                <p>This is my final communication regarding the outstanding debt of £4,500 plus accumulated interest of £540, for a total sum of £5,040 now owed to me.</p>
+                
+                <p>Your payment was due on September 1st. It is now nearly two months overdue. I have been patient beyond all reason, but my patience is exhausted.</p>
+                
+                <p>You assured me that your father would advance you the funds necessary to settle this debt. When I suggested approaching Lord Blackwood directly, you became quite agitated and insisted I do no such thing. I begin to suspect that your father is unaware of the extent of your financial difficulties.</p>
+                
+                <p>I require immediate payment of £5,040 by November 10th, 1889. If payment is not received, I shall have no alternative but to take legal action, which will include informing your father of your debts and potentially seizing any assets to which you might have claim.</p>
+                
+                <p>I suggest you reconcile with Lord Blackwood quickly, sir, for both our sakes.</p>
+            </div>
+            <div class="letter-signature">
+                Samuel Rothschild
+            </div>
+            <div class="evidence-tag">
+                Found in Victor's coat pocket. Letter shows signs of having been crumpled and smoothed repeatedly.
+            </div>
+        </div>
+
+        <!-- LETTER 4: CONSTANCE'S JOURNAL -->
+        <h2>Document 4: Constance Blackwood's Private Journal</h2>
+        <div class="journal-entry">
+            <div class="journal-date">October 28th, 1889</div>
+            <div class="letter-body">
+                <p>I have just endured another dreadful scene with Father. I begged him once more to release me from this engagement to Lord Thornbury, and once more he refused with such cruelty that I can barely recount it.</p>
+                
+                <p>He said I am "an ungrateful, foolish girl who knows nothing of the world" and that Lord Thornbury is "the best I can hope for" given my "limited prospects." He said I should be grateful that any man of quality would take me, considering I have no fortune and "insufficient charm."</p>
+                
+                <p>When I mentioned Lord Thornbury's reputation for cruelty to his first wife, Father laughed. He actually laughed! He said that "a firm hand is what young women need" and that perhaps Thornbury would "teach me obedience."</p>
+                
+                <p>I told him I would rather die than marry that man. Father's face went cold and he said, "That can be arranged if you continue this defiance."</p>
+                
+                <p>I spoke with Mother afterward. She wept with me and held me. She says she has been consulting with Dr. Ashworth about my situation. Mother believes there may be a solution, but she would not elaborate. She only said, "Helena is clever and she cares for our wellbeing. Trust in her, my darling."</p>
+                
+                <p>I have been reading the medical texts in the library - the ones on poisons and toxicology. I tell myself it is mere curiosity, a distraction from my troubles. But if I am honest with my own heart... I have imagined what it would be like if Father were simply... gone. If his cruelty could end. If Mother and I could be free.</p>
+                
+                <p>God forgive me for such thoughts.</p>
+            </div>
+            <div class="evidence-tag">
+                Journal discovered in Constance's chambers. Multiple pages had been torn out (dates: October 16th-21st).
+            </div>
+        </div>
+
+        <!-- NOTE 5: HELENA TO CATHERINE -->
+        <h2>Document 5: Note from Dr. Ashworth to Lady Catherine</h2>
+        <div class="note">
+            <div style="margin-bottom: 15px; color: #cd853f; font-family: 'Cinzel', serif;">Date: October 29th, 1889</div>
+            <p style="line-height: 1.8;">
+                Catherine,
+            </p>
+            <p style="line-height: 1.8; margin-top: 10px;">
+                We must speak privately tomorrow afternoon. I have considered our conversation most carefully and I believe I have found the answer we discussed. It requires precision and nerve, but it can be done safely if we are cautious.
+            </p>
+            <p style="line-height: 1.8; margin-top: 10px;">
+                I shall prepare everything necessary. You need only provide the opportunity we discussed - ensure he takes his tonic as usual at 8:00 PM. The timing is essential. I shall attend to the rest.
+            </p>
+            <p style="line-height: 1.8; margin-top: 10px;">
+                By this time tomorrow evening, your trials will be over. Trust in me, my dear friend. I would do anything to see you free of him.
+            </p>
+            <p style="line-height: 1.8; margin-top: 15px; text-align: right; font-style: italic;">
+                H.
+            </p>
+            <div class="evidence-tag" style="margin-top: 20px;">
+                Found folded in Lady Catherine's prayer book. Note appears to have been hastily hidden.
+            </div>
+        </div>
+
+        <!-- LETTER 6: PEMBROKE'S DRAFT -->
+        <h2>Document 6: James Pembroke's Unfinished Letter</h2>
+        <div class="letter">
+            <div class="letter-header">
+                <div class="letter-meta">Date: October 29th, 1889 (DRAFT - found in estate office)</div>
+                <div class="letter-from">From: James Pembroke</div>
+                <div class="letter-to">To: Lord Edmund Blackwood (never delivered)</div>
+            </div>
+            <div class="letter-body">
+                <p>Your Lordship,</p>
+                
+                <p>I am writing to confess certain financial irregularities in the estate accounts. I know the audit is scheduled for November 2nd, and I cannot in good conscience allow it to proceed without</p>
+                
+                <p style="margin-top: 20px; text-align: center; color: #8b7355; font-style: italic;">[Letter ends here - remainder torn off and burned]</p>
+            </div>
+            <div class="evidence-tag">
+                Found crumpled in estate office fireplace, partially burned. Remainder of letter destroyed. Multiple similar draft attempts found in waste basket, all abandoned.
+            </div>
+        </div>
+
+        <!-- TELEGRAM 7 -->
+        <h2>Document 7: Telegram to Victor Blackwood</h2>
+        <div class="telegram">
+            <div class="telegram-header">
+                ≡≡≡ POSTAL TELEGRAM ≡≡≡
+            </div>
+            <div style="margin: 20px 0; line-height: 1.8;">
+                <div>RECEIVED: OCTOBER 28, 1889 - 2:14 PM</div>
+                <div>TO: VICTOR BLACKWOOD, BLACKWOOD ESTATE, YORKSHIRE</div>
+                <div>FROM: WHITE'S CLUB, LONDON</div>
+                <div style="margin-top: 15px; padding: 15px; background: rgba(0,0,0,0.3);">
+                    PAYMENT THREE THOUSAND TWO HUNDRED POUNDS OVERDUE STOP LEGAL ACTION COMMENCES NOVEMBER FIRST UNLESS SETTLED STOP YOUR MEMBERSHIP SUSPENDED STOP CLUB SECRETARY
+                </div>
+            </div>
+            <div class="evidence-tag">
+                Found in Victor's jacket pocket along with two other similar demand telegrams from creditors.
+            </div>
+        </div>
+
+        <!-- LETTER 8: CATHERINE TO HELENA -->
+        <h2>Document 8: Lady Catherine to Dr. Ashworth</h2>
+        <div class="letter">
+            <div class="letter-header">
+                <div class="letter-meta">Date: October 24th, 1889</div>
+                <div class="letter-from">From: Lady Catherine Blackwood</div>
+                <div class="letter-to">To: Dr. Helena Ashworth</div>
+            </div>
+            <div class="letter-body">
+                <p>Dearest Helena,</p>
+                
+                <p>I am beside myself with worry after Edmund's letter to you. To lose your friendship and counsel now, when I need it most desperately, is more than I can bear.</p>
+                
+                <p>He suspects the nature of our bond, though he cannot comprehend its depth. You have been more than my physician - you have been my confidante, my solace, my dearest friend in this prison of a marriage. The thought of facing the years ahead without you fills me with despair.</p>
+                
+                <p>When we spoke yesterday of "solutions," you mentioned there might be ways to secure my freedom and your position simultaneously. I confess I did not fully understand your meaning, but I am willing to hear any proposal you might have.</p>
+                
+                <p>Edmund's cruelty grows worse by the day. Yesterday he struck me for the first time in our marriage - a backhanded blow across my face that left me bleeding. He immediately regretted it and begged forgiveness, but I know it will happen again. The monster within him is emerging.</p>
+                
+                <p>If there is any way - any way at all - to end this torment, I beg you to share it with me. I am at the end of my endurance.</p>
+                
+                <p>Please come to see me as planned on the 30th. We have much to discuss.</p>
+            </div>
+            <div class="letter-signature">
+                Your devoted Catherine
+            </div>
+            <div class="evidence-tag">
+                Found in Dr. Ashworth's medical bag in sealed envelope, undelivered. Analysis shows tear stains on paper.
+            </div>
+        </div>
+
+        <!-- NOTE 9: CONSTANCE TO MOTHER -->
+        <h2>Document 9: Note from Constance to Lady Catherine</h2>
+        <div class="note">
+            <div style="margin-bottom: 15px; color: #cd853f; font-family: 'Cinzel', serif;">Date: October 30th, 1889 - Morning</div>
+            <p style="line-height: 1.8;">
+                Mother,
+            </p>
+            <p style="line-height: 1.8; margin-top: 10px;">
+                I overheard you speaking with Dr. Ashworth in your sitting room this afternoon. I did not mean to eavesdrop, but I heard enough to understand that you are planning something.
+            </p>
+            <p style="line-height: 1.8; margin-top: 10px;">
+                Whatever it is, please let me help. I am not a child anymore, and Father's tyranny affects us both. Dr. Ashworth said something about "tonight" and "the tonic" and "freedom by morning."
+            </p>
+            <p style="line-height: 1.8; margin-top: 10px;">
+                I want to be brave like you and Helena. Please trust me.
+            </p>
+            <p style="line-height: 1.8; margin-top: 15px; text-align: right;">
+                Your loving daughter, C.
+            </p>
+            <div class="evidence-tag" style="margin-top: 20px;">
+                Found folded in Lady Catherine's dressing table drawer. Note appears to have been hidden quickly.
+            </div>
+        </div>
+
+        <footer>
+            <p>Scotland Yard - Evidence Collection Unit</p>
+            <p>All correspondence has been catalogued and secured as evidence</p>
+            <p style="margin-top: 15px;"><a href="index.html" style="color: #d4af37;">← Return to Evidence Index</a></p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeline Reconstruction - The Blackwood Estate</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕵️</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(135deg, #1a0a0a 0%, #2d1810 50%, #1a0a0a 100%);
+            color: #d4c5a9;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.15) 0px,
+                    transparent 1px,
+                    transparent 2px,
+                    rgba(0, 0, 0, 0.15) 3px
+                );
+            pointer-events: none;
+            z-index: 1;
+            animation: scan 8s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.95; }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(20, 10, 5, 0.9);
+            border: 3px solid #8b4513;
+            box-shadow: 
+                0 0 30px rgba(139, 69, 19, 0.5),
+                inset 0 0 50px rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            position: relative;
+            z-index: 2;
+            animation: flicker 3s infinite;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid #8b4513;
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2em;
+            color: #d4af37;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .document-info {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85em;
+            color: #8b7355;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #d4af37;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            border: 1px solid #8b4513;
+            padding: 10px 25px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            background: rgba(139, 69, 19, 0.2);
+        }
+
+        .back-link:hover {
+            background: rgba(212, 175, 55, 0.3);
+            border-color: #d4af37;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            color: #d4af37;
+            font-size: 1.6em;
+            margin: 40px 0 20px 0;
+            border-bottom: 1px solid #8b4513;
+            padding-bottom: 10px;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 60px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #8b4513, #cd853f, #8b4513);
+        }
+
+        .timeline-entry {
+            position: relative;
+            padding: 20px 0 20px 120px;
+            margin-bottom: 15px;
+        }
+
+        .timeline-time {
+            position: absolute;
+            left: 0;
+            width: 100px;
+            text-align: right;
+            font-family: 'Cinzel', serif;
+            color: #d4af37;
+            font-weight: 600;
+            font-size: 1.05em;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 52px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #8b4513;
+            border: 3px solid #d4af37;
+            z-index: 2;
+        }
+
+        .timeline-content {
+            background: rgba(40, 20, 10, 0.6);
+            border: 1px solid #8b4513;
+            border-left: 3px solid #cd853f;
+            padding: 15px 20px;
+            line-height: 1.7;
+        }
+
+        .timeline-entry.critical .timeline-dot {
+            background: #8b0000;
+            border-color: #ff6b6b;
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+        }
+
+        .timeline-entry.critical .timeline-content {
+            border-left-color: #ff6b6b;
+            background: rgba(60, 10, 10, 0.4);
+        }
+
+        .timeline-entry.suspicious .timeline-dot {
+            background: #cd853f;
+            border-color: #d4af37;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 rgba(212, 175, 55, 0); }
+            50% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.6); }
+        }
+
+        .timeline-entry.suspicious .timeline-content {
+            background: rgba(139, 69, 19, 0.3);
+        }
+
+        .witness {
+            color: #cd853f;
+            font-weight: 600;
+        }
+
+        .location {
+            color: #8b7355;
+            font-style: italic;
+        }
+
+        .note-box {
+            background: rgba(60, 40, 20, 0.6);
+            border-left: 4px solid #8b4513;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .warning-box {
+            background: rgba(139, 0, 0, 0.2);
+            border: 2px solid #8b0000;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .warning-box::before {
+            content: '⚠ CRITICAL ANALYSIS: ';
+            color: #ff6b6b;
+            font-weight: 600;
+            font-family: 'Cinzel', serif;
+        }
+
+        .section {
+            background: rgba(40, 20, 10, 0.6);
+            border: 2px solid #8b4513;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #8b4513;
+            font-size: 0.9em;
+            color: #8b7355;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-dot {
+                left: 22px;
+            }
+            
+            .timeline-entry {
+                padding-left: 60px;
+            }
+            
+            .timeline-time {
+                position: static;
+                width: auto;
+                text-align: left;
+                display: block;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Timeline Reconstruction</h1>
+            <div class="document-info">
+                OCTOBER 30TH, 1889 - THE FATAL EVENING<br>
+                COMPILED FROM WITNESS STATEMENTS & PHYSICAL EVIDENCE<br>
+                SCOTLAND YARD INVESTIGATION
+            </div>
+        </header>
+
+        <a href="index.html" class="back-link">← RETURN TO EVIDENCE INDEX</a>
+
+        <div class="section">
+            <h2>Overview</h2>
+            <p style="line-height: 1.8;">The following timeline has been reconstructed from multiple witness statements, physical evidence, and documented activities. Each entry represents a verified event during the crucial hours leading to Lord Blackwood's death. Pay particular attention to who had access to the victim, the tonic bottle, and the medicine cabinet during critical time windows.</p>
+        </div>
+
+        <!-- AFTERNOON TIMELINE -->
+        <h2>October 30th, 1889 - Afternoon</h2>
+        <div class="timeline">
+            <div class="timeline-entry">
+                <div class="timeline-time">3:00 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>Dr. Helena Ashworth arrives at estate</strong><br>
+                    <span class="location">Location: Main entrance</span><br>
+                    Arrived for scheduled consultation with Lady Catherine. Greeted by butler Thomas Wright.<br>
+                    <span class="witness">Witness: Thomas Wright</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="timeline-time">3:15 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>Private consultation begins</strong><br>
+                    <span class="location">Location: Lady Catherine's sitting room</span><br>
+                    Dr. Ashworth meets privately with Lady Catherine. Lady's maid Agnes Cooper dismissed from room.<br>
+                    <span class="witness">Witness: Agnes Cooper</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry suspicious">
+                <div class="timeline-time">3:15 PM - 4:30 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>Extended private meeting</strong><br>
+                    <span class="location">Location: Lady Catherine's sitting room</span><br>
+                    Dr. Ashworth and Lady Catherine remain in private conference for 75 minutes - significantly longer than typical medical consultation.<br>
+                    <span class="witness">Witnesses: None (door closed)</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="timeline-time">4:30 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>Agnes Cooper returns to sitting room</strong><br>
+                    <span class="location">Location: Lady Catherine's sitting room</span><br>
+                    Finds Lady Catherine crying, eyes red and swollen. Dr. Ashworth holding her hands and speaking urgently. Conversation stops when Agnes enters.<br>
+                    <span class="witness">Witness: Agnes Cooper</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="timeline-time">4:45 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>Dr. Ashworth leaves sitting room</strong><br>
+                    <span class="location">Location: Main staircase</span><br>
+                    Informs Thomas Wright she will stay for dinner at Lord Blackwood's invitation. States she needs to prepare His Lordship's evening tonic.<br>
+                    <span class="witness">Witness: Thomas Wright</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry critical">
+                <div class="timeline-time">5:00 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>Dr. Ashworth accesses medicine cabinet</strong><br>
+                    <span class="location">Location: Hallway medicine cabinet</span><br>
+                    Uses her key to access locked cabinet. Removes Lord Blackwood's tonic bottle and takes it to kitchen preparation room.<br>
+                    <span class="witness">Witness: Robert Finch (footman)</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry critical">
+                <div class="timeline-time">5:00 PM - 5:25 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>Tonic preparation - ALONE</strong><br>
+                    <span class="location">Location: Kitchen preparation room</span><br>
+                    Dr. Ashworth remains in preparation room for approximately 20-25 minutes. Cook Ellen Marsh hears bottles clinking and mortar/pestle grinding. Door is closed.<br>
+                    <span class="witness">Witness: Ellen Marsh (heard activity but did not observe directly)</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry critical">
+                <div class="timeline-time">5:25 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>Tonic bottle returned to cabinet</strong><br>
+                    <span class="location">Location: Hallway medicine cabinet</span><br>
+                    Dr. Ashworth emerges with sealed tonic bottle and returns it to medicine cabinet. Ellen Marsh notes she appeared agitated, hands shaking slightly, nearly dropped bottle.<br>
+                    <span class="witness">Witness: Ellen Marsh</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="timeline-time">6:30 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>Overheard conversation</strong><br>
+                    <span class="location">Location: Near the library</span><br>
+                    Robert Finch passes by library and overhears Miss Constance and Lady Catherine speaking. Constance says "there must be another way" and Catherine responds "Helena will know what to do."<br>
+                    <span class="witness">Witness: Robert Finch</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="timeline-time">7:00 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>James Pembroke burning documents</strong><br>
+                    <span class="location">Location: Estate office</span><br>
+                    Robert Finch observes Pembroke burning papers in fireplace. Pembroke reacts sharply when noticed, appearing nervous and defensive.<br>
+                    <span class="witness">Witness: Robert Finch</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- EVENING TIMELINE -->
+        <h2>October 30th, 1889 - Evening (Dinner & After)</h2>
+        <div class="timeline">
+            <div class="timeline-entry">
+                <div class="timeline-time">7:30 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>Dinner service begins</strong><br>
+                    <span class="location">Location: Dining room</span><br>
+                    All family members present: Lord Blackwood, Lady Catherine, Victor, Constance, Dr. Ashworth, and James Pembroke. Mary Hobbs serves. Atmosphere described as tense.<br>
+                    <span class="witness">Witness: Mary Hobbs</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="timeline-time">7:45 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>Argument at dinner</strong><br>
+                    <span class="location">Location: Dining room</span><br>
+                    Lord Blackwood makes sharp comment to Victor about "frivolous expenditures." Victor turns red-faced but does not respond. Miss Constance appears distressed, pale, hardly speaking.<br>
+                    <span class="witness">Witness: Mary Hobbs</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="timeline-time">8:00 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>Miss Constance leaves dinner early</strong><br>
+                    <span class="location">Location: Dining room → Staircase</span><br>
+                    Constance excuses herself from dinner, appearing upset. Robert Finch observes her crying on stairs as she goes to her room.<br>
+                    <span class="witness">Witness: Robert Finch</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry critical">
+                <div class="timeline-time">8:00 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>TONIC DELIVERED TO LORD BLACKWOOD</strong><br>
+                    <span class="location">Location: Lord Blackwood's study</span><br>
+                    Thomas Wright brings Lord Blackwood his evening port and medicinal tonic on silver tray. Tonic bottle retrieved from medicine cabinet as per nightly routine. Lord Blackwood examines bottle, comments it "smells stronger than usual" but drinks approximately half immediately, mixed with port.<br>
+                    <span class="witness">Witness: Thomas Wright (butler)</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="timeline-time">8:15 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>Dinner concludes</strong><br>
+                    <span class="location">Location: Dining room</span><br>
+                    Lord Blackwood retires to his study immediately after dinner. Others disperse to various parts of the estate.<br>
+                    <span class="witness">Witness: Mary Hobbs</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="timeline-time">8:20 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>James Pembroke enters study</strong><br>
+                    <span class="location">Location: Lord Blackwood's study</span><br>
+                    Pembroke requests entry to study carrying papers. Thomas Wright announces him. Meeting lasts approximately 15 minutes.<br>
+                    <span class="witness">Witness: Thomas Wright</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="timeline-time">8:30 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>Shouting heard from study</strong><br>
+                    <span class="location">Location: Lord Blackwood's study</span><br>
+                    Mary Hobbs, clearing dining room, hears Lord Blackwood's voice rising in anger from study. Cannot make out words. Door is closed.<br>
+                    <span class="witness">Witness: Mary Hobbs</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="timeline-time">8:35 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>James Pembroke exits study</strong><br>
+                    <span class="location">Location: Study hallway</span><br>
+                    Pembroke emerges looking shaken, hands trembling. Requests brandy from Thomas Wright.<br>
+                    <span class="witness">Witness: Thomas Wright</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="timeline-time">8:40 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>Victor enters study (unannounced)</strong><br>
+                    <span class="location">Location: Lord Blackwood's study</span><br>
+                    Victor goes directly to study without being announced. More shouting heard. Meeting lasts 15 minutes.<br>
+                    <span class="witness">Witness: Thomas Wright</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="timeline-time">8:55 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>Victor exits study</strong><br>
+                    <span class="location">Location: Study → Upstairs</span><br>
+                    Victor leaves study appearing agitated, muttering to himself. Goes directly upstairs.<br>
+                    <span class="witness">Witness: Thomas Wright</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry suspicious">
+                <div class="timeline-time">8:55 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>Lady Catherine checks on Lord Blackwood's location</strong><br>
+                    <span class="location">Location: Lady Catherine's quarters → Downstairs</span><br>
+                    Catherine asks Agnes Cooper to go downstairs and verify if Lord Blackwood is still in study. Agnes confirms he is and reports back.<br>
+                    <span class="witness">Witness: Agnes Cooper</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="timeline-time">9:00 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>Lady Catherine attempts to speak with Lord Blackwood</strong><br>
+                    <span class="location">Location: Outside study door</span><br>
+                    Catherine knocks on study door, asks to speak with Edmund. He refuses entry rudely. She stands outside door for several moments before retreating to her quarters. Appears distressed.<br>
+                    <span class="witness">Witness: Thomas Wright</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry critical">
+                <div class="timeline-time">9:05 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>Dr. Ashworth visits Lady Catherine</strong><br>
+                    <span class="location">Location: Lady Catherine's sitting room</span><br>
+                    Dr. Ashworth comes to Catherine's quarters. They speak privately for approximately 15 minutes.<br>
+                    <span class="witness">Witness: Agnes Cooper</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry suspicious">
+                <div class="timeline-time">9:20 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>Dr. Ashworth departs Lady Catherine's quarters</strong><br>
+                    <span class="location">Location: Lady Catherine's sitting room</span><br>
+                    Meeting concludes. Catherine tells Agnes she is retiring early due to headache. Says Dr. Ashworth gave her a sleeping draught.<br>
+                    <span class="witness">Witness: Agnes Cooper</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry critical">
+                <div class="timeline-time">9:25 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>DR. ASHWORTH ENTERS LORD BLACKWOOD'S STUDY</strong><br>
+                    <span class="location">Location: Lord Blackwood's study</span><br>
+                    Dr. Ashworth comes downstairs from Catherine's quarters and goes directly to study. Enters without knocking (physician's privilege). Remains inside for 7-8 minutes.<br>
+                    <span class="witness">Witness: Thomas Wright</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry critical">
+                <div class="timeline-time">9:33 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>Dr. Ashworth exits study and departs estate</strong><br>
+                    <span class="location">Location: Study → Main entrance</span><br>
+                    Dr. Ashworth emerges from study. Her face is flushed. She departs estate immediately, walking briskly to carriage. Does not acknowledge Mary Hobbs's greeting, which is unusual.<br>
+                    <span class="witness">Witnesses: Thomas Wright, Mary Hobbs</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="timeline-time">9:40 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>Lady Catherine retires for evening</strong><br>
+                    <span class="location">Location: Lady Catherine's chambers</span><br>
+                    Agnes Cooper helps Catherine prepare for bed. Catherine has taken sleeping draught provided by Dr. Ashworth.<br>
+                    <span class="witness">Witness: Agnes Cooper</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="timeline-time">10:15 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>Mary Hobbs attempts to check on Lord Blackwood</strong><br>
+                    <span class="location">Location: Outside study door</span><br>
+                    Mary knocks on study door to ask if Lord Blackwood needs anything before she retires. No answer received. Assumes he has gone to bed.<br>
+                    <span class="witness">Witness: Mary Hobbs</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="timeline-time">10:30 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>Main doors locked for night</strong><br>
+                    <span class="location">Location: Main entrance</span><br>
+                    Thomas Wright secures estate for evening as per nightly routine.<br>
+                    <span class="witness">Witness: Thomas Wright</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="timeline-time">11:00 PM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>Household retires</strong><br>
+                    <span class="location">Location: Servants' quarters</span><br>
+                    All staff retire for the evening. No further activity observed.<br>
+                    <span class="witness">Witness: Various staff</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- NIGHT/MORNING -->
+        <h2>October 30th-31st - Night & Morning</h2>
+        <div class="timeline">
+            <div class="timeline-entry critical">
+                <div class="timeline-time">2:00 AM - 4:00 AM<br>(Estimated)</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>LORD EDMUND BLACKWOOD DIES</strong><br>
+                    <span class="location">Location: Study, seated in armchair</span><br>
+                    Based on rigor mortis, body temperature, and gastric contents analysis, death occurred during this window - approximately 6-10 hours after consuming poisoned tonic at 8:00 PM. Symptoms would have included severe gastric pain, vomiting, diarrhea, cardiovascular collapse, and delirium.<br>
+                    <span class="witness">Analysis: Dr. William Hartley (coroner)</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="timeline-time">6:45 AM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>Body discovered</strong><br>
+                    <span class="location">Location: Lord Blackwood's study</span><br>
+                    Mary Hobbs enters study to clean grate and discovers Lord Blackwood deceased in his chair. Vomitus on floor and waistcoat. Tonic bottle overturned on carpet beside body. Mary screams and runs for Pembroke.<br>
+                    <span class="witness">Witness: Mary Hobbs</span>
+                </div>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="timeline-time">6:50 AM</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <strong>Death confirmed</strong><br>
+                    <span class="location">Location: Study</span><br>
+                    Thomas Wright and James Pembroke enter study and confirm Lord Blackwood has expired. Constable summoned. Dr. Hartley (coroner) sent for.<br>
+                    <span class="witness">Witness: Thomas Wright</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ANALYSIS SECTION -->
+        <div class="section">
+            <h2>Critical Timeline Analysis</h2>
+            
+            <div class="warning-box">
+                The timeline reveals a clear window of opportunity and suggests coordination between Lady Catherine and Dr. Helena Ashworth.
+            </div>
+
+            <h3 style="color: #cd853f; font-family: 'Cinzel', serif; margin: 25px 0 15px 0;">Key Observations:</h3>
+            
+            <div class="note-box">
+                <strong>1. Preparation Phase (3:00 PM - 5:25 PM)</strong><br>
+                - Extended 75-minute private meeting between Catherine and Helena (highly unusual)<br>
+                - Catherine found crying afterward<br>
+                - Helena immediately prepares tonic alone for 20-25 minutes<br>
+                - Helena appeared agitated when returning tonic to cabinet
+            </div>
+
+            <div class="note-box">
+                <strong>2. Tonic Administration (8:00 PM)</strong><br>
+                - Lord Blackwood consumes poisoned tonic at precisely 8:00 PM<br>
+                - Comments it "smells stronger than usual" but drinks it<br>
+                - This is approximately 3 hours after Helena prepared it<br>
+                - Catherine checks at 8:55 PM to confirm Edmund still in study
+            </div>
+
+            <div class="note-box">
+                <strong>3. The Suspicious Visit (9:05 PM - 9:33 PM)</strong><br>
+                - Helena visits Catherine privately 9:05-9:20 PM<br>
+                - Helena then enters Edmund's study 9:25-9:33 PM<br>
+                - This is 1 hour 25 minutes AFTER Edmund consumed the poison<br>
+                - Helena exits flushed and departs immediately without customary pleasantries<br>
+                - Catherine takes sleeping draught and retires (establishing alibi)
+            </div>
+
+            <div class="warning-box">
+                <strong>CRITICAL QUESTION:</strong> What was Dr. Ashworth doing in Lord Blackwood's study from 9:25-9:33 PM, more than an hour after he consumed the poisoned tonic? Was she checking to see if the poison had taken effect? Was she ensuring he consumed more of the tonic? This visit is highly suspicious and unexplained.
+            </div>
+
+            <div class="warning-box">
+                <strong>ALIBI ANALYSIS:</strong> Lady Catherine established her alibi by taking a sleeping draught at 9:40 PM, witnessed by Agnes Cooper. This places her in bed, sedated, before Lord Blackwood's death. However, the planning phase (afternoon meeting with Helena) and the coordination (Helena's visit at 9:05 PM, then to Edmund at 9:25 PM) suggests conspiracy.
+            </div>
+        </div>
+
+        <footer>
+            <p>Scotland Yard - Investigation Division</p>
+            <p>Timeline compiled from verified witness statements and forensic analysis</p>
+            <p style="margin-top: 15px;"><a href="index.html" style="color: #d4af37;">← Return to Evidence Index</a></p>
+        </footer>
+    </div>
+</body>
+</html>

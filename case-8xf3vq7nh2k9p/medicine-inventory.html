@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine Inventory - The Blackwood Estate</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕵️</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,404&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(135deg, #1a0a0a 0%, #2d1810 50%, #1a0a0a 100%);
+            color: #d4c5a9;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.15) 0px,
+                    transparent 1px,
+                    transparent 2px,
+                    rgba(0, 0, 0, 0.15) 3px
+                );
+            pointer-events: none;
+            z-index: 1;
+            animation: scan 8s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.95; }
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: rgba(20, 10, 5, 0.9);
+            border: 3px solid #8b4513;
+            box-shadow: 
+                0 0 30px rgba(139, 69, 19, 0.5),
+                inset 0 0 50px rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            position: relative;
+            z-index: 2;
+            animation: flicker 3s infinite;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid #8b4513;
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2em;
+            color: #d4af37;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .document-info {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85em;
+            color: #8b7355;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #d4af37;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            border: 1px solid #8b4513;
+            padding: 10px 25px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            background: rgba(139, 69, 19, 0.2);
+        }
+
+        .back-link:hover {
+            background: rgba(212, 175, 55, 0.3);
+            border-color: #d4af37;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            color: #d4af37;
+            font-size: 1.6em;
+            margin: 40px 0 20px 0;
+            border-bottom: 1px solid #8b4513;
+            padding-bottom: 10px;
+        }
+
+        .section {
+            background: rgba(40, 20, 10, 0.6);
+            border: 2px solid #8b4513;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .inventory-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-family: 'Crimson Text', serif;
+        }
+
+        .inventory-table th {
+            background: rgba(139, 69, 19, 0.4);
+            color: #d4af37;
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #8b4513;
+            font-family: 'Cinzel', serif;
+            font-size: 0.95em;
+        }
+
+        .inventory-table td {
+            padding: 10px 12px;
+            border: 1px solid #8b4513;
+            color: #d4c5a9;
+        }
+
+        .inventory-table tr:nth-child(even) {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .inventory-table tr:hover {
+            background: rgba(139, 69, 19, 0.2);
+        }
+
+        .dangerous-substance {
+            background: rgba(139, 0, 0, 0.15);
+            border-left: 3px solid #8b0000;
+        }
+
+        .discrepancy {
+            background: rgba(139, 0, 0, 0.25);
+            border-left: 4px solid #ff0000;
+        }
+
+        .warning-box {
+            background: rgba(139, 0, 0, 0.2);
+            border: 2px solid #8b0000;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .warning-box::before {
+            content: '⚠ CRITICAL FINDING: ';
+            color: #ff6b6b;
+            font-weight: 600;
+            font-family: 'Cinzel', serif;
+        }
+
+        .note-box {
+            background: rgba(60, 40, 20, 0.6);
+            border-left: 4px solid #8b4513;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .access-log {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+
+        .access-entry {
+            padding: 8px;
+            border-bottom: 1px solid #8b4513;
+            display: grid;
+            grid-template-columns: 180px 150px 1fr;
+            gap: 15px;
+        }
+
+        .access-entry:last-child {
+            border-bottom: none;
+        }
+
+        .access-suspicious {
+            background: rgba(139, 0, 0, 0.2);
+            border-left: 3px solid #ff0000;
+            padding-left: 12px;
+        }
+
+        .timestamp {
+            color: #d4af37;
+            font-weight: 600;
+        }
+
+        .person {
+            color: #cd853f;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #8b4513;
+            font-size: 0.9em;
+            color: #8b7355;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .inventory-table {
+                font-size: 0.85em;
+            }
+            
+            .access-entry {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Medicine Inventory & Access Log</h1>
+            <div class="document-info">
+                BLACKWOOD ESTATE APOTHECARY RECORDS<br>
+                MAINTAINED BY DR. HELENA ASHWORTH<br>
+                COMPILED FOR INVESTIGATION - NOVEMBER 1889
+            </div>
+        </header>
+
+        <a href="index.html" class="back-link">← RETURN TO EVIDENCE INDEX</a>
+
+        <div class="section">
+            <h2>Introduction</h2>
+            <p style="line-height: 1.8;">The Blackwood Estate maintains a locked medicine cabinet containing various medicinal compounds, tonics, and substances for family use. Dr. Helena Ashworth, as family physician since 1883, has been responsible for maintaining inventory and preparing medications. She holds one of three keys to the cabinet (the others held by Lord Blackwood and estate manager James Pembroke).</p>
+            
+            <p style="line-height: 1.8; margin-top: 15px;">The following inventory represents the contents of the medicine cabinet as of October 31st, 1889, along with access logs maintained by Dr. Ashworth showing all entries to the cabinet during October 1889.</p>
+        </div>
+
+        <!-- COMPLETE INVENTORY -->
+        <div class="section">
+            <h2>Current Medicine Cabinet Inventory</h2>
+            <p style="margin-bottom: 20px; font-style: italic;">Inventory conducted November 1st, 1889 by Inspector Caldwell and Dr. William Hartley</p>
+
+            <table class="inventory-table">
+                <thead>
+                    <tr>
+                        <th>Substance</th>
+                        <th>Quantity</th>
+                        <th>Purpose</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Laudanum (tincture of opium)</td>
+                        <td>2 bottles (100ml each)</td>
+                        <td>Pain relief, sleep aid</td>
+                        <td>Standard medicinal use</td>
+                    </tr>
+                    <tr>
+                        <td>Chloroform</td>
+                        <td>1 bottle (50ml)</td>
+                        <td>Anesthetic</td>
+                        <td>Rarely used at estate</td>
+                    </tr>
+                    <tr>
+                        <td>Strychnine (medicinal grade)</td>
+                        <td>15 grams</td>
+                        <td>Heart stimulant, tonic ingredient</td>
+                        <td>Common in Victorian tonics</td>
+                    </tr>
+                    <tr>
+                        <td>Mercury compounds</td>
+                        <td>30 grams</td>
+                        <td>Various treatments</td>
+                        <td>Standard medicinal supply</td>
+                    </tr>
+                    <tr>
+                        <td>Belladonna extract</td>
+                        <td>20ml</td>
+                        <td>Pain relief, eye treatments</td>
+                        <td>Highly toxic in large doses</td>
+                    </tr>
+                    <tr>
+                        <td>Digitalis powder</td>
+                        <td>25 grams</td>
+                        <td>Heart condition treatment</td>
+                        <td>Prescribed for Lord Blackwood 1887</td>
+                    </tr>
+                    <tr class="dangerous-substance">
+                        <td><strong>Arsenic Trioxide (white arsenic)</strong></td>
+                        <td><strong>DISCREPANCY - See below</strong></td>
+                        <td>Medicinal tonic ingredient, rat poison</td>
+                        <td>⚠ CONTROLLED SUBSTANCE</td>
+                    </tr>
+                    <tr>
+                        <td>Quinine powder</td>
+                        <td>40 grams</td>
+                        <td>Fever reduction, malaria prevention</td>
+                        <td>Regular supply</td>
+                    </tr>
+                    <tr>
+                        <td>Iron supplements</td>
+                        <td>3 bottles</td>
+                        <td>Anemia treatment, tonic ingredient</td>
+                        <td>For Lady Catherine primarily</td>
+                    </tr>
+                    <tr>
+                        <td>Various herbal compounds</td>
+                        <td>Multiple containers</td>
+                        <td>Tonic preparations</td>
+                        <td>Standard apothecary stock</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ARSENIC DISCREPANCY -->
+        <div class="section">
+            <h2>Arsenic Inventory Discrepancy</h2>
+            
+            <div class="warning-box">
+                Significant discrepancy detected in arsenic inventory. Analysis indicates deliberate manipulation of records.
+            </div>
+
+            <table class="inventory-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Expected Quantity</th>
+                        <th>Actual Quantity</th>
+                        <th>Discrepancy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>September 1st, 1889</td>
+                        <td>100 grams</td>
+                        <td>100 grams (verified)</td>
+                        <td>None</td>
+                    </tr>
+                    <tr>
+                        <td>September 15th, 1889</td>
+                        <td>100 grams</td>
+                        <td>95 grams (per log)</td>
+                        <td>5 grams - recorded as "tonic preparation"</td>
+                    </tr>
+                    <tr>
+                        <td>October 1st, 1889</td>
+                        <td>95 grams</td>
+                        <td>90 grams (per log)</td>
+                        <td>5 grams - recorded as "rat poison estate use"</td>
+                    </tr>
+                    <tr class="discrepancy">
+                        <td><strong>October 15th, 1889</strong></td>
+                        <td><strong>90 grams</strong></td>
+                        <td><strong>85 grams (per log)</strong></td>
+                        <td><strong>5 grams - recorded as "medicinal tonic"</strong></td>
+                    </tr>
+                    <tr class="discrepancy">
+                        <td><strong>October 29th, 1889</strong></td>
+                        <td><strong>85 grams</strong></td>
+                        <td><strong>62 grams (actual count Nov 1st)</strong></td>
+                        <td><strong>23 grams - NOT RECORDED IN LOG</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="warning-box">
+                23 grams of arsenic trioxide went missing between October 15th and October 29th with NO corresponding log entry. This represents more than enough for a lethal dose (70-180mg total lethal). The missing quantity could produce approximately 150-200 lethal doses.
+            </div>
+
+            <div class="note-box">
+                <strong>Analysis Note:</strong> The initial small withdrawals (5 grams each) were properly logged and match the pattern of chronic low-level poisoning detected in the autopsy. The final large withdrawal of 23 grams was NOT logged, suggesting intentional concealment of the theft.
+            </div>
+        </div>
+
+        <!-- ACCESS LOG -->
+        <div class="section">
+            <h2>Medicine Cabinet Access Log - October 1889</h2>
+            <p style="margin-bottom: 20px; font-style: italic;">Records maintained by Dr. Ashworth showing all documented access to locked cabinet</p>
+
+            <div class="access-log">
+                <div class="access-entry">
+                    <span class="timestamp">Oct 1, 2:30 PM</span>
+                    <span class="person">Dr. Ashworth</span>
+                    <span>Retrieved laudanum for Lady Catherine (headache treatment)</span>
+                </div>
+                
+                <div class="access-entry">
+                    <span class="timestamp">Oct 5, 11:00 AM</span>
+                    <span class="person">Dr. Ashworth</span>
+                    <span>Prepared Lord Blackwood's weekly tonic supply</span>
+                </div>
+                
+                <div class="access-entry">
+                    <span class="timestamp">Oct 8, 3:15 PM</span>
+                    <span class="person">Dr. Ashworth</span>
+                    <span>Retrieved iron supplements for Lady Catherine</span>
+                </div>
+                
+                <div class="access-entry">
+                    <span class="timestamp">Oct 12, 10:30 AM</span>
+                    <span class="person">Dr. Ashworth</span>
+                    <span>Prepared fresh batch of Lord Blackwood's daily tonic</span>
+                </div>
+                
+                <div class="access-entry access-suspicious">
+                    <span class="timestamp">Oct 15, 4:45 PM</span>
+                    <span class="person">Dr. Ashworth</span>
+                    <span>Retrieved arsenic (5g) for medicinal tonic preparation</span>
+                </div>
+                
+                <div class="access-entry">
+                    <span class="timestamp">Oct 18, 2:00 PM</span>
+                    <span class="person">Dr. Ashworth</span>
+                    <span>Retrieved quinine for fever treatment (housemaid)</span>
+                </div>
+                
+                <div class="access-entry">
+                    <span class="timestamp">Oct 22, 9:30 AM</span>
+                    <span class="person">Dr. Ashworth</span>
+                    <span>Restocked herbal compounds</span>
+                </div>
+                
+                <div class="access-entry">
+                    <span class="timestamp">Oct 25, 3:30 PM</span>
+                    <span class="person">Dr. Ashworth</span>
+                    <span>Retrieved laudanum for Lady Catherine (sleeping draught)</span>
+                </div>
+                
+                <div class="access-entry access-suspicious">
+                    <span class="timestamp">Oct 29, 5:00 PM</span>
+                    <span class="person">Dr. Ashworth</span>
+                    <span>Retrieved tonic ingredients for Lord Blackwood's evening dose</span>
+                </div>
+                
+                <div class="access-entry access-suspicious">
+                    <span class="timestamp">Oct 30, 5:00 PM</span>
+                    <span class="person">Dr. Ashworth</span>
+                    <span>Prepared Lord Blackwood's evening tonic (final preparation)</span>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                CRITICAL OBSERVATION: Dr. Ashworth accessed the cabinet on October 29th at 5:00 PM - the same day the 23 grams of arsenic went missing. The following day, she prepared Lord Blackwood's final tonic. No arsenic withdrawal is recorded for October 29th despite the confirmed missing quantity.
+            </div>
+        </div>
+
+        <!-- TONIC PREPARATION RECORDS -->
+        <div class="section">
+            <h2>Lord Blackwood's Tonic - Preparation Records</h2>
+            
+            <div class="note-box">
+                Dr. Ashworth maintained detailed records of tonic preparations for Lord Blackwood. Standard formula included: strychnine (2mg), iron compounds, herbal extracts, and trace arsenic (0.5mg - therapeutic dose common in Victorian tonics).
+            </div>
+
+            <table class="inventory-table">
+                <thead>
+                    <tr>
+                        <th>Date Prepared</th>
+                        <th>Prepared By</th>
+                        <th>Arsenic Content</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Sept 15, 1889</td>
+                        <td>Dr. Ashworth</td>
+                        <td>0.5mg per dose</td>
+                        <td>Standard therapeutic formula</td>
+                    </tr>
+                    <tr>
+                        <td>Sept 28, 1889</td>
+                        <td>Dr. Ashworth</td>
+                        <td>0.5mg per dose</td>
+                        <td>Standard therapeutic formula</td>
+                    </tr>
+                    <tr>
+                        <td>Oct 5, 1889</td>
+                        <td>Dr. Ashworth</td>
+                        <td>0.8mg per dose</td>
+                        <td>"Increased for vigor" - per Lord Blackwood's request</td>
+                    </tr>
+                    <tr>
+                        <td>Oct 12, 1889</td>
+                        <td>Dr. Ashworth</td>
+                        <td>0.8mg per dose</td>
+                        <td>Maintained increased dosage</td>
+                    </tr>
+                    <tr>
+                        <td>Oct 20, 1889</td>
+                        <td>Dr. Ashworth</td>
+                        <td>1.2mg per dose</td>
+                        <td>"Further increased per patient request"</td>
+                    </tr>
+                    <tr class="dangerous-substance">
+                        <td><strong>Oct 30, 1889</strong></td>
+                        <td><strong>Dr. Ashworth</strong></td>
+                        <td><strong>UNKNOWN - bottle tested at 2,400mg/L</strong></td>
+                        <td><strong>⚠ FATAL DOSE - approximately 192-240mg consumed</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="warning-box">
+                The progression from therapeutic doses (0.5mg) to the fatal dose (192-240mg) shows a pattern consistent with premeditation. Small increases accustomed Lord Blackwood to stronger-tasting tonics, masking the eventual lethal dose.
+            </div>
+        </div>
+
+        <!-- KEY HOLDERS -->
+        <div class="section">
+            <h2>Medicine Cabinet Key Holders</h2>
+            
+            <table class="inventory-table">
+                <thead>
+                    <tr>
+                        <th>Key Holder</th>
+                        <th>Position</th>
+                        <th>Access Rights</th>
+                        <th>Known Access Oct 30th</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Dr. Helena Ashworth</td>
+                        <td>Family Physician</td>
+                        <td>Unrestricted - responsible for inventory</td>
+                        <td>5:00 PM (tonic preparation)</td>
+                    </tr>
+                    <tr>
+                        <td>Lord Edmund Blackwood</td>
+                        <td>Estate Owner (deceased)</td>
+                        <td>Full access - rarely used</td>
+                        <td>No recorded access Oct 30th</td>
+                    </tr>
+                    <tr>
+                        <td>James Pembroke</td>
+                        <td>Estate Manager</td>
+                        <td>Emergency access only - manages all estate keys</td>
+                        <td>No recorded access Oct 30th</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="note-box">
+                While Pembroke technically had a key, he rarely accessed the medicine cabinet and had no medical knowledge. All October entries in the access log were made by Dr. Ashworth.
+            </div>
+        </div>
+
+        <!-- INVESTIGATOR NOTES -->
+        <div class="section">
+            <h2>Investigator's Analysis</h2>
+            
+            <div style="background: rgba(20, 40, 20, 0.3); border: 2px solid #2d5016; padding: 20px; margin: 20px 0;">
+                <h3 style="color: #90ee90; font-family: 'Cinzel', serif; margin-bottom: 15px;">Key Findings:</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="padding: 8px 0; padding-left: 25px; position: relative; line-height: 1.6;">
+                        <span style="position: absolute; left: 0; color: #8b4513;">▸</span>
+                        23 grams of arsenic disappeared from inventory on October 29th with NO log entry
+                    </li>
+                    <li style="padding: 8px 0; padding-left: 25px; position: relative; line-height: 1.6;">
+                        <span style="position: absolute; left: 0; color: #8b4513;">▸</span>
+                        Dr. Ashworth was the only person with regular access to the medicine cabinet
+                    </li>
+                    <li style="padding: 8px 0; padding-left: 25px; position: relative; line-height: 1.6;">
+                        <span style="position: absolute; left: 0; color: #8b4513;">▸</span>
+                        She accessed the cabinet at 5:00 PM on October 29th (when arsenic went missing)
+                    </li>
+                    <li style="padding: 8px 0; padding-left: 25px; position: relative; line-height: 1.6;">
+                        <span style="position: absolute; left: 0; color: #8b4513;">▸</span>
+                        She prepared the fatal tonic on October 30th at 5:00 PM
+                    </li>
+                    <li style="padding: 8px 0; padding-left: 25px; position: relative; line-height: 1.6;">
+                        <span style="position: absolute; left: 0; color: #8b4513;">▸</span>
+                        Pattern of gradually increasing arsenic doses suggests accustomization strategy
+                    </li>
+                    <li style="padding: 8px 0; padding-left: 25px; position: relative; line-height: 1.6;">
+                        <span style="position: absolute; left: 0; color: #8b4513;">▸</span>
+                        She had motive (Lord Blackwood threatened her career and livelihood)
+                    </li>
+                    <li style="padding: 8px 0; padding-left: 25px; position: relative; line-height: 1.6;">
+                        <span style="position: absolute; left: 0; color: #8b4513;">▸</span>
+                        She had means (medical knowledge, access to poison, ability to prepare tonics)
+                    </li>
+                    <li style="padding: 8px 0; padding-left: 25px; position: relative; line-height: 1.6;">
+                        <span style="position: absolute; left: 0; color: #8b4513;">▸</span>
+                        She had opportunity (sole responsibility for tonic preparation)
+                    </li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                The evidence strongly suggests Dr. Helena Ashworth had exclusive means and opportunity to poison Lord Blackwood. However, investigators must also consider potential conspiracy - correspondence suggests close relationship with Lady Catherine. Cross-reference with timeline and personal letters.
+            </div>
+        </div>
+
+        <footer>
+            <p>Scotland Yard - Forensic Analysis Division</p>
+            <p>Medicine inventory compiled from estate records and physical inspection</p>
+            <p style="margin-top: 15px;"><a href="index.html" style="color: #d4af37;">← Return to Evidence Index</a></p>
+        </footer>
+    </div>
+</body>
+</html>

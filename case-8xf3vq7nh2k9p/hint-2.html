@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hint 2 - The Blackwood Estate</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕵️</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(135deg, #1a0a0a 0%, #2d1810 50%, #1a0a0a 100%);
+            color: #d4c5a9;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.15) 0px,
+                    transparent 1px,
+                    transparent 2px,
+                    rgba(0, 0, 0, 0.15) 3px
+                );
+            pointer-events: none;
+            z-index: 1;
+            animation: scan 8s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.95; }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(20, 10, 5, 0.9);
+            border: 3px solid #8b4513;
+            box-shadow: 
+                0 0 30px rgba(139, 69, 19, 0.5),
+                inset 0 0 50px rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            position: relative;
+            z-index: 2;
+            animation: flicker 3s infinite;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid #8b4513;
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5em;
+            color: #d4af37;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .hint-number {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2em;
+            color: #cd853f;
+            letter-spacing: 2px;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #d4af37;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            border: 1px solid #8b4513;
+            padding: 10px 25px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            background: rgba(139, 69, 19, 0.2);
+        }
+
+        .back-link:hover {
+            background: rgba(212, 175, 55, 0.3);
+            border-color: #d4af37;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .hint-box {
+            background: rgba(40, 20, 10, 0.6);
+            border: 3px solid #8b4513;
+            border-left: 5px solid #d4af37;
+            padding: 30px;
+            margin: 30px 0;
+            line-height: 1.9;
+            font-size: 1.15em;
+        }
+
+        .hint-icon {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .warning {
+            background: rgba(139, 69, 19, 0.3);
+            border: 2px solid #8b4513;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .evidence-reference {
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 3px solid #cd853f;
+            padding: 15px;
+            margin: 20px 0;
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #8b4513;
+            font-size: 0.9em;
+            color: #8b7355;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Investigator's Hint</h1>
+            <div class="hint-number">HINT TWO - KEY CONNECTION</div>
+        </header>
+
+        <a href="index.html" class="back-link">← RETURN TO EVIDENCE INDEX</a>
+
+        <div class="warning">
+            <p>⚠️ This hint reveals a significant connection between pieces of evidence ⚠️</p>
+            <p style="margin-top: 10px;">Attempt to solve the case with Hint One before reading this</p>
+        </div>
+
+        <div class="hint-box">
+            <div class="hint-icon">🔍</div>
+            
+            <p style="margin-bottom: 20px;">Inspector Caldwell's investigation notes reveal a crucial pattern:</p>
+
+            <p style="margin-bottom: 15px; font-weight: 600; color: #d4af37;">"This murder required not just one person, but coordination between two individuals with complementary motives."</p>
+
+            <p style="margin-bottom: 15px;">Cross-reference the <strong>Personal Correspondence</strong> with the <strong>Timeline</strong>. Pay very close attention to Document 5 - the note dated October 29th.</p>
+
+            <div class="evidence-reference">
+                <p style="margin-bottom: 10px;">From the note:</p>
+                <p>"I have found the answer we discussed... ensure he takes his tonic as usual at 8:00 PM... By tomorrow evening, your trials will be over."</p>
+            </div>
+
+            <p style="margin-bottom: 15px;">Now examine the Timeline carefully. Who had an extended private meeting on the afternoon of October 30th? Who prepared the tonic that same day? Who visited whom immediately before departing the estate?</p>
+
+            <p style="margin-bottom: 15px;">The murder was not committed by one person alone. Look for two individuals who:</p>
+            <ul style="margin: 15px 0; padding-left: 30px; line-height: 1.8;">
+                <li>Had close personal relationship</li>
+                <li>Both had strong motives</li>
+                <li>One had the means (medical knowledge)</li>
+                <li>One had financial motive</li>
+                <li>Their actions on October 30th show coordination</li>
+            </ul>
+
+            <p style="margin-top: 25px; font-weight: 600; color: #d4af37;">This was a conspiracy. Find the two people working together.</p>
+        </div>
+
+        <footer>
+            <p>Scotland Yard - Investigation Support</p>
+            <p style="margin-top: 15px;"><a href="index.html" style="color: #d4af37;">← Return to Evidence Index</a></p>
+        </footer>
+    </div>
+</body>
+</html>
