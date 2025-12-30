@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕵️</text></svg>">
+    <title>سري للغاية :: قاعدة بيانات التحقيقات الجنائية</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Electrolize&family=Chakra+Petch:wght@300,400,600,700&family=Cairo:wght@400,600,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-pink: #ff006e;
+            --neon-cyan: #00f5ff;
+            --neon-purple: #8b00ff;
+            --neon-yellow: #ffea00;
+            --deep-space: #0a0014;
+            --dark-void: #120420;
+            --grid-color: rgba(139, 0, 255, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', 'Chakra Petch', sans-serif;
+            background: var(--deep-space);
+            color: var(--neon-cyan);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        /* Animated 3D grid background */
+        .grid-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            transform: translate(-50%, -50%) rotateX(60deg);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .grid-plane {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 80px 80px;
+            animation: gridMove 20s linear infinite;
+            opacity: 0.4;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(80px); }
+        }
+
+        /* Horizon glow */
+        .horizon-glow {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 300px;
+            background: radial-gradient(ellipse at bottom, var(--neon-purple) 0%, transparent 70%);
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Scan beam effect */
+        .scan-beam {
+            position: fixed;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(to bottom, 
+                transparent,
+                rgba(0, 245, 255, 0.2),
+                transparent
+            );
+            animation: scanDown 6s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        @keyframes scanDown {
+            0%, 100% { top: -100%; }
+            50% { top: 100%; }
+        }
+
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle-dot {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--neon-cyan);
+            border-radius: 50%;
+            animation: float-particle 15s linear infinite;
+            opacity: 0;
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        @keyframes float-particle {
+            0% {
+                transform: translateY(100vh) translateX(0) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Main container */
+        .nexus-container {
+            position: relative;
+            z-index: 10;
+            max-width: 520px;
+            width: 100%;
+        }
+
+        /* Glitch title effect */
+        .header-section {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInGlitch 1s ease-out;
+        }
+
+        @keyframes fadeInGlitch {
+            0%, 5%, 10% {
+                opacity: 0;
+                transform: translateY(-20px) skew(-5deg);
+            }
+            15%, 100% {
+                opacity: 1;
+                transform: translateY(0) skew(0deg);
+            }
+        }
+
+        .nexus-logo {
+            font-family: 'Cairo', sans-serif;
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple), var(--neon-cyan));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease infinite;
+            position: relative;
+            display: inline-block;
+            text-shadow: 
+                0 0 20px rgba(255, 0, 110, 0.5),
+                0 0 40px rgba(139, 0, 255, 0.3);
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Glitch effect */
+        .nexus-logo::before,
+        .nexus-logo::after {
+            content: 'سري للغاية';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple), var(--neon-cyan));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+        }
+
+        .nexus-logo::before {
+            animation: glitch1 2.5s infinite;
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+        }
+
+        .nexus-logo::after {
+            animation: glitch2 2.5s infinite;
+            clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+        }
+
+        @keyframes glitch1 {
+            0%, 90%, 100% {
+                opacity: 0;
+                transform: translateX(0);
+            }
+            91%, 93% {
+                opacity: 0.8;
+                transform: translateX(3px);
+            }
+        }
+
+        @keyframes glitch2 {
+            0%, 90%, 100% {
+                opacity: 0;
+                transform: translateX(0);
+            }
+            92%, 94% {
+                opacity: 0.8;
+                transform: translateX(-3px);
+            }
+        }
+
+        .protocol-text {
+            font-family: 'Cairo', sans-serif;
+            font-size: 13px;
+            letter-spacing: 2px;
+            color: var(--neon-cyan);
+            margin-top: 15px;
+            opacity: 0.8;
+        }
+
+        /* Hexagonal frame */
+        .hex-frame {
+            background: rgba(18, 4, 32, 0.85);
+            border: 2px solid var(--neon-purple);
+            border-radius: 20px;
+            padding: 50px 40px;
+            position: relative;
+            backdrop-filter: blur(10px);
+            box-shadow: 
+                0 0 30px rgba(139, 0, 255, 0.3),
+                inset 0 0 50px rgba(0, 245, 255, 0.05);
+            clip-path: polygon(
+                30px 0, calc(100% - 30px) 0, 100% 30px,
+                100% calc(100% - 30px), calc(100% - 30px) 100%,
+                30px 100%, 0 calc(100% - 30px), 0 30px
+            );
+        }
+
+        .hex-frame::before,
+        .hex-frame::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--neon-cyan);
+        }
+
+        .hex-frame::before {
+            top: 10px;
+            right: 10px;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .hex-frame::after {
+            bottom: 10px;
+            left: 10px;
+            border-right: none;
+            border-top: none;
+        }
+
+        /* System status */
+        .system-status {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 11px;
+            letter-spacing: 1px;
+            color: var(--neon-cyan);
+            margin-bottom: 35px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(139, 0, 255, 0.3);
+        }
+
+        .status-bars {
+            display: flex;
+            gap: 4px;
+        }
+
+        .status-bar {
+            width: 3px;
+            height: 16px;
+            background: var(--neon-cyan);
+            box-shadow: 0 0 8px var(--neon-cyan);
+            animation: statusPulse 1.5s ease-in-out infinite;
+        }
+
+        .status-bar:nth-child(2) { animation-delay: 0.2s; }
+        .status-bar:nth-child(3) { animation-delay: 0.4s; }
+        .status-bar:nth-child(4) { animation-delay: 0.6s; }
+
+        @keyframes statusPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Data fields */
+        .data-field {
+            margin-bottom: 28px;
+        }
+
+        .field-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            direction: rtl;
+        }
+
+        .field-label {
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: var(--neon-purple);
+            font-weight: 600;
+        }
+
+        .field-id {
+            font-size: 9px;
+            letter-spacing: 1px;
+            color: rgba(139, 0, 255, 0.6);
+            font-family: 'Courier New', monospace;
+            direction: ltr;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .corner-notch {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 12px;
+            height: 12px;
+            border-top: 2px solid var(--neon-cyan);
+            border-left: 2px solid var(--neon-cyan);
+            pointer-events: none;
+        }
+
+        input {
+            width: 100%;
+            padding: 16px 18px;
+            background: rgba(10, 0, 20, 0.6);
+            border: 1px solid rgba(139, 0, 255, 0.4);
+            border-radius: 8px;
+            color: var(--neon-cyan);
+            font-family: 'Cairo', sans-serif;
+            font-size: 15px;
+            letter-spacing: 1px;
+            outline: none;
+            transition: all 0.3s ease;
+            direction: ltr;
+            text-align: center;
+        }
+
+        input::placeholder {
+            color: rgba(0, 245, 255, 0.3);
+            letter-spacing: 2px;
+        }
+
+        input:focus {
+            border-color: var(--neon-cyan);
+            box-shadow: 
+                0 0 20px rgba(0, 245, 255, 0.3),
+                inset 0 0 20px rgba(0, 245, 255, 0.1);
+        }
+
+        /* Initialize button */
+        .init-section {
+            margin-top: 35px;
+        }
+
+        .init-button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, rgba(139, 0, 255, 0.3), rgba(255, 0, 110, 0.3));
+            border: 2px solid var(--neon-purple);
+            border-radius: 10px;
+            color: var(--neon-cyan);
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(139, 0, 255, 0.4);
+        }
+
+        .init-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 245, 255, 0.4), transparent);
+            transition: right 0.5s ease;
+        }
+
+        .init-button:hover::before {
+            right: 100%;
+        }
+
+        .init-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 30px rgba(139, 0, 255, 0.6);
+            border-color: var(--neon-cyan);
+        }
+
+        .init-button:active {
+            transform: translateY(0);
+        }
+
+        .button-corner {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border: 2px solid var(--neon-cyan);
+        }
+
+        .button-corner.tr {
+            top: 5px;
+            right: 5px;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .button-corner.bl {
+            bottom: 5px;
+            left: 5px;
+            border-right: none;
+            border-top: none;
+        }
+
+        /* Button states */
+        .init-button.processing {
+            background: linear-gradient(135deg, rgba(255, 234, 0, 0.3), rgba(255, 0, 110, 0.3));
+            animation: processPulse 1s ease-in-out infinite;
+        }
+
+        @keyframes processPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 234, 0, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(255, 234, 0, 0.8); }
+        }
+
+        .init-button.authorized {
+            background: linear-gradient(135deg, rgba(0, 255, 0, 0.3), rgba(0, 245, 255, 0.3));
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.6);
+        }
+
+        .init-button.denied {
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.3), rgba(255, 0, 110, 0.3));
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
+            animation: denyShake 0.5s ease;
+        }
+
+        @keyframes denyShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        /* Warning panel */
+        .warning-panel {
+            margin-top: 30px;
+            padding: 15px;
+            background: rgba(139, 0, 255, 0.1);
+            border-right: 3px solid var(--neon-purple);
+            border-radius: 5px;
+            font-size: 11px;
+            line-height: 1.8;
+            color: rgba(139, 0, 255, 0.8);
+            letter-spacing: 0.5px;
+            text-align: right;
+        }
+
+        .warning-icon {
+            color: var(--neon-yellow);
+            margin-left: 8px;
+            font-size: 14px;
+        }
+
+        /* Terminal footer */
+        .terminal-footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: rgba(139, 0, 255, 0.5);
+            font-family: 'Courier New', monospace;
+        }
+
+        .terminal-id {
+            margin-top: 8px;
+            color: rgba(0, 245, 255, 0.4);
+            font-size: 9px;
+        }
+
+        /* Error message */
+        .error-message {
+            margin-top: 15px;
+            padding: 12px;
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            border-radius: 5px;
+            color: var(--neon-pink);
+            font-size: 12px;
+            text-align: center;
+            letter-spacing: 1px;
+            display: none;
+            animation: errorBlink 0.5s ease;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        @keyframes errorBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nexus-logo {
+                font-size: 32px;
+                letter-spacing: 3px;
+            }
+
+            .hex-frame {
+                padding: 40px 30px;
+            }
+
+            input {
+                padding: 14px 16px;
+                font-size: 14px;
+            }
+
+            .init-button {
+                font-size: 14px;
+                padding: 16px;
+                letter-spacing: 2px;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background effects -->
+    <div class="grid-container">
+        <div class="grid-plane"></div>
+    </div>
+    <div class="horizon-glow"></div>
+    <div class="scan-beam"></div>
+    <div class="particles" id="particlesContainer"></div>
+
+    <!-- Main container -->
+    <div class="nexus-container">
+        <!-- Header -->
+        <div class="header-section">
+            <h1 class="nexus-logo">سري للغاية</h1>
+            <p class="protocol-text">قاعدة بيانات التحقيقات الجنائية</p>
+        </div>
+
+        <!-- Hexagonal frame -->
+        <div class="hex-frame">
+            <div class="system-status">
+                <div class="status-bars">
+                    <div class="status-bar"></div>
+                    <div class="status-bar"></div>
+                    <div class="status-bar"></div>
+                    <div class="status-bar"></div>
+                </div>
+                النظام متصل • اتصال آمن نشط
+            </div>
+
+            <form id="accessForm" onsubmit="handleAuthentication(event)">
+                <div class="data-field">
+                    <div class="field-header">
+                        <label class="field-label">رقم القضية</label>
+                        <span class="field-id">ID: CI-Δ01</span>
+                    </div>
+                    <div class="input-wrapper">
+                        <input 
+                            type="text" 
+                            id="caseNumber" 
+                            name="caseNumber"
+                            placeholder="CI-XXXX"
+                            autocomplete="off"
+                            required
+                        >
+                        <div class="corner-notch"></div>
+                    </div>
+                </div>
+
+                <div class="data-field">
+                    <div class="field-header">
+                        <label class="field-label">كود التفويض</label>
+                        <span class="field-id">ID: AUTH-Δ02</span>
+                    </div>
+                    <div class="input-wrapper">
+                        <input 
+                            type="password" 
+                            id="authCode" 
+                            name="authCode"
+                            placeholder="XXXX-XXXX"
+                            autocomplete="off"
+                            required
+                        >
+                        <div class="corner-notch"></div>
+                    </div>
+                </div>
+
+                <div class="init-section">
+                    <button type="submit" class="init-button" id="accessBtn">
+                        <div class="button-corner tr"></div>
+                        <div class="button-corner bl"></div>
+                        الوصول إلى السجلات
+                    </button>
+                </div>
+
+                <div class="error-message" id="errorMessage">
+                    ⚠ تم رفض الوصول: بيانات اعتماد غير صالحة
+                </div>
+            </form>
+
+            <div class="warning-panel">
+                <span class="warning-icon">⚠</span>
+                وصول محظور • سيتم تسجيل المحاولات غير المصرح بها للوصول إلى ملفات القضايا السرية والإبلاغ عنها. يتم مراقبة وتسجيل جميع الجلسات لأغراض أمنية.
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="terminal-footer">
+            الحاسوب المركزي للتحقيقات
+            <div class="terminal-id" id="terminalId"></div>
+        </div>
+    </div>
+
+    <!-- Authentication Script - Will be replaced with obfuscated version -->
+    <script src="auth-ar.js"></script>
+
+    <script>
+        // Generate terminal ID
+        function generateTerminalId() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let id = 'TERM-';
+            for (let i = 0; i < 8; i++) {
+                id += chars[Math.floor(Math.random() * chars.length)];
+                if (i === 3) id += '-';
+            }
+            return id;
+        }
+
+        document.getElementById('terminalId').textContent = generateTerminalId() + ' • ' + new Date().toISOString().split('T')[0];
+
+        // Create floating particles
+        function createParticles() {
+            const container = document.getElementById('particlesContainer');
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle-dot';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+                
+                // Random colors
+                const colors = ['var(--neon-pink)', 'var(--neon-cyan)', 'var(--neon-purple)'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.background = color;
+                particle.style.boxShadow = `0 0 10px ${color}`;
+                
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // Input glow effect on typing
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                this.style.boxShadow = '0 0 30px rgba(0, 245, 255, 0.5)';
+                setTimeout(() => {
+                    this.style.boxShadow = '';
+                }, 200);
+            });
+        });
+
+        // Random glitch effect
+        setInterval(() => {
+            if (Math.random() > 0.95) {
+                const logo = document.querySelector('.nexus-logo');
+                logo.style.transform = 'skew(' + (Math.random() * 10 - 5) + 'deg)';
+                setTimeout(() => {
+                    logo.style.transform = 'skew(0deg)';
+                }, 100);
+            }
+        }, 2000);
+    </script>
+</body>
+</html>
