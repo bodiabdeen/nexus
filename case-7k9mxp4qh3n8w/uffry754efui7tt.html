@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOLUTION :: YAMAMOTO INVESTIGATION</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #050814; color: #00f7ff; font-family: 'Rajdhani', sans-serif; min-height: 100vh; padding: 20px; }
+        body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: repeating-linear-gradient(0deg, rgba(0, 247, 255, 0.03) 0px, transparent 1px, transparent 2px, rgba(0, 247, 255, 0.03) 3px); pointer-events: none; animation: scanlines 8s linear infinite; z-index: 1; }
+        @keyframes scanlines { 0% { transform: translateY(0); } 100% { transform: translateY(10px); } }
+        .container { max-width: 1200px; margin: 0 auto; background: rgba(5, 8, 20, 0.95); border: 2px solid #00f7ff; padding: 50px; position: relative; z-index: 2; box-shadow: 0 0 40px rgba(0, 247, 255, 0.6); }
+        .header { text-align: center; margin-bottom: 40px; padding-bottom: 30px; border-bottom: 3px solid #ff006e; }
+        h1 { font-family: 'Orbitron', sans-serif; color: #ff006e; font-size: 42px; margin-bottom: 15px; text-shadow: 0 0 30px rgba(255, 0, 110, 1); animation: glow 2s ease-in-out infinite; }
+        @keyframes glow { 0%, 100% { text-shadow: 0 0 30px rgba(255, 0, 110, 1); } 50% { text-shadow: 0 0 50px rgba(255, 0, 110, 1); } }
+        .case-number { font-family: 'Share Tech Mono', monospace; color: #ffd700; font-size: 16px; letter-spacing: 3px; }
+        .verdict-box { background: linear-gradient(135deg, rgba(255, 0, 110, 0.2) 0%, rgba(255, 215, 0, 0.2) 100%); border: 3px solid #ff006e; padding: 30px; margin: 30px 0; text-align: center; }
+        .verdict { font-family: 'Orbitron', sans-serif; color: #ffd700; font-size: 28px; margin-bottom: 15px; letter-spacing: 2px; }
+        .killers { font-size: 24px; color: #ff006e; margin: 10px 0; font-weight: bold; }
+        .section { margin: 40px 0; padding: 30px; background: linear-gradient(135deg, rgba(0, 247, 255, 0.05) 0%, rgba(5, 8, 20, 0.9) 100%); border-left: 4px solid #00f7ff; }
+        .section-title { font-family: 'Orbitron', sans-serif; color: #ffd700; font-size: 24px; margin-bottom: 20px; text-transform: uppercase; }
+        .evidence-point { margin: 20px 0; padding: 15px; background: rgba(0, 0, 0, 0.3); border-left: 3px solid #ff006e; }
+        .evidence-label { color: #ffd700; font-weight: bold; margin-bottom: 8px; }
+        .evidence-text { color: #00f7ff; line-height: 1.7; }
+        .timeline { margin: 20px 0; }
+        .timeline-event { padding: 15px; margin: 10px 0; background: rgba(255, 0, 110, 0.1); border-left: 4px solid #ff006e; }
+        .time { color: #ffd700; font-family: 'Share Tech Mono', monospace; font-weight: bold; margin-bottom: 5px; }
+        .event { color: #00f7ff; }
+        .person-box { margin: 30px 0; padding: 25px; background: rgba(255, 0, 110, 0.15); border: 2px solid #ff006e; }
+        .person-name { font-family: 'Orbitron', sans-serif; color: #ff006e; font-size: 22px; margin-bottom: 15px; }
+        .role { color: #ffd700; font-size: 16px; margin-bottom: 10px; }
+        .back-link { display: inline-block; margin-top: 40px; padding: 15px 30px; background: rgba(0, 247, 255, 0.2); border: 2px solid #00f7ff; color: #00f7ff; text-decoration: none; font-family: 'Share Tech Mono', monospace; transition: all 0.3s ease; text-transform: uppercase; font-size: 16px; }
+        .back-link:hover { background: #00f7ff; color: #050814; box-shadow: 0 0 30px rgba(0, 247, 255, 0.8); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CASE SOLVED</h1>
+            <div class="case-number">CASE #2847-NGT :: YAMAMOTO INVESTIGATION :: COMPLETE</div>
+        </div>
+
+        <div class="verdict-box">
+            <div class="verdict">VERDICT: CONSPIRACY TO COMMIT MURDER</div>
+            <div class="killers">PRIMARY PERPETRATORS:</div>
+            <div class="killers">DR. ELENA VOLKOV & DR. RAYMOND FOSTER</div>
+            <div style="color: #00f7ff; margin-top: 15px;">With conspiracy involvement from Marcus Chen, Yuki Tanaka, and Jackson Armstrong</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">🎯 THE SOLUTION</div>
+            <p style="color: #00f7ff; font-size: 18px; line-height: 1.8; margin-bottom: 30px;">
+                Dr. Kenji Yamamoto was murdered by a <strong style="color: #ff006e;">sophisticated four-person conspiracy</strong> designed to eliminate him before he could expose illegal human trials that threatened NGT Corporation's ¥45 billion IPO. The murder involved two killers who created and delivered the toxin, with support from a corporate mastermind who financed the operation, an unwitting courier who delivered the poison, and a security chief who provided coverage.
+            </p>
+
+            <div class="person-box">
+                <div class="person-name">KILLER #1: DR. ELENA VOLKOV</div>
+                <div class="role">ROLE: Toxin Designer / Scientific Architect</div>
+                <div class="evidence-text">
+                    <strong>What She Did:</strong> Designed the targeted CRISPR-based toxin using Yamamoto's genetic profile.<br><br>
+
+                    <strong>Evidence:</strong><br>
+                    • Accessed Yamamoto's genetic profile on Nov 19 (Evidence 08) - needed to design guide RNA targeting his specific SCN5A gene polymorphism<br>
+                    • Present in synthesis lab with Foster on Nov 21 at 11:30 during toxin preparation (Evidence 06 witness testimony + Evidence 08 equipment logs)<br>
+                    • Witness heard her tell Foster "you owe me this" during their private conversation<br>
+                    • Email evidence (Evidence 03) shows secret collaboration with Foster on illegal HELIX trials<br>
+                    • Had both scientific expertise AND desperate financial motive (¥850,000/month debt payments)<br><br>
+
+                    <strong>Motive:</strong> With Yamamoto dead, she would become Chief Genetics Officer (¥12M salary increase) and her blocked HELIX project would be approved (¥8B project with ¥25M personal bonus). She was drowning in debt from a failed startup. Additionally, if Yamamoto exposed the illegal trials, her career would be destroyed.
+                </div>
+            </div>
+
+            <div class="person-box">
+                <div class="person-name">KILLER #2: DR. RAYMOND FOSTER</div>
+                <div class="role">ROLE: Toxin Synthesizer / Direct Executor</div>
+                <div class="evidence-text">
+                    <strong>What He Did:</strong> Actually synthesized the poison and integrated it into Yamamoto's gene therapy dose.<br><br>
+
+                    <strong>Evidence:</strong><br>
+                    • Prepared Yamamoto's dose on Nov 21 in a 5-hour synthesis session (Evidence 08)<br>
+                    • Had private 20-minute meeting with Volkov during this preparation (Evidence 06 witness + Evidence 08 logs)<br>
+                    • Only person with authorization to prepare executive medical doses<br>
+                    • Received ¥23 million in cryptocurrency payments (Evidence 04) for falsifying trial data<br>
+                    • Toxicology report (Evidence 02) confirms the poison used NGT's proprietary Cas9 variant - only available in Foster's Medical Division lab<br><br>
+
+                    <strong>Motive:</strong> Yamamoto's investigation would expose Foster's falsified medical data and illegal trials. Foster faced criminal charges, loss of medical license, and 15-25 years in prison. He had everything to lose and the perfect opportunity as Yamamoto's personal physician.
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">👥 THE CONSPIRACY</div>
+
+            <div class="person-box">
+                <div class="person-name">MARCUS CHEN (CFO)</div>
+                <div class="role">ROLE: Mastermind / Financier</div>
+                <div class="evidence-text">
+                    <strong>His Role:</strong> Organized and financed the conspiracy on behalf of the corporate board.<br><br>
+
+                    <strong>Evidence:</strong><br>
+                    • Received email on Nov 14 (Evidence 03) directing him to "neutralize this threat by any means necessary"<br>
+                    • Created offshore shell company "Pacific Ventures Ltd" in Cayman Islands<br>
+                    • Transferred ¥15 million to shell company on Nov 15 (Evidence 04)<br>
+                    • Shell company paid Yuki Tanaka ¥8.5 million on Nov 7 (Evidence 04) - direct financial link<br>
+                    • Controlled the burner phone that recruited and instructed Tanaka (Evidence 05 - cell tower data places burner at Chen's office)<br>
+                    • Was on 47-minute phone call with Armstrong during exact murder timeframe (22:05-22:52) creating mutual alibis (Evidence 05 + 07)<br><br>
+
+                    <strong>Motive:</strong> Yamamoto's disclosure would destroy the ¥45B IPO, costing Chen ¥12M in stock options and his career. Chen was following board directives to protect the company at any cost.
+                </div>
+            </div>
+
+            <div class="person-box">
+                <div class="person-name">YUKI TANAKA</div>
+                <div class="role">ROLE: Paid Courier (Possibly Coerced/Unwitting)</div>
+                <div class="evidence-text">
+                    <strong>Her Role:</strong> Delivered the poisoned dose while believing it was routine medication.<br><br>
+
+                    <strong>Evidence:</strong><br>
+                    • Received ¥8.5 million from Chen's shell company on Nov 7 (Evidence 04)<br>
+                    • Received detailed instructions via burner phone (Evidence 05) telling her to "act natural" and follow "standard protocol"<br>
+                    • Delivered Yamamoto's dose at exactly 22:18-22:30 on Nov 23 (Evidence 01 + 07)<br>
+                    • Witness saw her handling "package" at medical refrigeration unit on Nov 22 at 09:00 - exact time mentioned in burner phone text (Evidence 06)<br>
+                    • Left Lab 12-A at 22:33, before Yamamoto died at 22:47 (Evidence 07)<br>
+                    • Phone was turned off during murder timeframe as instructed (Evidence 05)<br><br>
+
+                    <strong>Assessment:</strong> Evidence suggests Tanaka was either coerced through blackmail or genuinely believed she was just doing her normal job. Burner phone texts emphasized "standard delivery" and "normal routine." She likely didn't know the dose was lethal. However, the ¥8.5M payment indicates she knew something irregular was happening.
+                </div>
+            </div>
+
+            <div class="person-box">
+                <div class="person-name">JACKSON ARMSTRONG</div>
+                <div class="role">ROLE: Security Coverage / Body Discovery</div>
+                <div class="evidence-text">
+                    <strong>His Role:</strong> Provided security oversight, alibis, and "discovered" the body.<br><br>
+
+                    <strong>Evidence:</strong><br>
+                    • Had ¥15 million performance bonus approved Nov 14, contingent on "Q4 security objectives met" (Evidence 04)<br>
+                    • Was on 47-minute phone call with Chen during entire murder window (Evidence 05)<br>
+                    • "Discovered" body at 23:14 - only 27 minutes after death (Evidence 07) - suspicious timing suggests foreknowledge<br>
+                    • Has master security override access to manipulate systems and access any floor undetected<br>
+                    • Withdrew ¥3 million cash on Nov 18 with no explanation (Evidence 04)<br>
+                    • Email from Chen (Evidence 03) explicitly told him to "neutralize this threat"<br><br>
+
+                    <strong>Assessment:</strong> Armstrong likely provided operational security, ensured security systems wouldn't detect the conspiracy, and coordinated timing with Chen via their phone calls.
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">⏰ COMPLETE TIMELINE OF THE CONSPIRACY</div>
+
+            <div class="timeline">
+                <div class="timeline-event">
+                    <div class="time">NOVEMBER 7, 2084</div>
+                    <div class="event">Tanaka receives ¥8.5M payment from Chen's shell company. Conspiracy recruitment begins.</div>
+                </div>
+
+                <div class="timeline-event">
+                    <div class="time">NOVEMBER 14, 2084 - 22:17 JST</div>
+                    <div class="event">Chen receives email directive: "neutralize this threat by any means necessary." Board authorizes murder.</div>
+                </div>
+
+                <div class="timeline-event">
+                    <div class="time">NOVEMBER 14, 2084 - 22:05 JST</div>
+                    <div class="event">Chen calls Armstrong for 47 minutes - likely coordination planning session.</div>
+                </div>
+
+                <div class="timeline-event">
+                    <div class="time">NOVEMBER 15, 2084</div>
+                    <div class="event">Chen wires ¥15M to shell company to cover payments to co-conspirators.</div>
+                </div>
+
+                <div class="timeline-event">
+                    <div class="time">NOVEMBER 16, 2084 - 21:00 JST</div>
+                    <div class="event">Volkov and Foster meet secretly (Evidence 03 emails). Volkov: "we're both finished" if exposed. They coordinate conspiracy involvement.</div>
+                </div>
+
+                <div class="timeline-event">
+                    <div class="time">NOVEMBER 19, 2084 - 16:47 JST</div>
+                    <div class="event">Volkov accesses Yamamoto's genetic profile. Begins designing targeted toxin specifications.</div>
+                </div>
+
+                <div class="timeline-event">
+                    <div class="time">NOVEMBER 21, 2084 - 08:00-13:12 JST</div>
+                    <div class="event">Foster synthesizes Yamamoto's "gene therapy" dose. At 11:30, Volkov enters synthesis lab for 20-minute private conversation - providing toxin design specifications. Poison is integrated into the dose.</div>
+                </div>
+
+                <div class="timeline-event">
+                    <div class="time">NOVEMBER 22, 2084 - 09:00 JST</div>
+                    <div class="event">Tanaka places poisoned ampule in Lab 12-A medical refrigeration unit as instructed by burner phone.</div>
+                </div>
+
+                <div class="timeline-event">
+                    <div class="time">NOVEMBER 22, 2084 - 21:33 JST</div>
+                    <div class="event">Tanaka receives final burner phone text: "Tomorrow. Standard delivery. No deviation."</div>
+                </div>
+
+                <div class="timeline-event">
+                    <div class="time">NOVEMBER 23, 2084 - 22:05 JST</div>
+                    <div class="event">Chen calls Armstrong - 47-minute call begins. They monitor the execution together while creating mutual alibis.</div>
+                </div>
+
+                <div class="timeline-event">
+                    <div class="time">NOVEMBER 23, 2084 - 22:18-22:30 JST</div>
+                    <div class="event">Tanaka delivers poisoned dose to Yamamoto's lab. Yamamoto activates privacy mode and administers the dose at 22:30:47.</div>
+                </div>
+
+                <div class="timeline-event">
+                    <div class="time">NOVEMBER 23, 2084 - 22:34 JST</div>
+                    <div class="event">Tanaka leaves Lab 12-A. Powers off phone and goes home as instructed.</div>
+                </div>
+
+                <div class="timeline-event">
+                    <div class="time">NOVEMBER 23, 2084 - 22:47:33 JST</div>
+                    <div class="event">DR. KENJI YAMAMOTO DIES from cardiac arrest induced by CRISPR toxin.</div>
+                </div>
+
+                <div class="timeline-event">
+                    <div class="time">NOVEMBER 23, 2084 - 22:52 JST</div>
+                    <div class="event">Chen-Armstrong phone call ends. Murder complete. Alibis established.</div>
+                </div>
+
+                <div class="timeline-event">
+                    <div class="time">NOVEMBER 23, 2084 - 23:14 JST</div>
+                    <div class="event">Armstrong uses emergency override to "discover" body - perfectly timed to avoid suspicion while ensuring investigation doesn't start too soon.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">🔍 THE SMOKING GUN</div>
+
+            <div class="evidence-point">
+                <div class="evidence-label">PRIMARY EVIDENCE:</div>
+                <div class="evidence-text">
+                    <strong>Equipment Logs (Evidence 08) + Witness Testimony (Evidence 06):</strong><br><br>
+                    On November 21, Dr. Foster was preparing Yamamoto's gene therapy dose in a 5-hour synthesis session. At exactly 11:30 AM during that session, Dr. Volkov entered the synthesis lab. A witness heard Volkov say "you owe me this" and Foster reply "I know what's at stake."<br><br>
+                    This proves BOTH scientists were present during toxin preparation. Volkov (the designer with genetic expertise) provided Foster (the synthesizer with lab access) with the specifications to create the targeted poison.<br><br>
+                    Combined with:<br>
+                    • Volkov accessing Yamamoto's genetic profile 2 days earlier<br>
+                    • Their email coordination about shared exposure<br>
+                    • Chen's payment to Tanaka through shell company<br>
+                    • Burner phone instructions matching Tanaka's actions<br><br>
+                    <strong style="color: #ff006e;">This evidence definitively proves the conspiracy.</strong>
+                </div>
+            </div>
+
+            <div class="evidence-point">
+                <div class="evidence-label">FINANCIAL PROOF:</div>
+                <div class="evidence-text">
+                    <strong>Money Trail (Evidence 04):</strong><br><br>
+                    Marcus Chen → Pacific Ventures Ltd (¥15M) → Yuki Tanaka (¥8.5M)<br><br>
+                    This direct financial connection proves Chen recruited and paid Tanaka. The burner phone that instructed Tanaka was at Chen's office location (Evidence 05 cell tower data). Chen orchestrated the conspiracy and funded it.
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">⚖️ FINAL VERDICT</div>
+
+            <p style="color: #00f7ff; font-size: 17px; line-height: 1.9;">
+                <strong style="color: #ffd700;">GUILTY OF MURDER IN THE FIRST DEGREE:</strong><br>
+                Dr. Elena Volkov and Dr. Raymond Foster<br><br>
+
+                <strong style="color: #ffd700;">GUILTY OF CONSPIRACY TO COMMIT MURDER:</strong><br>
+                Marcus Chen, Jackson Armstrong<br><br>
+
+                <strong style="color: #ffd700;">ACCOMPLICE (DEGREE PENDING INVESTIGATION):</strong><br>
+                Yuki Tanaka - May have been coerced or blackmailed. Payment suggests knowledge of wrongdoing, but burner phone instructions suggest she believed she was following normal procedures. Further investigation required to determine if she knew the dose was lethal.<br><br>
+
+                Dr. Yamamoto was killed because he threatened to expose illegal human trials that would have destroyed NGT Corporation's ¥45 billion IPO and exposed multiple executives to criminal liability. His murder was planned and executed by a sophisticated conspiracy involving corporate leadership, senior scientists, and security personnel.<br><br>
+
+                <strong style="color: #ff006e;">The corporation chose profit over human life, and five people conspired to silence a man who was trying to protect innocent victims of unethical medical experimentation.</strong>
+            </p>
+        </div>
+
+        <div style="text-align: center; background: rgba(255, 215, 0, 0.1); padding: 30px; margin: 40px 0; border: 2px solid #ffd700;">
+            <div style="font-family: 'Orbitron', sans-serif; color: #ffd700; font-size: 24px; margin-bottom: 15px;">
+                CASE CLOSED
+            </div>
+            <div style="font-family: 'Share Tech Mono', monospace; color: #00f7ff; font-size: 14px;">
+                CASE #2847-NGT :: DR. KENJI YAMAMOTO<br>
+                STATUS: SOLVED :: PERPETRATORS IDENTIFIED<br>
+                NEO-TOKYO METROPOLITAN POLICE :: CYBER-HOMICIDE DIVISION
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 50px;">
+            <a href="index.html" class="back-link">← Return to Investigation Hub</a>
+        </div>
+    </div>
+</body>
+</html>
