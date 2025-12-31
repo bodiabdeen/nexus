@@ -3,851 +3,568 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CLASSIFIED :: CRIMINAL INVESTIGATION DATABASE</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Electrolize&family=Chakra+Petch:wght@300,400,600,700&display=swap" rel="stylesheet">
+    <title>CID - Criminal Investigation Database</title>
     <style>
-        :root {
-            --neon-pink: #ff006e;
-            --neon-cyan: #00f5ff;
-            --neon-purple: #8b00ff;
-            --neon-yellow: #ffea00;
-            --deep-space: #0a0014;
-            --dark-void: #120420;
-            --grid-color: rgba(139, 0, 255, 0.3);
-        }
-
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=IBM+Plex+Mono:wght@400;600;700&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
-            font-family: 'Chakra Petch', sans-serif;
-            background: var(--deep-space);
-            color: var(--neon-cyan);
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
             min-height: 100vh;
-            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             position: relative;
             overflow-x: hidden;
         }
-
-        /* Wrapper to center content */
+        
+        /* Animated background grid */
         body::before {
             content: '';
-            display: block;
-            height: 0;
-        }
-
-        /* Animated 3D grid background */
-        .grid-container {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            width: 200%;
-            height: 200%;
-            transform: translate(-50%, -50%) rotateX(60deg);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .grid-plane {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(var(--grid-color) 1px, transparent 1px),
-                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-            background-size: 80px 80px;
-            animation: gridMove 20s linear infinite;
-            opacity: 0.4;
-        }
-
-        @keyframes gridMove {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(80px); }
-        }
-
-        /* Horizon glow */
-        .horizon-glow {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 300px;
-            background: radial-gradient(ellipse at bottom, var(--neon-purple) 0%, transparent 70%);
-            opacity: 0.3;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        /* Scan beam effect */
-        .scan-beam {
-            position: fixed;
-            top: -100%;
-            left: 0;
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(to bottom, 
-                transparent,
-                rgba(0, 245, 255, 0.2),
-                transparent
-            );
-            animation: scanDown 6s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 2;
-        }
-
-        @keyframes scanDown {
-            0%, 100% { top: -100%; }
-            50% { top: 100%; }
-        }
-
-        /* Floating particles */
-        .particles {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .particle-dot {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background: var(--neon-cyan);
-            border-radius: 50%;
-            animation: float-particle 15s linear infinite;
-            opacity: 0;
-            box-shadow: 0 0 10px var(--neon-cyan);
-        }
-
-        @keyframes float-particle {
-            0% {
-                transform: translateY(100vh) translateX(0) scale(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) translateX(100px) scale(1);
-                opacity: 0;
-            }
-        }
-
-        /* Main container */
-        .nexus-container {
-            position: relative;
-            z-index: 10;
-            max-width: 520px;
-            width: 100%;
-            margin: 50px auto;
-            padding: 0 10px;
-        }
-
-        /* Glitch title effect */
-        .header-section {
-            text-align: center;
-            margin-bottom: 50px;
-            animation: fadeInGlitch 1s ease-out;
-        }
-
-        @keyframes fadeInGlitch {
-            0%, 5%, 10% {
-                opacity: 0;
-                transform: translateY(-20px) skew(-5deg);
-            }
-            15%, 100% {
-                opacity: 1;
-                transform: translateY(0) skew(0deg);
-            }
-        }
-
-        .nexus-logo {
-            font-family: 'Audiowide', cursive;
-            font-size: 42px;
-            font-weight: 400;
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple), var(--neon-cyan));
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradientShift 3s ease infinite;
-            position: relative;
-            display: inline-block;
-            text-shadow: 
-                0 0 20px rgba(255, 0, 110, 0.5),
-                0 0 40px rgba(139, 0, 255, 0.3);
-        }
-
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        /* Glitch effect */
-        .nexus-logo::before,
-        .nexus-logo::after {
-            content: 'CLASSIFIED';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple), var(--neon-cyan));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            opacity: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(59, 130, 246, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            pointer-events: none;
         }
-
-        .nexus-logo::before {
-            animation: glitch1 2.5s infinite;
-            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+        
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
         }
-
-        .nexus-logo::after {
-            animation: glitch2 2.5s infinite;
-            clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
-        }
-
-        @keyframes glitch1 {
-            0%, 90%, 100% {
-                opacity: 0;
-                transform: translateX(0);
-            }
-            91%, 93% {
-                opacity: 0.8;
-                transform: translateX(-3px);
-            }
-        }
-
-        @keyframes glitch2 {
-            0%, 90%, 100% {
-                opacity: 0;
-                transform: translateX(0);
-            }
-            92%, 94% {
-                opacity: 0.8;
-                transform: translateX(3px);
-            }
-        }
-
-        .protocol-text {
-            font-family: 'Electrolize', sans-serif;
-            font-size: 13px;
-            letter-spacing: 4px;
-            color: var(--neon-cyan);
-            text-transform: uppercase;
-            margin-top: 15px;
-            opacity: 0.8;
-        }
-
-        /* Hexagonal frame */
-        .hex-frame {
-            background: rgba(18, 4, 32, 0.85);
-            border: 2px solid var(--neon-purple);
-            border-radius: 20px;
-            padding: 50px 40px;
-            position: relative;
-            backdrop-filter: blur(10px);
+        
+        .container {
+            max-width: 600px;
+            width: 90%;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 24px;
+            padding: 60px 50px;
             box-shadow: 
-                0 0 30px rgba(139, 0, 255, 0.3),
-                inset 0 0 50px rgba(0, 245, 255, 0.05);
-            clip-path: polygon(
-                30px 0, calc(100% - 30px) 0, 100% 30px,
-                100% calc(100% - 30px), calc(100% - 30px) 100%,
-                30px 100%, 0 calc(100% - 30px), 0 30px
-            );
+                0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.1),
+                inset 0 2px 4px rgba(255, 255, 255, 0.9);
+            position: relative;
+            z-index: 1;
+            animation: slideUp 0.8s ease-out;
         }
-
-        .hex-frame::before,
-        .hex-frame::after {
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Detective badge header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .badge {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                0 10px 30px rgba(30, 58, 138, 0.4),
+                inset 0 2px 4px rgba(255, 255, 255, 0.2);
+            position: relative;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .badge::before {
+            content: '🕵️';
+            font-size: 48px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+        
+        .badge::after {
             content: '';
             position: absolute;
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--neon-cyan);
+            inset: -4px;
+            border-radius: 50%;
+            border: 3px solid rgba(59, 130, 246, 0.3);
+            animation: rotate 3s linear infinite;
         }
-
-        .hex-frame::before {
-            top: 10px;
-            left: 10px;
-            border-right: none;
-            border-bottom: none;
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
-
-        .hex-frame::after {
-            bottom: 10px;
-            right: 10px;
-            border-left: none;
-            border-top: none;
+        
+        h1 {
+            font-size: 42px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            letter-spacing: -1px;
         }
-
-        /* System status */
-        .system-status {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 11px;
-            letter-spacing: 2px;
-            color: var(--neon-cyan);
-            margin-bottom: 35px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(139, 0, 255, 0.3);
-            text-transform: uppercase;
-        }
-
-        .status-bars {
-            display: flex;
-            gap: 4px;
-        }
-
-        .status-bar {
-            width: 3px;
-            height: 16px;
-            background: var(--neon-cyan);
-            box-shadow: 0 0 8px var(--neon-cyan);
-            animation: statusPulse 1.5s ease-in-out infinite;
-        }
-
-        .status-bar:nth-child(2) { animation-delay: 0.2s; }
-        .status-bar:nth-child(3) { animation-delay: 0.4s; }
-        .status-bar:nth-child(4) { animation-delay: 0.6s; }
-
-        @keyframes statusPulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
-
-        /* Data fields */
-        .data-field {
-            margin-bottom: 28px;
-        }
-
-        .field-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .field-label {
-            font-size: 11px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--neon-purple);
+        
+        .subtitle {
+            font-size: 16px;
+            color: #64748b;
             font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
         }
-
-        .field-id {
-            font-size: 9px;
+        
+        .tagline {
+            text-align: center;
+            font-size: 15px;
+            color: #475569;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            padding: 0 20px;
+        }
+        
+        .form-container {
+            margin-bottom: 30px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+            text-transform: uppercase;
             letter-spacing: 1px;
-            color: rgba(139, 0, 255, 0.6);
-            font-family: 'Courier New', monospace;
         }
-
-        .input-wrapper {
-            position: relative;
-        }
-
-        .corner-notch {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 12px;
-            height: 12px;
-            border-top: 2px solid var(--neon-cyan);
-            border-right: 2px solid var(--neon-cyan);
-            pointer-events: none;
-        }
-
+        
         input {
             width: 100%;
-            padding: 16px 18px;
-            background: rgba(10, 0, 20, 0.6);
-            border: 1px solid rgba(139, 0, 255, 0.4);
-            border-radius: 8px;
-            color: var(--neon-cyan);
-            font-family: 'Chakra Petch', sans-serif;
-            font-size: 15px;
-            letter-spacing: 1px;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        input::placeholder {
-            color: rgba(0, 245, 255, 0.3);
+            padding: 16px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 600;
             letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            background: #f8fafc;
         }
-
+        
         input:focus {
-            border-color: var(--neon-cyan);
-            box-shadow: 
-                0 0 20px rgba(0, 245, 255, 0.3),
-                inset 0 0 20px rgba(0, 245, 255, 0.1);
+            outline: none;
+            border-color: #3b82f6;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
         }
-
-        /* Initialize button */
-        .init-section {
-            margin-top: 35px;
+        
+        input::placeholder {
+            color: #cbd5e1;
+            font-weight: 400;
         }
-
-        .init-button {
+        
+        button {
             width: 100%;
             padding: 18px;
-            background: linear-gradient(135deg, rgba(139, 0, 255, 0.3), rgba(255, 0, 110, 0.3));
-            border: 2px solid var(--neon-purple);
-            border-radius: 10px;
-            color: var(--neon-cyan);
-            font-family: 'Audiowide', cursive;
-            font-size: 14px;
-            letter-spacing: 6px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 2px;
             cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 
+                0 10px 25px rgba(30, 58, 138, 0.3),
+                inset 0 1px 2px rgba(255, 255, 255, 0.2);
             position: relative;
             overflow: hidden;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 20px rgba(139, 0, 255, 0.4);
         }
-
-        .init-button::before {
+        
+        button::before {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 245, 255, 0.4), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
             transition: left 0.5s ease;
         }
-
-        .init-button:hover::before {
+        
+        button:hover::before {
             left: 100%;
         }
-
-        .init-button:hover {
+        
+        button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 30px rgba(139, 0, 255, 0.6);
-            border-color: var(--neon-cyan);
+            box-shadow: 
+                0 15px 35px rgba(30, 58, 138, 0.4),
+                inset 0 1px 2px rgba(255, 255, 255, 0.2);
         }
-
-        .init-button:active {
+        
+        button:active {
             transform: translateY(0);
         }
-
-        .button-corner {
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            border: 2px solid var(--neon-cyan);
+        
+        .error-message {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-left: 4px solid #dc2626;
+            color: #991b1b;
+            padding: 14px 18px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 20px;
+            display: none;
+            animation: shake 0.5s ease;
         }
-
-        .button-corner.tl {
-            top: 5px;
-            left: 5px;
-            border-right: none;
-            border-bottom: none;
-        }
-
-        .button-corner.br {
-            bottom: 5px;
-            right: 5px;
-            border-left: none;
-            border-top: none;
-        }
-
-        /* Button states */
-        .init-button.processing {
-            background: linear-gradient(135deg, rgba(255, 234, 0, 0.3), rgba(255, 0, 110, 0.3));
-            animation: processPulse 1s ease-in-out infinite;
-        }
-
-        @keyframes processPulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(255, 234, 0, 0.4); }
-            50% { box-shadow: 0 0 40px rgba(255, 234, 0, 0.8); }
-        }
-
-        .init-button.authorized {
-            background: linear-gradient(135deg, rgba(0, 255, 0, 0.3), rgba(0, 245, 255, 0.3));
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.6);
-        }
-
-        .init-button.denied {
-            background: linear-gradient(135deg, rgba(255, 0, 0, 0.3), rgba(255, 0, 110, 0.3));
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
-            animation: denyShake 0.5s ease;
-        }
-
-        @keyframes denyShake {
+        
+        @keyframes shake {
             0%, 100% { transform: translateX(0); }
             25% { transform: translateX(-10px); }
             75% { transform: translateX(10px); }
         }
-
-        /* Warning panel */
-        .warning-panel {
-            margin-top: 30px;
-            padding: 15px;
-            background: rgba(139, 0, 255, 0.1);
-            border-left: 3px solid var(--neon-purple);
-            border-radius: 5px;
-            font-size: 10px;
-            line-height: 1.6;
-            color: rgba(139, 0, 255, 0.8);
-            letter-spacing: 0.5px;
-        }
-
-        .warning-icon {
-            color: var(--neon-yellow);
-            margin-right: 8px;
-            font-size: 14px;
-        }
-
-        /* Terminal footer */
-        .terminal-footer {
-            margin-top: 30px;
+        
+        .divider {
             text-align: center;
-            font-size: 10px;
+            margin: 35px 0;
+            position: relative;
+        }
+        
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #cbd5e1, transparent);
+        }
+        
+        .divider span {
+            background: white;
+            padding: 0 20px;
+            color: #94a3b8;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
             letter-spacing: 2px;
-            color: rgba(139, 0, 255, 0.5);
-            font-family: 'Courier New', monospace;
+            position: relative;
+            z-index: 1;
         }
-
-        .terminal-id {
-            margin-top: 8px;
-            color: rgba(0, 245, 255, 0.4);
-            font-size: 9px;
-        }
-
-        /* Language Switcher */
-        .lang-switcher {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 100;
-        }
-
-        .lang-btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background: rgba(139, 0, 255, 0.2);
-            border: 2px solid var(--neon-purple);
+        
+        .info-box {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-left: 4px solid #3b82f6;
+            padding: 20px;
             border-radius: 8px;
-            color: var(--neon-cyan);
-            text-decoration: none;
-            font-family: 'Cairo', 'Courier New', monospace;
-            font-size: 14px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(139, 0, 255, 0.3);
+            font-size: 13px;
+            color: #1e40af;
+            line-height: 1.6;
         }
-
-        .lang-btn:hover {
-            background: rgba(139, 0, 255, 0.4);
-            border-color: var(--neon-cyan);
-            box-shadow: 0 0 25px rgba(0, 245, 255, 0.5);
-            transform: translateY(-2px);
-        }
-
-        .lang-btn:active {
-            transform: translateY(0);
-        }
-
-        /* Error message */
-        .error-message {
-            margin-top: 15px;
-            padding: 12px;
-            background: rgba(255, 0, 0, 0.1);
-            border: 1px solid rgba(255, 0, 0, 0.3);
-            border-radius: 5px;
-            color: var(--neon-pink);
-            font-size: 11px;
-            text-align: center;
-            letter-spacing: 1px;
-            display: none;
-            animation: errorBlink 0.5s ease;
-        }
-
-        .error-message.show {
+        
+        .info-box strong {
             display: block;
+            margin-bottom: 10px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-
-        @keyframes errorBlink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        
+        .info-box ul {
+            margin-left: 20px;
+            margin-top: 10px;
         }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-
-            .lang-switcher {
-                top: 10px;
-                right: 10px;
-            }
-
-            .lang-btn {
-                padding: 8px 16px;
-                font-size: 12px;
-                letter-spacing: 1px;
-            }
-
-            .nexus-logo {
-                font-size: 28px;
-                letter-spacing: 4px;
-            }
-
-            .protocol-text {
-                font-size: 11px;
-                letter-spacing: 2px;
-            }
-
-            .header-section {
-                margin-bottom: 30px;
-            }
-
-            .hex-frame {
-                padding: 30px 20px;
-            }
-
-            .system-status {
-                font-size: 9px;
-                flex-wrap: wrap;
-                gap: 10px;
-            }
-
-            input {
-                padding: 14px 16px;
-                font-size: 14px;
-            }
-
-            .init-button {
-                font-size: 12px;
-                padding: 16px;
-                letter-spacing: 3px;
-            }
-
-            .warning-panel {
-                font-size: 10px;
-                padding: 12px;
-                line-height: 1.6;
-            }
-
-            .field-label {
-                font-size: 11px;
-            }
+        
+        .info-box li {
+            margin-bottom: 6px;
         }
-
-        @media (max-width: 480px) {
-            .nexus-logo {
-                font-size: 24px;
-                letter-spacing: 3px;
-            }
-
-            .protocol-text {
-                font-size: 10px;
-            }
-
-            .hex-frame {
-                padding: 25px 15px;
-                clip-path: polygon(
-                    20px 0, calc(100% - 20px) 0, 100% 20px,
-                    100% calc(100% - 20px), calc(100% - 20px) 100%,
-                    20px 100%, 0 calc(100% - 20px), 0 20px
-                );
-            }
-
-            input {
-                padding: 12px 14px;
-                font-size: 13px;
-            }
-
-            .init-button {
-                font-size: 11px;
-                padding: 14px;
-                letter-spacing: 2px;
-            }
+        
+        .request-access-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 2px solid #f59e0b;
+            border-radius: 12px;
+            padding: 30px 25px;
+            text-align: center;
+            margin-top: 25px;
+            position: relative;
+            overflow: hidden;
         }
-
-        /* Accessibility */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
+        
+        .request-access-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(245, 158, 11, 0.05) 10px,
+                rgba(245, 158, 11, 0.05) 20px
+            );
+            animation: shine 20s linear infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes shine {
+            0% { transform: translate(0, 0) rotate(45deg); }
+            100% { transform: translate(50%, 50%) rotate(45deg); }
+        }
+        
+        .request-icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+        
+        .request-access-box h3 {
+            font-size: 18px;
+            color: #92400e;
+            margin-bottom: 10px;
+            font-weight: 800;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .request-access-box p {
+            font-size: 14px;
+            color: #78350f;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .request-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .request-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.5);
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+        }
+        
+        .btn-icon {
+            font-size: 18px;
+        }
+        
+        .request-note {
+            margin-top: 15px;
+            font-size: 11px;
+            color: #92400e;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 35px;
+            padding-top: 25px;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .footer p {
+            font-size: 11px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .lang-switch {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: white;
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            padding: 10px 20px;
+            color: #1e3a8a;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+        }
+        
+        .lang-switch:hover {
+            background: #3b82f6;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.3);
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 30px;
+            }
+            
+            h1 {
+                font-size: 32px;
+            }
+            
+            .badge {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .badge::before {
+                font-size: 36px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Background effects -->
-    <div class="grid-container">
-        <div class="grid-plane"></div>
-    </div>
-    <div class="horizon-glow"></div>
-    <div class="scan-beam"></div>
-    <div class="particles" id="particlesContainer"></div>
-
-    <!-- Main container -->
-    <div class="nexus-container">
-        <!-- Language Switcher -->
-        <div class="lang-switcher">
-            <a href="index-ar.html" class="lang-btn">عربي</a>
+    <a href="index-ar.html" class="lang-switch">العربية</a>
+    
+    <div class="container">
+        <div class="header">
+            <div class="badge"></div>
+            <h1>CID</h1>
+            <div class="subtitle">Criminal Investigation Database</div>
         </div>
-
-        <!-- Header -->
-        <div class="header-section">
-            <h1 class="nexus-logo">CLASSIFIED</h1>
-            <p class="protocol-text">Criminal Investigation Database</p>
-        </div>
-
-        <!-- Hexagonal frame -->
-        <div class="hex-frame">
-            <div class="system-status">
-                <div class="status-bars">
-                    <div class="status-bar"></div>
-                    <div class="status-bar"></div>
-                    <div class="status-bar"></div>
-                    <div class="status-bar"></div>
-                </div>
-                System Online • Secure Connection Active
+        
+        <p class="tagline">Access classified case files. Enter your credentials to begin investigation.</p>
+        
+        <div class="form-container">
+            <div class="input-group">
+                <label for="caseNumber">🔢 Case Number</label>
+                <input type="text" id="caseNumber" placeholder="CI-XXXX" maxlength="10">
             </div>
-
-            <form id="accessForm" onsubmit="handleAuthentication(event)">
-                <div class="data-field">
-                    <div class="field-header">
-                        <label class="field-label">Case Number</label>
-                        <span class="field-id">ID: CI-Δ01</span>
-                    </div>
-                    <div class="input-wrapper">
-                        <input 
-                            type="text" 
-                            id="caseNumber" 
-                            name="caseNumber"
-                            placeholder="CI-XXXX"
-                            autocomplete="off"
-                            required
-                        >
-                        <div class="corner-notch"></div>
-                    </div>
-                </div>
-
-                <div class="data-field">
-                    <div class="field-header">
-                        <label class="field-label">Authorization Code</label>
-                        <span class="field-id">ID: AUTH-Δ02</span>
-                    </div>
-                    <div class="input-wrapper">
-                        <input 
-                            type="password" 
-                            id="authCode" 
-                            name="authCode"
-                            placeholder="XXXX-XXXX"
-                            autocomplete="off"
-                            required
-                        >
-                        <div class="corner-notch"></div>
-                    </div>
-                </div>
-
-                <div class="init-section">
-                    <button type="submit" class="init-button" id="accessBtn">
-                        <div class="button-corner tl"></div>
-                        <div class="button-corner br"></div>
-                        Access Records
-                    </button>
-                </div>
-
-                <div class="error-message" id="errorMessage">
-                    ⚠ ACCESS DENIED: Invalid credentials
-                </div>
-            </form>
-
-            <div class="warning-panel">
-                <span class="warning-icon">⚠</span>
-                RESTRICTED ACCESS • Unauthorized attempts to access classified case files will be logged and reported. All sessions are monitored and recorded for security purposes.
+            
+            <div class="input-group">
+                <label for="authCode">🔑 Authorization Code</label>
+                <input type="text" id="authCode" placeholder="XXXX-XXXX" maxlength="9">
+            </div>
+            
+            <button onclick="accessCase()">Access Case File</button>
+            
+            <div class="error-message" id="errorMsg">
+                ⚠️ Invalid credentials. Please verify your case number and authorization code.
             </div>
         </div>
-
-        <!-- Footer -->
-        <div class="terminal-footer">
-            INVESTIGATION MAINFRAME
-            <div class="terminal-id" id="terminalId"></div>
+        
+        <div class="divider">
+            <span>Security Notice</span>
+        </div>
+        
+        <div class="info-box">
+            <strong>🔒 Authorized Personnel Only</strong>
+            <ul>
+                <li>All access attempts are logged and monitored</li>
+                <li>Unauthorized access will be reported</li>
+                <li>Case files contain sensitive information</li>
+            </ul>
+        </div>
+        
+        <div class="divider">
+            <span>Request Clearance</span>
+        </div>
+        
+        <div class="request-access-box">
+            <div class="request-icon">🔓</div>
+            <h3>Need Access to Additional Cases?</h3>
+            <p>If you require elevated clearance to classified investigations, submit your credentials for review.</p>
+            <a href="mailto:a.abdeen@live.com?subject=Request%20CID%20Case" class="request-btn">
+                <span class="btn-icon">✉️</span>
+                Request Case Clearance
+            </a>
+            <div class="request-note">Response time: 24-48 hours · Security verification required</div>
+        </div>
+        
+        <div class="footer">
+            <p>CID System v3.2.1 :: Secure Access Portal</p>
         </div>
     </div>
-
-    <!-- Authentication Script - Will be replaced with obfuscated version -->
-    <script src="auth.js"></script>
-
+    
     <script>
-        // Generate terminal ID
-        function generateTerminalId() {
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let id = 'TERM-';
-            for (let i = 0; i < 8; i++) {
-                id += chars[Math.floor(Math.random() * chars.length)];
-                if (i === 3) id += '-';
-            }
-            return id;
-        }
-
-        document.getElementById('terminalId').textContent = generateTerminalId() + ' • ' + new Date().toISOString().split('T')[0];
-
-        // Create floating particles
-        function createParticles() {
-            const container = document.getElementById('particlesContainer');
-            for (let i = 0; i < 20; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle-dot';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
-                
-                // Random colors
-                const colors = ['var(--neon-pink)', 'var(--neon-cyan)', 'var(--neon-purple)'];
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                particle.style.background = color;
-                particle.style.boxShadow = `0 0 10px ${color}`;
-                
-                container.appendChild(particle);
+        // Case mapping
+        const cases = {
+            'CI-2847': { code: 'K7M9-PX4Q', url: 'case-7k9mxp4qh3n8w' },
+            'CI-5039': { code: 'H3N8-WR6L', url: 'case-2bc9tj5yr6lm4' },
+            'CI-6281': { code: 'T5YJ-9BC2', url: 'case-8xf3vq7nh2k9p' },
+            'CI-1867': { code: 'U69K-LBG9', url: 'case-irhb4qsoke106' }
+        };
+        
+        function accessCase() {
+            const caseNumber = document.getElementById('caseNumber').value.toUpperCase().trim();
+            const authCode = document.getElementById('authCode').value.toUpperCase().trim();
+            const errorMsg = document.getElementById('errorMsg');
+            
+            if (cases[caseNumber] && cases[caseNumber].code === authCode) {
+                errorMsg.style.display = 'none';
+                window.location.href = cases[caseNumber].url;
+            } else {
+                errorMsg.style.display = 'block';
             }
         }
-        createParticles();
-
-        // Input glow effect on typing
-        const inputs = document.querySelectorAll('input');
-        inputs.forEach(input => {
-            input.addEventListener('input', function() {
-                this.style.boxShadow = '0 0 30px rgba(0, 245, 255, 0.5)';
-                setTimeout(() => {
-                    this.style.boxShadow = '';
-                }, 200);
-            });
+        
+        // Enter key support
+        document.getElementById('authCode').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                accessCase();
+            }
         });
-
-        // Random glitch effect
-        setInterval(() => {
-            if (Math.random() > 0.95) {
-                const logo = document.querySelector('.nexus-logo');
-                logo.style.transform = 'skew(' + (Math.random() * 10 - 5) + 'deg)';
-                setTimeout(() => {
-                    logo.style.transform = 'skew(0deg)';
-                }, 100);
+        
+        document.getElementById('caseNumber').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                accessCase();
             }
-        }, 2000);
+        });
     </script>
 </body>
 </html>
