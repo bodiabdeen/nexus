@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدليل 03 - الجدول الزمني وحركة المشتبه بهم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #1a0e00 0%, #3d2414 50%, #1a0e00 100%);
+            color: #d4c5a9;
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
+        .detective-icon {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 48px;
+            z-index: 1000;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .back-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #8b6f47, #a0826d);
+            color: #fff;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: linear-gradient(135deg, #d4af37, #c9a961);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(61, 36, 20, 0.6);
+            border: 3px solid #8b6f47;
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-family: 'Amiri', serif;
+            font-size: 2.5em;
+            color: #d4af37;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+            margin-bottom: 15px;
+        }
+
+        .evidence-id {
+            color: #c9a961;
+            font-size: 1.1em;
+            letter-spacing: 2px;
+        }
+
+        .intro-box {
+            background: rgba(139, 0, 0, 0.2);
+            border: 2px solid #8b0000;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 40px;
+            text-align: center;
+            line-height: 2;
+        }
+
+        .critical-window {
+            background: rgba(255, 107, 107, 0.2);
+            border: 3px solid #ff6b6b;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .critical-window h2 {
+            font-family: 'Amiri', serif;
+            color: #ff6b6b;
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .timeline-section {
+            margin: 40px 0;
+        }
+
+        .section-title {
+            font-family: 'Amiri', serif;
+            color: #d4af37;
+            font-size: 2em;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 2px solid #8b6f47;
+            padding-bottom: 15px;
+        }
+
+        .timeline-container {
+            position: relative;
+            padding: 30px 0;
+        }
+
+        .timeline-line {
+            position: absolute;
+            right: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, #8b6f47, #d4af37, #8b6f47);
+        }
+
+        .timeline-entry {
+            position: relative;
+            margin: 30px 0;
+            padding: 0 60px;
+        }
+
+        .timeline-entry.critical {
+            background: rgba(139, 0, 0, 0.1);
+            border: 2px solid #8b0000;
+            border-radius: 8px;
+            padding: 20px 60px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            right: 50%;
+            top: 50%;
+            transform: translate(50%, -50%);
+            width: 24px;
+            height: 24px;
+            background: #d4af37;
+            border: 4px solid #1a0e00;
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        .timeline-entry.critical .timeline-dot {
+            background: #ff6b6b;
+            width: 30px;
+            height: 30px;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7); }
+            50% { box-shadow: 0 0 0 10px rgba(255, 107, 107, 0); }
+        }
+
+        .timeline-time {
+            font-family: 'Amiri', serif;
+            font-size: 1.6em;
+            color: #d4af37;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .timeline-entry.critical .timeline-time {
+            color: #ff6b6b;
+        }
+
+        .timeline-event {
+            font-size: 1.2em;
+            color: #c9c9c9;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .timeline-details {
+            background: rgba(40, 25, 15, 0.5);
+            padding: 20px;
+            border-right: 4px solid #8b6f47;
+            border-radius: 5px;
+            line-height: 2;
+        }
+
+        .suspect-activity {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .activity-card {
+            background: rgba(61, 36, 20, 0.6);
+            padding: 15px;
+            border-radius: 5px;
+            border-right: 3px solid #8b6f47;
+        }
+
+        .activity-card.present {
+            border-right-color: #ff6b6b;
+        }
+
+        .activity-card.absent {
+            border-right-color: #6b9b7a;
+            opacity: 0.7;
+        }
+
+        .activity-name {
+            color: #d4af37;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .activity-location {
+            color: #c9c9c9;
+            font-size: 0.95em;
+        }
+
+        .summary-table {
+            width: 100%;
+            margin: 30px 0;
+            border-collapse: collapse;
+        }
+
+        .summary-table th,
+        .summary-table td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #8b6f47;
+        }
+
+        .summary-table th {
+            background: rgba(61, 36, 20, 0.7);
+            color: #d4af37;
+            font-weight: 700;
+        }
+
+        .summary-table td {
+            background: rgba(40, 25, 15, 0.5);
+        }
+
+        .present-mark {
+            color: #ff6b6b;
+            font-weight: 700;
+            font-size: 1.2em;
+        }
+
+        .absent-mark {
+            color: #6b9b7a;
+            font-size: 1.2em;
+        }
+
+        .analysis-box {
+            background: rgba(212, 175, 55, 0.1);
+            border: 3px solid #d4af37;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 40px 0;
+        }
+
+        .analysis-box h2 {
+            font-family: 'Amiri', serif;
+            color: #d4af37;
+            font-size: 2em;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .key-finding {
+            background: rgba(40, 25, 15, 0.6);
+            padding: 20px;
+            margin: 20px 0;
+            border-right: 4px solid #d4af37;
+            border-radius: 5px;
+        }
+
+        .key-finding h3 {
+            color: #d4af37;
+            margin-bottom: 12px;
+            font-size: 1.3em;
+        }
+
+        .contradiction-box {
+            background: rgba(139, 0, 0, 0.2);
+            border: 2px solid #8b0000;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .contradiction-box h3 {
+            color: #ff6b6b;
+            margin-bottom: 12px;
+            font-size: 1.3em;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            border-top: 2px solid #8b6f47;
+            color: #8b7355;
+        }
+
+        @media (max-width: 968px) {
+            .timeline-line {
+                right: 30px;
+            }
+
+            .timeline-dot {
+                right: 22px;
+            }
+
+            .timeline-entry {
+                padding: 0 20px 0 70px;
+            }
+
+            .timeline-entry.critical {
+                padding: 20px 20px 20px 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="detective-icon">🕵️</div>
+
+    <div class="container">
+        <a href="index.html" class="back-link">← العودة إلى القضية الرئيسية</a>
+
+        <header>
+            <h1>⏰ الدليل 03: الجدول الزمني وحركة المشتبه بهم</h1>
+            <div class="evidence-id">رقم الدليل: EVD-003 | القضية: CI-4192</div>
+        </header>
+
+        <div class="intro-box">
+            <p><strong>وصف الدليل:</strong> سجل تفصيلي لجميع الأحداث وتحركات المشتبه بهم مساء يوم الثلاثاء 12 نوفمبر 2024. تم جمع هذه المعلومات من شهادات الشهود، سجلات كاميرات المراقبة، وإفادات المشتبه بهم أنفسهم.</p>
+        </div>
+
+        <div class="critical-window">
+            <h2>🎯 الفترة الحرجة</h2>
+            <p style="font-size: 1.3em; line-height: 2; color: #ffb3b3;">
+                <strong>النافذة الزمنية للجريمة:</strong><br>
+                من الساعة 5:00 مساءً إلى 6:00 مساءً<br>
+                <em>(الوقت الذي أُضيف فيه السم إلى القهوة)</em>
+            </p>
+        </div>
+
+        <!-- TIMELINE -->
+        <div class="timeline-section">
+            <div class="section-title">📅 الجدول الزمني التفصيلي</div>
+
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+
+                <!-- 3:00 PM -->
+                <div class="timeline-entry">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-time">الساعة 3:00 ظهراً</div>
+                    <div class="timeline-event">عودة الحاج سعد من صلاة الظهر</div>
+                    <div class="timeline-details">
+                        <p>عاد الحاج سعد من المسجد المحلي إلى المزرعة. استقبله عمال المزرعة عند البوابة الرئيسية. دخل إلى البيت وجلس في المجلس لقراءة القرآن.</p>
+                        <div class="suspect-activity">
+                            <div class="activity-card present">
+                                <div class="activity-name">فهد</div>
+                                <div class="activity-location">في مكتب المزرعة</div>
+                            </div>
+                            <div class="activity-card present">
+                                <div class="activity-name">منيرة</div>
+                                <div class="activity-location">في البيت مع أطفالها</div>
+                            </div>
+                            <div class="activity-card present">
+                                <div class="activity-name">خالد</div>
+                                <div class="activity-location">في مكتب الإدارة</div>
+                            </div>
+                            <div class="activity-card absent">
+                                <div class="activity-name">عبدالله</div>
+                                <div class="activity-location">في مزرعته</div>
+                            </div>
+                            <div class="activity-card absent">
+                                <div class="activity-name">ماجد</div>
+                                <div class="activity-location">في مكتبه بالأحساء</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4:00 PM -->
+                <div class="timeline-entry">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-time">الساعة 4:00 عصراً</div>
+                    <div class="timeline-event">الحاج سعد يستدعي ماجد (المحامي)</div>
+                    <div class="timeline-details">
+                        <p>اتصل الحاج سعد بماجد الشمري (المحامي) وطلب منه المجيء إلى المزرعة لمراجعة الوصية الجديدة قبل التوقيع. ماجد وافق وقال إنه سيصل خلال ساعة.</p>
+                        <p><strong>ملاحظة:</strong> هذا الاتصال موثق في سجلات الهاتف.</p>
+                    </div>
+                </div>
+
+                <!-- 4:30 PM -->
+                <div class="timeline-entry critical">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-time">الساعة 4:30 عصراً</div>
+                    <div class="timeline-event">🔴 منيرة تحضّر القهوة العربية</div>
+                    <div class="timeline-details">
+                        <p><strong>حدث مهم جداً:</strong> منيرة العجمي تحضر إبريق القهوة العربية الطازجة للحاج سعد (كعادتها اليومية). حملت الإبريق إلى المجلس ووضعته على الطاولة أمام عمها مع الفناجين.</p>
+                        <p><strong>شهادة منيرة:</strong> "حضّرت القهوة في المطبخ كالعادة، واستخدمت البن الطازج والهيل. وضعت الإبريق أمام عمي وهو يقرأ القرآن. بقيت معه حوالي 5 دقائق نتحدث عن الأطفال، ثم غادرت."</p>
+                        <p><strong>شهادة الحاج سعد (من خادمة البيت):</strong> قال الحاج سعد بعد مغادرة منيرة: "القهوة ممتازة اليوم، بارك الله فيها".</p>
+                        <p><strong>ملاحظة حرجة:</strong> في هذا الوقت، القهوة كانت نظيفة وبدون سم (حسب شهادة الضحية نفسه).</p>
+                    </div>
+                </div>
+
+                <!-- 4:45 PM -->
+                <div class="timeline-entry">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-time">الساعة 4:45 عصراً</div>
+                    <div class="timeline-event">وصول عبدالله الهاجري (الجار)</div>
+                    <div class="timeline-details">
+                        <p>عبدالله الهاجري يصل إلى بوابة المزرعة. الحارس سجّل دخوله في السجل. عبدالله طلب مقابلة الحاج سعد "لموضوع مهم".</p>
+                        <p><strong>شهادة الحارس:</strong> "بدا متوتراً وغاضباً. قلت له أن الحاج سعد مشغول، لكنه أصر على المقابلة."</p>
+                        <p>تم إبلاغ الحاج سعد، فوافق على لقاء قصير.</p>
+                    </div>
+                </div>
+
+                <!-- 5:00 PM - CRITICAL -->
+                <div class="timeline-entry critical">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-time">الساعة 5:00 مساءً</div>
+                    <div class="timeline-event">🔴 بداية الفترة الحرجة - دخول الجار للمجلس</div>
+                    <div class="timeline-details">
+                        <p><strong>عبدالله الهاجري يدخل المجلس:</strong> دخل عبدالله المجلس للقاء الحاج سعد. كان الإبريق موجوداً على الطاولة.</p>
+                        <p><strong>موضوع اللقاء:</strong> حاول عبدالله مرة أخرى إقناع الحاج سعد ببيعه الأرض المتنازع عليها، لكن الحاج سعد رفض بشدة وطلب منه المغادرة.</p>
+                        <p><strong>شهادة عبدالله:</strong> "كان اللقاء قصيراً، لا يزيد عن 10 دقائق. رفض طلبي كالعادة، فغادرت غاضباً. لم ألمس أي شيء في المجلس."</p>
+                        <p><strong>ملاحظة:</strong> عبدالله كان بمفرده في المجلس مع الحاج سعد لمدة 10 دقائق تقريباً.</p>
+                        <div class="suspect-activity">
+                            <div class="activity-card present">
+                                <div class="activity-name">عبدالله</div>
+                                <div class="activity-location">في المجلس مع الضحية ⚠️</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5:10 PM -->
+                <div class="timeline-entry critical">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-time">الساعة 5:10 مساءً</div>
+                    <div class="timeline-event">🔴 مغادرة عبدالله - وصول ماجد المحامي</div>
+                    <div class="timeline-details">
+                        <p><strong>عبدالله يغادر:</strong> سجل الحارس خروج عبدالله من البوابة الساعة 5:12 مساءً. شوهد وهو يغادر بسرعة وهو غاضب.</p>
+                        <p><strong>وصول ماجد:</strong> ماجد الشمري (المحامي) يصل إلى المزرعة الساعة 5:10 مساءً تقريباً (مسجل في كاميرات المراقبة).</p>
+                        <p>توجه مباشرة إلى المجلس حيث كان الحاج سعد ينتظره.</p>
+                    </div>
+                </div>
+
+                <!-- 5:15 PM -->
+                <div class="timeline-entry critical">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-time">الساعة 5:15 - 5:45 مساءً</div>
+                    <div class="timeline-event">🔴 ماجد المحامي في المجلس - مراجعة الوصية</div>
+                    <div class="timeline-details">
+                        <p><strong>جلسة المراجعة:</strong> ماجد والحاج سعد يراجعان الوصية الجديدة بالتفصيل. الجلسة استمرت حوالي 30 دقيقة.</p>
+                        <p><strong>شهادة ماجد:</strong> "راجعنا جميع البنود. الحاج سعد كان مصراً على التوقيع يوم الخميس. كان هادئاً ومتأكداً من قراره. عرض علي قهوة لكني اعتذرت لأني لا أشرب القهوة في المساء."</p>
+                        <p><strong>ملاحظة حرجة:</strong> ماجد كان بمفرده مع الحاج سعد والإبريق كان على الطاولة طوال 30 دقيقة.</p>
+                        <p><strong>سؤال مهم:</strong> الحاج سعد لم يشرب القهوة خلال هذه الجلسة (حسب شهادة ماجد). لماذا؟</p>
+                        <div class="suspect-activity">
+                            <div class="activity-card present">
+                                <div class="activity-name">ماجد</div>
+                                <div class="activity-location">في المجلس مع الضحية ⚠️</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5:45 PM -->
+                <div class="timeline-entry critical">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-time">الساعة 5:45 مساءً</div>
+                    <div class="timeline-event">🔴 مغادرة ماجد المحامي</div>
+                    <div class="timeline-details">
+                        <p>ماجد انتهى من مراجعة الوصية وغادر المجلس. سجل الحارس خروجه من البوابة الساعة 5:52 مساءً.</p>
+                        <p><strong>شهادة ماجد:</strong> "غادرت والحاج سعد كان بصحة جيدة. قال لي: سأتصل بك يوم الخميس صباحاً لترتيب موعد التوقيع."</p>
+                        <p><strong>ملاحظة:</strong> هذا آخر شخص شوهد مع الحاج سعد قبل الوفاة (باستثناء القاتل).</p>
+                    </div>
+                </div>
+
+                <!-- 5:50 PM -->
+                <div class="timeline-entry critical">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-time">الساعة 5:50 مساءً</div>
+                    <div class="timeline-event">🔴 فهد يدخل المجلس</div>
+                    <div class="timeline-details">
+                        <p><strong>حدث حرج:</strong> فهد العجمي (الابن الأكبر) يدخل المجلس لرؤية والده.</p>
+                        <p><strong>شهادة فهد:</strong> "دخلت لأسلم على أبي قبل صلاة المغرب. وجدته يجلس بمفرده. سألني عن أعمال المزرعة، وتحدثنا لبضع دقائق. لاحظت الإبريق على الطاولة لكني لم ألمسه. غادرت بعد حوالي 5 دقائق."</p>
+                        <p><strong>ملاحظة مهمة جداً:</strong> فهد كان آخر شخص دخل المجلس قبل الوفاة!</p>
+                        <p><strong>التوقيت:</strong> دخل الساعة 5:50 مساءً وغادر الساعة 5:55 مساءً تقريباً.</p>
+                        <div class="suspect-activity">
+                            <div class="activity-card present">
+                                <div class="activity-name">فهد</div>
+                                <div class="activity-location">في المجلس مع الضحية ⚠️⚠️</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6:00 PM - END OF CRITICAL WINDOW -->
+                <div class="timeline-entry critical">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-time">الساعة 6:00 مساءً</div>
+                    <div class="timeline-event">🔴 نهاية الفترة الحرجة - الحاج سعد يشرب القهوة المسمومة</div>
+                    <div class="timeline-details">
+                        <p><strong>الحدث المميت:</strong> بعد مغادرة فهد، جلس الحاج سعد بمفرده وشرب من القهوة العربية.</p>
+                        <p><strong>كيف نعرف التوقيت؟</strong> من تحليل الطب الشرعي - الأعراض بدأت بعد 15-30 دقيقة من شرب السم.</p>
+                        <p>الوفاة حدثت حوالي الساعة 6:45 مساءً، مما يعني أنه شرب السم حوالي الساعة 6:00 مساءً.</p>
+                    </div>
+                </div>
+
+                <!-- 6:15-6:45 PM -->
+                <div class="timeline-entry">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-time">الساعة 6:15 - 6:45 مساءً</div>
+                    <div class="timeline-event">فترة المعاناة - تطور أعراض التسمم</div>
+                    <div class="timeline-details">
+                        <p>بدأت أعراض التسمم بالظهور على الحاج سعد: آلام في المعدة، غثيان، صعوبة في التنفس.</p>
+                        <p>كان بمفرده في المجلس ولم يستطع طلب المساعدة.</p>
+                        <p>الوفاة حدثت حوالي الساعة 6:45 مساءً.</p>
+                    </div>
+                </div>
+
+                <!-- 7:30 PM -->
+                <div class="timeline-entry">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-time">الساعة 7:30 مساءً</div>
+                    <div class="timeline-event">اكتشاف الجثة</div>
+                    <div class="timeline-details">
+                        <p><strong>فهد يكتشف الجثة:</strong> عندما لم يأت والده لصلاة المغرب (وهو أمر غير معتاد)، ذهب فهد للبحث عنه.</p>
+                        <p>وجده جالساً على الأريكة، رأسه مائل للخلف، وقد فارق الحياة.</p>
+                        <p>اتصل فوراً بالإسعاف والشرطة.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUMMARY TABLE -->
+        <div class="timeline-section">
+            <div class="section-title">📊 جدول ملخص - من كان في المزرعة؟</div>
+
+            <table class="summary-table">
+                <thead>
+                    <tr>
+                        <th>المشتبه به</th>
+                        <th>في المزرعة؟</th>
+                        <th>دخل المجلس؟</th>
+                        <th>وصول للإبريق؟</th>
+                        <th>التوقيت</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>فهد العجمي</strong></td>
+                        <td class="present-mark">✓ نعم</td>
+                        <td class="present-mark">✓ نعم</td>
+                        <td class="present-mark">✓ نعم</td>
+                        <td>5:50 - 5:55 مساءً</td>
+                    </tr>
+                    <tr>
+                        <td><strong>منيرة العجمي</strong></td>
+                        <td class="present-mark">✓ نعم</td>
+                        <td class="present-mark">✓ نعم</td>
+                        <td class="present-mark">✓ نعم (حضّرت القهوة)</td>
+                        <td>4:30 عصراً</td>
+                    </tr>
+                    <tr>
+                        <td><strong>خالد الدوسري</strong></td>
+                        <td class="present-mark">✓ نعم</td>
+                        <td class="absent-mark">✗ لا</td>
+                        <td class="absent-mark">✗ لا</td>
+                        <td>في مكتب الإدارة طوال المساء</td>
+                    </tr>
+                    <tr>
+                        <td><strong>عبدالله الهاجري</strong></td>
+                        <td class="present-mark">✓ نعم</td>
+                        <td class="present-mark">✓ نعم</td>
+                        <td class="present-mark">✓ نعم</td>
+                        <td>5:00 - 5:10 مساءً</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ماجد الشمري</strong></td>
+                        <td class="present-mark">✓ نعم</td>
+                        <td class="present-mark">✓ نعم</td>
+                        <td class="present-mark">✓ نعم</td>
+                        <td>5:15 - 5:45 مساءً</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ANALYSIS -->
+        <div class="analysis-box">
+            <h2>🔍 تحليل النافذة الزمنية</h2>
+
+            <div class="key-finding">
+                <h3>نقطة محورية: متى أُضيف السم؟</h3>
+                <p>القهوة حُضّرت الساعة 4:30 مساءً بواسطة منيرة، وكانت نظيفة (الحاج سعد أثنى عليها). إذن، السم أُضيف بين الساعة 4:30 مساءً والساعة 6:00 مساءً.</p>
+                <p><strong>الفترة الأكثر احتمالاً:</strong> بين 5:00 مساءً - 6:00 مساءً (الفترة الحرجة).</p>
+            </div>
+
+            <div class="key-finding">
+                <h3>من كان لديه الفرصة؟</h3>
+                <p><strong>1. عبدالله الهاجري:</strong> في المجلس من 5:00 - 5:10 مساءً. كان بمفرده مع الإبريق لمدة 10 دقائق.</p>
+                <p><strong>2. ماجد الشمري:</strong> في المجلس من 5:15 - 5:45 مساءً. كان بمفرده مع الإبريق لمدة 30 دقيقة.</p>
+                <p><strong>3. فهد العجمي:</strong> في المجلس من 5:50 - 5:55 مساءً. آخر شخص دخل قبل الوفاة مباشرة!</p>
+                <p><strong>4. منيرة العجمي:</strong> حضّرت القهوة في 4:30 مساءً، لكن هل عادت لاحقاً؟</p>
+                <p><strong>5. خالد الدوسري:</strong> لم يدخل المجلس، لكن هل يمكنه الوصول بطريقة أخرى؟</p>
+            </div>
+
+            <div class="contradiction-box">
+                <h3>⚠️ تناقضات في الشهادات</h3>
+                <p><strong>1. فهد:</strong> يدّعي أنه كان في مكتبه من 5:30 - 7:00 مساءً، لكنه شوهد يدخل المجلس الساعة 5:50 مساءً!</p>
+                <p><strong>2. ماجد:</strong> يقول إن الحاج سعد لم يشرب القهوة أثناء جلستهم. لماذا؟ هل كان يعرف أنها مسمومة؟</p>
+                <p><strong>3. عبدالله:</strong> يقول إنه لم يلمس شيئاً، لكن بصماته وُجدت على الطاولة قرب الإبريق.</p>
+            </div>
+
+            <div class="key-finding">
+                <h3>السؤال الأهم</h3>
+                <p style="font-size: 1.2em; color: #d4af37;">من كان آخر شخص بمفرده مع الإبريق قبل أن يشرب الحاج سعد القهوة المسمومة؟</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>الدليل رقم: EVD-003 | القضية: CI-4192</p>
+            <p>تم تجميعه بواسطة النقيب أحمد الزهراني | نوفمبر 2024</p>
+        </footer>
+    </div>
+</body>
+</html>

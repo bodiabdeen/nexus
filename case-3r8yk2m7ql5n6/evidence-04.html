@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدليل 04 - السجلات المالية والديون</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #1a0e00 0%, #3d2414 50%, #1a0e00 100%);
+            color: #d4c5a9;
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
+        .detective-icon {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 48px;
+            z-index: 1000;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .back-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #8b6f47, #a0826d);
+            color: #fff;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: linear-gradient(135deg, #d4af37, #c9a961);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(61, 36, 20, 0.6);
+            border: 3px solid #8b6f47;
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-family: 'Amiri', serif;
+            font-size: 2.5em;
+            color: #d4af37;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+            margin-bottom: 15px;
+        }
+
+        .evidence-id {
+            color: #c9a961;
+            font-size: 1.1em;
+            letter-spacing: 2px;
+        }
+
+        .intro-box {
+            background: rgba(139, 0, 0, 0.2);
+            border: 2px solid #8b0000;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 40px;
+            text-align: center;
+            line-height: 2;
+        }
+
+        .suspect-financial {
+            background: rgba(40, 25, 15, 0.7);
+            border: 2px solid #8b6f47;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 35px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .suspect-financial h2 {
+            font-family: 'Amiri', serif;
+            color: #d4af37;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #8b6f47;
+            padding-bottom: 15px;
+        }
+
+        .financial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .financial-item {
+            background: rgba(61, 36, 20, 0.5);
+            padding: 15px;
+            border-radius: 5px;
+            border-right: 3px solid #8b7355;
+        }
+
+        .financial-label {
+            color: #8b7355;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+        }
+
+        .financial-value {
+            color: #d4c5a9;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .financial-value.negative {
+            color: #ff6b6b;
+        }
+
+        .financial-value.positive {
+            color: #6b9b7a;
+        }
+
+        .debt-box {
+            background: rgba(139, 0, 0, 0.2);
+            border: 2px solid #8b0000;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .debt-box h3 {
+            color: #ff6b6b;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            font-family: 'Amiri', serif;
+        }
+
+        .debt-list {
+            background: rgba(40, 25, 15, 0.5);
+            padding: 15px;
+            border-right: 4px solid #ff6b6b;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .debt-list ul {
+            list-style-position: inside;
+            line-height: 2;
+        }
+
+        .transaction-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+
+        .transaction-table th,
+        .transaction-table td {
+            padding: 12px;
+            text-align: right;
+            border: 1px solid #8b6f47;
+            font-size: 0.95em;
+        }
+
+        .transaction-table th {
+            background: rgba(61, 36, 20, 0.7);
+            color: #d4af37;
+            font-weight: 700;
+        }
+
+        .transaction-table td {
+            background: rgba(40, 25, 15, 0.5);
+        }
+
+        .suspicious {
+            background: rgba(255, 107, 107, 0.2) !important;
+            font-weight: 700;
+        }
+
+        .motive-analysis {
+            background: rgba(212, 175, 55, 0.15);
+            border: 2px solid #d4af37;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .motive-analysis h3 {
+            color: #d4af37;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+        }
+
+        .critical-note {
+            background: rgba(255, 107, 107, 0.2);
+            border: 3px solid #ff6b6b;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .critical-note::before {
+            content: '⚠️';
+            font-size: 3em;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .critical-note h3 {
+            color: #ff6b6b;
+            font-size: 1.6em;
+            margin-bottom: 15px;
+            font-family: 'Amiri', serif;
+        }
+
+        .summary-box {
+            background: rgba(61, 36, 20, 0.7);
+            border: 3px solid #d4af37;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 40px 0;
+        }
+
+        .summary-box h2 {
+            font-family: 'Amiri', serif;
+            color: #d4af37;
+            font-size: 2em;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .ranking-list {
+            background: rgba(40, 25, 15, 0.5);
+            padding: 20px;
+            border-right: 4px solid #d4af37;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .ranking-item {
+            padding: 15px;
+            margin: 12px 0;
+            background: rgba(61, 36, 20, 0.6);
+            border-radius: 5px;
+            border-right: 3px solid #8b6f47;
+        }
+
+        .ranking-item.high {
+            border-right-color: #ff6b6b;
+        }
+
+        .ranking-item.medium {
+            border-right-color: #d4af37;
+        }
+
+        .ranking-item.low {
+            border-right-color: #6b9b7a;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            border-top: 2px solid #8b6f47;
+            color: #8b7355;
+        }
+    </style>
+</head>
+<body>
+    <div class="detective-icon">🕵️</div>
+
+    <div class="container">
+        <a href="index.html" class="back-link">← العودة إلى القضية الرئيسية</a>
+
+        <header>
+            <h1>💰 الدليل 04: السجلات المالية والديون</h1>
+            <div class="evidence-id">رقم الدليل: EVD-004 | القضية: CI-4192</div>
+        </header>
+
+        <div class="intro-box">
+            <p><strong>وصف الدليل:</strong> تحليل شامل للوضع المالي لجميع المشتبه بهم، بما في ذلك الديون، الحسابات البنكية، المعاملات المشبوهة، والعلاقات المالية مع الضحية. تم الحصول على هذه المعلومات من البنوك، السجلات الرسمية، وتحقيقات الشرطة المالية.</p>
+        </div>
+
+        <!-- FAHAD -->
+        <div class="suspect-financial">
+            <h2>المشتبه به الأول: فهد العجمي (الابن الأكبر)</h2>
+
+            <div class="financial-grid">
+                <div class="financial-item">
+                    <div class="financial-label">الدخل الشهري</div>
+                    <div class="financial-value positive">75,000 ريال</div>
+                </div>
+                <div class="financial-item">
+                    <div class="financial-label">المصروفات الشهرية</div>
+                    <div class="financial-value negative">120,000 ريال</div>
+                </div>
+                <div class="financial-item">
+                    <div class="financial-label">إجمالي الديون</div>
+                    <div class="financial-value negative">8,200,000 ريال</div>
+                </div>
+                <div class="financial-item">
+                    <div class="financial-label">الأصول</div>
+                    <div class="financial-value">3,500,000 ريال</div>
+                </div>
+            </div>
+
+            <div class="debt-box">
+                <h3>💳 الديون التفصيلية</h3>
+                <div class="debt-list">
+                    <ul>
+                        <li><strong>قرض عقاري (فيلا فاخرة):</strong> 4,500,000 ريال - قسط شهري: 35,000 ريال</li>
+                        <li><strong>قرض سيارتين فاخرتين:</strong> 800,000 ريال - قسط شهري: 18,000 ريال</li>
+                        <li><strong>ديون استثمارات فاشلة:</strong> 2,200,000 ريال (مشروع عقاري فشل)</li>
+                        <li><strong>بطاقات ائتمانية:</strong> 700,000 ريال (5 بطاقات)</li>
+                    </ul>
+                </div>
+                <p style="color: #ff6b6b; margin-top: 15px;"><strong>ملاحظة:</strong> فهد يعيش فوق مستواه المادي بكثير. مصروفاته تتجاوز دخله بـ 45,000 ريال شهرياً!</p>
+            </div>
+
+            <h3 style="color: #d4af37; margin: 25px 0 15px;">المعاملات المشبوهة:</h3>
+            <table class="transaction-table">
+                <thead>
+                    <tr>
+                        <th>التاريخ</th>
+                        <th>النوع</th>
+                        <th>المبلغ</th>
+                        <th>الوصف</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="suspicious">
+                        <td>25 أكتوبر 2024</td>
+                        <td>سحب نقدي</td>
+                        <td>150,000 ريال</td>
+                        <td>سحب نقدي كبير بدون تفسير واضح</td>
+                    </tr>
+                    <tr class="suspicious">
+                        <td>1 نوفمبر 2024</td>
+                        <td>سداد دين</td>
+                        <td>200,000 ريال</td>
+                        <td>سداد عاجل لدائن كان يهدد باتخاذ إجراءات قانونية</td>
+                    </tr>
+                    <tr>
+                        <td>8 نوفمبر 2024</td>
+                        <td>مكالمة مع البنك</td>
+                        <td>-</td>
+                        <td>استفسار عن إمكانية الحصول على قرض جديد (رُفض)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="motive-analysis">
+                <h3>🎯 تحليل الدافع المالي</h3>
+                <p><strong>الوضع:</strong> فهد في أزمة مالية خانقة. ديونه تبلغ 8.2 مليون ريال وهو غير قادر على السداد.</p>
+                <p><strong>الوصية القديمة:</strong> يحصل على 80 مليون ريال - كافية لسداد جميع ديونه والعيش براحة.</p>
+                <p><strong>الوصية الجديدة:</strong> يحصل على 40 مليون ريال فقط - خسارة 40 مليون ريال.</p>
+                <p><strong>الضغط:</strong> دائنوه يضغطون عليه، والبنوك ترفض إقراضه المزيد.</p>
+                <p style="color: #ff6b6b; margin-top: 10px; font-size: 1.1em;"><strong>الاستنتاج:</strong> فهد كان يواجه كارثة مالية إذا تم توقيع الوصية الجديدة. لديه أقوى دافع مالي للقتل.</p>
+            </div>
+        </div>
+
+        <!-- MUNIRA -->
+        <div class="suspect-financial">
+            <h2>المشتبه به الثاني: منيرة العجمي (ابنة الأخ)</h2>
+
+            <div class="financial-grid">
+                <div class="financial-item">
+                    <div class="financial-label">الدخل الشهري</div>
+                    <div class="financial-value">8,000 ريال (راتبها من المزرعة)</div>
+                </div>
+                <div class="financial-item">
+                    <div class="financial-label">المصروفات الشهرية</div>
+                    <div class="financial-value">12,000 ريال</div>
+                </div>
+                <div class="financial-item">
+                    <div class="financial-label">المدخرات</div>
+                    <div class="financial-value positive">180,000 ريال</div>
+                </div>
+                <div class="financial-item">
+                    <div class="financial-label">الديون</div>
+                    <div class="financial-value negative">320,000 ريال</div>
+                </div>
+            </div>
+
+            <div class="debt-box">
+                <h3>💳 الديون التفصيلية</h3>
+                <div class="debt-list">
+                    <ul>
+                        <li><strong>ديون علاج زوجها المتوفى:</strong> 180,000 ريال (مستشفيات خاصة)</li>
+                        <li><strong>قرض شخصي:</strong> 100,000 ريال - قسط شهري: 3,500 ريال</li>
+                        <li><strong>بطاقة ائتمانية:</strong> 40,000 ريال</li>
+                    </ul>
+                </div>
+                <p style="color: #ff6b6b; margin-top: 15px;"><strong>ملاحظة:</strong> منيرة تعتمد بشكل كامل على كرم عمها. دخلها لا يكفي لتغطية مصروفاتها.</p>
+            </div>
+
+            <h3 style="color: #d4af37; margin: 25px 0 15px;">الوضع السكني:</h3>
+            <div style="background: rgba(61, 36, 20, 0.5); padding: 20px; border-right: 4px solid #d4af37; border-radius: 5px;">
+                <p><strong>الوضع الحالي:</strong> تعيش في بيت داخل المزرعة بدون إيجار (قيمة السكن: ~4,000 ريال شهرياً)</p>
+                <p><strong>في الوصية القديمة:</strong> لها الحق في البيت مدى الحياة + 10,000 ريال شهرياً + 5 ملايين نقداً</p>
+                <p><strong>في الوصية الجديدة:</strong> 2 مليون فقط، بدون بيت وبدون راتب شهري</p>
+            </div>
+
+            <div class="motive-analysis">
+                <h3>🎯 تحليل الدافع المالي</h3>
+                <p><strong>الوضع:</strong> منيرة أرملة مع طفلين، دخلها ضعيف وديونها متراكمة.</p>
+                <p><strong>الوصية القديمة:</strong> أمان مالي كامل مدى الحياة (بيت + راتب + 5 ملايين)</p>
+                <p><strong>الوصية الجديدة:</strong> 2 مليون فقط - تفقد البيت والراتب الشهري</p>
+                <p><strong>الخوف:</strong> إذا فقدت البيت، ستضطر للخروج من المزرعة وإيجاد سكن (تكلفة ~4,000 ريال شهرياً)</p>
+                <p style="color: #ff6b6b; margin-top: 10px; font-size: 1.1em;"><strong>الاستنتاج:</strong> منيرة كانت ستفقد أمانها المستقبلي بالكامل. دافع قوي للحفاظ على الوصية القديمة.</p>
+            </div>
+        </div>
+
+        <!-- KHALED -->
+        <div class="suspect-financial">
+            <h2>المشتبه به الثالث: خالد الدوسري (مدير الأعمال)</h2>
+
+            <div class="financial-grid">
+                <div class="financial-item">
+                    <div class="financial-label">الدخل الشهري</div>
+                    <div class="financial-value positive">45,000 ريال</div>
+                </div>
+                <div class="financial-item">
+                    <div class="financial-label">المصروفات الشهرية</div>
+                    <div class="financial-value">32,000 ريال</div>
+                </div>
+                <div class="financial-item">
+                    <div class="financial-label">المدخرات الرسمية</div>
+                    <div class="financial-value positive">850,000 ريال</div>
+                </div>
+                <div class="financial-item">
+                    <div class="financial-label">الديون</div>
+                    <div class="financial-value">لا يوجد</div>
+                </div>
+            </div>
+
+            <div class="critical-note">
+                <h3>🚨 اكتشاف خطير - الاختلاس</h3>
+                <p>التدقيق المالي الذي أجراه الحاج سعد قبل 3 أسابيع كشف عن <strong>اختلاس بمبلغ 12 مليون ريال</strong> على مدى 4 سنوات!</p>
+                <p>المبلغ المختلس: <strong style="font-size: 1.3em;">12,000,000 ريال</strong></p>
+            </div>
+
+            <h3 style="color: #d4af37; margin: 25px 0 15px;">المعاملات المشبوهة - الحسابات السرية:</h3>
+            <table class="transaction-table">
+                <thead>
+                    <tr>
+                        <th>التاريخ</th>
+                        <th>النوع</th>
+                        <th>المبلغ</th>
+                        <th>الحساب</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="suspicious">
+                        <td>2021-2024</td>
+                        <td>تحويلات متكررة</td>
+                        <td>12,000,000 ريال</td>
+                        <td>حساب سري في بنك آخر باسمه</td>
+                    </tr>
+                    <tr class="suspicious">
+                        <td>يناير 2021</td>
+                        <td>شراء أراضي</td>
+                        <td>3,500,000 ريال</td>
+                        <td>استخدام أموال مختلسة</td>
+                    </tr>
+                    <tr class="suspicious">
+                        <td>مارس 2022</td>
+                        <td>شراء شقة فاخرة</td>
+                        <td>2,800,000 ريال</td>
+                        <td>باسم زوجته</td>
+                    </tr>
+                    <tr class="suspicious">
+                        <td>يوليو 2023</td>
+                        <td>استثمارات</td>
+                        <td>4,200,000 ريال</td>
+                        <td>في البورصة</td>
+                    </tr>
+                    <tr class="suspicious">
+                        <td>أكتوبر 2024</td>
+                        <td>محاولة تحويل</td>
+                        <td>1,500,000 ريال</td>
+                        <td>إلى حساب خارجي (أوقفه البنك)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="debt-box">
+                <h3>⚖️ العواقب القانونية المحتملة</h3>
+                <div class="debt-list">
+                    <ul>
+                        <li><strong>تهمة الاختلاس:</strong> عقوبة تصل إلى 15 سنة سجن</li>
+                        <li><strong>الغرامة:</strong> ضعف المبلغ المختلس (24 مليون ريال)</li>
+                        <li><strong>مصادرة الممتلكات:</strong> الأراضي والشقة والاستثمارات</li>
+                        <li><strong>الفضيحة العامة:</strong> تدمير سمعته المهنية بالكامل</li>
+                        <li><strong>الحظر المهني:</strong> منع من العمل في المحاسبة مدى الحياة</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="motive-analysis">
+                <h3>🎯 تحليل الدافع المالي</h3>
+                <p><strong>الوضع:</strong> خالد كان على وشك الكشف والاعتقال. الحاج سعد اكتشف الاختلاس وكان ينوي الإبلاغ عنه.</p>
+                <p><strong>الموعد المحدد:</strong> الحاج سعد أخبره أنه سيبلغ الشرطة بعد توقيع الوصية (يوم الخميس 14 نوفمبر)</p>
+                <p><strong>العواقب:</strong> سجن 15 سنة + غرامة 24 مليون + مصادرة ممتلكاته + فضيحة عائلية</p>
+                <p style="color: #ff6b6b; margin-top: 10px; font-size: 1.1em;"><strong>الاستنتاج:</strong> خالد كان يواجه كارثة شاملة. قتل الحاج سعد كان السبيل الوحيد لتجنب السجن والفضيحة. دافع قوي جداً!</p>
+            </div>
+        </div>
+
+        <!-- ABDULLAH -->
+        <div class="suspect-financial">
+            <h2>المشتبه به الرابع: عبدالله الهاجري (الجار)</h2>
+
+            <div class="financial-grid">
+                <div class="financial-item">
+                    <div class="financial-label">الدخل السنوي (من المزرعة)</div>
+                    <div class="financial-value">450,000 ريال</div>
+                </div>
+                <div class="financial-item">
+                    <div class="financial-label">المصروفات السنوية</div>
+                    <div class="financial-value negative">720,000 ريال</div>
+                </div>
+                <div class="financial-item">
+                    <div class="financial-label">إجمالي الديون</div>
+                    <div class="financial-value negative">4,800,000 ريال</div>
+                </div>
+                <div class="financial-item">
+                    <div class="financial-label">قيمة مزرعته</div>
+                    <div class="financial-value">8,500,000 ريال</div>
+                </div>
+            </div>
+
+            <div class="debt-box">
+                <h3>💳 الديون التفصيلية</h3>
+                <div class="debt-list">
+                    <ul>
+                        <li><strong>قروض زراعية:</strong> 2,200,000 ريال (للتشغيل والري)</li>
+                        <li><strong>قروض بنكية:</strong> 1,800,000 ريال</li>
+                        <li><strong>ديون للموردين:</strong> 600,000 ريال (متأخرة)</li>
+                        <li><strong>رهن عقاري على المزرعة:</strong> 200,000 ريال</li>
+                    </ul>
+                </div>
+                <p style="color: #ff6b6b; margin-top: 15px;"><strong>ملاحظة:</strong> مزرعة عبدالله تخسر 270,000 ريال سنوياً. إنه على وشك الإفلاس.</p>
+            </div>
+
+            <h3 style="color: #d4af37; margin: 25px 0 15px;">النزاع على الأرض:</h3>
+            <div style="background: rgba(61, 36, 20, 0.5); padding: 20px; border-right: 4px solid #d4af37; border-radius: 5px; margin: 15px 0;">
+                <p><strong>الأرض المتنازع عليها:</strong> 50 هكتار (500,000 متر مربع)</p>
+                <p><strong>القيمة المقدرة:</strong> 30-35 مليون ريال</p>
+                <p><strong>موقف الحاج سعد:</strong> رفض البيع أو النقاش - الأرض ملك عائلة العجمي قانونياً</p>
+                <p><strong>عرض عبدالله الأخير:</strong> 15 مليون ريال (رُفض بشدة)</p>
+                <p><strong>القضايا القانونية:</strong> رفع عبدالله 4 قضايا على مدى 20 سنة - فشلت جميعها</p>
+            </div>
+
+            <div class="motive-analysis">
+                <h3>🎯 تحليل الدافع المالي</h3>
+                <p><strong>الوضع:</strong> عبدالله على وشك خسارة مزرعته بسبب الديون المتراكمة.</p>
+                <p><strong>الحل الوحيد:</strong> الحصول على الأرض المتنازع عليها وبيعها (35 مليون ريال)</p>
+                <p><strong>المشكلة:</strong> الحاج سعد رفض بشكل قاطع. الوصية الجديدة كانت ستجعل استرجاع الأرض مستحيلاً تماماً</p>
+                <p><strong>الحقد:</strong> 20 سنة من الخلافات والقضايا الفاشلة</p>
+                <p style="color: #ff6b6b; margin-top: 10px; font-size: 1.1em;"><strong>الاستنتاج:</strong> عبدالله كان يائساً ومليئاً بالحقد. قد يكون قتل الحاج سعد انتقاماً وأملاً في الحصول على الأرض من الورثة الأضعف.</p>
+            </div>
+        </div>
+
+        <!-- MAJED -->
+        <div class="suspect-financial">
+            <h2>المشتبه به الخامس: ماجد الشمري (المحامي)</h2>
+
+            <div class="financial-grid">
+                <div class="financial-item">
+                    <div class="financial-label">الدخل الشهري</div>
+                    <div class="financial-value positive">95,000 ريال</div>
+                </div>
+                <div class="financial-item">
+                    <div class="financial-label">المصروفات الشهرية</div>
+                    <div class="financial-value">55,000 ريال</div>
+                </div>
+                <div class="financial-item">
+                    <div class="financial-label">المدخرات</div>
+                    <div class="financial-value positive">1,800,000 ريال</div>
+                </div>
+                <div class="financial-item">
+                    <div class="financial-label">الديون</div>
+                    <div class="financial-value negative">500,000 ريال</div>
+                </div>
+            </div>
+
+            <h3 style="color: #d4af37; margin: 25px 0 15px;">العلاقة المالية مع العملاء:</h3>
+            <table class="transaction-table">
+                <thead>
+                    <tr>
+                        <th>العميل</th>
+                        <th>الأتعاب السنوية</th>
+                        <th>ملاحظات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>الحاج سعد العجمي</td>
+                        <td class="suspicious">480,000 ريال</td>
+                        <td>أكبر عميل - 42% من دخله!</td>
+                    </tr>
+                    <tr class="suspicious">
+                        <td>فهد العجمي (سراً)</td>
+                        <td class="suspicious">180,000 ريال</td>
+                        <td>تضارب مصالح - كان يعمل لصالحه سراً!</td>
+                    </tr>
+                    <tr>
+                        <td>عملاء آخرون</td>
+                        <td>480,000 ريال</td>
+                        <td>عدة عملاء صغار</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="critical-note">
+                <h3>🚨 تضارب المصالح الخطير</h3>
+                <p>ماجد كان يعمل كمحامي للحاج سعد (يحضر الوصية)، وفي نفس الوقت كان يعمل سراً لصالح فهد (الابن) للبحث عن "ثغرات قانونية" في الوصية!</p>
+                <p style="margin-top: 15px;">عندما اكتشف الحاج سعد هذا التضارب قبل يومين من الوفاة، هدده بـ:</p>
+                <div style="background: rgba(139, 0, 0, 0.2); padding: 15px; border-radius: 5px; margin-top: 15px;">
+                    <ul style="list-style-position: inside; line-height: 2.2;">
+                        <li>فضحه أمام نقابة المحامين</li>
+                        <li>سحب جميع قضاياه (خسارة 480,000 ريال سنوياً)</li>
+                        <li>رفع قضية تعويض ضده</li>
+                        <li>تدمير سمعته المهنية بالكامل</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="motive-analysis">
+                <h3>🎯 تحليل الدافع المالي</h3>
+                <p><strong>الوضع:</strong> ماجد كان على وشك فقدان أكبر عملائه (42% من دخله) + فضيحة مهنية</p>
+                <p><strong>التهديد المباشر:</strong> الحاج سعد سيبلغ نقابة المحامين يوم الخميس</p>
+                <p><strong>العواقب:</strong> شطب من النقابة + خسارة السمعة + قضايا تعويض + إفلاس مكتبه</p>
+                <p style="color: #ff6b6b; margin-top: 10px; font-size: 1.1em;"><strong>الاستنتاج:</strong> ماجد كان يواجه كارثة مهنية ومالية. دافع قوي لإيقاف الحاج سعد قبل الفضيحة.</p>
+            </div>
+        </div>
+
+        <!-- SUMMARY -->
+        <div class="summary-box">
+            <h2>📊 ترتيب المشتبه بهم حسب قوة الدافع المالي</h2>
+
+            <div class="ranking-list">
+                <div class="ranking-item high">
+                    <h3 style="color: #ff6b6b; margin-bottom: 10px;">🥇 المركز الأول: خالد الدوسري</h3>
+                    <p><strong>الدافع:</strong> تجنب السجن 15 سنة + غرامة 24 مليون + الفضيحة</p>
+                    <p><strong>الضغط:</strong> كان سيتم الإبلاغ عنه خلال يومين</p>
+                    <p><strong>قوة الدافع:</strong> 10/10</p>
+                </div>
+
+                <div class="ranking-item high">
+                    <h3 style="color: #ff6b6b; margin-bottom: 10px;">🥈 المركز الثاني: فهد العجمي</h3>
+                    <p><strong>الدافع:</strong> خسارة 40 مليون ريال + أزمة ديون خانقة</p>
+                    <p><strong>الضغط:</strong> دائنون يطاردونه، ديون 8.2 مليون</p>
+                    <p><strong>قوة الدافع:</strong> 9/10</p>
+                </div>
+
+                <div class="ranking-item medium">
+                    <h3 style="color: #d4af37; margin-bottom: 10px;">🥉 المركز الثالث: ماجد الشمري</h3>
+                    <p><strong>الدافع:</strong> فضيحة مهنية + خسارة 42% من دخله</p>
+                    <p><strong>الضغط:</strong> كان سيتم فضحه خلال يومين</p>
+                    <p><strong>قوة الدافع:</strong> 7/10</p>
+                </div>
+
+                <div class="ranking-item medium">
+                    <h3 style="color: #d4af37; margin-bottom: 10px;">المركز الرابع: منيرة العجمي</h3>
+                    <p><strong>الدافع:</strong> فقدان الأمان المستقبلي (بيت + راتب + 3 ملايين)</p>
+                    <p><strong>الضغط:</strong> أرملة مع طفلين، دخل محدود</p>
+                    <p><strong>قوة الدافع:</strong> 6/10</p>
+                </div>
+
+                <div class="ranking-item low">
+                    <h3 style="color: #6b9b7a; margin-bottom: 10px;">المركز الخامس: عبدالله الهاجري</h3>
+                    <p><strong>الدافع:</strong> حقد قديم + رغبة في الحصول على الأرض</p>
+                    <p><strong>الضغط:</strong> على وشك الإفلاس</p>
+                    <p><strong>قوة الدافع:</strong> 5/10 (الحقد أكثر من المال)</p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>الدليل رقم: EVD-004 | القضية: CI-4192</p>
+            <p>تم تجميعه بواسطة النقيب أحمد الزهراني | نوفمبر 2024</p>
+        </footer>
+    </div>
+</body>
+</html>

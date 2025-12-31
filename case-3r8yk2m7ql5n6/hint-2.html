@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تلميح 2 - تضييق الاحتمالات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #1a0e00 0%, #3d2414 50%, #1a0e00 100%);
+            color: #d4c5a9;
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
+        .detective-icon {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 48px;
+            z-index: 1000;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .back-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #8b6f47, #a0826d);
+            color: #fff;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: linear-gradient(135deg, #d4af37, #c9a961);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(61, 36, 20, 0.6);
+            border: 3px solid #8b6f47;
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-family: 'Amiri', serif;
+            font-size: 2.5em;
+            color: #d4af37;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+            margin-bottom: 15px;
+        }
+
+        .hint-level {
+            color: #d4af37;
+            font-size: 1.1em;
+            letter-spacing: 2px;
+        }
+
+        .warning-box {
+            background: rgba(212, 175, 55, 0.15);
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 40px;
+            text-align: center;
+            line-height: 2;
+        }
+
+        .warning-box::before {
+            content: '🔍';
+            font-size: 3em;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .hint-box {
+            background: rgba(40, 25, 15, 0.7);
+            border: 2px solid #8b6f47;
+            border-radius: 8px;
+            padding: 35px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .hint-box h2 {
+            font-family: 'Amiri', serif;
+            color: #d4af37;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 2px solid #8b6f47;
+            padding-bottom: 15px;
+        }
+
+        .hint-content {
+            background: rgba(61, 36, 20, 0.5);
+            padding: 25px;
+            border-right: 4px solid #d4af37;
+            border-radius: 5px;
+            line-height: 2.2;
+            font-size: 1.1em;
+        }
+
+        .elimination-box {
+            background: rgba(107, 155, 122, 0.15);
+            border: 2px solid #6b9b7a;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .elimination-box h3 {
+            color: #6b9b7a;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            font-family: 'Amiri', serif;
+        }
+
+        .suspect-box {
+            background: rgba(40, 25, 15, 0.6);
+            padding: 20px;
+            margin: 20px 0;
+            border-right: 4px solid #8b6f47;
+            border-radius: 5px;
+        }
+
+        .suspect-box.eliminated {
+            border-right-color: #6b9b7a;
+            opacity: 0.7;
+        }
+
+        .suspect-box.possible {
+            border-right-color: #ff6b6b;
+            background: rgba(139, 0, 0, 0.15);
+        }
+
+        .suspect-name {
+            color: #d4af37;
+            font-weight: 700;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .suspect-box.eliminated .suspect-name {
+            color: #6b9b7a;
+        }
+
+        .suspect-box.possible .suspect-name {
+            color: #ff6b6b;
+        }
+
+        .emphasis {
+            color: #d4af37;
+            font-weight: 700;
+        }
+
+        .critical {
+            color: #ff6b6b;
+            font-weight: 700;
+        }
+
+        .clue-list {
+            background: rgba(61, 36, 20, 0.6);
+            padding: 20px;
+            margin: 20px 0;
+            border-right: 4px solid #d4af37;
+            border-radius: 5px;
+        }
+
+        .clue-list ul {
+            list-style-position: inside;
+            line-height: 2.5;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            border-top: 2px solid #8b6f47;
+            color: #8b7355;
+        }
+    </style>
+</head>
+<body>
+    <div class="detective-icon">🕵️</div>
+
+    <div class="container">
+        <a href="index.html" class="back-link">← العودة إلى القضية الرئيسية</a>
+
+        <header>
+            <h1>🔍 التلميح الثاني</h1>
+            <div class="hint-level">مستوى التلميح: متوسط - تضييق نطاق المشتبه بهم</div>
+        </header>
+
+        <div class="warning-box">
+            <p><strong>تنبيه:</strong> هذا التلميح سيساعدك على استبعاد بعض المشتبه بهم والتركيز على الأكثر احتمالاً. سنستخدم عملية الاستبعاد المنطقي.</p>
+        </div>
+
+        <div class="hint-box">
+            <h2>❌ عملية الاستبعاد</h2>
+            <div class="hint-content">
+                <p>دعنا نستبعد المشتبه بهم واحداً تلو الآخر بناءً على الأدلة المادية:</p>
+            </div>
+
+            <div class="suspect-box eliminated">
+                <div class="suspect-name">✗ عبدالله الهاجري (الجار)</div>
+                <p><strong>السبب:</strong> رغم أن عبدالله دخل المجلس (5:00 - 5:10 مساءً)، إلا أن هناك مشكلة كبيرة:</p>
+                <br>
+                <p>• كان في المجلس لمدة 10 دقائق فقط</p>
+                <p>• كان الحاج سعد <span class="emphasis">موجوداً معه</span> طوال الوقت (كانا يتحدثان)</p>
+                <p>• كيف يمكنه إضافة السم إلى الإبريق بينما الحاج سعد ينظر إليه؟</p>
+                <p>• بعد مغادرته، بقي الإبريق في المجلس لمدة ساعة تقريباً، وثلاثة أشخاص آخرين دخلوا بعده</p>
+                <br>
+                <p><strong>الاستنتاج:</strong> من غير المحتمل أن يكون عبدالله القاتل رغم وجود حقد وبصمات. الفرصة ضعيفة جداً.</p>
+            </div>
+
+            <div class="suspect-box eliminated">
+                <div class="suspect-name">✗ منيرة العجمي (ابنة الأخ)</div>
+                <p><strong>السبب:</strong> رغم أن منيرة حضّرت القهوة، إلا أن التوقيت يستبعدها:</p>
+                <br>
+                <p>• حضّرت القهوة الساعة 4:30 مساءً وكانت نظيفة (الحاج سعد أثنى عليها)</p>
+                <p>• <span class="emphasis">لم تدخل المجلس مرة أخرى</span> بعد الساعة 4:35 مساءً</p>
+                <p>• لو كانت هي القاتلة، لأضافت السم أثناء التحضير، لكن الحاج سعد مدح القهوة بعد أن تذوقها</p>
+                <p>• بصماتها على الإبريق طبيعية تماماً (هي من حمله)</p>
+                <br>
+                <p><strong>الاستنتاج:</strong> منيرة لديها دافع قوي، لكن لم تكن لديها الفرصة لإضافة السم بعد تحضير القهوة.</p>
+            </div>
+
+            <div class="suspect-box eliminated">
+                <div class="suspect-name">✗ خالد الدوسري (مدير الأعمال)</div>
+                <p><strong>السبب:</strong> رغم أن خالد لديه أقوى دافع (تجنب السجن)، إلا أن:</p>
+                <br>
+                <p>• <span class="emphasis">لم يدخل المجلس نهائياً</span> في يوم الجريمة</p>
+                <p>• كان في مكتب الإدارة طوال المساء (في مبنى منفصل)</p>
+                <p>• لا توجد بصماته في المجلس أو على الإبريق</p>
+                <p>• ليس لديه وصول سهل إلى المجلس الخاص للحاج سعد</p>
+                <br>
+                <p><strong>الاستنتاج:</strong> خالد لديه أقوى دافع، لكن لم تكن لديه الفرصة المادية لإضافة السم.</p>
+            </div>
+        </div>
+
+        <div class="hint-box">
+            <h2>✓ المشتبه بهم المتبقون</h2>
+            <div class="hint-content">
+                <p>بعد الاستبعاد، يبقى لدينا شخصان فقط كانت لديهما <span class="critical">الفرصة الحقيقية</span>:</p>
+            </div>
+
+            <div class="suspect-box possible">
+                <div class="suspect-name">🔴 ماجد الشمري (المحامي)</div>
+                <p><strong>الفرصة:</strong></p>
+                <p>• دخل المجلس من 5:15 - 5:45 مساءً (30 دقيقة!)</p>
+                <p>• كان بمفرده مع الإبريق طوال هذه الفترة</p>
+                <p>• الحاج سعد لم يشرب القهوة أثناء الجلسة (غريب!)</p>
+                <br>
+                <p><strong>الدافع:</strong></p>
+                <p>• كان سيفقد رخصته المهنية وسمعته بالكامل</p>
+                <p>• الحاج سعد هدده بإبلاغ نقابة المحامين</p>
+                <p>• سيخسر 42% من دخله (أكبر عميل)</p>
+                <br>
+                <p><strong>الدليل:</strong></p>
+                <p>• كان يتآمر مع فهد (الرسائل تثبت ذلك)</p>
+                <p>• وجوده في المجلس لمدة 30 دقيقة يعطيه وقتاً كافياً</p>
+            </div>
+
+            <div class="suspect-box possible">
+                <div class="suspect-name">🔴 فهد العجمي (الابن الأكبر)</div>
+                <p><strong>الفرصة:</strong></p>
+                <p>• دخل المجلس من 5:50 - 5:55 مساءً</p>
+                <p>• <span class="critical">آخر شخص دخل المجلس قبل أن يشرب الحاج سعد القهوة!</span></p>
+                <p>• كان بمفرده مع والده والإبريق لمدة 5 دقائق</p>
+                <br>
+                <p><strong>الدافع:</strong></p>
+                <p>• سيخسر 40 مليون ريال من الميراث</p>
+                <p>• لديه ديون 8.2 مليون ريال (أزمة خانقة)</p>
+                <p>• كان يتآمر مع ماجد للبحث عن ثغرات قانونية</p>
+                <br>
+                <p><strong>الدليل:</strong></p>
+                <p>• ادّعى أنه كان في مكتبه، لكنه شوهد في المجلس!</p>
+                <p>• لديه مفتاح خاص للمجلس ويعرف عادات والده</p>
+                <p>• بصماته موجودة في المجلس</p>
+            </div>
+        </div>
+
+        <div class="hint-box">
+            <h2>🎯 السؤال الحاسم</h2>
+            <div class="hint-content">
+                <p>الآن لدينا شخصان محتملان: <span class="critical">ماجد</span> أو <span class="critical">فهد</span>.</p>
+                <br>
+                <p>كلاهما كان في المجلس خلال الفترة الحرجة. كلاهما لديه دافع قوي. كلاهما كان لديه فرصة.</p>
+                <br>
+                <p><strong>لكن هناك تفصيلة صغيرة جداً ومهمة جداً تحدد القاتل:</strong></p>
+                <br>
+                <div class="clue-list">
+                    <ul>
+                        <li>لماذا لم يشرب الحاج سعد القهوة أثناء جلسته مع ماجد (5:15 - 5:45 مساءً)؟</li>
+                        <li>متى بالضبط شرب الحاج سعد من القهوة؟</li>
+                        <li>من كان <span class="critical">آخر شخص</span> في المجلس قبل أن يشرب الحاج سعد القهوة المسمومة؟</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="hint-box">
+            <h2>💡 تلميح إضافي</h2>
+            <div class="hint-content">
+                <p>فكر في هذا السيناريو:</p>
+                <br>
+                <p>• إذا كان ماجد هو القاتل، فقد أضاف السم بين 5:15 - 5:45 مساءً</p>
+                <p>• لكن الحاج سعد لم يشرب القهوة أثناء الجلسة</p>
+                <p>• بعد مغادرة ماجد، دخل فهد (5:50 مساءً)</p>
+                <p>• <span class="emphasis">بعد مغادرة فهد مباشرة</span>، شرب الحاج سعد القهوة وبدأت الأعراض</p>
+                <br>
+                <p><strong>السؤال:</strong> هل هذا مجرد توقيت مصادفة؟ أم أن فهد فعل شيئاً خلال دقائقه الخمس في المجلس؟</p>
+            </div>
+        </div>
+
+        <div class="elimination-box">
+            <h3>📌 الخطوة التالية</h3>
+            <p style="line-height: 2.2; font-size: 1.05em;">
+                ركز على هذين المشتبه بهم فقط: <strong>ماجد</strong> و<strong>فهد</strong>.
+            </p>
+            <br>
+            <p>أعد قراءة:</p>
+            <div class="clue-list">
+                <ul>
+                    <li><strong>الدليل 03:</strong> الجدول الزمني - انتبه للفترة من 5:15 - 6:00 مساءً</li>
+                    <li><strong>الدليل 06:</strong> سجلات المكالمات - ماذا كان فهد وماجد يخططان؟</li>
+                    <li><strong>الدليل 04:</strong> من منهما كان لديه دافع أقوى؟</li>
+                </ul>
+            </div>
+            <br>
+            <p style="text-align: center; margin-top: 20px; font-size: 1.1em; color: #d4af37;">
+                <strong>إذا كنت لا تزال محتاراً بين الاثنين، راجع التلميح الثالث للوصول إلى الحل النهائي.</strong>
+            </p>
+        </div>
+
+        <footer>
+            <p>التلميح رقم: 2 | القضية: CI-4192</p>
+            <p>تم إعداده بواسطة النقيب أحمد الزهراني</p>
+        </footer>
+    </div>
+</body>
+</html>

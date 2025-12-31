@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ملف القضية - المشتبه بهم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #1a0e00 0%, #3d2414 50%, #1a0e00 100%);
+            color: #d4c5a9;
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
+        .detective-icon {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 48px;
+            z-index: 1000;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .back-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #8b6f47, #a0826d);
+            color: #fff;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: linear-gradient(135deg, #d4af37, #c9a961);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 30px;
+            background: rgba(61, 36, 20, 0.6);
+            border: 3px solid #8b6f47;
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-family: 'Amiri', serif;
+            font-size: 2.5em;
+            color: #d4af37;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+        }
+
+        .victim-card {
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.2), rgba(61, 36, 20, 0.8));
+            border: 3px solid #8b0000;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .victim-card h2 {
+            font-family: 'Amiri', serif;
+            color: #ff6b6b;
+            font-size: 2em;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 2px solid #8b0000;
+            padding-bottom: 15px;
+        }
+
+        .victim-content {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .victim-image {
+            width: 100%;
+            border-radius: 8px;
+            border: 3px solid #8b0000;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .victim-details {
+            background: rgba(40, 25, 15, 0.5);
+            padding: 25px;
+            border-right: 4px solid #8b0000;
+            border-radius: 5px;
+        }
+
+        .victim-details p {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .suspect-section {
+            margin-bottom: 30px;
+        }
+
+        .suspect-section h2 {
+            font-family: 'Amiri', serif;
+            color: #d4af37;
+            font-size: 2em;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 2px solid #8b6f47;
+            padding-bottom: 15px;
+        }
+
+        .suspect-card {
+            background: rgba(40, 25, 15, 0.7);
+            border: 2px solid #8b6f47;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 40px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .suspect-card:hover {
+            border-color: #d4af37;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        .suspect-header {
+            border-bottom: 2px solid #8b6f47;
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        .suspect-name {
+            font-family: 'Amiri', serif;
+            color: #d4af37;
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .suspect-role {
+            color: #b8956f;
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+
+        .threat-level {
+            display: inline-block;
+            background: linear-gradient(135deg, #8b0000, #cd5c5c);
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .threat-high {
+            background: linear-gradient(135deg, #8b0000, #cd5c5c);
+        }
+
+        .threat-medium {
+            background: linear-gradient(135deg, #d4af37, #c9a961);
+        }
+
+        .threat-low {
+            background: linear-gradient(135deg, #4a7c59, #6b9b7a);
+        }
+
+        .suspect-content {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 30px;
+        }
+
+        .suspect-image {
+            width: 100%;
+            border-radius: 8px;
+            border: 2px solid #8b6f47;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .suspect-info {
+            display: grid;
+            gap: 20px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-item {
+            background: rgba(40, 30, 20, 0.4);
+            padding: 12px;
+            border-radius: 5px;
+            border-right: 3px solid #8b7355;
+        }
+
+        .info-label {
+            color: #8b7355;
+            font-size: 0.85em;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-value {
+            color: #d4c5a9;
+            font-size: 1em;
+            font-weight: 600;
+        }
+
+        .section-block {
+            background: rgba(61, 36, 20, 0.3);
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .section-block h3 {
+            color: #d4af37;
+            font-size: 1.3em;
+            margin-bottom: 12px;
+            font-family: 'Amiri', serif;
+        }
+
+        .motive-box {
+            background: rgba(139, 0, 0, 0.15);
+            border: 2px solid #8b0000;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .motive-box h4 {
+            color: #ff6b6b;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            font-family: 'Amiri', serif;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            border-top: 2px solid #8b6f47;
+            color: #8b7355;
+        }
+
+        @media (max-width: 968px) {
+            .suspect-content,
+            .victim-content {
+                grid-template-columns: 1fr;
+            }
+
+            .suspect-image,
+            .victim-image {
+                max-width: 300px;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="detective-icon">🕵️</div>
+
+    <div class="container">
+        <a href="index.html" class="back-link">← العودة إلى القضية الرئيسية</a>
+
+        <header>
+            <h1>📋 ملف القضية - المشتبه بهم</h1>
+            <p style="color: #c9a961; margin-top: 15px; font-size: 1.1em;">القضية رقم: CI-4192 | واحة الأحساء، المملكة العربية السعودية</p>
+        </header>
+
+        <!-- VICTIM -->
+        <div class="victim-card">
+            <h2>💀 الضحية</h2>
+            <div class="victim-content">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="الحاج سعد العجمي" class="victim-image" id="victim-img">
+                <div class="victim-details">
+                    <p><strong>الاسم:</strong> الحاج سعد بن عبدالعزيز العجمي</p>
+                    <p><strong>العمر:</strong> 62 عاماً</p>
+                    <p><strong>المهنة:</strong> مزارع ثري ومالك أكبر مزرعة نخيل في واحة الأحساء</p>
+                    <p><strong>الحالة الاجتماعية:</strong> متزوج، له 3 أبناء و 2 بنات (جميعهم متزوجون)</p>
+                    <p><strong>الثروة المقدرة:</strong> أكثر من 200 مليون ريال (أراضي، عقارات، استثمارات)</p>
+                    <br>
+                    <p><strong>الوصف:</strong> رجل محترم ومحبوب في المجتمع، معروف بكرمه وتدينه. كان يدير مزرعة نخيل تنتج أجود أنواع التمور في المنطقة. قبل وفاته كان يخطط لمشروع خيري كبير للقرية.</p>
+                    <br>
+                    <p><strong>سبب الوفاة:</strong> تسمم بمادة سامة (تحت التحليل) مخلوطة في الطعام أو القهوة العربية</p>
+                    <p><strong>تاريخ الوفاة:</strong> الثلاثاء 12 نوفمبر 2024، بين 6:00 مساءً - 7:30 مساءً</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUSPECTS -->
+        <div class="suspect-section">
+            <h2>🔍 المشتبه بهم</h2>
+
+            <!-- SUSPECT 1 -->
+            <div class="suspect-card">
+                <div class="suspect-header">
+                    <div class="suspect-name">المشتبه به الأول: فهد العجمي</div>
+                    <div class="suspect-role">الابن الأكبر ومدير المزرعة</div>
+                    <span class="threat-level threat-high">مستوى الخطورة: مرتفع</span>
+                </div>
+
+                <div class="suspect-content">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="فهد العجمي" class="suspect-image" id="suspect1-img">
+                    
+                    <div class="suspect-info">
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">العمر</div>
+                                <div class="info-value">42 عاماً</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">المهنة</div>
+                                <div class="info-value">مدير المزرعة</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">الحالة المالية</div>
+                                <div class="info-value">ديون كبيرة</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">العلاقة بالضحية</div>
+                                <div class="info-value">ابنه الأكبر</div>
+                            </div>
+                        </div>
+
+                        <div class="section-block">
+                            <h3>الخلفية</h3>
+                            <p>فهد هو الابن الأكبر للحاج سعد، ويعمل معه في إدارة المزرعة منذ 20 عاماً. رجل طموح وقوي الشخصية، لكنه معروف بحبه للمال وكثرة إنفاقه. تزوج من عائلة ثرية ولديه أسلوب حياة باهظ التكاليف. كان يتوقع أن يرث المزرعة كاملة باعتباره الابن الأكبر.</p>
+                        </div>
+
+                        <div class="motive-box">
+                            <h4>الدافع</h4>
+                            <p><strong>الإرث والطمع:</strong> فهد كان يتوقع وراثة المزرعة بالكامل. الوصية الجديدة كانت ستقسم الميراث بالتساوي بين جميع الأبناء والبنات (حسب الشريعة الإسلامية)، بالإضافة إلى التبرع بـ 40 مليون ريال للمشروع الخيري. هذا كان سيقلل نصيبه بشكل كبير. لديه ديون تقدر بـ 8 ملايين ريال بسبب استثمارات فاشلة.</p>
+                        </div>
+
+                        <div class="section-block">
+                            <h3>الحجة الغيابية (Alibi)</h3>
+                            <p>يدّعي أنه كان في مكتب المزرعة يراجع حسابات الموسم من الساعة 5:30 مساءً حتى 7:00 مساءً. زوجته تؤكد أنه عاد للبيت الساعة 7:15 مساءً تقريباً. لكن لا يوجد شهود على وجوده في المكتب في الفترة الحرجة.</p>
+                        </div>
+
+                        <div class="section-block">
+                            <h3>ملاحظات المحقق</h3>
+                            <p>• لديه مفتاح خاص لمجلس والده<br>
+                            • يعرف عادات والده اليومية بدقة<br>
+                            • لديه الدافع الأقوى من الناحية المالية<br>
+                            • كان غاضباً جداً عندما علم بنية والده التبرع للمشروع الخيري<br>
+                            • وُجدت بصماته في عدة أماكن في المجلس (طبيعي لأنه يزوره كثيراً)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUSPECT 2 -->
+            <div class="suspect-card">
+                <div class="suspect-header">
+                    <div class="suspect-name">المشتبه به الثاني: منيرة العجمي</div>
+                    <div class="suspect-role">ابنة أخ الضحية - تعيش في المزرعة</div>
+                    <span class="threat-level threat-medium">مستوى الخطورة: متوسط</span>
+                </div>
+
+                <div class="suspect-content">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="منيرة العجمي" class="suspect-image" id="suspect2-img">
+                    
+                    <div class="suspect-info">
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">العمر</div>
+                                <div class="info-value">35 عاماً</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">المهنة</div>
+                                <div class="info-value">مساعدة إدارية</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">الحالة الاجتماعية</div>
+                                <div class="info-value">أرملة</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">العلاقة بالضحية</div>
+                                <div class="info-value">ابنة أخيه المتوفى</div>
+                            </div>
+                        </div>
+
+                        <div class="section-block">
+                            <h3>الخلفية</h3>
+                            <p>منيرة هي ابنة أخ الحاج سعد المتوفى. بعد وفاة زوجها قبل 5 سنوات، استضافها عمها في المزرعة مع طفليها. تساعد في الإدارة المكتبية والحسابات، وتعتبر من أكثر الناس ذكاءً وتنظيماً في المزرعة. لها علاقة جيدة بعمها، وكان يعاملها كابنته.</p>
+                        </div>
+
+                        <div class="motive-box">
+                            <h4>الدافع</h4>
+                            <p><strong>الأمان المالي والخوف من المستقبل:</strong> في الوصية القديمة، خصص لها الحاج سعد مبلغ 5 ملايين ريال وبيت في المزرعة مدى الحياة. الوصية الجديدة كانت ستلغي هذا البند لأن التبرع الخيري سيستنزف جزءاً كبيراً من التركة. منيرة تخاف من فقدان الأمان المالي لها ولأطفالها.</p>
+                        </div>
+
+                        <div class="section-block">
+                            <h3>الحجة الغيابية (Alibi)</h3>
+                            <p>تدّعي أنها كانت في غرفتها تساعد أطفالها في واجباتهم المدرسية من 5:00 مساءً حتى 8:00 مساءً. أطفالها (8 و 10 سنوات) يؤكدون ذلك، لكن شهادة الأطفال قد لا تكون موثوقة تماماً.</p>
+                        </div>
+
+                        <div class="section-block">
+                            <h3>ملاحظات المحقق</h3>
+                            <p>• تعرف مواعيد عمها وعاداته اليومية بدقة<br>
+                            • لديها مفتاح لمعظم غرف المزرعة بحكم عملها الإداري<br>
+                            • ذكية ومنظمة - قادرة على التخطيط الدقيق<br>
+                            • كانت آخر من حضّر القهوة العربية لعمها ذلك اليوم (الساعة 4:30 مساءً)<br>
+                            • أظهرت قلقاً شديداً عند سماعها بنية عمها تغيير الوصية</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUSPECT 3 -->
+            <div class="suspect-card">
+                <div class="suspect-header">
+                    <div class="suspect-name">المشتبه به الثالث: خالد الدوسري</div>
+                    <div class="suspect-role">مدير أعمال المزرعة والمحاسب</div>
+                    <span class="threat-level threat-high">مستوى الخطورة: مرتفع</span>
+                </div>
+
+                <div class="suspect-content">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="خالد الدوسري" class="suspect-image" id="suspect3-img">
+                    
+                    <div class="suspect-info">
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">العمر</div>
+                                <div class="info-value">48 عاماً</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">المهنة</div>
+                                <div class="info-value">مدير أعمال ومحاسب</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">مدة العمل</div>
+                                <div class="info-value">15 سنة</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">الحالة المالية</div>
+                                <div class="info-value">جيدة ظاهرياً</div>
+                            </div>
+                        </div>
+
+                        <div class="section-block">
+                            <h3>الخلفية</h3>
+                            <p>خالد يعمل مع الحاج سعد منذ 15 عاماً كمدير أعمال ومحاسب رئيسي للمزرعة. رجل محترف ودقيق في عمله، يدير جميع الحسابات المالية والعقود التجارية. موثوق به من قبل الحاج سعد ولديه صلاحيات واسعة في التعاملات المالية.</p>
+                        </div>
+
+                        <div class="motive-box">
+                            <h4>الدافع</h4>
+                            <p><strong>اختلاس وتغطية الجريمة:</strong> قبل 3 أسابيع، بدأ الحاج سعد مراجعة دقيقة للحسابات بمساعدة مدقق خارجي استعداداً لتنظيم الوصية الجديدة. اكتشف تناقضات مالية تشير إلى اختلاس بمبلغ 12 مليون ريال على مدى السنوات الأربع الماضية. خالد هو المسؤول الوحيد عن هذه الحسابات. كان الحاج سعد ينوي مواجهته والإبلاغ عنه للسلطات بعد توقيع الوصية.</p>
+                        </div>
+
+                        <div class="section-block">
+                            <h3>الحجة الغيابية (Alibi)</h3>
+                            <p>يدّعي أنه كان في مكتبه في مبنى الإدارة يراجع الفواتير والمستندات من 4:00 مساءً حتى 7:30 مساءً. غادر المزرعة الساعة 7:45 مساءً (مسجل في كاميرات المراقبة عند البوابة الرئيسية). لكن لا يوجد شهود على وجوده المستمر في المكتب.</p>
+                        </div>
+
+                        <div class="section-block">
+                            <h3>ملاحظات المحقق</h3>
+                            <p>• لديه وصول كامل لجميع السجلات المالية<br>
+                            • يعرف محتويات الخزنة والوثائق المهمة<br>
+                            • كان على علم بموعد مراجعة المدقق الخارجي<br>
+                            • لديه دافع قوي جداً - مواجهة فضيحة واعتقال<br>
+                            • وُجدت حركات مالية مشبوهة في حساباته الشخصية<br>
+                            • كان متوتراً جداً في الأسابيع الأخيرة</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUSPECT 4 -->
+            <div class="suspect-card">
+                <div class="suspect-header">
+                    <div class="suspect-name">المشتبه به الرابع: عبدالله الهاجري</div>
+                    <div class="suspect-role">الجار - مزارع مجاور</div>
+                    <span class="threat-level threat-medium">مستوى الخطورة: متوسط</span>
+                </div>
+
+                <div class="suspect-content">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="عبدالله الهاجري" class="suspect-image" id="suspect4-img">
+                    
+                    <div class="suspect-info">
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">العمر</div>
+                                <div class="info-value">58 عاماً</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">المهنة</div>
+                                <div class="info-value">مزارع</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">العلاقة</div>
+                                <div class="info-value">جار ومنافس</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">الوضع المالي</div>
+                                <div class="info-value">متعثر مالياً</div>
+                            </div>
+                        </div>
+
+                        <div class="section-block">
+                            <h3>الخلفية</h3>
+                            <p>عبدالله الهاجري يملك مزرعة مجاورة لمزرعة الحاج سعد. بينهما نزاع قديم (منذ 20 سنة) حول حدود الأرض وحقوق المياه. مزرعته أصغر بكثير ومتعثرة مالياً. رجل عنيد وعصبي المزاج، معروف بخلافاته المتكررة مع جيرانه.</p>
+                        </div>
+
+                        <div class="motive-box">
+                            <h4>الدافع</h4>
+                            <p><strong>الحقد القديم والنزاع على الأرض:</strong> عبدالله يؤمن أن جزءاً من أرض الحاج سعد (حوالي 50 هكتار) هو ملك لعائلته وأن والد الحاج سعد استولى عليه بطرق غير مشروعة قبل عقود. رفع عدة قضايا قانونية لكنها فشلت جميعاً. قبل أسبوعين، عرض على الحاج سعد شراء هذا الجزء بـ 15 مليون ريال، لكن الحاج سعد رفض بشدة. الوصية الجديدة كانت ستجعل استرجاع الأرض مستحيلاً تماماً.</p>
+                        </div>
+
+                        <div class="section-block">
+                            <h3>الحجة الغيابية (Alibi)</h3>
+                            <p>يدّعي أنه كان في مزرعته طوال المساء. زوجته وعماله يؤكدون ذلك. لكنه زار مزرعة الحاج سعد في الصباح للحديث عن "موضوع مهم" (كما قال للحارس) - رغم أنه يزعم أنه لم يلتق بالحاج سعد.</p>
+                        </div>
+
+                        <div class="section-block">
+                            <h3>ملاحظات المحقق</h3>
+                            <p>• لديه حقد قديم وواضح ضد الضحية<br>
+                            • زار المزرعة صباح يوم الجريمة (مشبوه)<br>
+                            • يعرف تصميم المزرعة جيداً من الزيارات السابقة<br>
+                            • له سجل في المشاكل والخلافات<br>
+                            • شهود حجته الغيابية هم عائلته (قد لا يكونوا موضوعيين)<br>
+                            • وُجدت آثار أقدام مطابقة لحذائه قرب المجلس</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUSPECT 5 -->
+            <div class="suspect-card">
+                <div class="suspect-header">
+                    <div class="suspect-name">المشتبه به الخامس: ماجد الشمري</div>
+                    <div class="suspect-role">المحامي الخاص - محامي الوصايا</div>
+                    <span class="threat-level threat-low">مستوى الخطورة: منخفض</span>
+                </div>
+
+                <div class="suspect-content">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="ماجد الشمري" class="suspect-image" id="suspect5-img">
+                    
+                    <div class="suspect-info">
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">العمر</div>
+                                <div class="info-value">44 عاماً</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">المهنة</div>
+                                <div class="info-value">محامي</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">التخصص</div>
+                                <div class="info-value">قانون الأحوال الشخصية</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">مدة العمل</div>
+                                <div class="info-value">8 سنوات</div>
+                            </div>
+                        </div>
+
+                        <div class="section-block">
+                            <h3>الخلفية</h3>
+                            <p>ماجد الشمري هو المحامي الخاص للحاج سعد منذ 8 سنوات، متخصص في قضايا الوصايا والميراث. رجل محترف ومحترم، لديه مكتب محاماة ناجح في المنطقة الشرقية. كان يحضر الوصية الجديدة للحاج سعد ويعرف كل تفاصيلها.</p>
+                        </div>
+
+                        <div class="motive-box">
+                            <h4>الدافع</h4>
+                            <p><strong>تضارب المصالح المالية:</strong> ماجد كان يعمل سراً كمستشار قانوني لفهد العجمي (الابن) في موضوع آخر - مما يشكل تضارب مصالح خطير. فهد كان يدفع له مبالغ كبيرة لإيجاد "ثغرات قانونية" في الوصية الجديدة. عندما اكتشف الحاج سعد هذا الأمر (قبل يومين)، هدده بفضحه أمام نقابة المحامين وسحب جميع قضاياه منه، مما سيدمر سمعته المهنية.</p>
+                        </div>
+
+                        <div class="section-block">
+                            <h3>الحجة الغيابية (Alibi)</h3>
+                            <p>يدّعي أنه كان في مكتبه في مدينة الأحساء (20 كم من المزرعة) يعمل على قضايا أخرى من 3:00 مساءً حتى 8:00 مساءً. سكرتيرته تؤكد أنه كان في المكتب، لكنها غادرت الساعة 6:00 مساءً. بعد ذلك لا يوجد شهود.</p>
+                        </div>
+
+                        <div class="section-block">
+                            <h3>ملاحظات المحقق</h3>
+                            <p>• يعرف كل تفاصيل الوصية والترتيبات المالية<br>
+                            • لديه معرفة قانونية يمكن استخدامها لتخطيط الجريمة<br>
+                            • كان على علم بجدول الحاج سعد اليومي<br>
+                            • المسافة من مكتبه للمزرعة 20 دقيقة بالسيارة<br>
+                            • زار المزرعة في الأسبوع الماضي أكثر من مرة<br>
+                            • وُجدت مكالمات مشبوهة بينه وبين فهد العجمي<br>
+                            • تحت ضغط مالي لخسارة أكبر عميل له</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>القضية رقم: CI-4192 | تم إعداد الملف بواسطة النقيب أحمد الزهراني</p>
+            <p>نوفمبر 2024 - واحة الأحساء، المملكة العربية السعودية</p>
+        </footer>
+    </div>
+
+    <script>
+        // Load images with base64
+        const images = {
+            victim: '/mnt/user-data/uploads/سعد_العجمي.png',
+            suspect1: '/mnt/user-data/uploads/فهد_العجمي.png',
+            suspect2: '/mnt/user-data/uploads/منيرة_العجمي.png',
+            suspect3: '/mnt/user-data/uploads/خالد_الدوسري.png',
+            suspect4: '/mnt/user-data/uploads/عبدالله_الهاجري.png',
+            suspect5: '/mnt/user-data/uploads/ماجد_الشمري.png'
+        };
+
+        Object.keys(images).forEach(key => {
+            const img = document.getElementById(key + '-img');
+            if (img) {
+                img.src = images[key];
+            }
+        });
+    </script>
+</body>
+</html>

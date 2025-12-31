@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الحل النهائي - كشف القاتل</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #1a0e00 0%, #3d2414 50%, #1a0e00 100%);
+            color: #d4c5a9;
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
+        .detective-icon {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 48px;
+            z-index: 1000;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .back-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #8b6f47, #a0826d);
+            color: #fff;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: linear-gradient(135deg, #d4af37, #c9a961);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px;
+            background: rgba(139, 0, 0, 0.3);
+            border: 3px solid #8b0000;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-family: 'Amiri', serif;
+            font-size: 3em;
+            color: #ff6b6b;
+            text-shadow: 0 0 20px rgba(255, 107, 107, 0.6);
+            margin-bottom: 15px;
+        }
+
+        .solution-id {
+            color: #ffb3b3;
+            font-size: 1.1em;
+            letter-spacing: 2px;
+        }
+
+        .killer-reveal {
+            background: rgba(139, 0, 0, 0.3);
+            border: 4px solid #ff6b6b;
+            border-radius: 10px;
+            padding: 40px;
+            margin: 40px 0;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(139, 0, 0, 0.5);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 10px 30px rgba(139, 0, 0, 0.5); }
+            50% { box-shadow: 0 10px 40px rgba(139, 0, 0, 0.8); }
+        }
+
+        .killer-reveal::before {
+            content: '⚖️';
+            font-size: 4em;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .killer-reveal h2 {
+            font-family: 'Amiri', serif;
+            color: #ff6b6b;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .killer-name {
+            font-size: 3em;
+            color: #fff;
+            font-weight: 700;
+            text-shadow: 0 0 30px rgba(255, 107, 107, 0.8);
+            margin: 20px 0;
+        }
+
+        .section-box {
+            background: rgba(40, 25, 15, 0.7);
+            border: 2px solid #8b6f47;
+            border-radius: 8px;
+            padding: 35px;
+            margin-bottom: 35px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-box h2 {
+            font-family: 'Amiri', serif;
+            color: #d4af37;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 2px solid #8b6f47;
+            padding-bottom: 15px;
+        }
+
+        .content-box {
+            background: rgba(61, 36, 20, 0.5);
+            padding: 25px;
+            border-right: 4px solid #d4af37;
+            border-radius: 5px;
+            line-height: 2.2;
+            font-size: 1.05em;
+            margin: 20px 0;
+        }
+
+        .timeline-entry {
+            background: rgba(40, 25, 15, 0.6);
+            padding: 20px;
+            margin: 15px 0;
+            border-right: 4px solid #8b6f47;
+            border-radius: 5px;
+        }
+
+        .timeline-entry.critical {
+            border-right-color: #ff6b6b;
+            background: rgba(139, 0, 0, 0.2);
+        }
+
+        .time {
+            color: #d4af37;
+            font-weight: 700;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .timeline-entry.critical .time {
+            color: #ff6b6b;
+        }
+
+        .evidence-list {
+            background: rgba(61, 36, 20, 0.6);
+            padding: 25px;
+            margin: 20px 0;
+            border-right: 4px solid #d4af37;
+            border-radius: 5px;
+        }
+
+        .evidence-list h3 {
+            color: #d4af37;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            font-family: 'Amiri', serif;
+        }
+
+        .evidence-list ul {
+            list-style-position: inside;
+            line-height: 2.5;
+        }
+
+        .evidence-list li {
+            margin: 10px 0;
+            padding-right: 15px;
+        }
+
+        .motive-box {
+            background: rgba(255, 107, 107, 0.15);
+            border: 3px solid #ff6b6b;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+
+        .motive-box h3 {
+            color: #ff6b6b;
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            font-family: 'Amiri', serif;
+            text-align: center;
+        }
+
+        .emphasis {
+            color: #d4af37;
+            font-weight: 700;
+        }
+
+        .critical {
+            color: #ff6b6b;
+            font-weight: 700;
+        }
+
+        .verdict-box {
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.4), rgba(61, 36, 20, 0.8));
+            border: 4px solid #8b0000;
+            border-radius: 10px;
+            padding: 40px;
+            margin: 40px 0;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .verdict-box h2 {
+            font-family: 'Amiri', serif;
+            color: #ff6b6b;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+
+        .verdict-box p {
+            font-size: 1.2em;
+            line-height: 2.2;
+            color: #ffb3b3;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            border-top: 2px solid #8b6f47;
+            color: #8b7355;
+        }
+    </style>
+</head>
+<body>
+    <div class="detective-icon">🕵️</div>
+
+    <div class="container">
+        <a href="index.html" class="back-link">← العودة إلى القضية الرئيسية</a>
+
+        <header>
+            <h1>✅ الحل النهائي</h1>
+            <div class="solution-id">القضية رقم: CI-4192 | تم حل القضية</div>
+        </header>
+
+        <div class="killer-reveal">
+            <h2>القاتل هو:</h2>
+            <div class="killer-name">فهد بن سعد العجمي</div>
+            <p style="font-size: 1.3em; color: #ffb3b3; margin-top: 20px;">الابن الأكبر للضحية</p>
+        </div>
+
+        <div class="section-box">
+            <h2>🎯 ملخص الجريمة</h2>
+            <div class="content-box">
+                <p>في مساء يوم الثلاثاء 12 نوفمبر 2024، قام <strong>فهد العجمي</strong> بقتل والده <strong>الحاج سعد العجمي</strong> بإضافة جرعة قاتلة من الزرنيخ إلى إبريق القهوة العربية الخاص بوالده.</p>
+                <br>
+                <p><strong>الدافع:</strong> منع والده من توقيع وصية جديدة كانت ستخفض نصيبه من الميراث من 80 مليون ريال إلى 40 مليون ريال فقط، بينما كان يواجه ديوناً بقيمة 8.2 مليون ريال وضغوطاً مالية خانقة.</p>
+                <br>
+                <p><strong>الطريقة:</strong> استغل فهد دخوله للمجلس الساعة 5:50 مساءً (قبل 10 دقائق من شرب والده القهوة المسمومة) لإضافة السم إلى الإبريق عندما كان والده غير منتبه أو غادر الغرفة للحظات.</p>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <h2>⏰ إعادة بناء الجريمة - الجدول الزمني الكامل</h2>
+
+            <div class="timeline-entry">
+                <div class="time">الأسبوع قبل الجريمة</div>
+                <p>الحاج سعد يعلن عن نيته تغيير الوصية. فهد يعلم أنه سيخسر 40 مليون ريال. يبدأ التخطيط للجريمة.</p>
+            </div>
+
+            <div class="timeline-entry critical">
+                <div class="time">الاثنين 11 نوفمبر - مساءً</div>
+                <p>فهد يحصل على الزرنيخ (من مخزن المبيدات القديم في المزرعة أو من السوق السوداء).</p>
+            </div>
+
+            <div class="timeline-entry critical">
+                <div class="time">الثلاثاء 12 نوفمبر - 10:00 صباحاً</div>
+                <p>فهد يدخل مكتب والده بحجة البحث عن مستند. يسرق <strong>المفتاح B</strong> من درج المكتب (كان ينوي سرقة الخزنة بعد الجريمة لكنه فشل لأنه يحتاج المفتاحين معاً).</p>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="time">4:30 مساءً</div>
+                <p>منيرة تحضر القهوة العربية للحاج سعد. القهوة نظيفة وبدون سم.</p>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="time">5:00 - 5:10 مساءً</div>
+                <p>عبدالله الهاجري يدخل المجلس ويحاول مرة أخرى شراء الأرض. الحاج سعد يرفض. عبدالله يغادر غاضباً.</p>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="time">5:15 - 5:45 مساءً</div>
+                <p>ماجد الشمري (المحامي) في المجلس لمراجعة الوصية. الحاج سعد مشغول بقراءة الوثائق ولا يشرب القهوة. ماجد يغادر.</p>
+            </div>
+
+            <div class="timeline-entry critical">
+                <div class="time">5:50 مساءً - اللحظة الحاسمة</div>
+                <p><strong>فهد يدخل المجلس</strong> بحجة السلام على والده. يحمل معه الزرنيخ مخبأً في جيبه.</p>
+                <p>الحاج سعد يقوم للوضوء استعداداً لصلاة المغرب (أو يتجه لجلب شيء من الغرفة المجاورة).</p>
+                <p><span class="critical">فهد يستغل اللحظة:</span> يفتح العلبة الصغيرة ويسكب الزرنيخ في إبريق القهوة. يحركه قليلاً ليذوب السم.</p>
+                <p>الحاج سعد يعود. يتحدثان لدقيقتين عن أعمال المزرعة.</p>
+            </div>
+
+            <div class="timeline-entry critical">
+                <div class="time">5:55 مساءً</div>
+                <p>فهد يغادر المجلس. يعود إلى مكتبه ويتظاهر بالعمل (لبناء حجة غيابية كاذبة).</p>
+            </div>
+
+            <div class="timeline-entry critical">
+                <div class="time">6:00 مساءً - اللحظة القاتلة</div>
+                <p>الحاج سعد، بعد مغادرة ابنه مباشرة، يجلس ويسكب لنفسه فنجاناً من القهوة العربية.</p>
+                <p><span class="critical">يشرب القهوة المسمومة.</span></p>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="time">6:15 مساءً</div>
+                <p>تبدأ الأعراض: آلام شديدة في المعدة، غثيان، صعوبة في التنفس.</p>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="time">6:30 - 6:45 مساءً</div>
+                <p>تفاقم الأعراض. الحاج سعد يحاول طلب المساعدة لكنه لا يستطيع. الوفاة تحدث حوالي 6:45 مساءً.</p>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="time">7:30 مساءً</div>
+                <p>فهد "يكتشف" جثة والده. يتصل بالإسعاف والشرطة. يبدأ التمثيل.</p>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <h2>🔍 الأدلة التي تدين فهد</h2>
+
+            <div class="evidence-list">
+                <h3>الدليل المادي:</h3>
+                <ul>
+                    <li><span class="emphasis">التوقيت:</span> الحاج سعد شرب القهوة مباشرة بعد مغادرة فهد - ليست مصادفة!</li>
+                    <li><span class="emphasis">البصمات:</span> بصمات فهد موجودة في المجلس وعلى الطاولة</li>
+                    <li><span class="emphasis">المفتاح المسروق:</span> سُرق المفتاح B من المكتب - فهد دخل المكتب صباح ذلك اليوم</li>
+                    <li><span class="emphasis">الوصول:</span> فهد هو الوحيد الذي كان له وصول سهل للمجلس دون إثارة شبهات</li>
+                </ul>
+            </div>
+
+            <div class="evidence-list">
+                <h3>الدليل الظرفي:</h3>
+                <ul>
+                    <li><span class="critical">الكذب في الشهادة:</span> ادّعى أنه كان في مكتبه، لكنه شُوهد في المجلس!</li>
+                    <li><span class="emphasis">الدافع الأقوى:</span> سيخسر 40 مليون ريال - أكبر خسارة مالية بين جميع المشتبه بهم</li>
+                    <li><span class="emphasis">الأزمة المالية:</span> ديون 8.2 مليون ريال - لا مخرج له إلا الميراث الكبير</li>
+                    <li><span class="emphasis">المعرفة:</span> يعرف عادات والده وتوقيت شرب القهوة</li>
+                    <li><span class="emphasis">الوصول إلى السم:</span> كمدير المزرعة، لديه وصول لمخزن المبيدات القديمة</li>
+                </ul>
+            </div>
+
+            <div class="evidence-list">
+                <h3>الدليل السلوكي:</h3>
+                <ul>
+                    <li>كان يتآمر مع ماجد المحامي للبحث عن ثغرات قانونية (الرسائل تثبت ذلك)</li>
+                    <li>أظهر توتراً شديداً في الأسابيع الأخيرة</li>
+                    <li>كان أول من "اكتشف" الجثة - فرصة لإخفاء أدلة إضافية</li>
+                    <li>لم يُظهر حزناً حقيقياً على والده (حسب شهود)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="motive-box">
+            <h3>💰 الدافع المفصّل</h3>
+            <div class="content-box">
+                <p><strong>الوضع المالي الكارثي:</strong></p>
+                <p>فهد كان يواجه انهياراً مالياً كاملاً:</p>
+                <br>
+                <ul style="list-style-position: inside; line-height: 2.5;">
+                    <li>ديون: 8.2 مليون ريال (قروض، بطاقات ائتمان، استثمارات فاشلة)</li>
+                    <li>الدائنون يطاردونه ويهددون باتخاذ إجراءات قانونية</li>
+                    <li>البنوك رفضت إقراضه المزيد</li>
+                    <li>أسلوب حياة باهظ التكاليف (فيلا فاخرة، سيارات فارهة، زوجة من عائلة ثرية)</li>
+                    <li>مصروفاته الشهرية (120,000 ريال) تتجاوز دخله (75,000 ريال)</li>
+                </ul>
+                <br>
+                <p><strong>التهديد المباشر:</strong></p>
+                <p>الوصية الجديدة كانت ستدمره:</p>
+                <br>
+                <ul style="list-style-position: inside; line-height: 2.5;">
+                    <li>الوصية القديمة: 80 مليون ريال (40% من التركة)</li>
+                    <li>الوصية الجديدة: 40 مليون ريال فقط (20% من التركة)</li>
+                    <li><strong>الخسارة: 40 مليون ريال!</strong></li>
+                </ul>
+                <br>
+                <p><strong>الحساب البسيط:</strong></p>
+                <p>• إذا حصل على 80 مليون: يسدد جميع ديونه (8.2 مليون) ويبقى له 71.8 مليون - حياة مرفهة</p>
+                <p>• إذا حصل على 40 مليون: يسدد ديونه ويبقى له 31.8 مليون - أقل بكثير مما يطمح إليه</p>
+                <br>
+                <p style="color: #ff6b6b; font-size: 1.2em; text-align: center; margin-top: 20px;">
+                    <strong>القتل كان الحل الوحيد في نظره لتجنب الكارثة المالية.</strong>
+                </p>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <h2>❌ لماذا المشتبه بهم الآخرون ليسوا القتلة؟</h2>
+
+            <div class="content-box">
+                <p><strong>منيرة العجمي:</strong> حضّرت القهوة لكن لم تعد إلى المجلس بعد ذلك. لم تكن لديها الفرصة.</p>
+            </div>
+
+            <div class="content-box">
+                <p><strong>خالد الدوسري:</strong> لديه أقوى دافع (تجنب السجن)، لكن لم يدخل المجلس نهائياً. لم تكن لديه الفرصة.</p>
+            </div>
+
+            <div class="content-box">
+                <p><strong>عبدالله الهاجري:</strong> كان في المجلس لكن الحاج سعد كان معه طوال الوقت. لا يمكنه إضافة السم أمام الضحية. بعد مغادرته، دخل شخصان آخران (ماجد وفهد).</p>
+            </div>
+
+            <div class="content-box">
+                <p><strong>ماجد الشمري:</strong> كانت لديه الفرصة (30 دقيقة في المجلس)، لكن:</p>
+                <ul style="list-style-position: inside; margin-top: 10px; line-height: 2.2;">
+                    <li>لماذا لم يشرب الحاج سعد القهوة أثناء وجوده؟</li>
+                    <li>لماذا شرب القهوة مباشرة بعد مغادرة فهد وليس بعد مغادرة ماجد؟</li>
+                    <li>ماجد محامي محترف - قتل عميله سيدمر سمعته للأبد، بينما يمكنه البدء من جديد</li>
+                    <li>لا دليل مادي يربطه بالزرنيخ</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="verdict-box">
+            <h2>⚖️ الحكم النهائي</h2>
+            <p>
+                بعد تحليل جميع الأدلة المادية والظرفية والسلوكية، توصل التحقيق إلى نتيجة قاطعة:
+            </p>
+            <br>
+            <p style="font-size: 1.4em; color: #fff;">
+                <strong>فهد بن سعد العجمي</strong> مذنب بقتل والده عمداً ومع سبق الإصرار والترصد
+            </p>
+            <br>
+            <p>
+                <strong>التهمة:</strong> القتل العمد بالسم
+            </p>
+            <p>
+                <strong>الدافع:</strong> الطمع المالي - منع تغيير الوصية لضمان الحصول على 80 مليون ريال
+            </p>
+            <p>
+                <strong>الطريقة:</strong> إضافة جرعة قاتلة من الزرنيخ إلى القهوة العربية
+            </p>
+            <p>
+                <strong>التوقيت:</strong> الساعة 5:50 مساءً، 12 نوفمبر 2024
+            </p>
+            <br>
+            <br>
+            <p style="font-size: 1.2em; color: #d4af37;">
+                <strong>العدالة أُقيمت. القضية مُغلقة.</strong>
+            </p>
+        </div>
+
+        <div style="background: rgba(212, 175, 55, 0.15); border: 2px solid #d4af37; padding: 30px; border-radius: 8px; margin: 40px 0;">
+            <h3 style="color: #d4af37; font-size: 1.8em; margin-bottom: 20px; text-align: center; font-family: 'Amiri', serif;">
+                ملاحظة أخيرة
+            </h3>
+            <p style="line-height: 2.2; font-size: 1.05em; text-align: center;">
+                هذه القضية توضح أن الطمع والضغوط المالية يمكن أن تدفع حتى الابن إلى قتل والده.<br>
+                فهد لم يكن مجرماً بطبيعته، لكن الديون والأزمة المالية والخوف من خسارة الثروة حوّلته إلى قاتل.<br>
+                <br>
+                <strong>الدرس:</strong> المال لا يستحق حياة إنسان، خصوصاً إذا كان هذا الإنسان والدك.
+            </p>
+        </div>
+
+        <footer>
+            <p style="font-size: 1.2em; color: #d4af37; margin-bottom: 15px;">
+                <strong>القضية رقم: CI-4192 | الحالة: مُغلقة ✓</strong>
+            </p>
+            <p>المحقق الرئيسي: النقيب أحمد الزهراني</p>
+            <p>تاريخ حل القضية: 20 نوفمبر 2024</p>
+            <p>واحة الأحساء، المملكة العربية السعودية</p>
+        </footer>
+    </div>
+</body>
+</html>

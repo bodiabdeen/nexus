@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدليل 05 - سجل مفاتيح الخزنة والبصمات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #1a0e00 0%, #3d2414 50%, #1a0e00 100%);
+            color: #d4c5a9;
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
+        .detective-icon {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 48px;
+            z-index: 1000;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .back-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #8b6f47, #a0826d);
+            color: #fff;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: linear-gradient(135deg, #d4af37, #c9a961);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(61, 36, 20, 0.6);
+            border: 3px solid #8b6f47;
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-family: 'Amiri', serif;
+            font-size: 2.5em;
+            color: #d4af37;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+            margin-bottom: 15px;
+        }
+
+        .evidence-id {
+            color: #c9a961;
+            font-size: 1.1em;
+            letter-spacing: 2px;
+        }
+
+        .intro-box {
+            background: rgba(139, 0, 0, 0.2);
+            border: 2px solid #8b0000;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 40px;
+            text-align: center;
+            line-height: 2;
+        }
+
+        .section-box {
+            background: rgba(40, 25, 15, 0.7);
+            border: 2px solid #8b6f47;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 35px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-box h2 {
+            font-family: 'Amiri', serif;
+            color: #d4af37;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #8b6f47;
+            padding-bottom: 15px;
+        }
+
+        .keys-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+
+        .keys-table th,
+        .keys-table td {
+            padding: 15px;
+            text-align: right;
+            border: 1px solid #8b6f47;
+        }
+
+        .keys-table th {
+            background: rgba(61, 36, 20, 0.7);
+            color: #d4af37;
+            font-weight: 700;
+        }
+
+        .keys-table td {
+            background: rgba(40, 25, 15, 0.5);
+        }
+
+        .has-key {
+            color: #ff6b6b;
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+
+        .no-key {
+            color: #6b9b7a;
+        }
+
+        .missing-key {
+            background: rgba(255, 107, 107, 0.2) !important;
+            font-weight: 700;
+        }
+
+        .fingerprint-box {
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid #d4af37;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .fingerprint-box h3 {
+            font-family: 'Amiri', serif;
+            color: #d4af37;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .print-item {
+            background: rgba(40, 25, 15, 0.6);
+            padding: 20px;
+            margin: 15px 0;
+            border-right: 4px solid #8b6f47;
+            border-radius: 5px;
+        }
+
+        .print-item.suspicious {
+            border-right-color: #ff6b6b;
+            background: rgba(139, 0, 0, 0.15);
+        }
+
+        .print-location {
+            color: #d4af37;
+            font-weight: 700;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .print-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .print-detail {
+            background: rgba(61, 36, 20, 0.5);
+            padding: 12px;
+            border-radius: 5px;
+        }
+
+        .print-name {
+            color: #c9a961;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .print-quality {
+            color: #d4c5a9;
+            font-size: 0.95em;
+        }
+
+        .critical-finding {
+            background: rgba(139, 0, 0, 0.2);
+            border: 3px solid #8b0000;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .critical-finding h3 {
+            color: #ff6b6b;
+            font-size: 1.6em;
+            margin-bottom: 15px;
+            font-family: 'Amiri', serif;
+            text-align: center;
+        }
+
+        .critical-finding::before {
+            content: '⚠️';
+            font-size: 3em;
+            display: block;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .analysis-box {
+            background: rgba(212, 175, 55, 0.15);
+            border: 2px solid #d4af37;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .analysis-box h3 {
+            color: #d4af37;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            font-family: 'Amiri', serif;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .info-label {
+            color: #8b7355;
+            font-weight: 600;
+        }
+
+        .info-value {
+            color: #d4c5a9;
+        }
+
+        .timeline-entry {
+            background: rgba(40, 25, 15, 0.6);
+            padding: 20px;
+            margin: 15px 0;
+            border-right: 4px solid #d4af37;
+            border-radius: 5px;
+        }
+
+        .timeline-entry.critical {
+            border-right-color: #ff6b6b;
+            background: rgba(139, 0, 0, 0.15);
+        }
+
+        .time {
+            color: #d4af37;
+            font-weight: 700;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .conclusion-box {
+            background: rgba(61, 36, 20, 0.8);
+            border: 3px solid #d4af37;
+            border-radius: 10px;
+            padding: 35px;
+            margin: 40px 0;
+        }
+
+        .conclusion-box h2 {
+            font-family: 'Amiri', serif;
+            color: #d4af37;
+            font-size: 2em;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .question-box {
+            background: rgba(255, 107, 107, 0.2);
+            border: 2px solid #ff6b6b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .question-box p {
+            color: #ffb3b3;
+            font-size: 1.2em;
+            line-height: 2;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            border-top: 2px solid #8b6f47;
+            color: #8b7355;
+        }
+    </style>
+</head>
+<body>
+    <div class="detective-icon">🕵️</div>
+
+    <div class="container">
+        <a href="index.html" class="back-link">← العودة إلى القضية الرئيسية</a>
+
+        <header>
+            <h1>🔑 الدليل 05: سجل مفاتيح الخزنة والبصمات</h1>
+            <div class="evidence-id">رقم الدليل: EVD-005 | القضية: CI-4192</div>
+        </header>
+
+        <div class="intro-box">
+            <p><strong>وصف الدليل:</strong> سجل تفصيلي لجميع مفاتيح الخزنة الموجودة في مكتب الحاج سعد، ومن يملك نسخاً منها. بالإضافة إلى تحليل شامل لبصمات الأصابع التي وُجدت في مسرح الجريمة (المجلس الخاص) وعلى الأدوات المستخدمة.</p>
+        </div>
+
+        <!-- SAFE INFO -->
+        <div class="section-box">
+            <h2>🔒 معلومات عن الخزنة</h2>
+
+            <div class="info-grid">
+                <div class="info-label">الموقع:</div>
+                <div class="info-value">مكتب الحاج سعد الخاص داخل المنزل</div>
+
+                <div class="info-label">النوع:</div>
+                <div class="info-value">خزنة حديدية كبيرة - نظام قفل مزدوج (مفتاحين)</div>
+
+                <div class="info-label">المحتويات:</div>
+                <div class="info-value">وثائق ملكية الأراضي، عقود، مجوهرات، نقود (حوالي 500,000 ريال)، أوراق مهمة</div>
+
+                <div class="info-label">نظام القفل:</div>
+                <div class="info-value">يتطلب مفتاحين معاً لفتح الخزنة (المفتاح A + المفتاح B)</div>
+
+                <div class="info-label">عدد النسخ المصنوعة:</div>
+                <div class="info-value">المفتاح A: نسختان | المفتاح B: نسختان</div>
+            </div>
+
+            <div class="critical-finding">
+                <h3>🚨 اكتشاف خطير</h3>
+                <p style="line-height: 2; color: #ffb3b3; font-size: 1.1em;">
+                    بعد الجريمة، تم فحص الخزنة ووُجد أن <strong>المفتاح B</strong> مفقود من مكانه المعتاد (درج المكتب)!
+                </p>
+                <p style="margin-top: 15px; color: #ffb3b3;">
+                    المفتاح A موجود في مكانه، لكن المفتاح B اختفى. الخزنة لم تُفتح (لا توجد علامات عبث)، مما يعني أن السارق أخذ المفتاح لكنه لم يستطع فتح الخزنة لأنه يحتاج المفتاحين معاً.
+                </p>
+            </div>
+        </div>
+
+        <!-- KEYS DISTRIBUTION -->
+        <div class="section-box">
+            <h2>🗝️ توزيع المفاتيح - من يملك نسخاً؟</h2>
+
+            <table class="keys-table">
+                <thead>
+                    <tr>
+                        <th>الشخص</th>
+                        <th>المفتاح A</th>
+                        <th>المفتاح B</th>
+                        <th>ملاحظات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>الحاج سعد (الضحية)</strong></td>
+                        <td class="has-key">✓ نعم (النسخة 1)</td>
+                        <td class="has-key">✓ نعم (النسخة 1)</td>
+                        <td>يحتفظ بهما في درج مكتبه</td>
+                    </tr>
+                    <tr>
+                        <td><strong>فهد العجمي</strong></td>
+                        <td class="has-key">✓ نعم (النسخة 2)</td>
+                        <td class="no-key">✗ لا</td>
+                        <td>أعطاه والده المفتاح A للطوارئ</td>
+                    </tr>
+                    <tr>
+                        <td><strong>منيرة العجمي</strong></td>
+                        <td class="no-key">✗ لا</td>
+                        <td class="has-key">✓ نعم (النسخة 2)</td>
+                        <td>أعطاها عمها المفتاح B (تعمل في الإدارة)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>خالد الدوسري</strong></td>
+                        <td class="no-key">✗ لا</td>
+                        <td class="no-key">✗ لا</td>
+                        <td>لا يملك مفاتيح، لكن يعرف مكانها</td>
+                    </tr>
+                    <tr>
+                        <td><strong>عبدالله الهاجري</strong></td>
+                        <td class="no-key">✗ لا</td>
+                        <td class="no-key">✗ لا</td>
+                        <td>لا علاقة له بالخزنة</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ماجد الشمري</strong></td>
+                        <td class="no-key">✗ لا</td>
+                        <td class="no-key">✗ لا</td>
+                        <td>لا يملك مفاتيح</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="analysis-box">
+                <h3>💡 تحليل توزيع المفاتيح</h3>
+                <p><strong>النظام الأمني:</strong> الحاج سعد كان ذكياً - وزع المفاتيح بحيث لا يستطيع شخص واحد فتح الخزنة بمفرده. يحتاج إلى تعاون شخصين (من يملك A + من يملك B).</p>
+                <br>
+                <p><strong>الحالة الحالية:</strong></p>
+                <ul style="margin-right: 25px; margin-top: 10px; line-height: 2;">
+                    <li>المفتاح A (نسخة الحاج سعد): موجود في درج المكتب ✓</li>
+                    <li>المفتاح A (نسخة فهد): في حوزة فهد ✓</li>
+                    <li>المفتاح B (نسخة الحاج سعد): <span style="color: #ff6b6b; font-weight: 700;">مفقود ✗</span></li>
+                    <li>المفتاح B (نسخة منيرة): في حوزة منيرة ✓</li>
+                </ul>
+                <br>
+                <p style="color: #ff6b6b; font-size: 1.1em;"><strong>السؤال الحاسم:</strong> من سرق المفتاح B من درج مكتب الحاج سعد؟</p>
+            </div>
+        </div>
+
+        <!-- ACCESS TO OFFICE -->
+        <div class="section-box">
+            <h2>🚪 الوصول إلى مكتب الحاج سعد</h2>
+
+            <p style="margin-bottom: 20px;">المكتب يقع داخل المنزل، وليس كل شخص لديه حرية الدخول إليه. إليك من كان لديه وصول سهل:</p>
+
+            <div class="timeline-entry">
+                <div class="print-location">فهد العجمي</div>
+                <p><strong>الوصول:</strong> حر وسهل - ابن الحاج سعد ويدخل المكتب باستمرار</p>
+                <p><strong>الفرصة:</strong> يمكنه الدخول في أي وقت دون إثارة الشبهات</p>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="print-location">منيرة العجمي</div>
+                <p><strong>الوصول:</strong> حر ومتكرر - تعمل في الإدارة وتدخل المكتب يومياً</p>
+                <p><strong>الفرصة:</strong> تنظم الأوراق والملفات، لديها عذر دائم للدخول</p>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="print-location">خالد الدوسري</div>
+                <p><strong>الوصول:</strong> محدود - يدخل المكتب أحياناً لمناقشة الحسابات</p>
+                <p><strong>الفرصة:</strong> يمكنه الدخول إذا كان الحاج سعد موجوداً أو بإذن منه</p>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="print-location">عبدالله الهاجري</div>
+                <p><strong>الوصول:</strong> شبه معدوم - لا يدخل المنزل عادة</p>
+                <p><strong>الفرصة:</strong> صعب جداً أن يدخل المكتب دون أن يُلاحظ</p>
+            </div>
+
+            <div class="timeline-entry">
+                <div class="print-location">ماجد الشمري</div>
+                <p><strong>الوصول:</strong> محدود - يدخل المكتب فقط للقاءات رسمية</p>
+                <p><strong>الفرصة:</strong> يمكنه الدخول بحجة العمل، لكنه مراقب</p>
+            </div>
+        </div>
+
+        <!-- FINGERPRINTS -->
+        <div class="section-box">
+            <h2>👆 تحليل بصمات الأصابع</h2>
+
+            <div class="fingerprint-box">
+                <h3>📍 البصمات على إبريق القهوة العربية</h3>
+                
+                <div class="print-item">
+                    <div class="print-location">البصمات المكتشفة:</div>
+                    <div class="print-details">
+                        <div class="print-detail">
+                            <div class="print-name">منيرة العجمي</div>
+                            <div class="print-quality">بصمات واضحة جداً - على المقبض والغطاء</div>
+                        </div>
+                        <div class="print-detail">
+                            <div class="print-name">الحاج سعد</div>
+                            <div class="print-quality">بصمات على المقبض (قديمة نسبياً)</div>
+                        </div>
+                        <div class="print-detail">
+                            <div class="print-name">بصمات غير محددة</div>
+                            <div class="print-quality">بصمة جزئية مشوهة - لم يتم التعرف عليها</div>
+                        </div>
+                    </div>
+                    <p style="margin-top: 15px; color: #c9a961;"><strong>التفسير:</strong> بصمات منيرة طبيعية لأنها من حضّرت القهوة. البصمة غير المحددة قد تكون للقاتل، لكنها مشوهة ولا يمكن مطابقتها بشكل قاطع.</p>
+                </div>
+            </div>
+
+            <div class="fingerprint-box">
+                <h3>📍 البصمات على الفنجان المستخدم</h3>
+                
+                <div class="print-item">
+                    <div class="print-location">البصمات المكتشفة:</div>
+                    <div class="print-details">
+                        <div class="print-detail">
+                            <div class="print-name">الحاج سعد</div>
+                            <div class="print-quality">بصمات واضحة - على الحافة والمقبض</div>
+                        </div>
+                    </div>
+                    <p style="margin-top: 15px; color: #c9a961;"><strong>التفسير:</strong> بصمات الضحية فقط - هو من شرب من الفنجان.</p>
+                </div>
+            </div>
+
+            <div class="fingerprint-box">
+                <h3>📍 البصمات في المجلس (الطاولة والأثاث)</h3>
+                
+                <div class="print-item suspicious">
+                    <div class="print-location">🔴 البصمات على الطاولة قرب الإبريق:</div>
+                    <div class="print-details">
+                        <div class="print-detail">
+                            <div class="print-name">فهد العجمي</div>
+                            <div class="print-quality">بصمات حديثة - على حافة الطاولة</div>
+                        </div>
+                        <div class="print-detail">
+                            <div class="print-name">عبدالله الهاجري</div>
+                            <div class="print-quality">بصمات حديثة - على الطاولة قرب الإبريق</div>
+                        </div>
+                        <div class="print-detail">
+                            <div class="print-name">ماجد الشمري</div>
+                            <div class="print-quality">بصمات على حافة الطاولة</div>
+                        </div>
+                    </div>
+                    <p style="margin-top: 15px; color: #ff6b6b;"><strong>ملاحظة مهمة:</strong> عبدالله ادّعى أنه لم يلمس أي شيء، لكن بصماته وُجدت قرب الإبريق!</p>
+                </div>
+
+                <div class="print-item">
+                    <div class="print-location">البصمات على الأريكة:</div>
+                    <div class="print-details">
+                        <div class="print-detail">
+                            <div class="print-name">الحاج سعد</div>
+                            <div class="print-quality">بصمات متعددة</div>
+                        </div>
+                        <div class="print-detail">
+                            <div class="print-name">فهد</div>
+                            <div class="print-quality">بصمات قليلة</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fingerprint-box">
+                <h3>📍 البصمات في مكتب الحاج سعد (خاصة الدرج)</h3>
+                
+                <div class="print-item suspicious">
+                    <div class="print-location">🔴 البصمات على درج المكتب (حيث كان المفتاح B):</div>
+                    <div class="print-details">
+                        <div class="print-detail">
+                            <div class="print-name">الحاج سعد</div>
+                            <div class="print-quality">بصمات متعددة (متوقعة)</div>
+                        </div>
+                        <div class="print-detail">
+                            <div class="print-name">منيرة العجمي</div>
+                            <div class="print-quality">بصمات واضحة - حديثة نسبياً</div>
+                        </div>
+                        <div class="print-detail">
+                            <div class="print-name">فهد العجمي</div>
+                            <div class="print-quality">بصمات قديمة</div>
+                        </div>
+                    </div>
+                    <p style="margin-top: 15px; color: #ff6b6b;"><strong>ملاحظة حرجة:</strong> بصمات منيرة على الدرج حديثة! متى فتحت الدرج ولماذا؟</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TIMELINE OF KEY -->
+        <div class="section-box">
+            <h2>⏰ الجدول الزمني لاختفاء المفتاح B</h2>
+
+            <div class="timeline-entry">
+                <div class="time">الأحد 10 نوفمبر 2024</div>
+                <p>الحاج سعد استخدم الخزنة لإخراج وثيقة. المفتاح B كان في مكانه في الدرج (شهادة خادمة المنزل - رأتها تنظف المكتب).</p>
+            </div>
+
+            <div class="timeline-entry critical">
+                <div class="time">الاثنين 11 نوفمبر 2024</div>
+                <p>منيرة دخلت مكتب الحاج سعد لترتيب الأوراق (كعادتها). مكثت حوالي 15 دقيقة بمفردها في المكتب.</p>
+            </div>
+
+            <div class="timeline-entry critical">
+                <div class="time">الثلاثاء 12 نوفمبر 2024 - صباحاً</div>
+                <p>فهد دخل مكتب والده للبحث عن مستند (حوالي الساعة 10:00 صباحاً). مكث 10 دقائق.</p>
+            </div>
+
+            <div class="timeline-entry critical">
+                <div class="time">الثلاثاء 12 نوفمبر 2024 - بعد الظهر</div>
+                <p><strong>بعد الجريمة:</strong> عند فحص المكتب، اكتُشف أن المفتاح B مفقود من الدرج!</p>
+            </div>
+
+            <div class="analysis-box" style="margin-top: 30px;">
+                <h3>🔍 تحليل اختفاء المفتاح</h3>
+                <p><strong>متى اختفى المفتاح؟</strong> بين يوم الأحد (10 نوفمبر) ويوم الثلاثاء صباحاً (12 نوفمبر).</p>
+                <br>
+                <p><strong>من دخل المكتب في هذه الفترة؟</strong></p>
+                <ul style="margin-right: 25px; margin-top: 10px; line-height: 2;">
+                    <li><strong>منيرة:</strong> يوم الاثنين - بمفردها 15 دقيقة (بصماتها على الدرج!)</li>
+                    <li><strong>فهد:</strong> يوم الثلاثاء صباحاً - بمفرده 10 دقائق</li>
+                    <li><strong>الحاج سعد:</strong> دخل وخرج عدة مرات (المفتاح ملكه أصلاً)</li>
+                </ul>
+                <br>
+                <p style="color: #ff6b6b; font-size: 1.1em;"><strong>السؤال:</strong> هل سُرق المفتاح قبل الجريمة كجزء من خطة أكبر؟ أم أن القاتل سرقه بعد الجريمة؟</p>
+            </div>
+        </div>
+
+        <!-- CONCLUSIONS -->
+        <div class="conclusion-box">
+            <h2>📌 الاستنتاجات الرئيسية</h2>
+
+            <div class="question-box">
+                <p><strong>1. المفتاح B مفقود</strong></p>
+                <p>من سرقه؟ ولماذا؟ هل كان ينوي سرقة الخزنة بعد الجريمة؟</p>
+            </div>
+
+            <div class="question-box">
+                <p><strong>2. بصمات منيرة على الدرج</strong></p>
+                <p>لماذا فتحت الدرج؟ هل كانت تبحث عن شيء؟ أم أخذت المفتاح؟</p>
+            </div>
+
+            <div class="question-box">
+                <p><strong>3. بصمات عبدالله قرب الإبريق</strong></p>
+                <p>ادّعى أنه لم يلمس شيئاً، لكن بصماته موجودة! هل كذب؟</p>
+            </div>
+
+            <div class="question-box">
+                <p><strong>4. البصمة غير المحددة على الإبريق</strong></p>
+                <p>لمن تعود؟ هل هي بصمة القاتل محاولاً إخفاء آثاره؟</p>
+            </div>
+
+            <div style="background: rgba(212, 175, 55, 0.2); padding: 25px; border-radius: 8px; margin-top: 30px;">
+                <h3 style="color: #d4af37; font-size: 1.5em; margin-bottom: 15px; text-align: center;">النظرية</h3>
+                <p style="line-height: 2; font-size: 1.05em;">
+                    اختفاء المفتاح B يشير إلى أن القاتل كان يخطط لسرقة الخزنة بعد الجريمة - ربما لإخفاء أدلة أو سرقة وثائق مهمة. لكنه فشل لأنه يحتاج المفتاحين معاً.
+                </p>
+                <br>
+                <p style="line-height: 2; font-size: 1.05em;">
+                    البصمات تشير إلى ثلاثة أشخاص رئيسيين: <strong>منيرة</strong> (بصمات على الدرج)، <strong>عبدالله</strong> (بصمات قرب الإبريق رغم إنكاره)، و<strong>فهد</strong> (دخل المكتب صباح يوم الجريمة).
+                </p>
+            </div>
+        </div>
+
+        <footer>
+            <p>الدليل رقم: EVD-005 | القضية: CI-4192</p>
+            <p>تم تجميعه بواسطة النقيب أحمد الزهراني | نوفمبر 2024</p>
+        </footer>
+    </div>
+</body>
+</html>

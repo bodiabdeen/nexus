@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدليل 01 - مقارنة الوصيتين</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #1a0e00 0%, #3d2414 50%, #1a0e00 100%);
+            color: #d4c5a9;
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
+        .detective-icon {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 48px;
+            z-index: 1000;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .back-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #8b6f47, #a0826d);
+            color: #fff;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: linear-gradient(135deg, #d4af37, #c9a961);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(61, 36, 20, 0.6);
+            border: 3px solid #8b6f47;
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-family: 'Amiri', serif;
+            font-size: 2.5em;
+            color: #d4af37;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+            margin-bottom: 15px;
+        }
+
+        .evidence-id {
+            color: #c9a961;
+            font-size: 1.1em;
+            letter-spacing: 2px;
+        }
+
+        .intro-box {
+            background: rgba(139, 0, 0, 0.2);
+            border: 2px solid #8b0000;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 40px;
+            text-align: center;
+            line-height: 2;
+        }
+
+        .intro-box p {
+            font-size: 1.1em;
+        }
+
+        .comparison-section {
+            margin: 40px 0;
+        }
+
+        .section-title {
+            font-family: 'Amiri', serif;
+            color: #d4af37;
+            font-size: 2em;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 2px solid #8b6f47;
+            padding-bottom: 15px;
+        }
+
+        .wills-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .will-document {
+            background: rgba(40, 25, 15, 0.7);
+            border: 3px solid #8b6f47;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .will-document.old {
+            border-color: #4a7c59;
+        }
+
+        .will-document.new {
+            border-color: #8b0000;
+        }
+
+        .will-header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #8b6f47;
+        }
+
+        .will-title {
+            font-family: 'Amiri', serif;
+            font-size: 1.8em;
+            color: #d4af37;
+            margin-bottom: 10px;
+        }
+
+        .will-document.old .will-title {
+            color: #6b9b7a;
+        }
+
+        .will-document.new .will-title {
+            color: #ff6b6b;
+        }
+
+        .will-date {
+            color: #c9a961;
+            font-size: 0.95em;
+        }
+
+        .will-content {
+            line-height: 2.2;
+        }
+
+        .beneficiary {
+            background: rgba(61, 36, 20, 0.5);
+            padding: 15px;
+            margin: 15px 0;
+            border-right: 4px solid #d4af37;
+            border-radius: 5px;
+        }
+
+        .beneficiary-name {
+            font-weight: 700;
+            color: #d4af37;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+
+        .beneficiary-amount {
+            color: #c9c9c9;
+            font-size: 1.05em;
+        }
+
+        .total-box {
+            background: rgba(212, 175, 55, 0.15);
+            border: 2px solid #d4af37;
+            padding: 20px;
+            margin-top: 25px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .total-box strong {
+            color: #d4af37;
+            font-size: 1.3em;
+        }
+
+        .differences-section {
+            background: rgba(139, 0, 0, 0.2);
+            border: 3px solid #8b0000;
+            border-radius: 10px;
+            padding: 35px;
+            margin: 40px 0;
+        }
+
+        .differences-section h2 {
+            font-family: 'Amiri', serif;
+            color: #ff6b6b;
+            font-size: 2em;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .difference-item {
+            background: rgba(40, 25, 15, 0.6);
+            padding: 20px;
+            margin: 20px 0;
+            border-right: 4px solid #ff6b6b;
+            border-radius: 5px;
+        }
+
+        .difference-title {
+            font-weight: 700;
+            color: #ff6b6b;
+            font-size: 1.2em;
+            margin-bottom: 12px;
+        }
+
+        .impact-analysis {
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid #d4af37;
+            padding: 30px;
+            margin: 40px 0;
+            border-radius: 8px;
+        }
+
+        .impact-analysis h3 {
+            font-family: 'Amiri', serif;
+            color: #d4af37;
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .impact-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+
+        .impact-table th,
+        .impact-table td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #8b6f47;
+        }
+
+        .impact-table th {
+            background: rgba(61, 36, 20, 0.7);
+            color: #d4af37;
+            font-weight: 700;
+        }
+
+        .impact-table td {
+            background: rgba(40, 25, 15, 0.5);
+        }
+
+        .loss {
+            color: #ff6b6b;
+            font-weight: 700;
+        }
+
+        .gain {
+            color: #6b9b7a;
+            font-weight: 700;
+        }
+
+        .critical-note {
+            background: rgba(255, 107, 107, 0.2);
+            border: 3px solid #ff6b6b;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .critical-note::before {
+            content: '⚠️';
+            font-size: 3em;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .critical-note p {
+            font-size: 1.15em;
+            line-height: 2;
+            color: #ffb3b3;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            border-top: 2px solid #8b6f47;
+            color: #8b7355;
+        }
+
+        @media (max-width: 968px) {
+            .wills-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="detective-icon">🕵️</div>
+
+    <div class="container">
+        <a href="index.html" class="back-link">← العودة إلى القضية الرئيسية</a>
+
+        <header>
+            <h1>📜 الدليل 01: مقارنة الوصيتين</h1>
+            <div class="evidence-id">رقم الدليل: EVD-001 | القضية: CI-4192</div>
+        </header>
+
+        <div class="intro-box">
+            <p><strong>وصف الدليل:</strong> مقارنة تفصيلية بين الوصية القديمة (المكتوبة عام 2019) والوصية الجديدة (التي كان الحاج سعد ينوي توقيعها يوم 13 نوفمبر 2024 - بعد يوم واحد من وفاته). الوصية الجديدة وُجدت على الطاولة أمام الضحية غير موقعة.</p>
+        </div>
+
+        <div class="comparison-section">
+            <div class="section-title">📋 نصوص الوصيتين</div>
+            
+            <div class="wills-container">
+                <!-- OLD WILL -->
+                <div class="will-document old">
+                    <div class="will-header">
+                        <div class="will-title">✅ الوصية القديمة</div>
+                        <div class="will-date">مكتوبة وموقعة: 15 مارس 2019</div>
+                        <div class="will-date">الحالة: سارية المفعول قانونياً</div>
+                    </div>
+
+                    <div class="will-content">
+                        <p style="margin-bottom: 25px; text-align: center; font-style: italic;">بسم الله الرحمن الرحيم</p>
+                        
+                        <p style="margin-bottom: 20px;">أنا الحاج سعد بن عبدالعزيز العجمي، أوصي بتقسيم تركتي بعد وفاتي كالتالي:</p>
+
+                        <div class="beneficiary">
+                            <div class="beneficiary-name">1. الأبناء الذكور (3)</div>
+                            <div class="beneficiary-amount">• فهد العجمي: 40% من التركة (80 مليون ريال تقريباً)<br>
+                            • عبدالرحمن العجمي: 25% من التركة (50 مليون ريال)<br>
+                            • محمد العجمي: 25% من التركة (50 مليون ريال)</div>
+                        </div>
+
+                        <div class="beneficiary">
+                            <div class="beneficiary-name">2. البنات (2)</div>
+                            <div class="beneficiary-amount">• نورة العجمي: 5% من التركة (10 مليون ريال)<br>
+                            • هيا العجمي: 5% من التركة (10 مليون ريال)</div>
+                        </div>
+
+                        <div class="beneficiary">
+                            <div class="beneficiary-name">3. منيرة العجمي (ابنة الأخ)</div>
+                            <div class="beneficiary-amount">• مبلغ مقطوع: 5 مليون ريال<br>
+                            • بيت في المزرعة مدى الحياة<br>
+                            • راتب شهري: 10,000 ريال مدى الحياة</div>
+                        </div>
+
+                        <div class="beneficiary">
+                            <div class="beneficiary-name">4. المشاريع الخيرية</div>
+                            <div class="beneficiary-amount">• مبلغ رمزي: 2 مليون ريال للمسجد المحلي</div>
+                        </div>
+
+                        <div class="total-box">
+                            <strong>إجمالي التركة المقدرة: 200 مليون ريال</strong>
+                        </div>
+
+                        <p style="margin-top: 25px; font-size: 0.9em; color: #8b7355; text-align: center;"><em>ملاحظة: يحصل فهد على نسبة أكبر لأنه يدير المزرعة</em></p>
+                    </div>
+                </div>
+
+                <!-- NEW WILL -->
+                <div class="will-document new">
+                    <div class="will-header">
+                        <div class="will-title">❌ الوصية الجديدة</div>
+                        <div class="will-date">مكتوبة: 10 نوفمبر 2024</div>
+                        <div class="will-date">الحالة: غير موقعة - باطلة قانونياً</div>
+                    </div>
+
+                    <div class="will-content">
+                        <p style="margin-bottom: 25px; text-align: center; font-style: italic;">بسم الله الرحمن الرحيم</p>
+                        
+                        <p style="margin-bottom: 20px;">أنا الحاج سعد بن عبدالعزيز العجمي، أعدل وصيتي لتكون كالتالي:</p>
+
+                        <div class="beneficiary">
+                            <div class="beneficiary-name">1. الأبناء الذكور (3)</div>
+                            <div class="beneficiary-amount">• فهد العجمي: 20% من التركة (40 مليون ريال)<br>
+                            • عبدالرحمن العجمي: 20% من التركة (40 مليون ريال)<br>
+                            • محمد العجمي: 20% من التركة (40 مليون ريال)<br>
+                            <em style="color: #ff6b6b;">التوزيع بالتساوي حسب الشرع</em></div>
+                        </div>
+
+                        <div class="beneficiary">
+                            <div class="beneficiary-name">2. البنات (2)</div>
+                            <div class="beneficiary-amount">• نورة العجمي: 10% من التركة (20 مليون ريال)<br>
+                            • هيا العجمي: 10% من التركة (20 مليون ريال)<br>
+                            <em style="color: #6b9b7a;">زيادة كبيرة عن الوصية القديمة</em></div>
+                        </div>
+
+                        <div class="beneficiary">
+                            <div class="beneficiary-name">3. منيرة العجمي (ابنة الأخ)</div>
+                            <div class="beneficiary-amount">• مبلغ مقطوع: 2 مليون ريال فقط<br>
+                            • <em style="color: #ff6b6b;">إلغاء البيت والراتب الشهري</em></div>
+                        </div>
+
+                        <div class="beneficiary">
+                            <div class="beneficiary-name">4. المشروع الخيري الكبير</div>
+                            <div class="beneficiary-amount">• بناء مدرسة حديثة: 15 مليون ريال<br>
+                            • بناء مستوصف طبي: 10 مليون ريال<br>
+                            • وقف خيري دائم: 15 مليون ريال<br>
+                            • <strong style="color: #d4af37;">المجموع: 40 مليون ريال</strong></div>
+                        </div>
+
+                        <div class="total-box">
+                            <strong>إجمالي التركة المقدرة: 200 مليون ريال</strong>
+                        </div>
+
+                        <p style="margin-top: 25px; font-size: 0.9em; color: #ff6b6b; text-align: center;"><em>ملاحظة: كان من المقرر التوقيع يوم 13 نوفمبر 2024</em></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="differences-section">
+            <h2>🔍 الاختلافات الرئيسية</h2>
+
+            <div class="difference-item">
+                <div class="difference-title">1. تخفيض نصيب فهد (الابن الأكبر)</div>
+                <p>• في الوصية القديمة: 80 مليون ريال (40%)<br>
+                • في الوصية الجديدة: 40 مليون ريال (20%)<br>
+                • <strong style="color: #ff6b6b;">خسارة فهد: 40 مليون ريال (-50%)</strong></p>
+            </div>
+
+            <div class="difference-item">
+                <div class="difference-title">2. زيادة نصيب البنات</div>
+                <p>• في الوصية القديمة: 10 مليون لكل بنت<br>
+                • في الوصية الجديدة: 20 مليون لكل بنت<br>
+                • <strong style="color: #6b9b7a;">زيادة: 10 مليون لكل بنت (+100%)</strong></p>
+            </div>
+
+            <div class="difference-item">
+                <div class="difference-title">3. تخفيض نصيب منيرة (ابنة الأخ)</div>
+                <p>• في الوصية القديمة: 5 مليون + بيت + راتب شهري مدى الحياة<br>
+                • في الوصية الجديدة: 2 مليون فقط<br>
+                • <strong style="color: #ff6b6b;">خسارة منيرة: 3 مليون + فقدان الأمان المستقبلي</strong></p>
+            </div>
+
+            <div class="difference-item">
+                <div class="difference-title">4. زيادة ضخمة للمشاريع الخيرية</div>
+                <p>• في الوصية القديمة: 2 مليون فقط<br>
+                • في الوصية الجديدة: 40 مليون ريال<br>
+                • <strong style="color: #d4af37;">زيادة: 38 مليون ريال (+1900%)</strong></p>
+            </div>
+        </div>
+
+        <div class="impact-analysis">
+            <h3>📊 جدول تحليل التأثير المالي</h3>
+
+            <table class="impact-table">
+                <thead>
+                    <tr>
+                        <th>المستفيد</th>
+                        <th>الوصية القديمة</th>
+                        <th>الوصية الجديدة</th>
+                        <th>الفرق</th>
+                        <th>التأثير</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>فهد العجمي</strong></td>
+                        <td>80 مليون</td>
+                        <td>40 مليون</td>
+                        <td class="loss">-40 مليون</td>
+                        <td class="loss">خسارة كبيرة جداً</td>
+                    </tr>
+                    <tr>
+                        <td><strong>عبدالرحمن</strong></td>
+                        <td>50 مليون</td>
+                        <td>40 مليون</td>
+                        <td class="loss">-10 مليون</td>
+                        <td class="loss">خسارة متوسطة</td>
+                    </tr>
+                    <tr>
+                        <td><strong>محمد</strong></td>
+                        <td>50 مليون</td>
+                        <td>40 مليون</td>
+                        <td class="loss">-10 مليون</td>
+                        <td class="loss">خسارة متوسطة</td>
+                    </tr>
+                    <tr>
+                        <td><strong>نورة (البنت)</strong></td>
+                        <td>10 مليون</td>
+                        <td>20 مليون</td>
+                        <td class="gain">+10 مليون</td>
+                        <td class="gain">مكسب كبير</td>
+                    </tr>
+                    <tr>
+                        <td><strong>هيا (البنت)</strong></td>
+                        <td>10 مليون</td>
+                        <td>20 مليون</td>
+                        <td class="gain">+10 مليون</td>
+                        <td class="gain">مكسب كبير</td>
+                    </tr>
+                    <tr>
+                        <td><strong>منيرة العجمي</strong></td>
+                        <td>5 مليون + بيت + راتب</td>
+                        <td>2 مليون فقط</td>
+                        <td class="loss">-3 مليون + فقدان الأمان</td>
+                        <td class="loss">خسارة كبيرة</td>
+                    </tr>
+                    <tr>
+                        <td><strong>المشاريع الخيرية</strong></td>
+                        <td>2 مليون</td>
+                        <td>40 مليون</td>
+                        <td class="gain">+38 مليون</td>
+                        <td class="gain">زيادة هائلة</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="critical-note">
+            <p><strong>ملاحظة حرجة للمحقق:</strong></p>
+            <p>الوصية الجديدة كانت ستغير حياة جميع المستفيدين بشكل جذري. ثلاثة أشخاص كانوا سيخسرون بشكل كبير: <strong>فهد العجمي (40 مليون)</strong>، <strong>منيرة العجمي (الأمان المستقبلي)</strong>، و<strong>عبدالرحمن ومحمد (10 ملايين لكل منهما)</strong>.</p>
+            <br>
+            <p>وفاة الحاج سعد قبل توقيع الوصية الجديدة تعني أن <strong>الوصية القديمة ستبقى سارية المفعول</strong>، مما يعني أن فهد سيحصل على 80 مليون بدلاً من 40 مليون، ومنيرة ستحتفظ بأمانها المالي.</p>
+            <br>
+            <p style="font-size: 1.3em; color: #ff6b6b;"><strong>السؤال: من كان لديه الدافع الأقوى لمنع توقيع هذه الوصية؟</strong></p>
+        </div>
+
+        <footer>
+            <p>الدليل رقم: EVD-001 | القضية: CI-4192</p>
+            <p>تم تجميعه بواسطة النقيب أحمد الزهراني | نوفمبر 2024</p>
+        </footer>
+    </div>
+</body>
+</html>

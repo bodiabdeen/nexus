@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تلميح 3 - الطريق إلى الحل</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #1a0e00 0%, #3d2414 50%, #1a0e00 100%);
+            color: #d4c5a9;
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
+        .detective-icon {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 48px;
+            z-index: 1000;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .back-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #8b6f47, #a0826d);
+            color: #fff;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: linear-gradient(135deg, #d4af37, #c9a961);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(61, 36, 20, 0.6);
+            border: 3px solid #8b6f47;
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-family: 'Amiri', serif;
+            font-size: 2.5em;
+            color: #d4af37;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+            margin-bottom: 15px;
+        }
+
+        .hint-level {
+            color: #ff6b6b;
+            font-size: 1.1em;
+            letter-spacing: 2px;
+        }
+
+        .warning-box {
+            background: rgba(255, 107, 107, 0.2);
+            border: 3px solid #ff6b6b;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 40px;
+            text-align: center;
+            line-height: 2;
+        }
+
+        .warning-box::before {
+            content: '🎯';
+            font-size: 3em;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .hint-box {
+            background: rgba(40, 25, 15, 0.7);
+            border: 2px solid #8b6f47;
+            border-radius: 8px;
+            padding: 35px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .hint-box h2 {
+            font-family: 'Amiri', serif;
+            color: #d4af37;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 2px solid #8b6f47;
+            padding-bottom: 15px;
+        }
+
+        .hint-content {
+            background: rgba(61, 36, 20, 0.5);
+            padding: 25px;
+            border-right: 4px solid #d4af37;
+            border-radius: 5px;
+            line-height: 2.2;
+            font-size: 1.1em;
+        }
+
+        .critical-box {
+            background: rgba(255, 107, 107, 0.2);
+            border: 3px solid #ff6b6b;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+
+        .critical-box h3 {
+            color: #ff6b6b;
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            font-family: 'Amiri', serif;
+            text-align: center;
+        }
+
+        .critical-box::before {
+            content: '⚠️';
+            font-size: 3em;
+            display: block;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .timeline-box {
+            background: rgba(212, 175, 55, 0.15);
+            border: 2px solid #d4af37;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .timeline-entry {
+            background: rgba(40, 25, 15, 0.6);
+            padding: 20px;
+            margin: 15px 0;
+            border-right: 4px solid #d4af37;
+            border-radius: 5px;
+        }
+
+        .timeline-entry.critical {
+            border-right-color: #ff6b6b;
+            background: rgba(139, 0, 0, 0.2);
+        }
+
+        .time {
+            color: #d4af37;
+            font-weight: 700;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .timeline-entry.critical .time {
+            color: #ff6b6b;
+        }
+
+        .evidence-box {
+            background: rgba(40, 25, 15, 0.7);
+            border: 2px solid #8b6f47;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .evidence-box h3 {
+            color: #d4af37;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            font-family: 'Amiri', serif;
+        }
+
+        .evidence-item {
+            background: rgba(61, 36, 20, 0.5);
+            padding: 15px;
+            margin: 10px 0;
+            border-right: 3px solid #8b6f47;
+            border-radius: 5px;
+        }
+
+        .emphasis {
+            color: #d4af37;
+            font-weight: 700;
+        }
+
+        .critical {
+            color: #ff6b6b;
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+
+        .conclusion-box {
+            background: rgba(61, 36, 20, 0.8);
+            border: 3px solid #ff6b6b;
+            border-radius: 10px;
+            padding: 35px;
+            margin: 40px 0;
+        }
+
+        .conclusion-box h2 {
+            font-family: 'Amiri', serif;
+            color: #ff6b6b;
+            font-size: 2em;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            border-top: 2px solid #8b6f47;
+            color: #8b7355;
+        }
+    </style>
+</head>
+<body>
+    <div class="detective-icon">🕵️</div>
+
+    <div class="container">
+        <a href="index.html" class="back-link">← العودة إلى القضية الرئيسية</a>
+
+        <header>
+            <h1>🎯 التلميح الثالث</h1>
+            <div class="hint-level">مستوى التلميح: قوي - الاقتراب من الحل النهائي</div>
+        </header>
+
+        <div class="warning-box">
+            <p><strong>تحذير:</strong> هذا التلميح سيوجهك مباشرة نحو القاتل. إذا كنت تريد الوصول إلى الحل بنفسك، فلا تقرأ أكثر من ذلك! لكن إذا كنت بحاجة إلى دفعة أخيرة، تابع القراءة.</p>
+        </div>
+
+        <div class="hint-box">
+            <h2>🔍 تحليل دقيق للجدول الزمني</h2>
+            <div class="hint-content">
+                <p>من التلميح السابق، عرفنا أن المشتبه بهم الرئيسيين هم <span class="critical">فهد</span> و<span class="critical">ماجد</span>.</p>
+                <br>
+                <p>دعنا نفحص الجدول الزمني بدقة شديدة:</p>
+            </div>
+
+            <div class="timeline-box">
+                <div class="timeline-entry">
+                    <div class="time">4:30 مساءً</div>
+                    <p>منيرة تحضّر القهوة العربية وتضعها أمام الحاج سعد. <strong>القهوة نظيفة</strong> (الحاج سعد مدحها).</p>
+                </div>
+
+                <div class="timeline-entry">
+                    <div class="time">5:15 - 5:45 مساءً (30 دقيقة)</div>
+                    <p>ماجد الشمري في المجلس مع الحاج سعد. الإبريق على الطاولة أمامهما.</p>
+                    <p><span class="emphasis">ملاحظة مهمة جداً:</span> الحاج سعد <strong>لم يشرب</strong> من القهوة طوال هذه الجلسة!</p>
+                </div>
+
+                <div class="timeline-entry critical">
+                    <div class="time">5:50 - 5:55 مساءً (5 دقائق)</div>
+                    <p><span class="critical">فهد العجمي يدخل المجلس</span> - آخر شخص يدخل قبل الوفاة!</p>
+                    <p>كان بمفرده مع والده لمدة 5 دقائق.</p>
+                </div>
+
+                <div class="timeline-entry critical">
+                    <div class="time">6:00 مساءً (مباشرة بعد مغادرة فهد)</div>
+                    <p>الحاج سعد يشرب من القهوة المسمومة!</p>
+                </div>
+
+                <div class="timeline-entry">
+                    <div class="time">6:15 - 6:45 مساءً</div>
+                    <p>بدء ظهور الأعراض والوفاة.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="critical-box">
+            <h3>💡 الملاحظة الحاسمة</h3>
+            <p style="line-height: 2.2; font-size: 1.15em; color: #ffb3b3;">
+                لماذا لم يشرب الحاج سعد القهوة أثناء جلسته مع ماجد (30 دقيقة كاملة)، ثم شرب منها <strong>مباشرة</strong> بعد مغادرة فهد؟
+            </p>
+            <br>
+            <p style="font-size: 1.1em; color: #ffb3b3;">
+                هل هذا مجرد مصادفة؟ أم أن شيئاً حدث خلال الدقائق الخمس التي قضاها فهد مع والده؟
+            </p>
+        </div>
+
+        <div class="hint-box">
+            <h2>🧩 القطع المفقودة من اللغز</h2>
+
+            <div class="evidence-box">
+                <h3>الدليل 1: الدافع المالي</h3>
+                <div class="evidence-item">
+                    <p><strong>فهد:</strong></p>
+                    <p>• سيخسر 40 مليون ريال (نصف ميراثه)</p>
+                    <p>• لديه ديون 8.2 مليون ريال - أزمة خانقة</p>
+                    <p>• الدائنون يطاردونه والبنوك ترفض إقراضه</p>
+                    <p>• <span class="critical">إذا وقّع والده الوصية الجديدة، سينهار فهد مالياً تماماً</span></p>
+                </div>
+                <div class="evidence-item">
+                    <p><strong>ماجد:</strong></p>
+                    <p>• سيفقد رخصته المهنية وسمعته</p>
+                    <p>• سيخسر 42% من دخله</p>
+                    <p>• لكن يمكنه البدء من جديد في مدينة أخرى</p>
+                </div>
+                <p style="margin-top: 15px; color: #d4af37;"><strong>الاستنتاج:</strong> فهد كان في وضع أكثر يأساً - لا مخرج له إطلاقاً!</p>
+            </div>
+
+            <div class="evidence-box">
+                <h3>الدليل 2: الشهادات المتناقضة</h3>
+                <div class="evidence-item">
+                    <p><strong>فهد ادّعى:</strong> "كنت في مكتبي من 5:30 - 7:00 مساءً"</p>
+                    <p><span class="critical">الحقيقة:</span> شُوهد يدخل المجلس الساعة 5:50 مساءً!</p>
+                    <p><strong>السؤال:</strong> لماذا كذب عن مكان وجوده؟</p>
+                </div>
+            </div>
+
+            <div class="evidence-box">
+                <h3>الدليل 3: الوصول والمعرفة</h3>
+                <div class="evidence-item">
+                    <p><strong>فهد:</strong></p>
+                    <p>• يعرف عادات والده اليومية بدقة</p>
+                    <p>• لديه مفتاح خاص للمجلس</p>
+                    <p>• يدخل ويخرج دون إثارة شبهات</p>
+                    <p>• يعرف أن والده يشرب القهوة بعد المغرب عادة</p>
+                </div>
+            </div>
+
+            <div class="evidence-box">
+                <h3>الدليل 4: التواطؤ مع ماجد</h3>
+                <div class="evidence-item">
+                    <p>الرسائل بين فهد وماجد تُظهر تعاوناً وثيقاً:</p>
+                    <br>
+                    <p>• كانا يبحثان عن ثغرات قانونية معاً</p>
+                    <p>• ماجد كان يعمل لصالح فهد سراً</p>
+                    <p>• <span class="emphasis">هل خططا للجريمة معاً؟</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="hint-box">
+            <h2>🎭 السيناريو المحتمل</h2>
+            <div class="hint-content">
+                <p>دعنا نرسم الصورة الكاملة:</p>
+                <br>
+                <p><strong>الخطوة 1:</strong> ماجد يدخل المجلس (5:15 مساءً) لمراجعة الوصية مع الحاج سعد.</p>
+                <br>
+                <p><strong>الخطوة 2:</strong> خلال الجلسة، <span class="emphasis">يضيف ماجد السم إلى الإبريق</span> بينما الحاج سعد مشغول بقراءة الوثائق.</p>
+                <br>
+                <p><strong>الخطوة 3:</strong> ماجد يرفض شرب القهوة عندما يعرضها الحاج سعد ("لا أشرب القهوة في المساء").</p>
+                <br>
+                <p><strong>الخطوة 4:</strong> الحاج سعد أيضاً لا يشرب - مشغول بمراجعة الوصية.</p>
+                <br>
+                <p><strong>الخطوة 5:</strong> ماجد يغادر (5:45 مساءً) - الإبريق مسموم والحاج سعد لم يشرب بعد.</p>
+                <br>
+                <p><strong>الخطوة 6:</strong> <span class="critical">فهد يدخل (5:50 مساءً)</span> - هل كان يعرف أن الإبريق مسموم؟</p>
+                <br>
+                <p><strong>لكن هناك احتمال آخر أكثر احتمالاً:</strong></p>
+                <br>
+                <p>• ماجد <strong>لم</strong> يضع السم (لم تكن لديه الجرأة)</p>
+                <p>• <span class="critical">فهد هو من وضع السم</span> خلال الدقائق الخمس التي قضاها مع والده</p>
+                <p>• الحاج سعد كان مشغولاً أو غادر الغرفة للحظة (للوضوء مثلاً)</p>
+                <p>• فهد استغل الفرصة وأضاف السم بسرعة</p>
+                <p>• بعد مغادرة فهد مباشرة، شرب الحاج سعد القهوة - <span class="critical">ومات</span></p>
+            </div>
+        </div>
+
+        <div class="conclusion-box">
+            <h2>🔑 الدليل الحاسم</h2>
+            <div style="background: rgba(61, 36, 20, 0.6); padding: 25px; border-radius: 8px; margin: 20px 0;">
+                <p style="line-height: 2.5; font-size: 1.15em;">
+                    <span class="critical">التوقيت</span> هو الدليل الحاسم:
+                </p>
+                <br>
+                <p style="font-size: 1.1em; line-height: 2.2;">
+                    • الحاج سعد شرب القهوة <strong>مباشرة بعد مغادرة فهد</strong><br>
+                    • فهد كان <strong>آخر شخص</strong> في المجلس قبل أن يشرب الحاج سعد<br>
+                    • فهد <strong>كذب</strong> عن مكان وجوده في ذلك الوقت<br>
+                    • فهد لديه <strong>أقوى دافع مالي</strong> - سيخسر 40 مليون ريال<br>
+                    • فهد كان في <strong>أزمة مالية خانقة</strong> - لا مخرج له إلا الميراث
+                </p>
+                <br>
+                <p style="text-align: center; font-size: 1.3em; color: #ff6b6b; margin-top: 20px;">
+                    <strong>كل الأدلة تشير إلى شخص واحد...</strong>
+                </p>
+            </div>
+        </div>
+
+        <div style="background: rgba(212, 175, 55, 0.2); padding: 30px; border-radius: 8px; margin: 30px 0; text-align: center;">
+            <p style="font-size: 1.2em; line-height: 2; color: #d4af37;">
+                هل توصلت إلى النتيجة؟
+            </p>
+            <br>
+            <p style="font-size: 1.1em; line-height: 2;">
+                إذا كنت متأكداً من معرفة القاتل، راجع <strong>الحل النهائي</strong> للتأكد من استنتاجك وقراءة التفاصيل الكاملة للجريمة.
+            </p>
+        </div>
+
+        <footer>
+            <p>التلميح رقم: 3 | القضية: CI-4192</p>
+            <p>تم إعداده بواسطة النقيب أحمد الزهراني</p>
+        </footer>
+    </div>
+</body>
+</html>
