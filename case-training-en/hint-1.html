@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hint 1 - Time Window</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .detective-icon {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 48px;
+            z-index: 1000;
+            filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+
+        .hint-badge {
+            background: rgba(255, 255, 255, 0.2);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .hint-level {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            border-radius: 12px;
+            padding: 15px 25px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .hint-level h3 {
+            color: #92400e;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hint-box {
+            background: #fffbeb;
+            border-left: 5px solid #f59e0b;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 25px 0;
+        }
+
+        .hint-box h2 {
+            color: #92400e;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+
+        .hint-box p {
+            color: #78350f;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .think-about {
+            background: white;
+            border: 2px solid #fbbf24;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .think-about h4 {
+            color: #92400e;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .think-about ul {
+            color: #78350f;
+            line-height: 1.8;
+            margin-left: 25px;
+        }
+
+        .think-about li {
+            margin-bottom: 10px;
+        }
+
+        .warning-note {
+            background: #fee2e2;
+            border: 2px solid #ef4444;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .warning-note p {
+            color: #991b1b;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 18px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e1;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+
+        .btn-warning:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="detective-icon">🕵️</div>
+
+    <div class="container">
+        <div class="header">
+            <div class="hint-badge">💡</div>
+            <h1>HINT #1</h1>
+            <div class="subtitle">Gentle Guidance - Focus Your Investigation</div>
+        </div>
+
+        <div class="content">
+            <div class="hint-level">
+                <h3>⭐ Level 1 Hint - Basic Direction</h3>
+            </div>
+
+            <div class="hint-box">
+                <h2>🕐 Focus on the Critical Time Window</h2>
+                <p>The theft occurred during a very specific time period when David Park's office was left unattended. The security logs in Evidence #01 show exactly when David locked his office door from the inside and when he returned.</p>
+                
+                <p>Pay close attention to who had access to the third floor between <strong>2:00 PM and 3:00 PM</strong> on January 15, 2024. This is your primary window of opportunity for the theft.</p>
+
+                <p>Also consider: Why would someone schedule camera maintenance for this exact time period? Was it coincidence, or was it planned?</p>
+            </div>
+
+            <div class="think-about">
+                <h4>🤔 Questions to Consider:</h4>
+                <ul>
+                    <li>Which suspects were physically present on the third floor during the critical time?</li>
+                    <li>Who had the ability to access David's locked office without forced entry?</li>
+                    <li>Look at the security badge logs - do any patterns stand out?</li>
+                    <li>Who scheduled the security camera maintenance, and when was it scheduled?</li>
+                    <li>Does anyone's claimed alibi conflict with the physical evidence?</li>
+                </ul>
+            </div>
+
+            <div class="warning-note">
+                <p>💭 Still stuck? There are two more hints available if you need additional guidance!</p>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="evidence-04.html" class="btn btn-secondary">← Back to Evidence</a>
+                <a href="hint-2.html" class="btn btn-warning">Next Hint →</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

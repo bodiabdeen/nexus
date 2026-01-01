@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hint 3 - Final Clue</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .detective-icon {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 48px;
+            z-index: 1000;
+            filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+
+        .hint-badge {
+            background: rgba(255, 255, 255, 0.2);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .hint-level {
+            background: #fee2e2;
+            border: 2px solid #ef4444;
+            border-radius: 12px;
+            padding: 15px 25px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .hint-level h3 {
+            color: #991b1b;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hint-box {
+            background: #fef2f2;
+            border-left: 5px solid #ef4444;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 25px 0;
+        }
+
+        .hint-box h2 {
+            color: #991b1b;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+
+        .hint-box p {
+            color: #7f1d1d;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .smoking-gun {
+            background: #fee2e2;
+            border: 3px solid #ef4444;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 25px 0;
+        }
+
+        .smoking-gun h3 {
+            color: #991b1b;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .smoking-gun-content {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 5px solid #ef4444;
+        }
+
+        .smoking-gun-content h4 {
+            color: #991b1b;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .smoking-gun-content p {
+            color: #1e293b;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .evidence-highlight {
+            background: #fef3c7;
+            padding: 15px 20px;
+            border-radius: 8px;
+            border-left: 4px solid #f59e0b;
+            margin: 15px 0;
+        }
+
+        .evidence-highlight strong {
+            color: #92400e;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .timeline-box {
+            background: white;
+            border: 2px solid #fca5a5;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .timeline-box h4 {
+            color: #991b1b;
+            margin-bottom: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .timeline-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .timeline-time {
+            font-weight: bold;
+            color: #ef4444;
+            min-width: 80px;
+        }
+
+        .timeline-event {
+            color: #475569;
+            line-height: 1.6;
+        }
+
+        .final-push {
+            background: #dcfce7;
+            border: 2px solid #22c55e;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .final-push h4 {
+            color: #166534;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .final-push p {
+            color: #166534;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 18px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e1;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="detective-icon">🕵️</div>
+
+    <div class="container">
+        <div class="header">
+            <div class="hint-badge">💡💡💡</div>
+            <h1>HINT #3</h1>
+            <div class="subtitle">Final Hint - The Smoking Gun</div>
+        </div>
+
+        <div class="content">
+            <div class="hint-level">
+                <h3>⭐⭐⭐ Level 3 Hint - Almost the Complete Answer</h3>
+            </div>
+
+            <div class="hint-box">
+                <h2>🎯 The Case is Almost Solved</h2>
+                <p>If you've read all the evidence carefully, you have everything you need to solve this case. Let me walk you through the most damning piece of evidence that seals the case.</p>
+            </div>
+
+            <div class="smoking-gun">
+                <h3>🔫 THE SMOKING GUN</h3>
+                <div class="smoking-gun-content">
+                    <h4>Physical Evidence from Evidence #04:</h4>
+                    <p><strong>The stolen laptop was recovered from Marcus Webb's IT toolkit in his car trunk.</strong></p>
+                    
+                    <div class="evidence-highlight">
+                        <strong>From Evidence #04 - Critical Discovery:</strong>
+                        "David Park's missing MacBook Pro was discovered inside Marcus Webb's IT toolkit in the trunk of his car. The laptop was powered off and placed inside a protective anti-static bag."
+                    </div>
+
+                    <p>This is physical proof that Marcus Webb took the laptop. But the evidence doesn't stop there - let's look at how he planned and executed the theft:</p>
+                </div>
+            </div>
+
+            <div class="timeline-box">
+                <h4>📅 COMPLETE TIMELINE OF THE THEFT</h4>
+                
+                <div class="timeline-item">
+                    <div class="timeline-time">Jan 6</div>
+                    <div class="timeline-event"><strong>Planning Phase:</strong> Marcus schedules camera maintenance for January 15, 2:00-4:00 PM, creating a surveillance blind spot</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">Jan 8-9</div>
+                    <div class="timeline-event"><strong>Intelligence Gathering:</strong> Marcus learns the software is worth $2.5 million and is stored only on David's laptop (not backed up)</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">2:00 PM</div>
+                    <div class="timeline-event">David locks his office from inside and begins private work</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">2:00 PM</div>
+                    <div class="timeline-event"><strong>Marcus's Plan Activates:</strong> Camera maintenance begins - no surveillance on David's office</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">2:32 PM</div>
+                    <div class="timeline-event">Lisa Chen calls Marcus (likely asking when he'll arrive - she may have been his lookout)</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">2:45 PM</div>
+                    <div class="timeline-event"><strong>The Theft:</strong> Marcus uses admin override to unlock David's office and enters with his toolkit</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">2:52 PM</div>
+                    <div class="timeline-event">Marcus exits the office (7 minutes inside - enough time to take the laptop)</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">2:55 PM</div>
+                    <div class="timeline-event"><strong>Escape:</strong> Security guard sees Marcus leave building with toolkit, acting nervous and sweating</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">3:05 PM</div>
+                    <div class="timeline-event"><strong>The Deal:</strong> Marcus calls TechVenture Capital (competitor company) - likely arranging to sell the software</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">3:15 PM</div>
+                    <div class="timeline-event">Marcus returns without toolkit (laptop now hidden in his car)</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">5:30 PM</div>
+                    <div class="timeline-event">David discovers the laptop missing and reports the theft</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">Jan 16</div>
+                    <div class="timeline-event"><strong>Case Solved:</strong> Police search Marcus's car and find the laptop in his toolkit</div>
+                </div>
+            </div>
+
+            <div class="smoking-gun">
+                <h3>🔍 WHY MARCUS WEBB IS GUILTY</h3>
+                <div class="smoking-gun-content">
+                    <h4>The Complete Picture:</h4>
+                    
+                    <div class="evidence-highlight">
+                        <strong>MOTIVE:</strong>
+                        Recently denied a raise despite excellent performance. Had been in contact with competitor TechVenture Capital. Saw opportunity to sell $2.5 million software for personal gain.
+                    </div>
+
+                    <div class="evidence-highlight">
+                        <strong>MEANS:</strong>
+                        IT Administrator with master access to all offices. Technical knowledge to handle the laptop safely. Ability to schedule and execute camera maintenance blackout.
+                    </div>
+
+                    <div class="evidence-highlight">
+                        <strong>OPPORTUNITY:</strong>
+                        Created surveillance gap with scheduled maintenance. Used admin override to access locked office. Had 7 minutes alone in David's office during camera blackout.
+                    </div>
+
+                    <div class="evidence-highlight">
+                        <strong>PHYSICAL EVIDENCE:</strong>
+                        The stolen laptop was found in his possession. Security footage shows him leaving with toolkit. Witness saw him acting suspiciously nervous.
+                    </div>
+
+                    <div class="evidence-highlight">
+                        <strong>PREMEDITATION:</strong>
+                        Scheduled camera maintenance one week in advance. Created false work order for "network diagnostic" as cover story. Planned every detail to avoid detection.
+                    </div>
+                </div>
+            </div>
+
+            <div class="final-push">
+                <h4>✅ You Have All The Evidence</h4>
+                <p>Marcus Webb is the thief. He planned it, executed it, and was caught with the laptop. Ready to see the complete solution?</p>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="hint-2.html" class="btn btn-secondary">← Previous Hint</a>
+                <a href="solution.html" class="btn btn-success">View Solution ✓</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

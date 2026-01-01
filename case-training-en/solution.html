@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solution - Case Solved</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .detective-icon {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 48px;
+            z-index: 1000;
+            filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .solution-badge {
+            background: rgba(255, 255, 255, 0.2);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            opacity: 0.9;
+            font-size: 16px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .culprit-reveal {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border: 4px solid #ef4444;
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .culprit-reveal h2 {
+            color: #991b1b;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .culprit-name {
+            font-size: 42px;
+            font-weight: bold;
+            color: #dc2626;
+            margin: 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .culprit-title {
+            color: #7f1d1d;
+            font-size: 20px;
+            font-style: italic;
+        }
+
+        .section {
+            background: #f8fafc;
+            border-left: 5px solid #22c55e;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .section h3 {
+            color: #166534;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .section p {
+            color: #1e293b;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .evidence-list {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .evidence-list h4 {
+            color: #1e293b;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .evidence-list ul {
+            margin-left: 25px;
+        }
+
+        .evidence-list li {
+            color: #475569;
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+
+        .evidence-list strong {
+            color: #166534;
+        }
+
+        .timeline {
+            background: white;
+            border: 2px solid #22c55e;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 25px 0;
+        }
+
+        .timeline h4 {
+            color: #166534;
+            margin-bottom: 25px;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .timeline-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .timeline-time {
+            font-weight: bold;
+            color: #16a34a;
+            min-width: 100px;
+            font-size: 16px;
+        }
+
+        .timeline-event {
+            color: #1e293b;
+            line-height: 1.7;
+        }
+
+        .timeline-event strong {
+            color: #166534;
+        }
+
+        .why-others-innocent {
+            background: #dcfce7;
+            border: 2px solid #22c55e;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 25px 0;
+        }
+
+        .why-others-innocent h4 {
+            color: #166534;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .innocent-person {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .innocent-person:last-child {
+            margin-bottom: 0;
+        }
+
+        .innocent-person h5 {
+            color: #1e293b;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .innocent-person p {
+            color: #475569;
+            line-height: 1.7;
+        }
+
+        .congratulations {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .congratulations h3 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .congratulations p {
+            font-size: 16px;
+            opacity: 0.95;
+            line-height: 1.7;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 18px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e1;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            .culprit-name {
+                font-size: 32px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="detective-icon">🕵️</div>
+
+    <div class="container">
+        <div class="header">
+            <div class="solution-badge">✅</div>
+            <h1>CASE SOLVED</h1>
+            <div class="subtitle">Training Case CI-TRAIN-EN - Complete Solution</div>
+        </div>
+
+        <div class="content">
+            <div class="culprit-reveal">
+                <h2>🎯 THE CULPRIT IS:</h2>
+                <div class="culprit-name">MARCUS WEBB</div>
+                <div class="culprit-title">IT Administrator, Age 35</div>
+            </div>
+
+            <div class="section">
+                <h3>📋 CASE SUMMARY</h3>
+                <p>Marcus Webb, the IT Administrator at TechStart Inc., orchestrated and executed the theft of David Park's laptop containing $2.5 million worth of proprietary AI software. The theft was carefully premeditated, with Marcus planning the crime at least one week in advance by scheduling security camera maintenance to create a surveillance blind spot.</p>
+                
+                <p>On January 15, 2024, at 2:45 PM, Marcus used his administrative privileges to unlock David Park's office while David was away. He spent approximately 7 minutes inside the office, during which he took the MacBook Pro and placed it in his IT toolkit. He then left the building at 2:55 PM, appearing nervous to the security guard, and placed the toolkit in his car trunk.</p>
+
+                <p>The stolen laptop was recovered from Marcus Webb's vehicle on January 16, 2024, providing indisputable physical evidence of his guilt. Phone records also revealed that Marcus contacted TechVenture Capital, a competing company, immediately after the theft, indicating his intention to sell the stolen software.</p>
+            </div>
+
+            <div class="section">
+                <h3>🔍 THE EVIDENCE AGAINST MARCUS WEBB</h3>
+                
+                <div class="evidence-list">
+                    <h4>1. Physical Evidence (The Smoking Gun)</h4>
+                    <ul>
+                        <li><strong>The stolen laptop was found in Marcus's possession</strong> - discovered in his IT toolkit in his car trunk on January 16, 2024 (Evidence #04)</li>
+                        <li><strong>Serial number confirmed:</strong> Device matched David Park's registered MacBook Pro (TS-MBPRO-0847)</li>
+                        <li>This alone is sufficient to prove guilt beyond reasonable doubt</li>
+                    </ul>
+                </div>
+
+                <div class="evidence-list">
+                    <h4>2. Opportunity - Access & Timing</h4>
+                    <ul>
+                        <li><strong>Administrative access:</strong> Marcus had master key privileges to unlock any office in the building (Evidence #01)</li>
+                        <li><strong>Security logs confirm:</strong> Marcus used admin override to unlock David's office at exactly 2:45 PM on January 15 (Evidence #01)</li>
+                        <li><strong>7-minute window:</strong> Entered at 2:45 PM, exited at 2:52 PM - sufficient time to take the laptop (Evidence #01)</li>
+                        <li><strong>Surveillance blackout:</strong> Marcus scheduled camera maintenance for 2:00-4:00 PM, eliminating video evidence (Evidence #04)</li>
+                    </ul>
+                </div>
+
+                <div class="evidence-list">
+                    <h4>3. Premeditation - Planned in Advance</h4>
+                    <ul>
+                        <li><strong>Camera maintenance scheduled January 6</strong> - nine days before the theft (Evidence #04)</li>
+                        <li><strong>Strategic timing:</strong> Maintenance window covered David's office during prime working hours</li>
+                        <li><strong>False work order:</strong> Created bogus "network diagnostic" task as cover story for accessing the office (Evidence #04)</li>
+                        <li><strong>Intelligence gathering:</strong> Email exchanges show Marcus asked David about the software's value and storage location (Evidence #02)</li>
+                    </ul>
+                </div>
+
+                <div class="evidence-list">
+                    <h4>4. Motive - Financial Gain</h4>
+                    <ul>
+                        <li><strong>Recently denied raise:</strong> Despite excellent performance reviews, Marcus was refused a salary increase (Case File)</li>
+                        <li><strong>Knowledge of value:</strong> Marcus knew the software was worth $2.5 million from his conversation with David (Evidence #02)</li>
+                        <li><strong>Competitor contact:</strong> Phone records show Marcus called TechVenture Capital at 3:05 PM - immediately after hiding the laptop (Evidence #04)</li>
+                        <li><strong>Multiple contacts:</strong> Marcus had been in communication with this competitor "multiple times over the past month" (Evidence #04)</li>
+                    </ul>
+                </div>
+
+                <div class="evidence-list">
+                    <h4>5. Witness Testimony</h4>
+                    <ul>
+                        <li><strong>Tom Bradford (Junior Developer):</strong> Saw Marcus use his access card to enter David's office at 2:45 PM and exit with his toolkit (Evidence #03)</li>
+                        <li><strong>James Chen (Security Guard):</strong> Observed Marcus leaving the building at 2:55 PM carrying his IT toolkit, acting nervous and sweating despite cool weather (Evidence #03)</li>
+                        <li><strong>Same witness:</strong> Noted Marcus returned at 3:15 PM without the toolkit - unusual behavior (Evidence #03)</li>
+                        <li><strong>Lisa Chen's presence:</strong> Lisa called Marcus at 2:32 PM and was seen waiting near David's office, possibly acting as lookout (Evidence #03 & #04)</li>
+                    </ul>
+                </div>
+
+                <div class="evidence-list">
+                    <h4>6. Suspicious Behavior</h4>
+                    <ul>
+                        <li><strong>Nervous demeanor:</strong> Security guard noted Marcus was "sweating" and "kept looking back at the elevators" (Evidence #03)</li>
+                        <li><strong>Toolkit disappearance:</strong> Left building with toolkit, returned without it - claimed he "dropped it off at his car for repairs" (Evidence #03)</li>
+                        <li><strong>Timing of phone call:</strong> Called competitor company within minutes of securing the laptop (Evidence #04)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline">
+                <h4>📅 COMPLETE TIMELINE - HOW THE CRIME UNFOLDED</h4>
+                
+                <div class="timeline-item">
+                    <div class="timeline-time">January 6</div>
+                    <div class="timeline-event"><strong>Initial Planning:</strong> Marcus schedules security camera maintenance for January 15, 2:00-4:00 PM, creating future surveillance gap for Office 3-12</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">January 8</div>
+                    <div class="timeline-event"><strong>Intelligence Gathering Begins:</strong> David emails Marcus about laptop performance issues, expressing concern about the valuable software on the device</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">January 9</div>
+                    <div class="timeline-event"><strong>Critical Information Obtained:</strong> David reveals the software is worth $2.5 million and is stored only locally on his laptop (not backed up to cloud)</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">January 14</div>
+                    <div class="timeline-event"><strong>Final Preparation:</strong> Marcus creates false work order for "network connectivity diagnostic" as cover story for accessing David's office the next day</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">Jan 15, 2:00 PM</div>
+                    <div class="timeline-event"><strong>David Secures Office:</strong> David Park locks his office from inside to work privately. Camera maintenance begins - surveillance goes offline</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">2:32 PM</div>
+                    <div class="timeline-event"><strong>Coordination Call:</strong> Lisa Chen calls Marcus (possibly acting as lookout to confirm coast is clear)</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">2:45 PM</div>
+                    <div class="timeline-event"><strong>THE THEFT OCCURS:</strong> Marcus uses administrative override to unlock David's office and enters with his IT toolkit. No cameras recording</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">2:52 PM</div>
+                    <div class="timeline-event"><strong>Exit:</strong> Marcus leaves the office after 7 minutes - laptop now in his toolkit</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">2:55 PM</div>
+                    <div class="timeline-event"><strong>Building Exit:</strong> Security guard observes Marcus leaving with toolkit, acting nervous, sweating, looking back at elevators</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">3:02 PM</div>
+                    <div class="timeline-event"><strong>Evidence Concealment:</strong> Parking lot camera shows Marcus placing toolkit in car trunk (discovered during investigation)</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">3:05 PM</div>
+                    <div class="timeline-event"><strong>Monetization Attempt:</strong> Marcus calls TechVenture Capital (competitor) - likely negotiating sale of stolen software</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">3:15 PM</div>
+                    <div class="timeline-event"><strong>Return to Building:</strong> Marcus re-enters without toolkit, tells security guard he "dropped it at his car for repairs later"</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">5:30 PM</div>
+                    <div class="timeline-event"><strong>Crime Discovered:</strong> David unlocks his office and discovers laptop missing, reports theft to security</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">January 16, 10:00 AM</div>
+                    <div class="timeline-event"><strong>CASE SOLVED:</strong> Police search Marcus's vehicle with warrant. Laptop discovered in IT toolkit in trunk. Serial number confirms it's David's stolen MacBook Pro</div>
+                </div>
+            </div>
+
+            <div class="why-others-innocent">
+                <h4>❌ WHY THE OTHER SUSPECTS ARE INNOCENT</h4>
+
+                <div class="innocent-person">
+                    <h5>Lisa Chen - Marketing Manager</h5>
+                    <p><strong>Why she's innocent:</strong> While Lisa was present in the hallway and had a motive (needed software specs for her presentation), she lacks the technical means to execute the theft. She has no administrative access to unlock offices, and witness testimony shows she left immediately when Marcus arrived. She may have been involved as a lookout or accomplice, but she did not physically steal the laptop. Most importantly, the laptop was found in Marcus's possession, not hers. At worst, she was complicit, but Marcus was the primary perpetrator.</p>
+                </div>
+
+                <div class="innocent-person">
+                    <h5>Sarah Miller - Chief Financial Officer</h5>
+                    <p><strong>Why she's innocent:</strong> Sarah had strong financial motive (wanted David's project to fail to save budget) and was unaccounted for during the theft window. However, she has no technical knowledge, no administrative building access, and no means to unlock David's office. Her assistant's testimony about her absence is suspicious, but there's no physical evidence connecting her to the theft. The laptop was found in Marcus's possession. Sarah may have harbored ill will toward David, but she didn't commit the theft.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>⚖️ CONCLUSION</h3>
+                <p><strong>Marcus Webb is guilty beyond reasonable doubt.</strong> He had motive (financial gain through selling to competitors), means (administrative access and technical knowledge), and opportunity (scheduled camera blackout and legitimate access to the office). The physical evidence - the laptop found in his possession - conclusively proves his guilt.</p>
+
+                <p>Marcus carefully planned this theft at least one week in advance, demonstrating premeditation. He created a surveillance blind spot, fabricated a work order as cover, and immediately contacted a competitor to sell the stolen intellectual property. His nervous behavior when leaving the building and the discovery of the laptop in his vehicle seal his conviction.</p>
+
+                <p><strong>Recommended charges:</strong> Theft of intellectual property, computer fraud, corporate espionage, and attempted sale of stolen trade secrets.</p>
+            </div>
+
+            <div class="congratulations">
+                <h3>🎉 CONGRATULATIONS, DETECTIVE!</h3>
+                <p>You've successfully solved your first training case! You learned how to examine evidence, cross-reference witness statements with physical evidence, identify contradictions in alibis, and piece together a timeline of events.</p>
+                <p style="margin-top: 15px;">Ready for a real case? The full cases are more complex with more suspects, evidence, and challenging puzzles to solve!</p>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="index.html" class="btn btn-primary">← Return to Case Start</a>
+                <a href="../index.html" class="btn btn-secondary">Back to Main Portal</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

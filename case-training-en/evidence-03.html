@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence 03 - Witness Statements</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .detective-icon {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 48px;
+            z-index: 1000;
+            filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .evidence-header {
+            background: #f1f5f9;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        .evidence-header h2 {
+            color: #1e293b;
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .evidence-meta {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .statement-box {
+            background: #fefefe;
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .statement-header {
+            background: #f8fafc;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .witness-name {
+            font-weight: bold;
+            color: #1e293b;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .witness-role {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .interview-date {
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        .statement-content {
+            color: #1e293b;
+            line-height: 1.8;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .statement-content p {
+            margin-bottom: 15px;
+        }
+
+        .quote {
+            background: #f1f5f9;
+            border-left: 4px solid #667eea;
+            padding: 15px 20px;
+            margin: 15px 0;
+            font-style: italic;
+            color: #475569;
+        }
+
+        .highlight-statement {
+            border: 2px solid #f59e0b;
+            background: #fffbeb;
+        }
+
+        .highlight-statement .statement-header {
+            background: #fef3c7;
+        }
+
+        .alert-box {
+            background: #fee2e2;
+            border: 2px solid #ef4444;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .alert-box h4 {
+            color: #991b1b;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .alert-box p {
+            color: #7f1d1d;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .info-box {
+            background: #dbeafe;
+            border: 2px solid #3b82f6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .info-box h4 {
+            color: #1e3a8a;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .info-box ul {
+            color: #1e40af;
+            line-height: 1.8;
+            margin-left: 20px;
+        }
+
+        .info-box li {
+            margin-bottom: 8px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 18px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e1;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            .statement-box {
+                padding: 15px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="detective-icon">🕵️</div>
+
+    <div class="container">
+        <div class="header">
+            <h1>👥 EVIDENCE #03</h1>
+            <div class="subtitle">Witness Statements - Office Staff Interviews</div>
+        </div>
+
+        <div class="content">
+            <div class="evidence-header">
+                <h2>Employee Witness Interviews</h2>
+                <div class="evidence-meta">
+                    Document Type: Formal Witness Statements | Conducted By: Security Department | Date: January 15-16, 2024
+                </div>
+            </div>
+
+            <div class="statement-box">
+                <div class="statement-header">
+                    <div class="witness-name">Rachel Torres</div>
+                    <div class="witness-role">Receptionist, Front Desk</div>
+                    <div class="interview-date">Interview Date: January 15, 2024 - 6:45 PM</div>
+                </div>
+                <div class="statement-content">
+                    <p><strong>Q: What did you observe on January 15th that might be relevant?</strong></p>
+                    <div class="quote">
+                        "I saw Sarah Miller leave the building around 2:15 PM. She told me she was going to grab lunch, but I noticed she came back about 45 minutes later carrying the same purse with no food or coffee. I remember thinking it was odd since she usually brings lunch from home."
+                    </div>
+                    <p><strong>Q: Did you see anyone else unusual that afternoon?</strong></p>
+                    <div class="quote">
+                        "Marcus from IT walked by around 2:40 PM carrying his toolkit. He was heading toward the elevators. He seemed like he was in a hurry, which isn't normal for him - he's usually very relaxed."
+                    </div>
+                </div>
+            </div>
+
+            <div class="statement-box highlight-statement">
+                <div class="statement-header">
+                    <div class="witness-name">Jennifer Kim</div>
+                    <div class="witness-role">Executive Assistant to CFO Sarah Miller</div>
+                    <div class="interview-date">Interview Date: January 16, 2024 - 9:00 AM</div>
+                </div>
+                <div class="statement-content">
+                    <p><strong>Q: Can you describe Sarah Miller's activities on January 15th?</strong></p>
+                    <div class="quote">
+                        "Sarah asked me to hold all her calls from 2:00 PM to 3:30 PM because she said she needed to focus on the quarterly reports. But when I brought her coffee around 2:20 PM, she wasn't in her office. Her computer was on, and there was a document open, but she wasn't there."
+                    </div>
+                    <p><strong>Q: When did she return?</strong></p>
+                    <div class="quote">
+                        "She came back around 3:00 PM. When I asked if she wanted the coffee reheated, she seemed flustered and said she'd just stepped out to use the restroom. But that didn't make sense - she was gone for at least 40 minutes, and the restroom is right next to her office."
+                    </div>
+                    <p><strong>Q: Did Sarah mention David Park recently?</strong></p>
+                    <div class="quote">
+                        "Yes, she's been very stressed about his project budget. Last week she said something like, 'If David's project fails, it could actually save the company money in the short term.' I found that comment strange."
+                    </div>
+                </div>
+            </div>
+
+            <div class="statement-box">
+                <div class="statement-header">
+                    <div class="witness-name">Tom Bradford</div>
+                    <div class="witness-role">Junior Software Developer, sits near David's office</div>
+                    <div class="interview-date">Interview Date: January 15, 2024 - 7:15 PM</div>
+                </div>
+                <div class="statement-content">
+                    <p><strong>Q: Did you notice anything unusual near David's office today?</strong></p>
+                    <div class="quote">
+                        "I saw Lisa Chen walking in the hallway outside David's office around 2:35 PM. She was on her phone and looked like she was waiting for something. I thought maybe she had a meeting with David, but she didn't knock on his door."
+                    </div>
+                    <p><strong>Q: How long was she there?</strong></p>
+                    <div class="quote">
+                        "Maybe 5-10 minutes. Then Marcus from IT showed up with his access card and opened David's door. Lisa walked away right after Marcus went inside. I didn't think much of it at the time."
+                    </div>
+                    <p><strong>Q: Did you see Marcus leave?</strong></p>
+                    <div class="quote">
+                        "Yeah, about 5-7 minutes later. He was carrying his toolkit, walking pretty fast. He didn't look at anyone - just went straight to the elevator."
+                    </div>
+                </div>
+            </div>
+
+            <div class="statement-box highlight-statement">
+                <div class="statement-header">
+                    <div class="witness-name">Building Security Guard - James Chen</div>
+                    <div class="witness-role">Security Officer, Main Entrance</div>
+                    <div class="interview-date">Interview Date: January 15, 2024 - 8:00 PM</div>
+                </div>
+                <div class="statement-content">
+                    <p><strong>Q: Do you monitor who enters and exits the building?</strong></p>
+                    <div class="quote">
+                        "Yes, all employees badge in and out. I also visually check larger bags or packages. On January 15th at approximately 2:55 PM, Marcus Webb left the building carrying his large IT toolkit - the metal case he uses for computer repairs."
+                    </div>
+                    <p><strong>Q: Is that unusual?</strong></p>
+                    <div class="quote">
+                        "Not particularly - he often takes equipment home or to other offices. But I do remember he seemed nervous. He was sweating even though it was cool outside, and he kept looking back at the elevators. When I asked him if everything was okay, he said he was just running late for an appointment."
+                    </div>
+                    <p><strong>Q: Did you see him return?</strong></p>
+                    <div class="quote">
+                        "Yes, he came back about 20 minutes later at 3:15 PM, but without the toolkit. He said he'd dropped it off at his car for repairs later. That struck me as odd because he usually keeps it at his desk."
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <h4>⚠️ CRITICAL CONTRADICTIONS IDENTIFIED</h4>
+                <p><strong>Sarah Miller's Alibi:</strong> Her assistant confirms she was missing from her office during the critical time window (2:20 PM - 3:00 PM), contradicting her statement about working on reports all afternoon.</p>
+                <p><strong>Marcus Webb's Actions:</strong> Witness Tom Bradford confirms Marcus accessed David's office, and security guard James Chen observed suspicious behavior when Marcus left the building with his toolkit.</p>
+                <p><strong>Lisa Chen's Presence:</strong> She was observed near David's office during her claimed "meeting time," and her presence coincided exactly with Marcus's access to the office.</p>
+            </div>
+
+            <div class="info-box">
+                <h4>🔍 KEY WITNESS OBSERVATIONS</h4>
+                <ul>
+                    <li>Multiple witnesses place suspects at or near David's office during the theft window</li>
+                    <li>Security guard noted Marcus Webb acting nervous and leaving with his toolkit at 2:55 PM</li>
+                    <li>Marcus returned without the toolkit 20 minutes later - unusual behavior</li>
+                    <li>Sarah Miller was unaccounted for during the exact time the security logs show her on the third floor</li>
+                    <li>Lisa Chen was seen waiting in the hallway, departing immediately after Marcus entered David's office</li>
+                    <li>All suspects have documented alibis that conflict with physical evidence and witness statements</li>
+                </ul>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="evidence-02.html" class="btn btn-secondary">← Previous Evidence</a>
+                <a href="evidence-04.html" class="btn btn-primary">Next Evidence →</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

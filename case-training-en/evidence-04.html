@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence 04 - IT Records</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .detective-icon {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 48px;
+            z-index: 1000;
+            filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .evidence-header {
+            background: #f1f5f9;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        .evidence-header h2 {
+            color: #1e293b;
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .evidence-meta {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .document-box {
+            background: #fefefe;
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 25px 0;
+        }
+
+        .doc-title {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .doc-title h3 {
+            color: #1e293b;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .doc-subtitle {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .record-item {
+            background: #f8fafc;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        .record-item h4 {
+            color: #1e293b;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .record-item p {
+            color: #475569;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+
+        .highlight-record {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        thead {
+            background: #667eea;
+            color: white;
+        }
+
+        th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #1e293b;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .critical-row {
+            background: #fee2e2 !important;
+            font-weight: bold;
+        }
+
+        .alert-box {
+            background: #fee2e2;
+            border: 2px solid #ef4444;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .alert-box h4 {
+            color: #991b1b;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .alert-box p {
+            color: #7f1d1d;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .success-box {
+            background: #dcfce7;
+            border: 2px solid #22c55e;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .success-box h4 {
+            color: #166534;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .success-box p {
+            color: #166534;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .info-box {
+            background: #dbeafe;
+            border: 2px solid #3b82f6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .info-box h4 {
+            color: #1e3a8a;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .info-box ul {
+            color: #1e40af;
+            line-height: 1.8;
+            margin-left: 20px;
+        }
+
+        .info-box li {
+            margin-bottom: 8px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 18px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e1;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+
+        .btn-warning:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="detective-icon">🕵️</div>
+
+    <div class="container">
+        <div class="header">
+            <h1>💻 EVIDENCE #04</h1>
+            <div class="subtitle">IT Department Records & Forensic Analysis</div>
+        </div>
+
+        <div class="content">
+            <div class="evidence-header">
+                <h2>Information Technology Service Records</h2>
+                <div class="evidence-meta">
+                    Document Type: IT Work Orders & System Logs | Source: IT Department Database | Period: January 1-15, 2024
+                </div>
+            </div>
+
+            <div class="document-box">
+                <div class="doc-title">
+                    <h3>📋 IT WORK ORDER HISTORY</h3>
+                    <div class="doc-subtitle">January 2024 - Marcus Webb (IT Administrator)</div>
+                </div>
+
+                <div class="record-item">
+                    <h4>Work Order #2401-034</h4>
+                    <p><strong>Date Submitted:</strong> January 6, 2024</p>
+                    <p><strong>Task:</strong> Schedule security camera maintenance for 3rd floor</p>
+                    <p><strong>Scheduled For:</strong> January 15, 2024, 2:00 PM - 4:00 PM</p>
+                    <p><strong>Reason:</strong> "Firmware update required for camera system"</p>
+                    <p><strong>Notes:</strong> Maintenance will affect cameras covering offices 3-10 through 3-15, including Office 3-12 (David Park's office)</p>
+                </div>
+
+                <div class="record-item highlight-record">
+                    <h4>Work Order #2401-041</h4>
+                    <p><strong>Date Submitted:</strong> January 14, 2024</p>
+                    <p><strong>Task:</strong> Network connectivity diagnostic for Office 3-12</p>
+                    <p><strong>Scheduled For:</strong> January 15, 2024, 2:45 PM</p>
+                    <p><strong>Reason:</strong> "Proactive maintenance check on high-value equipment"</p>
+                    <p><strong>Status:</strong> Completed at 2:52 PM on January 15, 2024</p>
+                    <p><strong>Notes Added After Completion:</strong> "Checked network port. All functioning normally. No issues found."</p>
+                </div>
+
+                <div class="record-item">
+                    <h4>Work Order #2401-028</h4>
+                    <p><strong>Date Submitted:</strong> January 8, 2024</p>
+                    <p><strong>Requester:</strong> David Park</p>
+                    <p><strong>Task:</strong> Performance diagnostics on MacBook Pro</p>
+                    <p><strong>Status:</strong> Scheduled for January 16, 2024 (postponed from original date)</p>
+                    <p><strong>Notes:</strong> "Will diagnose performance issues. Possible hardware upgrade needed."</p>
+                </div>
+            </div>
+
+            <div class="document-box">
+                <div class="doc-title">
+                    <h3>🔐 ADMIN ACCESS LOG</h3>
+                    <div class="doc-subtitle">Administrative Override Events - January 15, 2024</div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Admin User</th>
+                            <th>Override Type</th>
+                            <th>Target Location</th>
+                            <th>Justification</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>9:30 AM</td>
+                            <td>Marcus Webb</td>
+                            <td>Door Unlock</td>
+                            <td>Server Room</td>
+                            <td>Routine maintenance</td>
+                        </tr>
+                        <tr class="critical-row">
+                            <td>2:45 PM</td>
+                            <td>Marcus Webb</td>
+                            <td>Door Unlock</td>
+                            <td>Office 3-12</td>
+                            <td>Network diagnostic</td>
+                        </tr>
+                        <tr>
+                            <td>4:15 PM</td>
+                            <td>Marcus Webb</td>
+                            <td>System Access</td>
+                            <td>Email Server</td>
+                            <td>Security patch</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="alert-box">
+                <h4>🚨 CRITICAL DISCOVERY - IT TOOLKIT INSPECTION</h4>
+                <p><strong>Date:</strong> January 16, 2024 - 10:00 AM</p>
+                <p><strong>Location:</strong> Marcus Webb's vehicle (parking lot inspection with warrant)</p>
+                <p><strong>Finding:</strong> David Park's missing MacBook Pro was discovered inside Marcus Webb's IT toolkit in the trunk of his car. The laptop was powered off and placed inside a protective anti-static bag.</p>
+                <p><strong>Serial Number Match:</strong> Device serial number confirmed as TS-MBPRO-0847, registered to David Park</p>
+                <p><strong>Laptop Status:</strong> Intact, no damage, all data appears to be present on the device</p>
+            </div>
+
+            <div class="success-box">
+                <h4>✅ CASE BREAKTHROUGH - LAPTOP RECOVERED</h4>
+                <p>The stolen laptop has been recovered from Marcus Webb's possession. Forensic analysis confirms it is the missing device containing the $2.5 million AI software.</p>
+                <p><strong>Additional Evidence:</strong> Security footage from the parking lot shows Marcus Webb placing his toolkit in his trunk at 3:02 PM on January 15, 2024 - matching the timeline of the theft.</p>
+            </div>
+
+            <div class="document-box">
+                <div class="doc-title">
+                    <h3>📱 PHONE RECORDS ANALYSIS</h3>
+                    <div class="doc-subtitle">Company Phone System - January 15, 2024</div>
+                </div>
+
+                <div class="record-item">
+                    <h4>Call Record: Lisa Chen ↔ Marcus Webb</h4>
+                    <p><strong>Time:</strong> 2:32 PM - 2:34 PM (Duration: 2 minutes)</p>
+                    <p><strong>Type:</strong> Internal company line</p>
+                    <p><strong>Note:</strong> This call occurred while Lisa was observed waiting in the hallway outside David's office, moments before Marcus arrived</p>
+                </div>
+
+                <div class="record-item">
+                    <h4>Call Record: Marcus Webb ↔ External Number</h4>
+                    <p><strong>Time:</strong> 3:05 PM - 3:08 PM (Duration: 3 minutes)</p>
+                    <p><strong>Type:</strong> Outbound to mobile phone</p>
+                    <p><strong>Number Traced To:</strong> TechVenture Capital - known competitor of TechStart Inc.</p>
+                    <p><strong>Follow-up Investigation:</strong> Marcus Webb had been in contact with this competitor multiple times over the past month</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>🔍 INVESTIGATOR'S FINAL ANALYSIS</h4>
+                <ul>
+                    <li><strong>Opportunity:</strong> Marcus had legitimate access to David's office using admin override</li>
+                    <li><strong>Means:</strong> Scheduled camera maintenance created a surveillance blind spot he controlled</li>
+                    <li><strong>Motive:</strong> Phone records reveal contact with competing company; likely planned to sell the software</li>
+                    <li><strong>Physical Evidence:</strong> Laptop found in Marcus's possession</li>
+                    <li><strong>Timing:</strong> All evidence points to the theft occurring between 2:45 PM - 2:52 PM during Marcus's "network diagnostic"</li>
+                    <li><strong>Premeditation:</strong> Camera maintenance was scheduled one week in advance, suggesting careful planning</li>
+                </ul>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="evidence-03.html" class="btn btn-secondary">← Previous Evidence</a>
+                <a href="hint-1.html" class="btn btn-warning">Need a Hint? 💡</a>
+                <a href="solution.html" class="btn btn-primary">View Solution ✓</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

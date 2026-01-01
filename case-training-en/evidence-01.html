@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence 01 - Security Logs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .detective-icon {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 48px;
+            z-index: 1000;
+            filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .evidence-header {
+            background: #f1f5f9;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        .evidence-header h2 {
+            color: #1e293b;
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .evidence-meta {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .document-box {
+            background: #fefefe;
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 25px 0;
+        }
+
+        .doc-title {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .doc-title h3 {
+            color: #1e293b;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .doc-subtitle {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        thead {
+            background: #667eea;
+            color: white;
+        }
+
+        th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #1e293b;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .time-col {
+            font-weight: 600;
+            color: #667eea;
+            white-space: nowrap;
+        }
+
+        .highlight-row {
+            background: #fef3c7 !important;
+            border-left: 4px solid #f59e0b;
+        }
+
+        .alert-box {
+            background: #fee2e2;
+            border: 2px solid #ef4444;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .alert-box h4 {
+            color: #991b1b;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .alert-box p {
+            color: #7f1d1d;
+            line-height: 1.6;
+        }
+
+        .info-box {
+            background: #dbeafe;
+            border: 2px solid #3b82f6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .info-box h4 {
+            color: #1e3a8a;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .info-box p, .info-box ul {
+            color: #1e40af;
+            line-height: 1.6;
+        }
+
+        .info-box ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .info-box li {
+            margin-bottom: 8px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 18px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e1;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="detective-icon">🕵️</div>
+
+    <div class="container">
+        <div class="header">
+            <h1>📊 EVIDENCE #01</h1>
+            <div class="subtitle">Security Access Logs - January 15, 2024</div>
+        </div>
+
+        <div class="content">
+            <div class="evidence-header">
+                <h2>Building Security & Access Records</h2>
+                <div class="evidence-meta">
+                    Document Type: Electronic Security Logs | Source: TechStart Inc. Security System | Date: January 15, 2024
+                </div>
+            </div>
+
+            <div class="document-box">
+                <div class="doc-title">
+                    <h3>🏢 BADGE ACCESS LOG</h3>
+                    <div class="doc-subtitle">Third Floor - Product Development Wing</div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Employee Name</th>
+                            <th>Badge ID</th>
+                            <th>Location</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="time-col">1:15 PM</td>
+                            <td>David Park</td>
+                            <td>TS-0847</td>
+                            <td>Office 3-12</td>
+                            <td>Door Unlock</td>
+                        </tr>
+                        <tr>
+                            <td class="time-col">1:45 PM</td>
+                            <td>Lisa Chen</td>
+                            <td>TS-0623</td>
+                            <td>Conference Room B</td>
+                            <td>Door Unlock</td>
+                        </tr>
+                        <tr>
+                            <td class="time-col">2:00 PM</td>
+                            <td>David Park</td>
+                            <td>TS-0847</td>
+                            <td>Office 3-12</td>
+                            <td>Door Lock (Interior)</td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td class="time-col">2:15 PM</td>
+                            <td>Sarah Miller</td>
+                            <td>TS-0301</td>
+                            <td>Elevator - Floor 3</td>
+                            <td>Access Granted</td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td class="time-col">2:30 PM</td>
+                            <td>Lisa Chen</td>
+                            <td>TS-0623</td>
+                            <td>Hallway 3-West</td>
+                            <td>Motion Detected</td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td class="time-col">2:45 PM</td>
+                            <td>Marcus Webb</td>
+                            <td>TS-0512</td>
+                            <td>Office 3-12</td>
+                            <td>Door Unlock (Admin Override)</td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td class="time-col">2:52 PM</td>
+                            <td>Marcus Webb</td>
+                            <td>TS-0512</td>
+                            <td>Office 3-12</td>
+                            <td>Door Lock</td>
+                        </tr>
+                        <tr>
+                            <td class="time-col">3:00 PM</td>
+                            <td>Sarah Miller</td>
+                            <td>TS-0301</td>
+                            <td>Elevator - Floor 2</td>
+                            <td>Access Granted</td>
+                        </tr>
+                        <tr>
+                            <td class="time-col">4:30 PM</td>
+                            <td>David Park</td>
+                            <td>TS-0847</td>
+                            <td>Office 3-12</td>
+                            <td>Door Unlock (Interior)</td>
+                        </tr>
+                        <tr>
+                            <td class="time-col">5:30 PM</td>
+                            <td>David Park</td>
+                            <td>TS-0847</td>
+                            <td>Security Desk</td>
+                            <td>Theft Reported</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="alert-box">
+                <h4>⚠️ SECURITY ANOMALIES DETECTED</h4>
+                <p><strong>Admin Override Usage:</strong> Marcus Webb used administrative privileges to unlock David Park's office at 2:45 PM. This override bypasses the standard access control system and is typically only used for emergencies or maintenance.</p>
+                <p style="margin-top: 10px;"><strong>Note:</strong> IT administrators have master access to all office doors for technical support purposes.</p>
+            </div>
+
+            <div class="info-box">
+                <h4>🔍 KEY OBSERVATIONS</h4>
+                <ul>
+                    <li>David Park locked his office from the inside at 2:00 PM, indicating he was working privately</li>
+                    <li>All three suspects were present on the third floor during the critical time window (2:00 PM - 3:00 PM)</li>
+                    <li>Sarah Miller's elevator access contradicts her statement about being in her office all afternoon</li>
+                    <li>Lisa Chen's motion detection in Hallway 3-West occurred during her claimed meeting time</li>
+                    <li>Marcus Webb accessed David's office for 7 minutes (2:45 PM - 2:52 PM)</li>
+                    <li>The laptop was discovered missing at 5:30 PM when David unlocked his office after meetings</li>
+                </ul>
+            </div>
+
+            <div class="document-box">
+                <div class="doc-title">
+                    <h3>📹 CAMERA COVERAGE NOTE</h3>
+                </div>
+                <p style="color: #64748b; line-height: 1.6;">
+                    The security camera covering Office 3-12 was undergoing maintenance from 2:00 PM to 4:00 PM on January 15, 2024. This maintenance was scheduled by the IT department one week in advance. No visual footage is available for the critical time period.
+                </p>
+                <p style="color: #64748b; line-height: 1.6; margin-top: 15px;">
+                    <strong>Maintenance scheduled by:</strong> Marcus Webb (IT Administrator)<br>
+                    <strong>Reason noted:</strong> "Firmware update required for camera system"
+                </p>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="case-file.html" class="btn btn-secondary">← Back to Case File</a>
+                <a href="evidence-02.html" class="btn btn-primary">Next Evidence →</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

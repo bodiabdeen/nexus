@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hint 2 - Eliminate Suspects</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .detective-icon {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 48px;
+            z-index: 1000;
+            filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+
+        .hint-badge {
+            background: rgba(255, 255, 255, 0.2);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .hint-level {
+            background: #fed7aa;
+            border: 2px solid #f59e0b;
+            border-radius: 12px;
+            padding: 15px 25px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .hint-level h3 {
+            color: #92400e;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hint-box {
+            background: #fffbeb;
+            border-left: 5px solid #f59e0b;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 25px 0;
+        }
+
+        .hint-box h2 {
+            color: #92400e;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+
+        .hint-box p {
+            color: #78350f;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .suspect-analysis {
+            background: white;
+            border: 2px solid #fbbf24;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .suspect-item {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .suspect-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .suspect-name {
+            color: #1e293b;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .suspect-verdict {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .unlikely {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .prime-suspect {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .suspect-reasoning {
+            color: #475569;
+            line-height: 1.7;
+            margin-top: 10px;
+        }
+
+        .key-evidence {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .key-evidence h4 {
+            color: #92400e;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .key-evidence ul {
+            color: #78350f;
+            line-height: 1.8;
+            margin-left: 25px;
+        }
+
+        .key-evidence li {
+            margin-bottom: 10px;
+        }
+
+        .warning-note {
+            background: #fee2e2;
+            border: 2px solid #ef4444;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .warning-note p {
+            color: #991b1b;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 18px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e1;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+
+        .btn-warning:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="detective-icon">🕵️</div>
+
+    <div class="container">
+        <div class="header">
+            <div class="hint-badge">💡💡</div>
+            <h1>HINT #2</h1>
+            <div class="subtitle">Stronger Guidance - Process of Elimination</div>
+        </div>
+
+        <div class="content">
+            <div class="hint-level">
+                <h3>⭐⭐ Level 2 Hint - Eliminate Suspects</h3>
+            </div>
+
+            <div class="hint-box">
+                <h2>🔍 Let's Narrow Down the Suspects</h2>
+                <p>When solving a case, it's often helpful to eliminate suspects who don't have the complete combination of <strong>motive, means, and opportunity</strong>. Let's analyze each suspect systematically.</p>
+            </div>
+
+            <div class="suspect-analysis">
+                <div class="suspect-item">
+                    <div class="suspect-name">👤 Lisa Chen - Marketing Manager</div>
+                    <span class="suspect-verdict unlikely">❌ UNLIKELY CULPRIT</span>
+                    <div class="suspect-reasoning">
+                        <strong>Why she's unlikely:</strong> While Lisa was present on the third floor and had a motive (needed the software specs for her presentation), she lacks the technical <strong>means</strong> to execute the theft. She doesn't have administrative access to unlock David's office, and witness statements show she left immediately when Marcus arrived. She appears to have been waiting for someone else - possibly an accomplice, but not the primary thief.
+                    </div>
+                </div>
+
+                <div class="suspect-item">
+                    <div class="suspect-name">👤 Sarah Miller - Chief Financial Officer</div>
+                    <span class="suspect-verdict unlikely">❌ UNLIKELY CULPRIT</span>
+                    <div class="suspect-reasoning">
+                        <strong>Why she's unlikely:</strong> Sarah had strong financial motive and was present on the third floor during the theft window. However, she has no technical skills and no administrative access to David's locked office. Her absence from her office is suspicious, but there's no evidence she physically took the laptop. More importantly, Evidence #04 reveals the laptop was found in someone else's possession.
+                    </div>
+                </div>
+
+                <div class="suspect-item">
+                    <div class="suspect-name">👤 Marcus Webb - IT Administrator</div>
+                    <span class="suspect-verdict prime-suspect">⚠️ PRIME SUSPECT</span>
+                    <div class="suspect-reasoning">
+                        <strong>Why he's the prime suspect:</strong> Marcus has the complete trifecta - motive, means, and opportunity. He had administrative access to unlock any office, scheduled the camera maintenance to create a blind spot, knew the exact value and location of the software, and was observed accessing David's office during the critical time period. Multiple pieces of evidence point directly to him.
+                    </div>
+                </div>
+            </div>
+
+            <div class="key-evidence">
+                <h4>🎯 Critical Evidence Pointing to Marcus Webb:</h4>
+                <ul>
+                    <li><strong>Administrative Access:</strong> Used admin override to unlock David's office at 2:45 PM (Evidence #01)</li>
+                    <li><strong>Planned Ahead:</strong> Scheduled camera maintenance one week in advance to create a surveillance gap (Evidence #04)</li>
+                    <li><strong>Knowledge:</strong> Email records show he knew the software was worth $2.5 million and stored locally (Evidence #02)</li>
+                    <li><strong>Suspicious Behavior:</strong> Security guard witnessed him acting nervous, leaving with his toolkit, and returning without it (Evidence #03)</li>
+                    <li><strong>Outside Contact:</strong> Phone records reveal calls to a competing company right after the theft (Evidence #04)</li>
+                    <li><strong>Physical Evidence:</strong> Check Evidence #04 carefully for the final damning discovery</li>
+                </ul>
+            </div>
+
+            <div class="warning-note">
+                <p>💭 Need one more push? Hint #3 will give you the complete picture!</p>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="hint-1.html" class="btn btn-secondary">← Previous Hint</a>
+                <a href="hint-3.html" class="btn btn-warning">Final Hint →</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

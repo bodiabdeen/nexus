@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training Case - The Office Theft</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .detective-icon {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 48px;
+            z-index: 1000;
+            filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.2);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .case-number {
+            font-size: 18px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .training-banner {
+            background: #fbbf24;
+            color: #78350f;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .briefing {
+            background: #f8fafc;
+            border-left: 4px solid #667eea;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        .briefing h2 {
+            color: #1e293b;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .briefing p {
+            color: #475569;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .info-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-size: 16px;
+            color: #1e293b;
+            font-weight: 600;
+        }
+
+        .warning-box {
+            background: #fee2e2;
+            border: 2px solid #ef4444;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .warning-box h3 {
+            color: #991b1b;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .warning-box p {
+            color: #7f1d1d;
+            line-height: 1.6;
+        }
+
+        .toolkit-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .toolkit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 18px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .print-case-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .print-case-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 8, 20, 0.95);
+            z-index: 10002;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(102, 126, 234, 0.3);
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: white;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 8, 20, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-overlay.hidden {
+            display: none;
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 500px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-header {
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .modal-header h2 {
+            color: #667eea;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .modal-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: none;
+            color: #64748b;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .modal-content h3 {
+            color: #1e293b;
+            font-size: 18px;
+            margin: 20px 0 10px;
+        }
+
+        .modal-content p, .modal-content li {
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .modal-content ul, .modal-content ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .close-modal {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                min-width: 100%;
+            }
+
+            .print-case-btn {
+                bottom: 20px;
+                right: 20px;
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="detective-icon">🕵️</div>
+
+    <div class="container">
+        <div class="header">
+            <div class="badge">🎓</div>
+            <h1>TRAINING CASE</h1>
+            <div class="case-number">CI-TRAIN-EN</div>
+        </div>
+
+        <div class="training-banner">
+            ⚠️ BEGINNER LEVEL - PRACTICE YOUR DETECTIVE SKILLS
+        </div>
+
+        <div class="content">
+            <div class="briefing">
+                <h2>📋 Case Briefing</h2>
+                <p>Welcome, Detective! This is a training case designed to help you understand how our investigation system works. The case is simpler than our regular investigations, with fewer suspects and straightforward evidence.</p>
+                
+                <p>A valuable company laptop has been stolen from TechStart Inc., containing proprietary software worth millions. The theft occurred during business hours, and only employees had access to the building.</p>
+
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Case Type</div>
+                        <div class="info-value">Theft</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Location</div>
+                        <div class="info-value">San Francisco, CA</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Date</div>
+                        <div class="info-value">January 15, 2024</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Suspects</div>
+                        <div class="info-value">3 Employees</div>
+                    </div>
+                </div>
+
+                <button class="toolkit-btn" onclick="showInstructions()">🛠️ INVESTIGATION TOOLKIT</button>
+            </div>
+
+            <div class="warning-box">
+                <h3>⚠️ Learning Objectives</h3>
+                <p><strong>In this training case, you will learn to:</strong></p>
+                <ul>
+                    <li>Examine suspect profiles and identify potential motives</li>
+                    <li>Review and analyze evidence documents</li>
+                    <li>Use the progressive hint system when needed</li>
+                    <li>Piece together clues to solve the case</li>
+                </ul>
+                <p style="margin-top: 15px;"><strong>Remember:</strong> Take your time, read everything carefully, and use the hints if you get stuck!</p>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="case-file.html" class="btn btn-primary">Begin Investigation →</a>
+            </div>
+        </div>
+    </div>
+
+    <button class="print-case-btn" onclick="printAllPages()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/>
+            <path d="M6 14h12v8H6z"/>
+        </svg>
+        Print Case
+    </button>
+
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Preparing case file for printing...</div>
+    </div>
+
+    <div id="instructionsModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🛠️ Investigation Toolkit</h2>
+                <p style="color: #64748b;">Enhance your investigation experience</p>
+            </div>
+
+            <div class="modal-tabs">
+                <button class="tab-btn active" onclick="switchTab('translate')">🌐 Translate</button>
+                <button class="tab-btn" onclick="switchTab('listen')">🔊 Listen</button>
+            </div>
+
+            <div id="translateTab" class="tab-content active">
+                <h3>Translate This Page</h3>
+                <p>You can translate this investigation into your preferred language using your browser's built-in translation feature:</p>
+                
+                <h3>Google Chrome / Edge</h3>
+                <ol>
+                    <li>Right-click anywhere on the page</li>
+                    <li>Select "Translate to [Your Language]"</li>
+                    <li>Or click the translate icon in the address bar</li>
+                </ol>
+
+                <h3>Safari (Mac/iOS)</h3>
+                <ol>
+                    <li>Click the "aA" icon in the address bar</li>
+                    <li>Select "Translate to [Your Language]"</li>
+                </ol>
+
+                <h3>Firefox</h3>
+                <ol>
+                    <li>Click the translate icon in the address bar</li>
+                    <li>Select your preferred language</li>
+                </ol>
+            </div>
+
+            <div id="listenTab" class="tab-content">
+                <h3>Listen to This Page</h3>
+                <p>Use text-to-speech to have the investigation read aloud:</p>
+                
+                <h3>Google Chrome / Edge</h3>
+                <ol>
+                    <li>Right-click on any text</li>
+                    <li>Select "Read aloud" or "Speak"</li>
+                    <li>Control playback with the toolbar that appears</li>
+                </ol>
+
+                <h3>Safari (Mac)</h3>
+                <ol>
+                    <li>Select the text you want to hear</li>
+                    <li>Right-click and choose "Speech" → "Start Speaking"</li>
+                </ol>
+
+                <h3>Mobile Devices</h3>
+                <ol>
+                    <li>Use your device's built-in screen reader</li>
+                    <li>iOS: VoiceOver / Android: TalkBack</li>
+                </ol>
+            </div>
+
+            <button class="close-modal" onclick="hideInstructions()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        const CASE_PAGES = [
+            'case-file.html',
+            'evidence-01.html',
+            'evidence-02.html',
+            'evidence-03.html',
+            'evidence-04.html'
+        ];
+
+        function showInstructions() {
+            document.getElementById('instructionsModal').classList.remove('hidden');
+        }
+
+        function hideInstructions() {
+            document.getElementById('instructionsModal').classList.add('hidden');
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabName + 'Tab').classList.add('active');
+        }
+
+        async function printAllPages() {
+            try {
+                document.getElementById('loadingOverlay').classList.add('active');
+
+                const printWindow = window.open('', '_blank');
+                printWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <title>Training Case - The Office Theft</title>
+                        <style>
+                            @media print {
+                                @page {
+                                    size: A4;
+                                    margin: 2cm;
+                                }
+                            }
+                            
+                            body {
+                                font-family: Georgia, 'Times New Roman', serif;
+                                font-size: 11pt;
+                                line-height: 1.6;
+                                color: #000;
+                                background: #fff;
+                            }
+                            
+                            .page-break {
+                                page-break-after: always;
+                                page-break-inside: avoid;
+                                margin: 50px 0;
+                                border-top: 3px double #333;
+                                padding-top: 30px;
+                            }
+                            
+                            h1 {
+                                color: #667eea;
+                                border-bottom: 3px solid #667eea;
+                                padding-bottom: 10px;
+                                margin-bottom: 20px;
+                                font-size: 24pt;
+                                page-break-after: avoid;
+                            }
+                            
+                            h2 {
+                                color: #333;
+                                margin-top: 25px;
+                                margin-bottom: 15px;
+                                font-size: 18pt;
+                                page-break-after: avoid;
+                            }
+                            
+                            h3 {
+                                color: #555;
+                                margin-top: 20px;
+                                margin-bottom: 10px;
+                                font-size: 14pt;
+                                page-break-after: avoid;
+                            }
+                            
+                            p {
+                                margin-bottom: 12px;
+                                text-align: justify;
+                            }
+                            
+                            table {
+                                width: 100%;
+                                border-collapse: collapse;
+                                margin: 15px 0;
+                                page-break-inside: avoid;
+                            }
+                            
+                            th, td {
+                                border: 1px solid #333;
+                                padding: 8px;
+                                text-align: left;
+                            }
+                            
+                            th {
+                                background: #f0f0f0;
+                                font-weight: bold;
+                            }
+                            
+                            ul, ol {
+                                margin-left: 25px;
+                                margin-bottom: 12px;
+                            }
+                            
+                            li {
+                                margin-bottom: 6px;
+                            }
+                            
+                            img {
+                                max-width: 100%;
+                                height: auto;
+                                page-break-inside: avoid;
+                                margin: 15px 0;
+                            }
+                            
+                            .classified {
+                                background: #667eea;
+                                color: #fff;
+                                padding: 5px 15px;
+                                display: inline-block;
+                                font-weight: bold;
+                                margin: 10px 0;
+                            }
+                            
+                            .info-box {
+                                border: 2px solid #667eea;
+                                padding: 15px;
+                                margin: 15px 0;
+                                background: #f9f9f9;
+                                page-break-inside: avoid;
+                            }
+                            
+                            .evidence-item {
+                                margin: 20px 0;
+                                padding: 15px;
+                                border-left: 4px solid #667eea;
+                                background: #fafafa;
+                                page-break-inside: avoid;
+                            }
+                            
+                            strong {
+                                font-weight: bold;
+                                color: #000;
+                            }
+                            
+                            nav, button, .btn, a[href*="hint"], a[href*="solution"], .no-print {
+                                display: none !important;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <h1>Training Case - The Office Theft</h1>
+                        <div class="classified">TRAINING MATERIAL - FOR EDUCATIONAL USE</div>
+                        <p><strong>Case Number:</strong> CI-TRAIN-EN</p>
+                        <p><strong>Location:</strong> TechStart Inc., San Francisco, CA</p>
+                        <p><strong>Date Printed:</strong> ${new Date().toLocaleDateString()}</p>
+                        <div class="page-break"></div>
+                    </body>
+                    </html>
+                `);
+
+                let loadedPages = 0;
+                for (const page of CASE_PAGES) {
+                    try {
+                        const response = await fetch(page);
+                        const html = await response.text();
+                        
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        
+                        const bodyContent = doc.querySelector('body');
+                        if (bodyContent) {
+                            const elementsToRemove = bodyContent.querySelectorAll(
+                                'nav, button, .btn, script, style, .no-print, a[href*="hint"], a[href*="solution"], header, footer, .detective-icon'
+                            );
+                            elementsToRemove.forEach(el => el.remove());
+                            
+                            if (loadedPages > 0) {
+                                printWindow.document.body.innerHTML += '<div class="page-break"></div>';
+                            }
+                            
+                            printWindow.document.body.innerHTML += bodyContent.innerHTML;
+                            loadedPages++;
+                        }
+                    } catch (error) {
+                        console.error(`Error loading ${page}:`, error);
+                    }
+                }
+
+                document.getElementById('loadingOverlay').classList.remove('active');
+
+                setTimeout(() => {
+                    printWindow.print();
+                }, 500);
+
+            } catch (error) {
+                console.error('Print preparation error:', error);
+                document.getElementById('loadingOverlay').classList.remove('active');
+                alert('An error occurred while preparing the file for printing. Please try again.');
+            }
+        }
+    </script>
+</body>
+</html>
