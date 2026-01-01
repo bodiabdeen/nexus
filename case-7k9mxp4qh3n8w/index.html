@@ -46,6 +46,21 @@
             100% { transform: translateY(10px); }
         }
 
+        .detective-icon {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 48px;
+            z-index: 1000;
+            filter: drop-shadow(0 0 10px rgba(0, 247, 255, 0.8));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -259,6 +274,12 @@
             .file-grid {
                 grid-template-columns: 1fr;
             }
+
+            .detective-icon {
+                font-size: 36px;
+                top: 15px;
+                left: 15px;
+            }
         }
 
         .classified {
@@ -299,33 +320,28 @@
 
         .modal-content {
             background: linear-gradient(135deg, rgba(0, 247, 255, 0.1), rgba(255, 0, 110, 0.1));
-            border: 3px solid #00f7ff;
-            border-radius: 10px;
+            border: 2px solid #00f7ff;
+            border-radius: 5px;
             max-width: 500px;
             max-height: 85vh;
             overflow-y: auto;
             padding: 25px;
             box-shadow: 0 0 50px rgba(0, 247, 255, 0.5);
             position: relative;
-            animation: slideIn 0.5s ease-out;
-        }
-
-        @keyframes slideIn {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
         }
 
         .modal-header {
             text-align: center;
             margin-bottom: 20px;
+            border-bottom: 2px solid #ff006e;
+            padding-bottom: 15px;
         }
 
         .modal-header h3 {
             font-family: 'Orbitron', sans-serif;
-            color: #ffd700;
+            color: #ff006e;
             font-size: 1.3em;
             margin-bottom: 8px;
-            text-shadow: 0 0 10px #ffd700;
         }
 
         .feature-buttons {
@@ -336,40 +352,39 @@
         }
 
         .feature-btn {
-            background: linear-gradient(135deg, rgba(0, 247, 255, 0.2), rgba(0, 247, 255, 0.1));
+            background: rgba(0, 247, 255, 0.1);
             border: 2px solid #00f7ff;
             padding: 15px;
-            border-radius: 8px;
+            border-radius: 5px;
             cursor: pointer;
             transition: all 0.3s ease;
             text-align: center;
             color: #00f7ff;
             font-family: 'Rajdhani', sans-serif;
             font-weight: 600;
-            font-size: 0.95em;
         }
 
         .feature-btn:hover {
-            background: linear-gradient(135deg, rgba(0, 247, 255, 0.3), rgba(0, 247, 255, 0.2));
+            background: rgba(0, 247, 255, 0.2);
             transform: translateY(-2px);
-            box-shadow: 0 0 20px rgba(0, 247, 255, 0.4);
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.3);
         }
 
         .feature-btn.active {
-            background: linear-gradient(135deg, rgba(255, 0, 110, 0.3), rgba(255, 0, 110, 0.2));
+            background: rgba(255, 0, 110, 0.3);
             border-color: #ff006e;
             color: #ff006e;
+            box-shadow: 0 0 15px rgba(255, 0, 110, 0.4);
         }
 
         .feature-icon {
-            font-size: 1.8em;
+            font-size: 1.5em;
             display: block;
             margin-bottom: 5px;
         }
 
         .instructions-content {
             display: none;
-            animation: fadeIn 0.3s ease-in;
         }
 
         .instructions-content.active {
@@ -381,7 +396,7 @@
             border-left: 3px solid #00f7ff;
             padding: 12px;
             margin-bottom: 12px;
-            border-radius: 4px;
+            border-radius: 3px;
             font-size: 0.9em;
         }
 
@@ -389,78 +404,135 @@
             color: #ffd700;
             display: block;
             margin-bottom: 6px;
-            font-size: 0.95em;
         }
 
         .quick-steps ul {
             color: #00f7ff;
             padding-left: 20px;
-            line-height: 1.5;
-        }
-
-        .quick-steps li {
-            margin-bottom: 3px;
+            line-height: 1.6;
         }
 
         .close-modal-btn {
             display: block;
             width: 100%;
             margin-top: 20px;
-            background: linear-gradient(45deg, #ff006e, #ff4499);
-            color: #fff;
+            background: linear-gradient(135deg, #00f7ff, #ff006e);
+            color: #050814;
             padding: 12px;
-            border: 2px solid #ff006e;
+            border: none;
             border-radius: 5px;
             font-family: 'Orbitron', sans-serif;
             font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
         .close-modal-btn:hover {
             transform: scale(1.02);
-            box-shadow: 0 0 20px rgba(255, 0, 110, 0.6);
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.6);
         }
 
         .toolkit-btn {
             display: inline-block;
-            background: rgba(255, 215, 0, 0.1);
+            background: rgba(255, 215, 0, 0.2);
             border: 2px solid #ffd700;
             color: #ffd700;
             padding: 10px 20px;
             border-radius: 5px;
-            font-family: 'Share Tech Mono', monospace;
+            font-family: 'Rajdhani', sans-serif;
             font-size: 0.9em;
             cursor: pointer;
             transition: all 0.3s ease;
             margin-top: 15px;
-            text-decoration: none;
         }
 
         .toolkit-btn:hover {
-            background: rgba(255, 215, 0, 0.2);
+            background: rgba(255, 215, 0, 0.3);
             transform: translateY(-2px);
             box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
         }
 
-        /* Custom scrollbar for modal */
-        .modal-content::-webkit-scrollbar {
-            width: 10px;
+        /* Print Case Button - Cyberpunk Style */
+        .print-case-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #00f7ff, #ff006e);
+            color: #050814;
+            border: 2px solid #00f7ff;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 247, 255, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .print-case-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 247, 255, 0.6);
+        }
+        
+        .print-case-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: #050814;
         }
 
-        .modal-content::-webkit-scrollbar-track {
-            background: rgba(0, 247, 255, 0.1);
+        /* Loading overlay */
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 8, 20, 0.95);
+            z-index: 10002;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
         }
 
-        .modal-content::-webkit-scrollbar-thumb {
-            background: #ff006e;
-            border-radius: 5px;
+        .loading-overlay.active {
+            display: flex;
         }
 
-        .modal-content::-webkit-scrollbar-thumb:hover {
-            background: #ff4499;
+        .loading-spinner {
+            border: 5px solid rgba(0, 247, 255, 0.3);
+            border-top: 5px solid #00f7ff;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #00f7ff;
+            font-size: 1.2em;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        @media print {
+            .print-case-btn {
+                display: none !important;
+            }
         }
     </style>
 </head>
@@ -470,17 +542,17 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3>🛠️ INVESTIGATION TOOLKIT</h3>
-                <p style="color: #00f7ff; font-size: 0.85em; margin: 0;">Choose your preferred feature:</p>
+                <p style="color: #00f7ff; font-size: 0.85em; margin: 0;">Select accessibility feature:</p>
             </div>
 
             <div class="feature-buttons">
                 <div class="feature-btn active" onclick="showFeature('translate')">
                     <span class="feature-icon">🌐</span>
-                    Translate Page
+                    TRANSLATE
                 </div>
                 <div class="feature-btn" onclick="showFeature('listen')">
                     <span class="feature-icon">🔊</span>
-                    Listen to Page
+                    LISTEN
                 </div>
             </div>
 
@@ -488,7 +560,7 @@
                 <div class="quick-steps">
                     <strong>🖥️ Chrome / Edge / Android</strong>
                     <ul>
-                        <li>Right-click page → "Translate"</li>
+                        <li>Right-click → "Translate"</li>
                         <li>Or click translate icon in address bar</li>
                     </ul>
                 </div>
@@ -504,8 +576,8 @@
                 <div class="quick-steps">
                     <strong>🦊 Firefox</strong>
                     <ul>
-                        <li>Install "Firefox Translations" add-on</li>
-                        <li>Click extension to translate</li>
+                        <li>Install "Firefox Translations" addon</li>
+                        <li>Click addon icon to translate</li>
                     </ul>
                 </div>
             </div>
@@ -516,15 +588,15 @@
                     <ul>
                         <li>Press Ctrl+Shift+U (Windows)</li>
                         <li>Or Cmd+Shift+U (Mac)</li>
-                        <li>Select "Read aloud this page"</li>
+                        <li>Select "Read this page aloud"</li>
                     </ul>
                 </div>
 
                 <div class="quick-steps">
                     <strong>🖥️ Chrome</strong>
                     <ul>
-                        <li>Right-click selected text</li>
-                        <li>Choose "Read aloud"</li>
+                        <li>Right-click on text</li>
+                        <li>Select "Read aloud"</li>
                     </ul>
                 </div>
 
@@ -539,8 +611,8 @@
                 <div class="quick-steps">
                     <strong>🍎 Safari (Mac)</strong>
                     <ul>
-                        <li>Select text → Right-click</li>
-                        <li>Speech → "Start Speaking"</li>
+                        <li>Select text → right-click</li>
+                        <li>Choose "Speech" → "Start Speaking"</li>
                     </ul>
                 </div>
 
@@ -552,14 +624,6 @@
                         <li>Swipe down with 2 fingers to listen</li>
                     </ul>
                 </div>
-
-                <div class="quick-steps">
-                    <strong>📱 Android</strong>
-                    <ul>
-                        <li>Settings → Accessibility → Select to Speak</li>
-                        <li>Tap accessibility icon, then tap text</li>
-                    </ul>
-                </div>
             </div>
 
             <button class="close-modal-btn" onclick="closeInstructions()">
@@ -568,33 +632,41 @@
         </div>
     </div>
 
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Preparing case file for print...</div>
+    </div>
+
+    <div class="detective-icon">🕵️</div>
+
     <div class="container">
         <div class="header">
-            <div class="case-number">CASE FILE #2847-NGT :: CLEARANCE LEVEL: OMEGA</div>
-            <h1>YAMAMOTO INVESTIGATION</h1>
-            <div class="subtitle">NEO-TOKYO GENETICS CORPORATION :: HOMICIDE</div>
+            <div class="case-number">NEO-TOKYO METROPOLITAN POLICE :: CYBER-HOMICIDE DIVISION</div>
+            <h1>ACTIVE INVESTIGATION</h1>
+            <div class="subtitle">CASE #2847-NGT :: DR. KENJI YAMAMOTO</div>
         </div>
 
         <div class="status-bar">
             <div class="status-item">
                 <span class="label">VICTIM:</span>
-                <span class="value">DR. KENJI YAMAMOTO (DECEASED)</span>
-            </div>
-            <div class="status-item">
-                <span class="label">DATE OF DEATH:</span>
-                <span class="value">2084.11.23 :: 22:47:33 JST</span>
+                <span class="value">Dr. Kenji Yamamoto (52) - Chief Geneticist</span>
             </div>
             <div class="status-item">
                 <span class="label">LOCATION:</span>
-                <span class="value">NEO-TOKYO GENETICS CORP :: FLOOR 47 :: LAB 12-A</span>
+                <span class="value">GeneTech Tower, Floor 47 - Private Laboratory</span>
             </div>
             <div class="status-item">
-                <span class="label">CAUSE:</span>
-                <span class="value">TARGETED GENE-EDITING TOXIN (CRISPR-BASED)</span>
+                <span class="label">DATE/TIME:</span>
+                <span class="value">2084.11.23 :: 23:14 JST</span>
+            </div>
+            <div class="status-item">
+                <span class="label">CAUSE OF DEATH:</span>
+                <span class="value">CRISPR-Based Toxin - Molecular Assassination</span>
             </div>
             <div class="status-item">
                 <span class="label">STATUS:</span>
-                <span class="value classified">ACTIVE INVESTIGATION :: 5 SUSPECTS</span>
+                <span class="value"><span class="classified">CLASSIFIED :: ACTIVE INVESTIGATION</span></span>
             </div>
         </div>
 
@@ -733,8 +805,16 @@
         </div>
     </div>
 
+    <!-- Print Case File Button -->
+    <button class="print-case-btn" onclick="printAllPages()">
+        <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clip-rule="evenodd"></path>
+        </svg>
+        Print Case
+    </button>
+
     <script>
-        // Modal control functions
+        // Investigation Toolkit Modal
         function showInstructions() {
             const modal = document.getElementById('instructionsModal');
             modal.classList.remove('hidden');
@@ -746,12 +826,10 @@
         }
 
         function showFeature(feature) {
-            // Update active button
             const buttons = document.querySelectorAll('.feature-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
             event.target.closest('.feature-btn').classList.add('active');
 
-            // Show corresponding content
             const contents = document.querySelectorAll('.instructions-content');
             contents.forEach(content => content.classList.remove('active'));
             
@@ -762,7 +840,6 @@
             }
         }
 
-        // Close modal when clicking outside
         document.addEventListener('click', function(event) {
             const modal = document.getElementById('instructionsModal');
             if (event.target === modal) {
@@ -770,12 +847,215 @@
             }
         });
 
-        // Close modal with Escape key
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
                 closeInstructions();
             }
         });
+
+        // Print All Pages Functionality - Cyberpunk Case
+        const CASE_PAGES = [
+            'case-file.html',
+            'evidence-01.html',
+            'evidence-02.html',
+            'evidence-03.html',
+            'evidence-04.html',
+            'evidence-05.html',
+            'evidence-06.html',
+            'evidence-07.html',
+            'evidence-08.html'
+        ];
+
+        async function printAllPages() {
+            document.getElementById('loadingOverlay').classList.add('active');
+
+            try {
+                const printWindow = window.open('', '_blank', 'width=800,height=600');
+                
+                printWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>Case File #2847-NGT - Yamamoto Investigation</title>
+                        <style>
+                            @page {
+                                margin: 2cm;
+                                size: A4;
+                            }
+                            
+                            * {
+                                margin: 0;
+                                padding: 0;
+                                box-sizing: border-box;
+                            }
+                            
+                            body {
+                                font-family: 'Georgia', 'Times New Roman', serif;
+                                font-size: 11pt;
+                                line-height: 1.6;
+                                color: #000;
+                                background: #fff;
+                            }
+                            
+                            .page-break {
+                                page-break-after: always;
+                                page-break-inside: avoid;
+                                margin: 50px 0;
+                                border-top: 3px double #333;
+                                padding-top: 30px;
+                            }
+                            
+                            h1 {
+                                color: #c00;
+                                border-bottom: 3px solid #c00;
+                                padding-bottom: 10px;
+                                margin-bottom: 20px;
+                                font-size: 24pt;
+                                page-break-after: avoid;
+                            }
+                            
+                            h2 {
+                                color: #333;
+                                margin-top: 25px;
+                                margin-bottom: 15px;
+                                font-size: 18pt;
+                                page-break-after: avoid;
+                            }
+                            
+                            h3 {
+                                color: #555;
+                                margin-top: 20px;
+                                margin-bottom: 10px;
+                                font-size: 14pt;
+                                page-break-after: avoid;
+                            }
+                            
+                            p {
+                                margin-bottom: 12px;
+                                text-align: justify;
+                            }
+                            
+                            table {
+                                width: 100%;
+                                border-collapse: collapse;
+                                margin: 15px 0;
+                                page-break-inside: avoid;
+                            }
+                            
+                            th, td {
+                                border: 1px solid #333;
+                                padding: 8px;
+                                text-align: left;
+                            }
+                            
+                            th {
+                                background: #f0f0f0;
+                                font-weight: bold;
+                            }
+                            
+                            ul, ol {
+                                margin-left: 25px;
+                                margin-bottom: 12px;
+                            }
+                            
+                            li {
+                                margin-bottom: 6px;
+                            }
+                            
+                            img {
+                                max-width: 100%;
+                                height: auto;
+                                page-break-inside: avoid;
+                                margin: 15px 0;
+                            }
+                            
+                            .classified {
+                                background: #c00;
+                                color: #fff;
+                                padding: 5px 15px;
+                                display: inline-block;
+                                font-weight: bold;
+                                margin: 10px 0;
+                            }
+                            
+                            .info-box {
+                                border: 2px solid #333;
+                                padding: 15px;
+                                margin: 15px 0;
+                                background: #f9f9f9;
+                                page-break-inside: avoid;
+                            }
+                            
+                            .evidence-item {
+                                margin: 20px 0;
+                                padding: 15px;
+                                border-left: 4px solid #c00;
+                                background: #fafafa;
+                                page-break-inside: avoid;
+                            }
+                            
+                            strong {
+                                font-weight: bold;
+                                color: #000;
+                            }
+                            
+                            nav, button, .btn, a[href*="hint"], a[href*="solution"], .no-print, .file-link {
+                                display: none !important;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <h1>NEO-TOKYO METROPOLITAN POLICE - CASE FILE</h1>
+                        <div class="classified">CLASSIFIED - AUTHORIZED PERSONNEL ONLY</div>
+                        <p><strong>Case Number:</strong> #2847-NGT</p>
+                        <p><strong>Victim:</strong> Dr. Kenji Yamamoto</p>
+                        <p><strong>Print Date:</strong> ${new Date().toLocaleDateString()}</p>
+                        <div class="page-break"></div>
+                    </body>
+                    </html>
+                `);
+
+                let loadedPages = 0;
+                for (const page of CASE_PAGES) {
+                    try {
+                        const response = await fetch(page);
+                        const html = await response.text();
+                        
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        
+                        const bodyContent = doc.querySelector('body');
+                        if (bodyContent) {
+                            const elementsToRemove = bodyContent.querySelectorAll(
+                                'nav, button, .btn, script, style, .no-print, a[href*="hint"], a[href*="solution"], header, footer, .file-link, .detective-icon'
+                            );
+                            elementsToRemove.forEach(el => el.remove());
+                            
+                            if (loadedPages > 0) {
+                                printWindow.document.body.innerHTML += '<div class="page-break"></div>';
+                            }
+                            
+                            printWindow.document.body.innerHTML += bodyContent.innerHTML;
+                            loadedPages++;
+                        }
+                    } catch (error) {
+                        console.error(`Error loading ${page}:`, error);
+                    }
+                }
+
+                document.getElementById('loadingOverlay').classList.remove('active');
+
+                setTimeout(() => {
+                    printWindow.print();
+                }, 500);
+
+            } catch (error) {
+                console.error('Error preparing print:', error);
+                document.getElementById('loadingOverlay').classList.remove('active');
+                alert('Error preparing case file for printing. Please try again.');
+            }
+        }
     </script>
 </body>
 </html>
