@@ -330,6 +330,174 @@
             font-family: 'Share Tech Mono', monospace;
         }
 
+        /* Instructions Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 8, 20, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .modal-overlay.hidden {
+            display: none;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, rgba(0, 247, 255, 0.1), rgba(255, 0, 110, 0.1));
+            border: 3px solid #00f7ff;
+            border-radius: 10px;
+            max-width: 500px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 25px;
+            box-shadow: 0 0 50px rgba(0, 247, 255, 0.5);
+            position: relative;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffd700;
+            font-size: 1.3em;
+            margin-bottom: 8px;
+            text-shadow: 0 0 10px #ffd700;
+        }
+
+        .feature-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .feature-btn {
+            background: linear-gradient(135deg, rgba(0, 247, 255, 0.2), rgba(0, 247, 255, 0.1));
+            border: 2px solid #00f7ff;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            color: #00f7ff;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .feature-btn:hover {
+            background: linear-gradient(135deg, rgba(0, 247, 255, 0.3), rgba(0, 247, 255, 0.2));
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.4);
+        }
+
+        .feature-btn.active {
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.3), rgba(255, 0, 110, 0.2));
+            border-color: #ff006e;
+            color: #ff006e;
+        }
+
+        .feature-icon {
+            font-size: 1.8em;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .instructions-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .instructions-content.active {
+            display: block;
+        }
+
+        .quick-steps {
+            background: rgba(0, 247, 255, 0.05);
+            border-left: 3px solid #00f7ff;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .quick-steps strong {
+            color: #ffd700;
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.95em;
+        }
+
+        .quick-steps ul {
+            color: #00f7ff;
+            padding-left: 20px;
+            line-height: 1.5;
+        }
+
+        .quick-steps li {
+            margin-bottom: 3px;
+        }
+
+        .close-modal-btn {
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            background: linear-gradient(45deg, #ff006e, #ff4499);
+            color: #fff;
+            padding: 12px;
+            border: 2px solid #ff006e;
+            border-radius: 5px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(255, 0, 110, 0.6);
+        }
+
+        .toolkit-btn {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid #ffd700;
+            color: #ffd700;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+            text-decoration: none;
+        }
+
+        .toolkit-btn:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+        }
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 1.8em;
@@ -342,10 +510,146 @@
             .key-info {
                 grid-template-columns: 1fr;
             }
+
+            .modal-content {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            .modal-header h2 {
+                font-size: 1.5em;
+            }
+
+            .detective-icon {
+                font-size: 2em;
+                top: 10px;
+                right: 10px;
+            }
+        }
+
+        /* Custom scrollbar for modal */
+        .modal-content::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .modal-content::-webkit-scrollbar-track {
+            background: rgba(0, 247, 255, 0.1);
+        }
+
+        .modal-content::-webkit-scrollbar-thumb {
+            background: #ff006e;
+            border-radius: 5px;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb:hover {
+            background: #ff4499;
         }
     </style>
 </head>
 <body>
+    <!-- Instructions Modal -->
+    <div id="instructionsModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🛠️ INVESTIGATION TOOLKIT</h3>
+                <p style="color: #00f7ff; font-size: 0.85em; margin: 0;">Choose your preferred feature:</p>
+            </div>
+
+            <div class="feature-buttons">
+                <div class="feature-btn active" onclick="showFeature('translate')">
+                    <span class="feature-icon">🌐</span>
+                    Translate Page
+                </div>
+                <div class="feature-btn" onclick="showFeature('listen')">
+                    <span class="feature-icon">🔊</span>
+                    Listen to Page
+                </div>
+            </div>
+
+            <div id="translateContent" class="instructions-content active">
+                <div class="quick-steps">
+                    <strong>🖥️ Chrome / Edge / Android</strong>
+                    <ul>
+                        <li>Right-click page → "Translate"</li>
+                        <li>Or click translate icon in address bar</li>
+                    </ul>
+                </div>
+
+                <div class="quick-steps">
+                    <strong>🍎 Safari (Mac/iPhone/iPad)</strong>
+                    <ul>
+                        <li>Click aA icon in address bar</li>
+                        <li>Select "Translate to [Language]"</li>
+                    </ul>
+                </div>
+
+                <div class="quick-steps">
+                    <strong>🦊 Firefox</strong>
+                    <ul>
+                        <li>Install "Firefox Translations" add-on</li>
+                        <li>Click extension to translate</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="listenContent" class="instructions-content">
+                <div class="quick-steps">
+                    <strong>🌐 Microsoft Edge (Recommended)</strong>
+                    <ul>
+                        <li>Press Ctrl+Shift+U (Windows)</li>
+                        <li>Or Cmd+Shift+U (Mac)</li>
+                        <li>Select "Read aloud this page"</li>
+                    </ul>
+                </div>
+
+                <div class="quick-steps">
+                    <strong>🖥️ Chrome</strong>
+                    <ul>
+                        <li>Right-click selected text</li>
+                        <li>Choose "Read aloud"</li>
+                    </ul>
+                </div>
+
+                <div class="quick-steps">
+                    <strong>🦊 Firefox</strong>
+                    <ul>
+                        <li>Menu (☰) → "Read aloud"</li>
+                        <li>Or press Ctrl+Alt+R</li>
+                    </ul>
+                </div>
+
+                <div class="quick-steps">
+                    <strong>🍎 Safari (Mac)</strong>
+                    <ul>
+                        <li>Select text → Right-click</li>
+                        <li>Speech → "Start Speaking"</li>
+                    </ul>
+                </div>
+
+                <div class="quick-steps">
+                    <strong>📱 iPhone/iPad</strong>
+                    <ul>
+                        <li>Settings → Accessibility → Spoken Content</li>
+                        <li>Enable "Speak Screen"</li>
+                        <li>Swipe down with 2 fingers to listen</li>
+                    </ul>
+                </div>
+
+                <div class="quick-steps">
+                    <strong>📱 Android</strong>
+                    <ul>
+                        <li>Settings → Accessibility → Select to Speak</li>
+                        <li>Tap accessibility icon, then tap text</li>
+                    </ul>
+                </div>
+            </div>
+
+            <button class="close-modal-btn" onclick="closeInstructions()">
+                ▶ START INVESTIGATION
+            </button>
+        </div>
+    </div>
+
     <div class="container">
         <header>
             <h1>⚠ ACTIVE INVESTIGATION ⚠</h1>
@@ -385,6 +689,9 @@
 
         <div class="warning">
             ⚡ WARNING: This is an active homicide investigation. All evidence must be analyzed carefully. Cross-reference timestamps, access logs, and witness statements. The killer is among the five suspects with access to Research Wing 3. ⚡
+            <div style="margin-top: 15px;">
+                <button class="toolkit-btn" onclick="showInstructions()">🛠️ INVESTIGATION TOOLKIT</button>
+            </div>
         </div>
 
         <section class="evidence-section">
@@ -477,5 +784,50 @@
             <p>Authorized Access Only - All Activity Monitored</p>
         </footer>
     </div>
+
+    <script>
+        // Modal starts hidden, user clicks button to show
+        function showInstructions() {
+            const modal = document.getElementById('instructionsModal');
+            modal.classList.remove('hidden');
+        }
+
+        function closeInstructions() {
+            const modal = document.getElementById('instructionsModal');
+            modal.classList.add('hidden');
+        }
+
+        function showFeature(feature) {
+            // Update active button
+            const buttons = document.querySelectorAll('.feature-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.closest('.feature-btn').classList.add('active');
+
+            // Show corresponding content
+            const contents = document.querySelectorAll('.instructions-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            if (feature === 'translate') {
+                document.getElementById('translateContent').classList.add('active');
+            } else if (feature === 'listen') {
+                document.getElementById('listenContent').classList.add('active');
+            }
+        }
+
+        // Close modal when clicking outside of it
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('instructionsModal');
+            if (event.target === modal) {
+                closeInstructions();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeInstructions();
+            }
+        });
+    </script>
 </body>
 </html>
