@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدليل 04 - الاعتراف</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Amiri:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            direction: rtl;
+        }
+
+        .detective-icon {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 48px;
+            z-index: 1000;
+            filter: drop-shadow(0 0 10px rgba(20, 184, 166, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            font-family: 'Amiri', serif;
+        }
+
+        .subtitle {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .evidence-header {
+            background: #f0fdfa;
+            border-right: 5px solid #14b8a6;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        .evidence-header h2 {
+            color: #0f766e;
+            margin-bottom: 10px;
+            font-size: 22px;
+            font-family: 'Amiri', serif;
+        }
+
+        .evidence-meta {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .confession-box {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border: 3px solid #ef4444;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .confession-box h3 {
+            color: #991b1b;
+            margin-bottom: 20px;
+            font-size: 22px;
+            text-align: center;
+            font-family: 'Amiri', serif;
+        }
+
+        .confession-text {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            color: #1e293b;
+            line-height: 2;
+            font-family: 'Amiri', serif;
+            font-size: 16px;
+        }
+
+        .confession-text p {
+            margin-bottom: 15px;
+        }
+
+        .quote-section {
+            background: #f0fdfa;
+            border-right: 4px solid #14b8a6;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .quote-section p {
+            color: #475569;
+            line-height: 1.8;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .islamic-lesson {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border: 3px solid #059669;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .islamic-lesson h3 {
+            color: #065f46;
+            margin-bottom: 20px;
+            font-size: 22px;
+            text-align: center;
+            font-family: 'Amiri', serif;
+        }
+
+        .islamic-lesson p {
+            color: #047857;
+            line-height: 2;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .quran-verse {
+            background: white;
+            border: 2px solid #d4af37;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .quran-verse .arabic {
+            font-family: 'Amiri', serif;
+            font-size: 20px;
+            color: #1e293b;
+            line-height: 2.2;
+            margin-bottom: 15px;
+        }
+
+        .quran-verse .reference {
+            color: #64748b;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .timeline-box {
+            background: #f8fafc;
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .timeline-box h4 {
+            color: #1e293b;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-family: 'Amiri', serif;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .timeline-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .timeline-time {
+            font-weight: bold;
+            color: #0f766e;
+            min-width: 90px;
+            font-size: 14px;
+        }
+
+        .timeline-event {
+            color: #475569;
+            line-height: 1.6;
+        }
+
+        .alert-box {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .alert-box h4 {
+            color: #92400e;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .alert-box p {
+            color: #78350f;
+            line-height: 1.6;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 18px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e1;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+
+        .btn-warning:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="detective-icon">🕵️</div>
+
+    <div class="container">
+        <div class="header">
+            <h1>📝 الدليل #04</h1>
+            <div class="subtitle">اعتراف الجاني والدرس الإسلامي</div>
+        </div>
+
+        <div class="content">
+            <div class="evidence-header">
+                <h2>اعتراف سالم الكعبي</h2>
+                <div class="evidence-meta">
+                    نوع الوثيقة: محضر اعتراف رسمي | التاريخ: 16 يناير 2024 - 10:00 صباحاً
+                </div>
+            </div>
+
+            <div class="confession-box">
+                <h3>💔 الاعتراف الكامل</h3>
+                <div class="confession-text">
+                    <p><strong>عندما واجه المحققون سالم الكعبي بالأدلة (وجود ورقة الإجابات في حقيبته، سجلات الدخول، شهادات الشهود)، انهار وبدأ في البكاء واعترف بكل شيء:</strong></p>
+
+                    <div class="quote-section">
+                        <p>"أنا آسف... أنا آسف جداً. أنا من سرق ورقة الإجابات. كنت خائفاً جداً من الرسوب. عائلتي ستكون خائبة الأمل مني، وأصدقائي سيسخرون مني. فكرت أن هذه الطريقة الوحيدة."</p>
+                        
+                        <p>"خططت لكل شيء قبل أسبوع. عرفت أن المدير يذهب للصلاة كل يوم في نفس الوقت، فقررت أن أجدول صيانة الكاميرا في ذلك الوقت حتى لا يراني أحد. استخدمت الباب الجانبي من مكتب تقنية المعلومات ودخلت إلى مكتب المدير."</p>
+                        
+                        <p>"وجدت ورقة الإجابات على مكتبه، أخذتها بسرعة وأخفيتها في حقيبتي. كنت متوتراً جداً وخائفاً. عندما رأيت الحارس، كدت أن أعترف من شدة الخوف."</p>
+                        
+                        <p>"أعرف أن ما فعلته خطأ كبير. الغش حرام في الإسلام، وخنت ثقة المدير يوسف. كان يثق بي ويعتبرني طالباً مسؤولاً، وأنا خذلته. أستحق العقاب."</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-box">
+                <h4>⏰ الجدول الزمني الكامل للجريمة</h4>
+                
+                <div class="timeline-item">
+                    <div class="timeline-time">8 يناير</div>
+                    <div class="timeline-event"><strong>التخطيط:</strong> سالم يقدم طلب صيانة الكاميرا ويحدد التوقيت ليوافق صلاة المدير</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">13-14 يناير</div>
+                    <div class="timeline-event"><strong>القلق المتزايد:</strong> سالم يخبر زملاءه عن خوفه من الرسوب ويذكر "مازحاً" فكرة الحصول على ورقة الإجابات</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">15 يناير - 11:15 ص</div>
+                    <div class="timeline-event">سالم يدخل مكتب تقنية المعلومات ويبدأ "صيانة الكاميرا"</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">11:30 ص</div>
+                    <div class="timeline-event">تتوقف كاميرا ممر الإدارة عن العمل (صيانة مجدولة)</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">11:40 ص</div>
+                    <div class="timeline-event">المدير يوسف يغادر مكتبه للصلاة، تاركاً الباب مفتوحاً كالمعتاد</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">11:42 ص</div>
+                    <div class="timeline-event"><strong>السرقة:</strong> سالم يستخدم الباب الجانبي من مكتب IT ويدخل إلى مكتب المدير، يأخذ ورقة الإجابات ويخفيها في حقيبته</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">11:45 ص</div>
+                    <div class="timeline-event">سالم يخرج من مكتب IT، الحارس يلاحظ توتره وتعرقه</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">12:10 م</div>
+                    <div class="timeline-event">المدير يوسف يعود من الصلاة ولا يلاحظ السرقة فوراً</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">12:30 م</div>
+                    <div class="timeline-event">تعود الكاميرا للعمل بعد انتهاء "الصيانة"</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">3:00 م</div>
+                    <div class="timeline-event">المدير يكتشف اختفاء ورقة الإجابات ويبلغ الإدارة</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">16 يناير - 9:00 ص</div>
+                    <div class="timeline-event"><strong>الاكتشاف:</strong> يتم العثور على ورقة الإجابات في حقيبة سالم</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">10:00 ص</div>
+                    <div class="timeline-event"><strong>الاعتراف:</strong> سالم يعترف بالسرقة ويشرح كيف خطط لها</div>
+                </div>
+            </div>
+
+            <div class="islamic-lesson">
+                <h3>📖 الدرس الإسلامي: العدل والصدق</h3>
+                
+                <div class="quran-verse">
+                    <div class="arabic">
+                        "يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ وَكُونُوا مَعَ الصَّادِقِينَ"
+                    </div>
+                    <div class="reference">سورة التوبة - الآية 119</div>
+                </div>
+
+                <p>قصة سالم تعلمنا درساً مهماً عن <strong>العدل والصدق</strong> في الإسلام. الغش ليس مجرد خطأ أكاديمي، بل هو <strong>ظلم وخيانة للأمانة</strong>. عندما يغش الطالب، فهو:</p>
+
+                <ul style="margin-right: 20px; line-height: 2; color: #047857; margin-top: 15px;">
+                    <li><strong>يظلم نفسه:</strong> لأنه لم يتعلم حقاً ولم يستفد من العلم</li>
+                    <li><strong>يظلم زملاءه:</strong> الذين درسوا واجتهدوا بأمانة</li>
+                    <li><strong>يخون ثقة معلميه:</strong> الذين يثقون بنزاهة الطلاب</li>
+                    <li><strong>يكذب على نفسه:</strong> بأنه يستحق النجاح</li>
+                </ul>
+
+                <p style="margin-top: 20px;">قال رسول الله ﷺ: <strong>"من غشنا فليس منا"</strong>. الغش يدمر الثقة في المجتمع ويضعف الأخلاق.</p>
+
+                <div class="quran-verse" style="margin-top: 20px;">
+                    <div class="arabic">
+                        "وَلَا تَأْكُلُوا أَمْوَالَكُم بَيْنَكُم بِالْبَاطِلِ"
+                    </div>
+                    <div class="reference">سورة البقرة - الآية 188</div>
+                </div>
+
+                <p style="margin-top: 20px;">النجاح الحقيقي يأتي من <strong>الجهد الصادق والعمل الشريف</strong>. حتى لو كانت الدرجات أقل، فإن الطالب الذي يدرس بأمانة ينجح في الدنيا والآخرة. أما الذي يغش، فقد خسر الدنيا والآخرة معاً.</p>
+            </div>
+
+            <div class="alert-box">
+                <h4>⚖️ العقوبة والدرس</h4>
+                <p>تم فصل سالم من المدرسة لمدة أسبوعين كعقوبة تأديبية. لكن الأهم من العقوبة هو <strong>الدرس الذي تعلمه</strong>: الصدق والأمانة أغلى من أي درجة أو نجاح مزيف.</p>
+                <p style="margin-top: 10px;">المدير يوسف الهاشمي، رغم حزنه لخيانة الثقة، أعطى سالم فرصة ثانية بشرط أن يدرس بجد ويثبت أنه تعلم الدرس. قال له: <strong>"النجاح الحقيقي ليس في الغش، بل في الجهد الصادق والتوبة من الخطأ."</strong></p>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="evidence-03.html" class="btn btn-secondary">→ الدليل السابق</a>
+                <a href="hint-1.html" class="btn btn-warning">التلميحات ←</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

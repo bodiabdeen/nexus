@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدليل 01 - سجلات الأمن</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Amiri:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            direction: rtl;
+        }
+
+        .detective-icon {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 48px;
+            z-index: 1000;
+            filter: drop-shadow(0 0 10px rgba(20, 184, 166, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            font-family: 'Amiri', serif;
+        }
+
+        .subtitle {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .evidence-header {
+            background: #f0fdfa;
+            border-right: 5px solid #14b8a6;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        .evidence-header h2 {
+            color: #0f766e;
+            margin-bottom: 10px;
+            font-size: 22px;
+            font-family: 'Amiri', serif;
+        }
+
+        .evidence-meta {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .document-box {
+            background: #fefefe;
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 25px 0;
+        }
+
+        .doc-title {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .doc-title h3 {
+            color: #1e293b;
+            font-size: 20px;
+            margin-bottom: 5px;
+            font-family: 'Amiri', serif;
+        }
+
+        .doc-subtitle {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        thead {
+            background: #0f766e;
+            color: white;
+        }
+
+        th {
+            padding: 12px;
+            text-align: right;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #1e293b;
+        }
+
+        tbody tr:hover {
+            background: #f0fdfa;
+        }
+
+        .time-col {
+            font-weight: 600;
+            color: #0f766e;
+            white-space: nowrap;
+        }
+
+        .highlight-row {
+            background: #fef3c7 !important;
+            border-right: 4px solid #f59e0b;
+        }
+
+        .alert-box {
+            background: #fee2e2;
+            border: 2px solid #ef4444;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .alert-box h4 {
+            color: #991b1b;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .alert-box p {
+            color: #7f1d1d;
+            line-height: 1.6;
+        }
+
+        .info-box {
+            background: #dbeafe;
+            border: 2px solid #3b82f6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .info-box h4 {
+            color: #1e3a8a;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .info-box p, .info-box ul {
+            color: #1e40af;
+            line-height: 1.6;
+        }
+
+        .info-box ul {
+            margin-right: 20px;
+            margin-top: 10px;
+        }
+
+        .info-box li {
+            margin-bottom: 8px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 18px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e1;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(15, 118, 110, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(15, 118, 110, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="detective-icon">🕵️</div>
+
+    <div class="container">
+        <div class="header">
+            <h1>📊 الدليل #01</h1>
+            <div class="subtitle">سجلات الدخول والكاميرات الأمنية - 15 يناير 2024</div>
+        </div>
+
+        <div class="content">
+            <div class="evidence-header">
+                <h2>سجلات الأمن والوصول إلى المبنى</h2>
+                <div class="evidence-meta">
+                    نوع الوثيقة: سجلات إلكترونية أمنية | المصدر: نظام الأمن في مدرسة النور | التاريخ: 15 يناير 2024
+                </div>
+            </div>
+
+            <div class="document-box">
+                <div class="doc-title">
+                    <h3>🏢 سجل دخول ممر الإدارة</h3>
+                    <div class="doc-subtitle">الطابق الثاني - جناح الإدارة والمكاتب</div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>الوقت</th>
+                            <th>اسم الطالب/الموظف</th>
+                            <th>رقم البطاقة</th>
+                            <th>الموقع</th>
+                            <th>الإجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="time-col">10:45 ص</td>
+                            <td>يوسف الهاشمي (المدير)</td>
+                            <td>ADMIN-001</td>
+                            <td>مكتب المدير</td>
+                            <td>فتح الباب</td>
+                        </tr>
+                        <tr>
+                            <td class="time-col">11:00 ص</td>
+                            <td>يوسف الهاشمي</td>
+                            <td>ADMIN-001</td>
+                            <td>مكتب المدير</td>
+                            <td>قفل الباب من الداخل</td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td class="time-col">11:30 ص</td>
+                            <td>ليلى السالم</td>
+                            <td>STU-1247</td>
+                            <td>ممر الإدارة - الطابق 2</td>
+                            <td>دخول المنطقة</td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td class="time-col">11:35 ص</td>
+                            <td>ليلى السالم</td>
+                            <td>STU-1247</td>
+                            <td>غرفة النشاطات</td>
+                            <td>فتح الباب</td>
+                        </tr>
+                        <tr>
+                            <td class="time-col">11:40 ص</td>
+                            <td>يوسف الهاشمي</td>
+                            <td>ADMIN-001</td>
+                            <td>مكتب المدير</td>
+                            <td>فتح الباب - مغادرة للصلاة</td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td class="time-col">11:45 ص</td>
+                            <td>سالم الكعبي</td>
+                            <td>STU-1389</td>
+                            <td>مكتب تقنية المعلومات</td>
+                            <td>خروج من المكتب</td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td class="time-col">11:50 ص</td>
+                            <td>ليلى السالم</td>
+                            <td>STU-1247</td>
+                            <td>ممر الإدارة</td>
+                            <td>مغادرة المنطقة</td>
+                        </tr>
+                        <tr>
+                            <td class="time-col">12:10 م</td>
+                            <td>يوسف الهاشمي</td>
+                            <td>ADMIN-001</td>
+                            <td>مكتب المدير</td>
+                            <td>عودة من الصلاة</td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td class="time-col">12:15 م</td>
+                            <td>فاطمة المزروعي</td>
+                            <td>STU-1156</td>
+                            <td>ممر الإدارة</td>
+                            <td>دخول المنطقة</td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td class="time-col">12:25 م</td>
+                            <td>فاطمة المزروعي</td>
+                            <td>STU-1156</td>
+                            <td>ممر الإدارة</td>
+                            <td>مغادرة المنطقة</td>
+                        </tr>
+                        <tr>
+                            <td class="time-col">3:00 م</td>
+                            <td>يوسف الهاشمي</td>
+                            <td>ADMIN-001</td>
+                            <td>مكتب المدير</td>
+                            <td>اكتشاف السرقة - الإبلاغ</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="alert-box">
+                <h4>⚠️ ملاحظات أمنية مهمة</h4>
+                <p><strong>فترة حرجة:</strong> مكتب المدير كان مفتوحاً وخالياً من الساعة 11:40 ص إلى 12:10 م (30 دقيقة) عندما ذهب للصلاة. هذه هي الفترة الأكثر احتمالاً لحدوث السرقة.</p>
+                <p style="margin-top: 10px;"><strong>ملاحظة:</strong> المدير يوسف الهاشمي معروف بأنه يترك مكتبه مفتوحاً عند ذهابه لصلاة الظهر في المسجد المدرسي لمدة 30 دقيقة تقريباً كل يوم، لأنه يثق بالطلاب والموظفين.</p>
+            </div>
+
+            <div class="info-box">
+                <h4>🔍 ملاحظات التحقيق</h4>
+                <ul>
+                    <li>المدير يوسف قفل مكتبه في الساعة 11:00 ص، ثم فتحه في 11:40 ص للذهاب للصلاة</li>
+                    <li>ليلى السالم كانت في ممر الإدارة من 11:30 ص إلى 11:50 ص - قبل أن يغادر المدير للصلاة</li>
+                    <li>سالم الكعبي خرج من مكتب تقنية المعلومات (المجاور لمكتب المدير) في 11:45 ص - خلال فترة صلاة المدير</li>
+                    <li>فاطمة المزروعي دخلت ممر الإدارة في 12:15 م - خلال فترة صلاة المدير أيضاً</li>
+                    <li>مكتب تقنية المعلومات له باب جانبي مباشر إلى مكتب المدير (للطوارئ التقنية)</li>
+                    <li>غرفة النشاطات التي دخلتها ليلى قريبة جداً من مكتب المدير</li>
+                </ul>
+            </div>
+
+            <div class="document-box">
+                <div class="doc-title">
+                    <h3>📹 تقرير الكاميرات الأمنية</h3>
+                </div>
+                <p style="color: #64748b; line-height: 1.6;">
+                    الكاميرا المثبتة في ممر الإدارة كانت تخضع لصيانة دورية من الساعة 11:30 ص إلى 12:30 م يوم 15 يناير 2024. تم جدولة هذه الصيانة قبل أسبوع من قبل قسم تقنية المعلومات.
+                </p>
+                <p style="color: #64748b; line-height: 1.6; margin-top: 15px;">
+                    <strong>الصيانة تمت بواسطة:</strong> سالم الكعبي (طالب مساعد في قسم تقنية المعلومات)<br>
+                    <strong>السبب المذكور:</strong> "تحديث برنامج الكاميرا وصيانة دورية"<br>
+                    <strong>الموافقة:</strong> تمت الموافقة من قبل مشرف تقنية المعلومات الأستاذ خالد
+                </p>
+            </div>
+
+            <div class="alert-box">
+                <h4>🚨 اكتشاف حاسم</h4>
+                <p><strong>توقيت مريب:</strong> صيانة الكاميرا تمت بالضبط خلال فترة صلاة المدير (11:40 ص - 12:10 م)، وهذا يعني عدم وجود تسجيل فيديو لما حدث أمام مكتب المدير خلال الفترة الحرجة!</p>
+                <p style="margin-top: 10px;"><strong>سؤال:</strong> هل كان هذا التوقيت صدفة أم تخطيطاً مقصوداً؟</p>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="case-file.html" class="btn btn-secondary">→ العودة لملف القضية</a>
+                <a href="evidence-02.html" class="btn btn-primary">الدليل التالي ←</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدليل 03 - الأدلة المادية</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Amiri:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            direction: rtl;
+        }
+
+        .detective-icon {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 48px;
+            z-index: 1000;
+            filter: drop-shadow(0 0 10px rgba(20, 184, 166, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            font-family: 'Amiri', serif;
+        }
+
+        .subtitle {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .evidence-header {
+            background: #f0fdfa;
+            border-right: 5px solid #14b8a6;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        .evidence-header h2 {
+            color: #0f766e;
+            margin-bottom: 10px;
+            font-size: 22px;
+            font-family: 'Amiri', serif;
+        }
+
+        .evidence-meta {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .evidence-item {
+            background: #fefefe;
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .evidence-item h3 {
+            color: #1e293b;
+            margin-bottom: 15px;
+            font-size: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+            font-family: 'Amiri', serif;
+        }
+
+        .evidence-item p {
+            color: #475569;
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+
+        .evidence-photo {
+            background: #f8fafc;
+            border: 3px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .photo-placeholder {
+            background: #e2e8f0;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .photo-caption {
+            color: #64748b;
+            font-size: 13px;
+            font-style: italic;
+        }
+
+        .critical-discovery {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border: 3px solid #ef4444;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .critical-discovery h3 {
+            color: #991b1b;
+            margin-bottom: 15px;
+            font-size: 22px;
+            text-align: center;
+            font-family: 'Amiri', serif;
+            border: none;
+        }
+
+        .critical-discovery p {
+            color: #7f1d1d;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .highlight-text {
+            background: #fef3c7;
+            padding: 15px;
+            border-right: 4px solid #f59e0b;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .info-card {
+            background: #f0fdfa;
+            border: 2px solid #14b8a6;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #0f766e;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .info-value {
+            font-size: 18px;
+            color: #1e293b;
+            font-weight: bold;
+        }
+
+        .alert-box {
+            background: #fee2e2;
+            border: 2px solid #ef4444;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .alert-box h4 {
+            color: #991b1b;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .alert-box p {
+            color: #7f1d1d;
+            line-height: 1.6;
+        }
+
+        .alert-box ul {
+            color: #7f1d1d;
+            line-height: 1.8;
+            margin-right: 20px;
+            margin-top: 10px;
+        }
+
+        .alert-box li {
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background: #dbeafe;
+            border: 2px solid #3b82f6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .info-box h4 {
+            color: #1e3a8a;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .info-box p {
+            color: #1e40af;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 18px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e1;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(15, 118, 110, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(15, 118, 110, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="detective-icon">🕵️</div>
+
+    <div class="container">
+        <div class="header">
+            <h1>🔬 الدليل #03</h1>
+            <div class="subtitle">الأدلة المادية والفنية</div>
+        </div>
+
+        <div class="content">
+            <div class="evidence-header">
+                <h2>تقرير الأدلة المادية</h2>
+                <div class="evidence-meta">
+                    نوع الوثيقة: تحليل الأدلة الجنائية | المصدر: فريق التحقيق | التاريخ: 15-16 يناير 2024
+                </div>
+            </div>
+
+            <div class="evidence-item">
+                <h3>🔑 مفاتيح الوصول إلى مكتب المدير</h3>
+                <p>تم فحص جميع المفاتيح التي تمنح الوصول إلى مكتب المدير يوسف الهاشمي:</p>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-label">المدير يوسف</div>
+                        <div class="info-value">مفتاح رئيسي</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">نائبة المدير</div>
+                        <div class="info-value">مفتاح احتياطي</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">قسم الصيانة</div>
+                        <div class="info-value">مفتاح عام</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">الباب الجانبي</div>
+                        <div class="info-value">من مكتب IT</div>
+                    </div>
+                </div>
+
+                <div class="highlight-text">
+                    <p><strong>اكتشاف مهم:</strong> يوجد باب جانبي يربط مكتب تقنية المعلومات بمكتب المدير مباشرة. هذا الباب موجود للطوارئ التقنية (مثل إصلاح الكمبيوتر أو الإنترنت). مفتاح هذا الباب موجود في مكتب تقنية المعلومات فقط.</p>
+                </div>
+
+                <p><strong>من لديه وصول إلى مكتب تقنية المعلومات؟</strong></p>
+                <ul style="margin-right: 20px; color: #475569; line-height: 1.8;">
+                    <li>مشرف تقنية المعلومات: الأستاذ خالد (كان في إجازة يوم 15 يناير)</li>
+                    <li>الطلاب المساعدون: سالم الكعبي وعبدالله المري</li>
+                </ul>
+            </div>
+
+            <div class="evidence-item">
+                <h3>📱 سجل استخدام بطاقات الطلاب</h3>
+                <p>تم فحص بطاقات الطلاب الإلكترونية لمعرفة من دخل إلى أي مكان:</p>
+
+                <div class="evidence-photo">
+                    <div class="photo-placeholder">🔐</div>
+                    <div class="photo-caption">سجل استخدام بطاقة سالم الكعبي</div>
+                </div>
+
+                <p><strong>بطاقة سالم الكعبي (STU-1389):</strong></p>
+                <ul style="margin-right: 20px; color: #475569; line-height: 1.8;">
+                    <li>11:15 ص - دخول مكتب تقنية المعلومات</li>
+                    <li>11:45 ص - خروج من مكتب تقنية المعلومات</li>
+                    <li><strong>ملاحظة:</strong> كان في المكتب وحده لمدة 30 دقيقة بالضبط (نفس فترة صلاة المدير!)</li>
+                </ul>
+            </div>
+
+            <div class="critical-discovery">
+                <h3>🚨 الاكتشاف الحاسم</h3>
+                <p><strong>تم العثور على ورقة الإجابات المسروقة!</strong></p>
+                
+                <div class="evidence-photo">
+                    <div class="photo-placeholder">📄</div>
+                    <div class="photo-caption">ورقة الإجابات تم العثور عليها في حقيبة سالم الكعبي</div>
+                </div>
+
+                <p>عند تفتيش حقائب الطلاب المشتبه بهم صباح يوم 16 يناير، تم العثور على ورقة إجابات امتحان الدراسات الإسلامية <strong>مخبأة داخل دفتر الملاحظات في حقيبة سالم الكعبي!</strong></p>
+
+                <div class="highlight-text">
+                    <p><strong>تفاصيل الاكتشاف:</strong></p>
+                    <ul style="margin-right: 20px; line-height: 1.8;">
+                        <li>الورقة كانت مطوية ومخبأة بين صفحات دفتر الحاسوب</li>
+                        <li>تم التأكد من أنها الورقة الأصلية بختم المدير عليها</li>
+                        <li>سالم ادّعى أولاً أنه لا يعرف كيف وصلت لحقيبته</li>
+                        <li>عندما واجهه المحققون بالأدلة الأخرى، اعترف بالسرقة</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="evidence-item">
+                <h3>🖥️ سجلات صيانة الكاميرا</h3>
+                <p>تم فحص سجلات صيانة كاميرا ممر الإدارة:</p>
+
+                <div class="highlight-text">
+                    <p><strong>طلب الصيانة رقم #TI-2024-015:</strong></p>
+                    <ul style="margin-right: 20px; line-height: 1.8;">
+                        <li><strong>تاريخ الطلب:</strong> 8 يناير 2024 (قبل أسبوع من السرقة)</li>
+                        <li><strong>مقدم الطلب:</strong> سالم الكعبي</li>
+                        <li><strong>التوقيت المحدد:</strong> 11:30 ص - 12:30 م يوم 15 يناير</li>
+                        <li><strong>السبب:</strong> "تحديث برنامج الكاميرا وصيانة دورية"</li>
+                        <li><strong>الموافقة:</strong> الأستاذ خالد (كان يثق بسالم ووافق دون تدقيق)</li>
+                    </ul>
+                </div>
+
+                <p style="margin-top: 15px;"><strong>السؤال الحاسم:</strong> لماذا حدد سالم هذا التوقيت بالضبط؟ هل كان يعرف أن المدير يذهب للصلاة كل يوم في الساعة 11:40 ص؟</p>
+            </div>
+
+            <div class="alert-box">
+                <h4>🎯 الأدلة تشير إلى سالم الكعبي</h4>
+                <ul>
+                    <li><strong>الوصول:</strong> لديه مفتاح مكتب تقنية المعلومات الذي له باب مباشر لمكتب المدير</li>
+                    <li><strong>التوقيت:</strong> كان في مكتب IT بالضبط خلال فترة صلاة المدير (11:15-11:45 ص)</li>
+                    <li><strong>التخطيط المسبق:</strong> جدول صيانة الكاميرا قبل أسبوع ليخلق فترة عمياء</li>
+                    <li><strong>الدليل المادي:</strong> تم العثور على ورقة الإجابات في حقيبته!</li>
+                    <li><strong>السلوك المريب:</strong> كان متوتراً ومتعرقاً عند رؤية الحارس</li>
+                    <li><strong>الدافع:</strong> سيرسب ولن يتخرج إذا لم يحصل على درجة عالية</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h4>📝 ملاحظات نهائية</h4>
+                <p>رغم أن ليلى وفاطمة كانتا في ممر الإدارة في نفس اليوم، لا يوجد دليل مادي يربطهما بالسرقة. ليس لديهما مفتاح للدخول إلى مكتب المدير، وورقة الإجابات لم تُعثر عليها في حقائبهما.</p>
+                <p style="margin-top: 10px;"><strong>الخلاصة:</strong> جميع الأدلة المادية والظرفية تشير إلى سالم الكعبي كمرتكب الجريمة.</p>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="evidence-02.html" class="btn btn-secondary">→ الدليل السابق</a>
+                <a href="evidence-04.html" class="btn btn-primary">الدليل التالي ←</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

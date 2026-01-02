@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدليل 02 - شهادات الطلاب</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Amiri:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            direction: rtl;
+        }
+
+        .detective-icon {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 48px;
+            z-index: 1000;
+            filter: drop-shadow(0 0 10px rgba(20, 184, 166, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            font-family: 'Amiri', serif;
+        }
+
+        .subtitle {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .evidence-header {
+            background: #f0fdfa;
+            border-right: 5px solid #14b8a6;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        .evidence-header h2 {
+            color: #0f766e;
+            margin-bottom: 10px;
+            font-size: 22px;
+            font-family: 'Amiri', serif;
+        }
+
+        .evidence-meta {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .statement-box {
+            background: #fefefe;
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .statement-header {
+            background: #f8fafc;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-right: 4px solid #0f766e;
+        }
+
+        .witness-name {
+            font-weight: bold;
+            color: #1e293b;
+            font-size: 18px;
+            margin-bottom: 5px;
+            font-family: 'Amiri', serif;
+        }
+
+        .witness-role {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .interview-date {
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        .statement-content {
+            color: #1e293b;
+            line-height: 1.8;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .statement-content p {
+            margin-bottom: 15px;
+        }
+
+        .quote {
+            background: #f0fdfa;
+            border-right: 4px solid #14b8a6;
+            padding: 15px 20px;
+            margin: 15px 0;
+            font-style: italic;
+            color: #475569;
+            font-family: 'Amiri', serif;
+            font-size: 15px;
+        }
+
+        .highlight-statement {
+            border: 2px solid #f59e0b;
+            background: #fffbeb;
+        }
+
+        .highlight-statement .statement-header {
+            background: #fef3c7;
+        }
+
+        .alert-box {
+            background: #fee2e2;
+            border: 2px solid #ef4444;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .alert-box h4 {
+            color: #991b1b;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .alert-box p {
+            color: #7f1d1d;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .info-box {
+            background: #dbeafe;
+            border: 2px solid #3b82f6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .info-box h4 {
+            color: #1e3a8a;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .info-box ul {
+            color: #1e40af;
+            line-height: 1.8;
+            margin-right: 20px;
+        }
+
+        .info-box li {
+            margin-bottom: 8px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 18px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e1;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(15, 118, 110, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(15, 118, 110, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            .statement-box {
+                padding: 15px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="detective-icon">🕵️</div>
+
+    <div class="container">
+        <div class="header">
+            <h1>👥 الدليل #02</h1>
+            <div class="subtitle">شهادات الطلاب والشهود</div>
+        </div>
+
+        <div class="content">
+            <div class="evidence-header">
+                <h2>مقابلات الشهود من الطلاب</h2>
+                <div class="evidence-meta">
+                    نوع الوثيقة: شهادات رسمية | تم إجراؤها بواسطة: إدارة المدرسة | التاريخ: 15-16 يناير 2024
+                </div>
+            </div>
+
+            <div class="statement-box highlight-statement">
+                <div class="statement-header">
+                    <div class="witness-name">نورة أحمد - زميلة ليلى السالم</div>
+                    <div class="witness-role">طالبة في الصف الثاني عشر</div>
+                    <div class="interview-date">تاريخ المقابلة: 15 يناير 2024 - 4:30 مساءً</div>
+                </div>
+                <div class="statement-content">
+                    <p><strong>س: أين كانت ليلى السالم صباح اليوم؟</strong></p>
+                    <div class="quote">
+                        "ليلى قالت لي إنها ستكون في المكتبة تدرس طوال الصباح استعداداً للامتحان. لكني رأيتها عند الساعة 11:45 صباحاً وهي خارجة من الطابق الثاني (طابق الإدارة) وتبدو متوترة جداً. عندما سألتها ماذا كانت تفعل هناك، قالت إنها كانت تبحث عن كتاب في غرفة النشاطات."
+                    </div>
+                    <p><strong>س: هل لاحظتِ أي شيء غريب؟</strong></p>
+                    <div class="quote">
+                        "نعم، كانت تحمل حقيبتها معها، وهذا غريب لأنها عادة تتركها في المكتبة عندما تخرج لفترة قصيرة. وأيضاً، كانت تنظر حولها بقلق كأنها تخاف من شيء."
+                    </div>
+                </div>
+            </div>
+
+            <div class="statement-box">
+                <div class="statement-header">
+                    <div class="witness-name">عبدالله المري - زميل سالم الكعبي</div>
+                    <div class="witness-role">طالب في الصف الثاني عشر - مساعد في قسم تقنية المعلومات</div>
+                    <div class="interview-date">تاريخ المقابلة: 15 يناير 2024 - 5:00 مساءً</div>
+                </div>
+                <div class="statement-content">
+                    <p><strong>س: هل كان سالم يعمل على صيانة الكاميرا اليوم؟</strong></p>
+                    <div class="quote">
+                        "نعم، سالم قال لي قبل أسبوع إنه سيقوم بصيانة كاميرا ممر الإدارة يوم 15 يناير. لكن الغريب أنه طلب مني عدم مساعدته وقال إنه يريد أن يقوم بها بمفرده، رغم أن الصيانة عادة نقوم بها معاً."
+                    </div>
+                    <p><strong>س: هل كان سالم قلقاً بشأن امتحان الدراسات الإسلامية؟</strong></p>
+                    <div class="quote">
+                        "سالم كان قلقاً جداً! قال لي قبل يومين: 'إذا رسبت في هذا الامتحان، لن أتخرج هذا العام'. كان يبحث عن أي طريقة للحصول على درجة عالية. حتى أنه سألني مازحاً: 'ماذا لو حصلنا على ورقة الإجابات؟' ضحكت وقتها لأني ظننت أنه يمزح."
+                    </div>
+                </div>
+            </div>
+
+            <div class="statement-box highlight-statement">
+                <div class="statement-header">
+                    <div class="witness-name">مريم سعيد - عضوة في النادي الثقافي</div>
+                    <div class="witness-role">طالبة في الصف الثاني عشر</div>
+                    <div class="interview-date">تاريخ المقابلة: 16 يناير 2024 - 9:00 صباحاً</div>
+                </div>
+                <div class="statement-content">
+                    <p><strong>س: متى انتهى اجتماع النادي الثقافي صباح أمس؟</strong></p>
+                    <div class="quote">
+                        "انتهى الاجتماع في الساعة 11:15 صباحاً، وليس الساعة 1:00 ظهراً كما قالت فاطمة. عندما انتهى الاجتماع، قالت فاطمة إن لديها 'شيء مهم جداً' يجب أن تفعله وغادرت بسرعة."
+                    </div>
+                    <p><strong>س: كيف كان سلوك فاطمة في الأيام الأخيرة؟</strong></p>
+                    <div class="quote">
+                        "فاطمة كانت محبطة جداً لأنها لا تزال في المرتبة الثانية. سمعتها تقول لصديقتها: 'سأفعل أي شيء للحصول على المنحة الطبية، حتى لو...' ثم توقفت عن الكلام عندما رأتني. كانت تبدو يائسة."
+                    </div>
+                </div>
+            </div>
+
+            <div class="statement-box">
+                <div class="statement-header">
+                    <div class="witness-name">أحمد الحارس - حارس المدرسة</div>
+                    <div class="witness-role">موظف أمن</div>
+                    <div class="interview-date">تاريخ المقابلة: 15 يناير 2024 - 6:00 مساءً</div>
+                </div>
+                <div class="statement-content">
+                    <p><strong>س: هل رأيت أي طالب يتصرف بشكل غريب اليوم؟</strong></p>
+                    <div class="quote">
+                        "نعم، رأيت الطالب سالم الكعبي يخرج من مكتب تقنية المعلومات حوالي الساعة 11:45 صباحاً. كان يحمل حقيبته ويبدو متوتراً جداً. عندما مر بجانبي، كان يتعرق ويتجنب النظر إليّ. سألته 'هل أنت بخير؟' فقال بسرعة 'نعم نعم' واستمر في المشي."
+                    </div>
+                    <p><strong>س: هل لاحظت شيئاً آخر؟</strong></p>
+                    <div class="quote">
+                        "نعم، لاحظت أن مكتب المدير كان مفتوحاً من الساعة 11:40 ص لأن المدير ذهب للصلاة كالمعتاد. وأيضاً، الباب الجانبي بين مكتب تقنية المعلومات ومكتب المدير كان مفتوحاً قليلاً، وهذا غير معتاد."
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <h4>🚨 تناقضات حرجة في الشهادات</h4>
+                <p><strong>ليلى السالم:</strong> ادّعت أنها كانت في المكتبة، لكن زميلتها رأتها خارجة من طابق الإدارة في 11:45 ص وهي تبدو متوترة.</p>
+                <p><strong>سالم الكعبي:</strong> كان في طابق الإدارة خلال فترة صلاة المدير، وكان متوتراً جداً عند رؤية الحارس. أيضاً، هو من جدول صيانة الكاميرا.</p>
+                <p><strong>فاطمة المزروعي:</strong> كذبت بشأن وقت انتهاء الاجتماع، وكانت في ممر الإدارة خلال فترة صلاة المدير.</p>
+            </div>
+
+            <div class="info-box">
+                <h4>🔍 ملاحظات المحقق</h4>
+                <ul>
+                    <li>جميع المشتبه بهم الثلاثة لديهم تناقضات في شهاداتهم</li>
+                    <li>سالم هو الوحيد الذي كان لديه وصول مباشر إلى مكتب المدير عبر الباب الجانبي</li>
+                    <li>سالم خطط لصيانة الكاميرا قبل أسبوع - هل كان يخطط للسرقة؟</li>
+                    <li>الحارس لاحظ أن سالم كان متوتراً جداً ويتعرق</li>
+                    <li>ليلى وفاطمة كانتا في ممر الإدارة أيضاً، لكن ليس لديهما مفتاح مكتب المدير</li>
+                    <li>سالم ذكر "مازحاً" فكرة الحصول على ورقة الإجابات قبل يومين من السرقة</li>
+                </ul>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="evidence-01.html" class="btn btn-secondary">→ الدليل السابق</a>
+                <a href="evidence-03.html" class="btn btn-primary">الدليل التالي ←</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التلميح 2 - استبعاد المشتبه بهم</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Amiri:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            direction: rtl;
+        }
+
+        .detective-icon {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 48px;
+            z-index: 1000;
+            filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+
+        .hint-badge {
+            background: rgba(255, 255, 255, 0.2);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            font-family: 'Amiri', serif;
+        }
+
+        .subtitle {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .hint-level {
+            background: #fed7aa;
+            border: 2px solid #f59e0b;
+            border-radius: 12px;
+            padding: 15px 25px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .hint-level h3 {
+            color: #92400e;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hint-box {
+            background: #fffbeb;
+            border-right: 5px solid #f59e0b;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 25px 0;
+        }
+
+        .hint-box h2 {
+            color: #92400e;
+            margin-bottom: 20px;
+            font-size: 22px;
+            font-family: 'Amiri', serif;
+        }
+
+        .hint-box p {
+            color: #78350f;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .suspect-analysis {
+            background: white;
+            border: 2px solid #fbbf24;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .suspect-item {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .suspect-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .suspect-name {
+            color: #1e293b;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-family: 'Amiri', serif;
+        }
+
+        .suspect-verdict {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .unlikely {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .prime-suspect {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .suspect-reasoning {
+            color: #475569;
+            line-height: 1.7;
+            margin-top: 10px;
+        }
+
+        .key-evidence {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .key-evidence h4 {
+            color: #92400e;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .key-evidence ul {
+            color: #78350f;
+            line-height: 1.8;
+            margin-right: 25px;
+        }
+
+        .key-evidence li {
+            margin-bottom: 10px;
+        }
+
+        .warning-note {
+            background: #fee2e2;
+            border: 2px solid #ef4444;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .warning-note p {
+            color: #991b1b;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 18px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e1;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+
+        .btn-warning:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="detective-icon">🕵️</div>
+
+    <div class="container">
+        <div class="header">
+            <div class="hint-badge">💡💡</div>
+            <h1>التلميح #2</h1>
+            <div class="subtitle">إرشاد أقوى - عملية الاستبعاد</div>
+        </div>
+
+        <div class="content">
+            <div class="hint-level">
+                <h3>⭐⭐ التلميح المستوى 2 - استبعاد المشتبه بهم</h3>
+            </div>
+
+            <div class="hint-box">
+                <h2>🔍 لنضيق دائرة المشتبه بهم</h2>
+                <p>عند حل قضية، من المفيد استبعاد المشتبه بهم الذين لا يملكون المزيج الكامل من <strong>الدافع، الوسيلة، والفرصة</strong>. دعنا نحلل كل مشتبه به بشكل منهجي.</p>
+            </div>
+
+            <div class="suspect-analysis">
+                <div class="suspect-item">
+                    <div class="suspect-name">👤 ليلى السالم - طالبة متفوقة</div>
+                    <span class="suspect-verdict unlikely">❌ مستبعدة</span>
+                    <div class="suspect-reasoning">
+                        <strong>لماذا هي مستبعدة:</strong> رغم أن ليلى كانت موجودة في طابق الإدارة ولديها دافع (ضغط العائلة للكمال)، إلا أنها تفتقر إلى <strong>الوسيلة</strong> التقنية لتنفيذ السرقة. ليس لديها وصول إداري لفتح مكتب المدير المقفل، وشهادات الشهود تُظهر أنها غادرت قبل أن يذهب المدير للصلاة. يبدو أنها كانت تنتظر شخصاً آخر - ربما شريكاً، لكن ليست السارق الرئيسي.
+                    </div>
+                </div>
+
+                <div class="suspect-item">
+                    <div class="suspect-name">👤 فاطمة المزروعي - طالبة طموحة</div>
+                    <span class="suspect-verdict unlikely">❌ مستبعدة</span>
+                    <div class="suspect-reasoning">
+                        <strong>لماذا هي مستبعدة:</strong> فاطمة لديها دافع قوي (المنافسة على المنحة الطبية) وكانت موجودة في طابق الإدارة خلال فترة السرقة. لكنها لا تملك مهارات تقنية ولا وصول إداري لمكتب المدير المقفل. غيابها عن مكتبها مريب، لكن لا يوجد دليل على أنها أخذت الورقة فعلياً. والأهم، الدليل #03 يكشف أن الورقة وُجدت في حوزة شخص آخر.
+                    </div>
+                </div>
+
+                <div class="suspect-item">
+                    <div class="suspect-name">👤 سالم الكعبي - طالب تقنية المعلومات</div>
+                    <span class="suspect-verdict prime-suspect">⚠️ المشتبه به الرئيسي</span>
+                    <div class="suspect-reasoning">
+                        <strong>لماذا هو المشتبه به الرئيسي:</strong> سالم لديه الثلاثية الكاملة - الدافع، الوسيلة، والفرصة. كان لديه وصول إداري لفتح أي مكتب، جدول صيانة الكاميرا لخلق نقطة عمياء، كان يعرف قيمة الورقة وموقعها بالضبط، ولوحظ وهو يدخل منطقة مكتب المدير خلال الفترة الحرجة. أدلة متعددة تشير إليه مباشرة.
+                    </div>
+                </div>
+            </div>
+
+            <div class="key-evidence">
+                <h4>🎯 الأدلة الحاسمة التي تشير إلى سالم الكعبي:</h4>
+                <ul>
+                    <li><strong>الوصول الخاص:</strong> استخدم مفتاح مكتب تقنية المعلومات للدخول عبر الباب الجانبي إلى مكتب المدير (الدليل #03)</li>
+                    <li><strong>التخطيط المسبق:</strong> جدول صيانة الكاميرا قبل أسبوع لخلق فجوة في المراقبة (الدليل #01)</li>
+                    <li><strong>المعرفة:</strong> سجلات البريد الإلكتروني تُظهر أنه كان يعرف أن الورقة موجودة في مكتب المدير (الدليل #02)</li>
+                    <li><strong>السلوك المريب:</strong> الحارس شاهده وهو يتصرف بعصبية، يغادر حاملاً حقيبته، ويبدو متوتراً (الدليل #02)</li>
+                    <li><strong>التوقيت المثالي:</strong> كان في مكتب IT بالضبط خلال فترة صلاة المدير (11:15-11:45 ص)</li>
+                    <li><strong>الدليل المادي:</strong> راجع الدليل #03 بعناية للاكتشاف النهائي الحاسم!</li>
+                </ul>
+            </div>
+
+            <div class="warning-note">
+                <p>💭 تحتاج دفعة أخيرة؟ التلميح #3 سيعطيك الصورة الكاملة!</p>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="hint-1.html" class="btn btn-secondary">→ التلميح السابق</a>
+                <a href="hint-3.html" class="btn btn-warning">التلميح الأخير ←</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

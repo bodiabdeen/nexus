@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التلميح 3 - الدليل الحاسم</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Amiri:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            direction: rtl;
+        }
+
+        .detective-icon {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 48px;
+            z-index: 1000;
+            filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+
+        .hint-badge {
+            background: rgba(255, 255, 255, 0.2);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            font-family: 'Amiri', serif;
+        }
+
+        .subtitle {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .hint-level {
+            background: #fee2e2;
+            border: 2px solid #ef4444;
+            border-radius: 12px;
+            padding: 15px 25px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .hint-level h3 {
+            color: #991b1b;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hint-box {
+            background: #fef2f2;
+            border-right: 5px solid #ef4444;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 25px 0;
+        }
+
+        .hint-box h2 {
+            color: #991b1b;
+            margin-bottom: 20px;
+            font-size: 22px;
+            font-family: 'Amiri', serif;
+        }
+
+        .hint-box p {
+            color: #7f1d1d;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .smoking-gun {
+            background: #fee2e2;
+            border: 3px solid #ef4444;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 25px 0;
+        }
+
+        .smoking-gun h3 {
+            color: #991b1b;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-family: 'Amiri', serif;
+        }
+
+        .smoking-gun-content {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            border-right: 5px solid #ef4444;
+        }
+
+        .smoking-gun-content h4 {
+            color: #991b1b;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .smoking-gun-content p {
+            color: #1e293b;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .evidence-highlight {
+            background: #fef3c7;
+            padding: 15px 20px;
+            border-radius: 8px;
+            border-right: 4px solid #f59e0b;
+            margin: 15px 0;
+        }
+
+        .evidence-highlight strong {
+            color: #92400e;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .timeline-box {
+            background: white;
+            border: 2px solid #fca5a5;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .timeline-box h4 {
+            color: #991b1b;
+            margin-bottom: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .timeline-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .timeline-time {
+            font-weight: bold;
+            color: #ef4444;
+            min-width: 100px;
+        }
+
+        .timeline-event {
+            color: #475569;
+            line-height: 1.6;
+        }
+
+        .final-push {
+            background: #dcfce7;
+            border: 2px solid #22c55e;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .final-push h4 {
+            color: #166534;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .final-push p {
+            color: #166534;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 18px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e1;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="detective-icon">🕵️</div>
+
+    <div class="container">
+        <div class="header">
+            <div class="hint-badge">💡💡💡</div>
+            <h1>التلميح #3</h1>
+            <div class="subtitle">التلميح الأخير - الدليل الحاسم</div>
+        </div>
+
+        <div class="content">
+            <div class="hint-level">
+                <h3>⭐⭐⭐ التلميح المستوى 3 - الجواب شبه الكامل</h3>
+            </div>
+
+            <div class="hint-box">
+                <h2>🎯 القضية تكاد تُحل</h2>
+                <p>إذا قرأت جميع الأدلة بعناية، فلديك كل ما تحتاجه لحل هذه القضية. دعني أوضح لك الدليل الأكثر إدانة الذي يحسم القضية.</p>
+            </div>
+
+            <div class="smoking-gun">
+                <h3>🔫 الدليل الحاسم</h3>
+                <div class="smoking-gun-content">
+                    <h4>الدليل المادي من الدليل #03:</h4>
+                    <p><strong>تم العثور على ورقة الإجابات المسروقة مخبأة في حقيبة سالم الكعبي!</strong></p>
+                    
+                    <div class="evidence-highlight">
+                        <strong>من الدليل #03 - الاكتشاف الحرج:</strong>
+                        "عند تفتيش حقائب الطلاب المشتبه بهم صباح يوم 16 يناير، تم العثور على ورقة إجابات امتحان الدراسات الإسلامية مخبأة داخل دفتر الملاحظات في حقيبة سالم الكعبي. الورقة كانت مطوية ومخبأة بين صفحات دفتر الحاسوب."
+                    </div>
+
+                    <p>هذا دليل مادي على أن سالم الكعبي أخذ الورقة. لكن الأدلة لا تتوقف هنا - دعنا ننظر إلى كيف خطط ونفذ السرقة:</p>
+                </div>
+            </div>
+
+            <div class="timeline-box">
+                <h4>📅 الجدول الزمني الكامل للسرقة</h4>
+                
+                <div class="timeline-item">
+                    <div class="timeline-time">8 يناير</div>
+                    <div class="timeline-event"><strong>مرحلة التخطيط:</strong> سالم يجدول صيانة الكاميرا ليوم 15 يناير، الساعة 11:30 ص - 12:30 م، لخلق نقطة عمياء في المراقبة</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">13-14 يناير</div>
+                    <div class="timeline-event"><strong>جمع المعلومات:</strong> سالم يذكر "مازحاً" لزملائه فكرة الحصول على ورقة الإجابات</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">11:15 ص</div>
+                    <div class="timeline-event">سالم يدخل مكتب تقنية المعلومات ويبدأ "صيانة الكاميرا"</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">11:30 ص</div>
+                    <div class="timeline-event"><strong>تفعيل الخطة:</strong> تتوقف كاميرا ممر الإدارة - لا مراقبة على مكتب المدير</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">11:40 ص</div>
+                    <div class="timeline-event">المدير يوسف يغادر مكتبه للصلاة (30 دقيقة كل يوم)</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">11:42 ص</div>
+                    <div class="timeline-event"><strong>السرقة:</strong> سالم يستخدم الباب الجانبي من مكتب IT ويدخل مكتب المدير، يأخذ ورقة الإجابات (7 دقائق داخل المكتب)</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">11:45 ص</div>
+                    <div class="timeline-event"><strong>الهروب:</strong> سالم يخرج من مكتب IT حاملاً حقيبته، الحارس يلاحظ توتره وتعرقه</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">12:10 م</div>
+                    <div class="timeline-event">المدير يوسف يعود من الصلاة ولا يلاحظ السرقة فوراً</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">3:00 م</div>
+                    <div class="timeline-event">المدير يكتشف اختفاء الورقة ويبلغ الإدارة</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">16 يناير - 9:00 ص</div>
+                    <div class="timeline-event"><strong>القضية مُحلولة:</strong> تُعثر على ورقة الإجابات في حقيبة سالم</div>
+                </div>
+            </div>
+
+            <div class="smoking-gun">
+                <h3>🔍 لماذا سالم الكعبي هو الجاني</h3>
+                <div class="smoking-gun-content">
+                    <h4>الصورة الكاملة:</h4>
+                    
+                    <div class="evidence-highlight">
+                        <strong>الدافع:</strong>
+                        رسب في الفصل الأول ويحتاج درجة عالية جداً في الامتحان النهائي ليتخرج. كان خائفاً من خيبة أمل عائلته وسخرية أصدقائه.
+                    </div>
+
+                    <div class="evidence-highlight">
+                        <strong>الوسيلة:</strong>
+                        طالب مساعد في قسم تقنية المعلومات لديه مفتاح مكتب IT الذي له باب جانبي مباشر إلى مكتب المدير. قدرة على جدولة صيانة الكاميرات.
+                    </div>
+
+                    <div class="evidence-highlight">
+                        <strong>الفرصة:</strong>
+                        خلق نقطة عمياء بصيانة الكاميرا المجدولة. كان في مكتب IT بالضبط خلال فترة صلاة المدير (11:15-11:45 ص).
+                    </div>
+
+                    <div class="evidence-highlight">
+                        <strong>الدليل المادي:</strong>
+                        ورقة الإجابات المسروقة وُجدت في حقيبته. سجلات الدخول تُظهر وجوده في المكان والزمان الصحيحين. الحارس شاهده يتصرف بعصبية.
+                    </div>
+
+                    <div class="evidence-highlight">
+                        <strong>التخطيط المسبق:</strong>
+                        جدول صيانة الكاميرا قبل أسبوع. عرف بالضبط متى يذهب المدير للصلاة. خطط كل التفاصيل لتجنب الكشف.
+                    </div>
+                </div>
+            </div>
+
+            <div class="final-push">
+                <h4>✅ لديك جميع الأدلة</h4>
+                <p>سالم الكعبي هو السارق. خطط لها، نفذها، وتم القبض عليه والورقة في حقيبته. مستعد لرؤية الحل الكامل؟</p>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="hint-2.html" class="btn btn-secondary">→ التلميح السابق</a>
+                <a href="solution.html" class="btn btn-success">عرض الحل ✓</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
