@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>قاعدة بيانات التحقيقات الجنائية</title>
+    <title>قاعدة بيانات التحقيقات الجنائية - CID</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=IBM+Plex+Mono:wght@400;600;700&display=swap');
         
@@ -176,6 +176,7 @@
             text-transform: uppercase;
             transition: all 0.3s ease;
             background: #f8fafc;
+            direction: ltr;
             text-align: center;
         }
         
@@ -215,15 +216,15 @@
             content: '';
             position: absolute;
             top: 0;
-            left: -100%;
+            right: -100%;
             width: 100%;
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s ease;
+            transition: right 0.5s ease;
         }
         
         button:hover::before {
-            left: 100%;
+            right: 100%;
         }
         
         button:hover {
@@ -257,40 +258,35 @@
         }
         
         .divider {
+            display: flex;
+            align-items: center;
             text-align: center;
-            margin: 35px 0;
-            position: relative;
-        }
-        
-        .divider::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #cbd5e1, transparent);
-        }
-        
-        .divider span {
-            background: white;
-            padding: 0 20px;
+            margin: 30px 0;
             color: #94a3b8;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 2px;
-            position: relative;
-            z-index: 1;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .divider span {
+            padding: 0 15px;
         }
         
         .info-box {
-            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
             border-right: 4px solid #3b82f6;
-            padding: 20px;
+            padding: 18px;
             border-radius: 8px;
             font-size: 13px;
-            color: #1e40af;
+            color: #1e3a8a;
             line-height: 1.8;
         }
         
@@ -298,26 +294,34 @@
             display: block;
             margin-bottom: 10px;
             font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
         
         .info-box ul {
-            margin-right: 20px;
-            margin-top: 10px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
         }
         
         .info-box li {
-            margin-bottom: 6px;
+            padding: 4px 0;
+            padding-right: 20px;
+            position: relative;
+        }
+        
+        .info-box li::before {
+            content: '◂';
+            position: absolute;
+            right: 0;
+            color: #3b82f6;
+            font-weight: bold;
         }
         
         .request-access-box {
             background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-            border: 2px solid #f59e0b;
+            border: 2px solid #d97706;
             border-radius: 12px;
-            padding: 30px 25px;
+            padding: 25px;
             text-align: center;
-            margin-top: 25px;
             position: relative;
             overflow: hidden;
         }
@@ -333,68 +337,51 @@
                 45deg,
                 transparent,
                 transparent 10px,
-                rgba(245, 158, 11, 0.05) 10px,
-                rgba(245, 158, 11, 0.05) 20px
+                rgba(217, 119, 6, 0.05) 10px,
+                rgba(217, 119, 6, 0.05) 20px
             );
             animation: shine 20s linear infinite;
             pointer-events: none;
         }
         
         @keyframes shine {
-            0% { transform: translate(0, 0) rotate(45deg); }
-            100% { transform: translate(50%, 50%) rotate(45deg); }
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
         }
         
         .request-icon {
             font-size: 36px;
             margin-bottom: 12px;
             filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+            position: relative;
+            z-index: 1;
         }
         
         .request-access-box h3 {
-            font-size: 18px;
-            color: #92400e;
-            margin-bottom: 10px;
-            font-weight: 800;
+            font-size: 16px;
+            color: #78350f;
+            margin-bottom: 12px;
+            font-weight: 700;
             position: relative;
             z-index: 1;
         }
         
         .request-access-box p {
-            font-size: 14px;
-            color: #78350f;
-            margin-bottom: 20px;
+            font-size: 13px;
+            color: #92400e;
             line-height: 1.8;
             position: relative;
             z-index: 1;
         }
         
-        .request-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            color: white;
-            padding: 14px 28px;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 700;
+        .request-access-box a {
+            color: #92400e;
             text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
-            position: relative;
-            z-index: 1;
+            font-weight: 700;
         }
         
-        .request-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.5);
-            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-        }
-        
-        .btn-icon {
+        .request-access-box a:hover {
+            text-decoration: underline;
             font-size: 18px;
         }
         
@@ -423,7 +410,14 @@
             letter-spacing: 1px;
         }
         
-        /* Training Case Section - Arabic */
+        .disclaimer {
+            font-size: 10px;
+            color: #94a3b8;
+            margin-top: 8px;
+            font-style: italic;
+        }
+        
+        /* Training Case Section */
         .training-section {
             background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
             border: 2px solid #d97706;
@@ -433,7 +427,6 @@
             margin-bottom: 25px;
             position: relative;
             overflow: hidden;
-            direction: rtl;
         }
         
         .training-section::before {
@@ -475,7 +468,7 @@
             font-size: 12px;
             color: #92400e;
             margin-bottom: 12px;
-            line-height: 1.5;
+            line-height: 1.8;
             position: relative;
             z-index: 1;
         }
@@ -491,6 +484,7 @@
             font-size: 13px;
             font-weight: 700;
             text-decoration: none;
+            text-transform: uppercase;
             letter-spacing: 0.5px;
             transition: all 0.3s ease;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -564,13 +558,13 @@
             <div class="subtitle">قاعدة بيانات التحقيقات الجنائية</div>
         </div>
         
-        <p class="tagline">الوصول إلى ملفات القضايا السرية. أدخل بيانات الاعتماد الخاصة بك لبدء التحقيق.</p>
+        <p class="tagline">الوصول إلى ملفات القضايا المصنفة. أدخل بيانات الاعتماد الخاصة بك لبدء التحقيق.</p>
         
-        <!-- Training Case Section - Arabic -->
+        <!-- Training Case Section -->
         <div class="training-section">
             <div class="training-icon">🎓</div>
-            <h3>جديد على CID؟ جرّب القضية التدريبية</h3>
-            <p>تدرب على مهارات التحقيق مع قضية بسيطة مصممة لتعليمك كيفية التحقيق في الجرائم وحل الألغاز.</p>
+            <h3>جديد في CID؟ جرّب القضية التدريبية</h3>
+            <p>تدرب على مهاراتك كمحقق مع قضية مصممة للمبتدئين لتعليمك كيفية التحقيق في الجرائم وحل الألغاز.</p>
             <a href="case-training-ar/index.html" class="training-btn">
                 <span class="btn-icon">▶️</span>
                 ابدأ القضية التدريبية
@@ -595,41 +589,40 @@
             <button onclick="accessCase()">الوصول إلى ملف القضية</button>
             
             <div class="error-message" id="errorMsg">
-                ⚠️ بيانات اعتماد غير صالحة. يرجى التحقق من رقم القضية ورمز التفويض.
+                ⚠️ بيانات اعتماد غير صحيحة. يرجى التحقق من رقم القضية ورمز التفويض.
             </div>
         </div>
         
         <div class="divider">
-            <span>تنويه أمني</span>
+            <span>إشعار أمني</span>
         </div>
         
         <div class="info-box">
             <strong>🔒 للموظفين المصرح لهم فقط</strong>
             <ul>
-                <li>يتم تسجيل ومراقبة جميع محاولات الوصول</li>
+                <li>يتم تسجيل جميع محاولات الوصول ومراقبتها</li>
                 <li>سيتم الإبلاغ عن الوصول غير المصرح به</li>
                 <li>تحتوي ملفات القضايا على معلومات حساسة</li>
             </ul>
         </div>
         
         <div class="divider">
-            <span>طلب تصريح أمني</span>
+            <span>طلب التصريح</span>
         </div>
         
         <div class="request-access-box">
             <div class="request-icon">🔓</div>
-            <h3>هل تحتاج إلى الوصول لقضايا إضافية؟</h3>
-            <p>إذا كنت بحاجة إلى تصريح أمني متقدم للتحقيقات السرية، أرسل بريداً إلكترونياً إلى <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d8b9f6b9babcbdbdb698b4b1aebdf6bbb7b5">[email&#160;protected]</a></strong> وقم بتضمين في سطر الموضوع: <strong>"طلب الوصول لقضايا CID"</strong></p>
-            <div class="request-note">وقت الاستجابة: 24-48 ساعة · يتطلب التحقق الأمني</div>
+            <h3>هل تحتاج إلى الوصول إلى قضايا إضافية؟</h3>
+            <p>إذا كنت بحاجة إلى تصريح أمني للوصول إلى تحقيقات مصنفة، أرسل بريدًا إلكترونيًا إلى <strong><a href="mailto:cigame@abdeen.uk">cigame@abdeen.uk</a></strong> وقم بتضمين في سطر الموضوع: <strong>"طلب الوصول إلى قضية CID"</strong></p>
+            <div class="request-note">وقت الاستجابة: 24-48 ساعة · التحقق الأمني مطلوب</div>
         </div>
         
         <div class="footer">
             <p>نظام CID الإصدار 3.2.1 :: بوابة الوصول الآمن</p>
+            <p class="disclaimer">جميع الأحداث والشخصيات والصور خيالية وتم إنشاؤها بمساعدة الذكاء الاصطناعي</p>
         </div>
     </div>
     
-    
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script src="auth.js"></script>
     <script>
         function accessCase() {
@@ -653,3 +646,12 @@
                 accessCase();
             }
         });
+        
+        document.getElementById('caseNumber').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                accessCase();
+            }
+        });
+    </script>
+</body>
+</html>
